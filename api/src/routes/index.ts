@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { getUsers } from "../controllers/users";
 
 const mainRouter: Router = Router();
 
-mainRouter.get('/', (req, res) =>{
-    res.send('Primer prueba del mainRouter')
-});
+mainRouter.get('/users', getUsers )
 
 export default mainRouter
+
