@@ -1,8 +1,9 @@
+// import React from 'react'
 import { Link } from 'react-router-dom';
 
 import style from './Landing.module.css'
 
-const Landing = (): JSX.Element  => {
+const Landing = ()  => {
 
   return (
     <div>
