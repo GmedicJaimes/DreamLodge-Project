@@ -1,12 +1,11 @@
 // import React from 'react'
 
-import Card from "./Cards";
+import Card from "../Card/Card";
 
 const Cards: React.FC = () => {
   return (
     <div>
-      <Card/>
-      <Card/>
+      <h1>hola</h1>
       <Card/>
     </div>
   );
