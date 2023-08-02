@@ -1,12 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Landing from './views/Landing/LandingPage';
+import Landing from './views/Landing/LandingPage'
 
 import './App.css'
 import { HomePage } from './views/HomePage'
 
-function App() {
-
-
+const App = (): JSX.Element => {
   return (
     
     <Routes>
