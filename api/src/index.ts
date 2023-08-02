@@ -2,8 +2,8 @@ import app from './app';
 import './db'
 import run from "./db"
 
-//startingServer
 
+//startingServer
 
 
 async function main(){
