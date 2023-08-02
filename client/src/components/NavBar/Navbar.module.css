@@ -1,0 +1,34 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.containerNavbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  background-color: aqua;
+  width: 100%;
+
+  padding: 5px;
+}
+
+.logo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-right: 30px;
+}
+
+

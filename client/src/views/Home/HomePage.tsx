@@ -7,11 +7,10 @@ import { Navbar } from "../../components/NavBar/NavBar"
 export const HomePage: React.FC = () => {
   return (
     <div>
-        <h1>homePage</h1>
-        <Navbar/>
-        <Cards/>
-        <Footer/>
-
+      <h1>homePage</h1>
+      <Navbar/>
+      <Cards/>
+      <Footer/>
     </div>
   )
 }
