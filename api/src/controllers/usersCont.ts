@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+<<<<<<< HEAD
 import { gettingUsers,getAllUsers } from '../handlers/usersHand'; // Importamos la función 'gettingUsers'
 
 
@@ -9,6 +10,13 @@ export const getUsers = (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener los usuarios.' });
   }
+=======
+// import {users} from "../../info/usuarios/users"
+
+
+export const getUsers = (req: Request, res: Response) => {
+
+>>>>>>> b22260502a3e993e78baa5612e553b7545ad7699
 };
 
 

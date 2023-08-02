@@ -19,3 +19,33 @@ const userSchema = new Schema<User>({
 });
 
 export default model<User>('User', userSchema);
+// const User = new Schema ({
+//   firstname:{
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   lastName:{
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   userName:{
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   email:{
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   password:{
+//     type: String,
+//     required: true,
+//     trim: true
+//   }
+// },  {
+//   versionKey: false,
+//   timestamps: true
+// });
