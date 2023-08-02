@@ -8,7 +8,7 @@ interface Review extends Document {
 }
 
 const reviewSchema = new Schema<Review>({
-  rating: { type: Number, required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 }, // Establecer límites mínimos y máximos
   comment: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   createdAt: { type: Date, default: Date.now },
