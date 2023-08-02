@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import {users} from "../../usuarios/users"
 
 
 export const getUsers = (req: Request, res: Response) => {
-    res.send(`mandando usuarios`)
+    res.json(users)
 };
-
 

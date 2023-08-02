@@ -1,6 +1,6 @@
 import express from "express";
 //importing Routes
-import indexRoutes from "./routes"
+import indexRoutes from "./routes/index"
 //initialization
 const app = express()
 
@@ -8,11 +8,10 @@ const app = express()
 app.set("port", process.env.PORT || 4000);
 
 //middlewares
-app.use(express.json());
-
+ app.use(express.json());
 
 //routes
-app.use('/users', indexRoutes);
+app.use('/', indexRoutes);
 
 //staticFiles
 
