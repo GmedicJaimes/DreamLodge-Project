@@ -1,24 +1,3 @@
-// import mongoose from "mongoose";
-
-
-// (async ()=>{
-//     await mongoose.connect('mongodb://localhost27017/dreamLodge')
-//     await 
-// })();
-// import mongoose from 'mongoose';
-
-// const dbName = 'dreamLodge'; 
-// const dbURI = `mongodb://localhost:27017/${dbName}`;
-
-// (async () => {
-//   try {
-//     await mongoose.connect(dbURI);
-//     console.log('Conexión exitosa a la base de datos.');
-//   } catch (err) {
-//     console.error('Error al conectar a la base de datos:', err);
-//   }
-// })();
-// mongodb.ts
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import config from './config';
 
@@ -45,4 +24,6 @@ async function run() {
   }
 }
 
-run().catch(console.dir);
+
+export default run;
+
