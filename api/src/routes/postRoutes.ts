@@ -6,4 +6,3 @@ const PostsRouter: Router = Router();
 PostsRouter.get("/",getPosts)
 
 export default  PostsRouter
-

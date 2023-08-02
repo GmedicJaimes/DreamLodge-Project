@@ -1,6 +1,7 @@
 import app from './app';
 import './db'
 import run from "./db"
+const PORT = 3001;
 
 //startingServer
 
@@ -9,9 +10,9 @@ import run from "./db"
 async function main(){
     await run()
 
-    app.listen(app.get("port"), ()=>{
-        console.log("server listen on port 4000")
-})}
-
+    app.listen(PORT, () => {
+        console.log(`server listen on port ${PORT}`);
+    });
+}
 
 main()
