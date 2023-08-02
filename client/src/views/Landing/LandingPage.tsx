@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 
 import style from './Landing.module.css'
 
-const Landing = () => {
+const Landing = (): JSX.Element  => {
+
   return (
     <div>
       <h1 className={style.h1}>Estamos en la Landing</h1>
