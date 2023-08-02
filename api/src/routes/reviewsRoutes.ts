@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { getReviews } from "../controllers/reviewsCont";
+import { getReviewsFilt,reviewByID  } from "../controllers/reviewsCont";
 
 const reviewsRouter: Router = Router();
 
-reviewsRouter.get("/",getReviews)
+reviewsRouter.get("/",getReviewsFilt)
+reviewsRouter.get("/:id",reviewByID )
 
 export default  reviewsRouter
 

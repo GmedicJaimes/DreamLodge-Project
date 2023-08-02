@@ -17,6 +17,11 @@ interface User {
   createdAt: string; // Puedes cambiar este tipo a Date si prefieres trabajar con objetos de fecha Date
 }
 
+// Definimos la función 'getAllUsers' para obtener todos los usuarios
+export const getAllUsers = (): User[] => {
+  // Devolvemos el array completo de usuarios
+  return users;
+};
 
 // Definimos una función asincrónica 'gettingUsers' que recibe un 'id' de tipo number y devuelve una promesa que resuelve con un objeto 'User'
 export const gettingUsers = async (id: number): Promise<User> => {
