@@ -1,11 +1,15 @@
 // import React from 'react'
 
-import { Card } from "../Card/Card"
+import Card from "./Cards";
 
-export const Cards = () => {
+const Cards: React.FC = () => {
   return (
     <div>
-        <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
     </div>
-  )
-}
+  );
+};
+
+export default Cards;

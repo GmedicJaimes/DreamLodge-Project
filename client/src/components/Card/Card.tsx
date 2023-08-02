@@ -1,14 +1,37 @@
 // import React from 'react'
 
-export const Card = () => {
+const Card: React.FC = () => {
   return (
     <div>
-        <h2>Name</h2>
-        <h2>Image</h2>
-        <h2>Price</h2>
-        <h2>Stars</h2>
-        <h2>Type</h2>
-
+      <h2>name</h2>
+      <h2>image</h2>
+      <h2>price</h2>
+      <h2>stars</h2>
+      <h2>type</h2>
     </div>
-  )
-}
+  );
+};
+
+export default Card;
+
+// interface CardProps {
+//   name: string;
+//   image: string;
+//   price: number;
+//   stars: number;
+//   type: string;
+// }
+
+// const Card: React.FC<CardProps> = ({ name, image, price, stars, type }) => {
+//   return (
+//     <div>
+//       <h2>{name}</h2>
+//       <img src={image} alt={name} />
+//       <h2>{price}</h2>
+//       <h2>{stars}</h2>
+//       <h2>{type}</h2>
+//     </div>
+//   );
+// };
+
+// export default Card;
