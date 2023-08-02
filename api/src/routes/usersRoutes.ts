@@ -3,7 +3,7 @@ import { getUsers } from "../controllers/usersCont";
 
 const userRouter: Router = Router();
 
-userRouter.get("/",getUsers)
+userRouter.get("/:id",getUsers)
 
 export default userRouter
 
