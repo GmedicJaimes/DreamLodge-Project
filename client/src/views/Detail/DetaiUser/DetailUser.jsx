@@ -1,4 +1,15 @@
+
 const DetailUser = () => {
+
+    const { id } = useParams()
+    const dispatch = useDispatch
+
+    const user = useSelector((state) => state.detailUser)
+    
+    useEffect(() => {
+        dispatch(getDetailUser(id))
+    }, [ dispatch ])
+
     return(
         <div>
             <div>
