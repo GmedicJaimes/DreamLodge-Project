@@ -1,20 +1,28 @@
 import axios from "axios"
 import {
-    GET_DETAIL_PROPERTY,
+    GET_DETAIL_PROPERTIE,
     GET_DETAIL_USER,
-    GET_ALL_PROPERTYS
+    GET_ALL_PROPERTIES
 } from "./action-types"
 
-export const getAllPropertys = () => {
-    return { type: GET_ALL_PROPERTYS}
+
+export const getAllProperties = () => {
+    return async function(dispatch){
+        const { data } = await axios.get("")
+        return dispatch({type: GET_ALL_PROPERTIES, payload: data})
+    }
 }
 
-export const getDetailProperty = ( id ) => {
-    console.log(`Detail propery ${id}`);
-    return { type: GET_DETAIL_PROPERTY }
+export const getDetailPropertie = ( id ) => {
+    return async function(dispatch) {
+        const { data } = await axios.get("")
+        return dispatch({ type: GET_DETAIL_PROPERTIE, payload: data})
+    }
 }
 
 export const getDetailUser = ( id ) => {
-    console.log(`Detail user ${id}`);
-    return { type: GET_DETAIL_USER}
+    return async function(dispatch) {
+        const { data } = await axios.get("")
+        return dispatch({ type: GET_DETAIL_USER, payload: data})
+    }
 }

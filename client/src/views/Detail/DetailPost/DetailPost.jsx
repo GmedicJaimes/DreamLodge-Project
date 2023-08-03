@@ -3,30 +3,41 @@ import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailProperty } from "../../../redux/actions";
+import { getDetailPropertie } from "../../../redux/actions";
 
 const DetailPost = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const property = useSelector((state) => state.detailProperty)
-    
-    useEffect(() => {
-        dispatch(getDetailProperty(id))
-    }, [ dispatch ])
+    // const propertie = useSelector((state) => state.detailPropertie)
+    const propertie = {
+        technologies: "Jacuzzi",
+        name: "Cabañita",
+        description: "Esta es una propiedad de es developer",
+        extraAmenities: null,
+        location: "Mar de Las Pampas",
+        comment: null,
+        specialServices: false,
+        views: 150,
+        rooms: 4,
+        price: 20
+    }
 
+    useEffect(() => {
+        dispatch(getDetailPropertie(id))
+    }, [ dispatch ])
 
     return(
         <div className={styles.maincontainer}>
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
-                        <h1>Depto</h1>
+                        <h1>{propertie.name}</h1>
                         <p>Departamento lindo blablabla ubicado frente al mar etc</p>
                     </div>
                     <div>
-                        <h2>Precio</h2>
+                        <h2>{propertie.price}</h2>
                         <button className={styles.btn}>Reserve</button>
                     </div>
                 </header>
