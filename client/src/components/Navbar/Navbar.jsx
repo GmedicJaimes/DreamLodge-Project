@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import Searchbar from "./Searchbar/Searchbar"
-import style from "./Navbar.module.css"
+import styles from "./Navbar.module.css"
 
 const Navbar = () => {
     return(
-        <div classname={style.container}> 
+        <div className={styles.container}> 
             <Link to={"/home"}>Home</Link>
             
             <Searchbar/>

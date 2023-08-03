@@ -1,0 +1,30 @@
+.container {
+    border: 1px solid black;
+    max-width: 90vh;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mediumContainer {
+    border: 1px solid black;
+    border-radius: 0.7em;
+    background-color: #e2e1e1;
+    display: flex;
+}
+
+.mediumContainer div{
+    max-width: 50%;
+}
+
+.ratingBox{
+    background-color: aquamarine;
+    height: 100px;
+    width: 100px;
+}
+
+.division{
+    display: flex;
+}
