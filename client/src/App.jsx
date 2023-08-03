@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar'
 
 import { useLocation } from 'react-router-dom'
 
-import './App.css'
+// import './App.css'
 
 function App() {
 
