@@ -1,4 +1,4 @@
-import Cards from "../Cards/Cards"
+import Cards from "../../components/Cards/Cards"
 
 
 const Homepage = () => {
