@@ -7,7 +7,64 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = admin.firestore();
 
+// Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
+router.get('/properties', async (req, res) => {
+    try {
+        const { rooms } = req.query;
 
+        if (rooms) {
+            const roomsNumber = parseInt(rooms);
+            if (isNaN(roomsNumber)) {
+                return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
+            }
+
+            const querySnapshot = await db.collection('properties').where("rooms", "==", roomsNumber).get();
+
+            if (querySnapshot.empty) {
+                return res.status(404).json({ message: 'No se encontraron propiedades con el número de habitaciones especificado.' });
+            }
+
+            const response = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                response.push(data);
+            });
+
+            return res.status(200).json(response);
+        } else {
+            // Si no se proporciona el parámetro 'rooms', se obtienen todas las propiedades
+            const querySnapshot = await db.collection('properties').get();
+            const docs = querySnapshot.docs;
+
+            const response = docs.map((doc) => ({
+                name: doc.data().name,
+                location: doc.data().location,
+                description: doc.data().description,
+                rooms: doc.data().rooms,
+                technologies: doc.data().technologies,
+                views: doc.data().views,
+                price: doc.data().price,
+            }));
+            return res.status(200).json(response);
+        }
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
+
+//ruta para traer propiedades por ID
+router.get('/properties/:property_id', async(req, res)=>{
+    try {
+        const doc =  db.collection('properties').doc(req.params.property_id);
+        const item = await doc.get();
+        const response = item.data()
+        return res.status(200).json(response)
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+});
+
+//ruta para crear propiedades
 router.post('/properties', async (req, res) => {
     try {
     
@@ -35,39 +92,7 @@ router.post('/properties', async (req, res) => {
 });
 
 
-router.get('/properties/:property_id', async(req, res)=>{
-    try {
-        const doc =  db.collection('properties').doc(req.params.property_id);
-        const item = await doc.get();
-        const response = item.data()
-        return res.status(200).json(response)
-    } catch (error) {
-        return res.status(500).send(error)
-    }
-});
-
-router.get('/properties', async(req, res)=>{
-    try {
-        const query = db.collection('properties');
-        const querySnapshot = await query.get();
-        const docs = querySnapshot.docs;
-        
-        const response = docs.map(doc=>({
-            name:doc.data().name, 
-            location:doc.data().location,
-            description:doc.data().description,
-            rooms:doc.data().rooms,
-            technologies:doc.data().technologies,
-            views: doc.data().views,
-            price: doc.data().price,
-         
-        }));
-        return res.status(200).json(response)
-    } catch (error) {
-        return res.status(500).send(error)
-    }
-});
-
+//ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
@@ -78,6 +103,7 @@ router.delete('/properties/:properties_id', async(req, res)=>{
     }
 });
 
+//ruta para actualizar propiedades
 router.put('/properties/:properties_id', async(req, res)=>{
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
@@ -97,3 +123,5 @@ router.put('/properties/:properties_id', async(req, res)=>{
 });
 
 module.exports= router;
+
+

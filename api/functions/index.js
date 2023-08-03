@@ -21,10 +21,6 @@ const app = express()
 
 
 
-// app.get('/hello-world', (req, res)=>{
-//     res.json("hello World")
-// });
-
 // app.post('/users', async(req, res)=>{
 //     await db.collection('users')
 //     .doc('/' + req.body.id + '/')
