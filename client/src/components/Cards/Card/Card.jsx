@@ -1,11 +1,14 @@
-
+import { Link } from "react-router-dom"
 
 const Card = () => {
     return(
         <div>
             <h1>Propiedad</h1>
             <h2>Precio: $200</h2>
-            <button>Detalles</button>
+
+            <Link to={"/rooms"}>
+                <button>Detalles</button>
+            </Link>
         </div>
     )
 }
