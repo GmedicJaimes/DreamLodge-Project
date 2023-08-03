@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Searchbar from "./Searchbar/Searchbar"
+import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
 
 const Navbar = () => {
