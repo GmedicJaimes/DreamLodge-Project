@@ -8,13 +8,15 @@ import { getDetailProperty } from "../../../redux/actions";
 const DetailPost = () => {
 
     const { id } = useParams()
-    const dispatch = useDispatch
+    const dispatch = useDispatch()
 
     const property = useSelector((state) => state.detailProperty)
     
     useEffect(() => {
-        dispatch(getDetailProperty())
+        dispatch(getDetailProperty(id))
     }, [ dispatch ])
+
+
     return(
         <div className={styles.maincontainer}>
             <div className={styles.container}>
