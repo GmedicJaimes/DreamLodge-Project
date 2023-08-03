@@ -1,6 +1,5 @@
 import Cards from "../../components/Cards/Cards"
 
-
 const Homepage = () => {
     return(
         <div>
