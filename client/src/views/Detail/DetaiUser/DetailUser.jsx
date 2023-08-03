@@ -1,8 +1,10 @@
+import { useDispatch, useSelector } from "react-redux"
+import { getDetailUser } from "../../../redux/actions"
 
 const DetailUser = () => {
 
     const { id } = useParams()
-    const dispatch = useDispatch
+    const dispatch = useDispatch()
 
     const user = useSelector((state) => state.detailUser)
     
@@ -51,4 +53,4 @@ const DetailUser = () => {
     )
 }
 
-export default DetailUser
+export default DetailUser;

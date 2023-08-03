@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import Cards from "../../components/Cards/Cards"
 import {useEffect} from "react"
-import { getAllPropertys } from "../../redux/actions"
+import { getAllProperties } from "../../redux/actions"
 import Filters from "../../components/Filters/Filters"
 
 const Homepage = () => {
@@ -13,7 +13,7 @@ const Homepage = () => {
     } = useSelector( state => state)
 
     useEffect(() => {
-        dispatch(getAllPropertys())
+        dispatch(getAllProperties())
     }, [dispatch])
 
     return(

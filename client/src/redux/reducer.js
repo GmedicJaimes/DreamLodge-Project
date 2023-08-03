@@ -1,12 +1,12 @@
 import { 
-    GET_ALL_PROPERTYS,
-    GET_DETAIL_PROPERTY,
+    GET_ALL_PROPERTIES,
+    GET_DETAIL_PROPERTIE,
     GET_DETAIL_USER 
 } from "./action-types"
 
 const initialState = {
-    allPropertys : [],
-    detailProperty : {},
+    allProperties : [],
+    detailPropertie : {},
     detailUser: {}
 }
 
@@ -14,22 +14,22 @@ const reducer = ( state = initialState, actions) => {
     const { type, payload } = actions
 
     switch (type) {
-        case GET_ALL_PROPERTYS: 
+        case GET_ALL_PROPERTIES: 
             return {
                 ...state,
                 allPropertys: payload
             }
 
-        case GET_DETAIL_PROPERTY:
+        case GET_DETAIL_PROPERTIE:
             return {
                 ...state,
-                detailProperty : {}
+                detailProperty : payload
             }
         
         case GET_DETAIL_USER: 
             return{
                 ...state,
-                detailUser: {}
+                detailUser: payload
             }
         default:
             return { ...state }
