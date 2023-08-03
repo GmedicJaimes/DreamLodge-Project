@@ -1,18 +1,21 @@
-import { GET_EXAMPLE } from "./action-types"
+import { 
+    GET_EXAMPLE,
+    GET_DETAIL_PROPERTY 
+} from "./action-types"
 
 const initialState = {
     propertys : [],
-    numerito : 0
+    detailProperty : {}
 }
 
 const reducer = ( state = initialState, actions) => {
     const { type, payload } = actions
 
     switch (type) {
-        case GET_EXAMPLE:
+        case GET_DETAIL_PROPERTY:
             return {
                 ...state,
-                numerito : payload
+                detailProperty : payload
             }
         default:
             return { ...state }

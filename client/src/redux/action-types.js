@@ -1,1 +1,2 @@
 export const GET_EXAMPLE = "GET_EXAMPLE"
+export const GET_DETAIL_PROPERTY = "GET_DETAIL_PROPERTY"

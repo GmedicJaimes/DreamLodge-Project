@@ -1,7 +1,20 @@
 import styles from "./DetailPost.module.css"
 import About from "../../../components/About/About";
+import { useEffect } from "react"
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailProperty } from "../../../redux/actions";
 
 const DetailPost = () => {
+
+    const { id } = useParams()
+    const dispatch = useDispatch
+
+    const property = useSelector((state) => state.detailProperty)
+    
+    useEffect(() => {
+        dispatch(getDetailProperty())
+    }, [ dispatch ])
     return(
         <div className={styles.maincontainer}>
             <div className={styles.container}>
@@ -19,7 +32,7 @@ const DetailPost = () => {
                     <img src="" alt="" />
                 </div>
                 <div className={styles.line}></div>
-                <div className={styles.mediumContainer}>
+                <div className={styles.detailContainer}>
                     <div>
                         <h2>Overview</h2>
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni enim nostrum, neque laudantium culpa maiores pariatur dolorem possimus officia amet sint quisquam vel, tenetur, cum cupiditate consequatur? Consequuntur, enim blanditiis.</p>
@@ -33,8 +46,10 @@ const DetailPost = () => {
                 </div>
                 <div className={styles.line}></div>
                 <section className={styles.division}>
-                    <h2>Services</h2>
-                    <div className={styles.mediumContainer}>
+                    <div>
+                        <h2>Services</h2>
+                    </div>
+                    <div className={styles.srvcContainer}>
                         <div className={styles.containerList}>
                             <ul>
                                 <li>Restaurant</li>
