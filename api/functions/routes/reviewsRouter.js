@@ -5,21 +5,62 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = admin.firestore();
 
+// router.post('/reviews', async (req, res) => {
+//     try {
+//         const { property_id } = req.body;
+
+//         const newReview = {
+//             author: req.body.author,
+//             rating: req.body.rating,
+//             comment: req.body.comment,
+
+//         };
+
+//         const propertyRef = db.collection('properties').doc(property_id);
+
+//         const propertyDoc = await propertyRef.get();
+       
+//         const newReviewId = uuidv4();
+//         // await db.collection('reviews').doc(newReviewId).set(newReview);
+
+//         const reviewsCollectionRef = propertyRef.collection('reviews').doc(newReviewId);
+//         await reviewsCollectionRef.add({author, rating, comment})
+//     //    
+
+//         return res.status(200).json()        
+//     } catch (error) {
+//         return res.status(500).send('Erorr');
+//     }
+// });
+
 router.post('/reviews', async (req, res) => {
     try {
-        const newReview = {
-            author: req.body.author,
-            rating: req.body.rating,
-            comment: req.body.comment,
+        const { property_id, author, rating, comment } = req.body;
 
-        };
+        // Verificar que se proporcionen todos los campos requeridos en el cuerpo de la solicitud
+        if (!property_id || !author || !rating || !comment) {
+            return res.status(400).json({ error: 'Todos los campos son requeridos para crear una reseña.' });
+        }
 
+        const propertyRef = db.collection('properties').doc(property_id);
+
+        // Verificar si la propiedad a la que se está asociando la reseña existe
+        const propertyDoc = await propertyRef.get();
+        if (!propertyDoc.exists) {
+            return res.status(404).json({ error: 'La propiedad con el ID proporcionado no existe.' });
+        }
+
+        // Crear una nueva reseña en la subcolección "reviews" dentro del documento de la propiedad
         const newReviewId = uuidv4();
-        await db.collection('reviews').doc(newReviewId).set(newReview);
+        await propertyRef.collection('reviews').doc(newReviewId).set({
+            author,
+            rating,
+            comment
+        });
 
-        return res.status(200).json()        
+        return res.status(200).json();
     } catch (error) {
-        return res.status(500).send('Erorr');
+        return res.status(500).send('Error al crear la reseña.');
     }
 });
 
@@ -81,3 +122,4 @@ router.delete('/reviews/:reviews_id', async(req, res)=>{
 });
 
 module.exports = router;
+

@@ -10,22 +10,22 @@ const db = admin.firestore();
 // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
 router.get('/properties', async (req, res) => {
     try {
-        const { rooms } = req.query;
-
+        const { rooms, location, guests, types } = req.query;
+       
         if (rooms) {
             const roomsNumber = parseInt(rooms);
             if (isNaN(roomsNumber)) {
                 return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
             }
 
-            const querySnapshot = await db.collection('properties').where("rooms", "==", roomsNumber).get();
+            const roomsQuerySnapshot = await db.collection('properties').where("rooms", "==", roomsNumber).get();
 
-            if (querySnapshot.empty) {
+            if (roomsQuerySnapshot.empty) {
                 return res.status(404).json({ message: 'No se encontraron propiedades con el número de habitaciones especificado.' });
             }
 
             const response = [];
-            querySnapshot.forEach((doc) => {
+            roomsQuerySnapshot.forEach((doc) => {
                 const data = doc.data();
                 response.push(data);
             });
@@ -67,7 +67,8 @@ router.get('/properties/:property_id', async(req, res)=>{
 //ruta para crear propiedades
 router.post('/properties', async (req, res) => {
     try {
-    
+        const {user_id} = req.body;
+
         const newProperty = {
             name: req.body.name,
             location: req.body.location,
@@ -78,12 +79,13 @@ router.post('/properties', async (req, res) => {
             specialServices: req.body.specialServices || false,
             views: req.body.views,
             price: req.body.price,
-            comment: req.body.comment || null
+            comment: req.body.comment || null,
         };
+        const userRef = db.collection("users").doc(user_id);
 
         // Agregar un ID único para el documento
         const newPropertyId = uuidv4();
-        await db.collection('properties').doc(newPropertyId).set(newProperty);
+        await userRef.collection('properties').doc(newPropertyId).set(newProperty);
 
         return res.status(204).json();
     } catch (error) {
