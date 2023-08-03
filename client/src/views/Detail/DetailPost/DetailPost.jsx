@@ -1,22 +1,24 @@
 import styles from "./DetailPost.module.css"
+import About from "../../../components/About/About";
 
 const DetailPost = () => {
     return(
-        <div>
+        <div className={styles.maincontainer}>
             <div className={styles.container}>
-                <div className={styles.head}>
+                <header className={styles.head}>
                     <div>
                         <h1>Depto</h1>
                         <p>Departamento lindo blablabla ubicado frente al mar etc</p>
                     </div>
                     <div>
                         <h2>Precio</h2>
-                        <button>Reserve</button>
+                        <button className={styles.btn}>Reserve</button>
                     </div>
-                </div>
+                </header>
                 <div>
                     <img src="" alt="" />
                 </div>
+                <div className={styles.line}></div>
                 <div className={styles.mediumContainer}>
                     <div>
                         <h2>Overview</h2>
@@ -29,10 +31,11 @@ const DetailPost = () => {
                         </div>
                     </div>
                 </div>
-                <div className={styles.division}>
+                <div className={styles.line}></div>
+                <section className={styles.division}>
                     <h2>Services</h2>
                     <div className={styles.mediumContainer}>
-                        <div>
+                        <div className={styles.containerList}>
                             <ul>
                                 <li>Restaurant</li>
                                 <li>Cafeteria</li>
@@ -49,22 +52,22 @@ const DetailPost = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div className={styles.division}>
+                </section>
+                <div className={styles.line}></div>
+                <section className={styles.division}>
                     <h2>Opinions</h2>
                     <div>
-                        <div>
-                            <ul>
-                                <li>Nice</li>
-                                <li>Bad</li>
-                                <li>xD</li>
-                                <li>:v</li>
-                                <li>:'v</li>
-                            </ul>
-                        </div>
+                        <ul>
+                            <li>Nice</li>
+                            <li>Bad</li>
+                            <li>xD</li>
+                            <li>:v</li>
+                            <li>:'v</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
             </div>
+            <About/>
         </div>
     )
 }

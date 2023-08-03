@@ -1,3 +1,7 @@
+.maincontainer{
+    text-align: center;
+}
+
 .container {
     border: 1px solid black;
     max-width: 90vh;
@@ -13,6 +17,7 @@
     border-radius: 0.7em;
     background-color: #e2e1e1;
     display: flex;
+    height: 16em;
 }
 
 .mediumContainer div{
@@ -20,11 +25,33 @@
 }
 
 .ratingBox{
-    background-color: aquamarine;
-    height: 100px;
-    width: 100px;
+    background-color: #549C8F;
+    height: 9em;
+    width: 20em;
+    border-radius: 1em;
 }
 
 .division{
     display: flex;
+}
+
+.containerList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.btn{
+    background-color: #549C8F;
+    border-radius: 1em;
+}
+
+.line{
+    background-color: #549C8F;
+    border: 2px solid #549C8F;
+    margin: 1em 0 1em 0;
+}
+
+.serviceContainer{
+    
 }
