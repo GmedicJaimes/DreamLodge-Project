@@ -33,6 +33,7 @@ const app = express()
 // });
 
 app.use(require('./routes/propertiesRouter'))
+app.use(require('./routes/userRoutes'))
 
 exports.app = onRequest(app)
 // app.get('/', (req, res)=>{
