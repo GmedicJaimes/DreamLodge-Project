@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const db = admin.firestore();
 
 // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
-router.get('/properties', async (req, res) => {
+/* router.get('/properties', async (req, res) => {
     try {
         const { rooms, location, guests, types } = req.query;
        
@@ -50,7 +50,59 @@ router.get('/properties', async (req, res) => {
     } catch (error) {
         return res.status(500).send(error);
     }
+}); */
+
+router.get('/properties', async (req, res) => {
+    try {
+        const { rooms, location, guests, types } = req.query;
+   
+
+        let query = db.collectionGroup('properties');
+
+        if (rooms) {
+            const roomsNumber = parseInt(rooms);
+            if (isNaN(roomsNumber)) {
+                return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
+            }
+            query = query.where("rooms", "==", roomsNumber);
+        }
+
+        if (location) {
+           /*  const cleanedLocation = location ? location.trim().toLowerCase() : null; */
+
+            query = query.where("location", "==", location);
+        }
+
+        if (guests) {
+            const guestsNumber = parseInt(guests);
+            if (isNaN(guestsNumber)) {
+                return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
+            }
+            query = query.where("guests", "==", guestsNumber);
+        }
+
+        if (types) {
+            query = query.where("types", "array-contains", types);
+        }
+
+        const querySnapshot = await query.get();
+
+        if (querySnapshot.empty) {
+            return res.status(404).json({ message: 'No se encontraron propiedades que coincidan con los filtros especificados.' });
+        }
+
+        const response = [];
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            response.push(data);
+        });
+
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
 });
+
 
 //ruta para traer propiedades por ID
 router.get('/properties/:property_id', async(req, res)=>{
