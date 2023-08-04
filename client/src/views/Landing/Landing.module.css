@@ -4,7 +4,8 @@
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-  background-image: url(../../assets/Fondo-Landing.jpg);
+  background-image: url(../../assets/rooms.jpg);
+  background-repeat: no-repeat;
   background-size: 100% 100%; 
   font-family: 'Lexend Deca';
 }
@@ -90,7 +91,10 @@
 .footer {
   display: flex;
   justify-content: center;
-  margin-top: 14vw;
+  margin-top: 260px;
+
+  font-size: 1.3em;
+  
 }
 
 .footer ul{

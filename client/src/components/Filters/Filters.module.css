@@ -1,38 +1,37 @@
-.container {
-    /* height: 30vh; */
-    background-image: url(../../assets/filters.jpg);
-    background-size: 100% 100%;
+.containerFilter{
+    /* margin-top: 2px; */
+    height: 30vh;
+
+    background-image: url(../../assets/filter3.jpg);
+    background-size: 1000px 200px;
     background-repeat: no-repeat;
-    /* background-position-y: 50%; */
-    /* background-position-x: 50%; */
+    background-position-y: 50%;
+    background-position-x: 50%;
     overflow: hidden;
     position: relative;
     display: flex;
     justify-content: center;
+
 }
 
-.filterContainer {
+.filter {
     position: absolute;
     bottom: 20px;
-    /* margin: 10px; */
-    background-color: #647A6A;
-    border: 5px solid #647A6A;
-    border-radius: 0.7em;
-    /* width: 70vw; */
+    margin: 10px;
+    background-color: #eed0a8cc;
+    padding: 10px;
+    border-radius: 6px;
+    width: 70vw;
     display: flex;
     justify-content: space-evenly;
 }
 
 .btn{
-    background-color: #D9D9D9;
-    border-radius: .2em;
+    background-color: transparent;
     border: none;
-    transition: background-color 0.2s ease-in-out;
+    /* transition: background-color 0.2s ease-in-out; */
     font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
 }
 
-.btn:hover {
-    background-color: #000000;
-    color: #fcfcfc;
-    
-  }

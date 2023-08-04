@@ -5,14 +5,14 @@ import styles from "./Card.module.css"
 const Card = ({property}) => {
     const {name, price, location} = property
     return(
-      <Link to={"/rooms"}>
+      <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
-            <section className={styles.image}>
-                <img src="filters.jpg" alt="casa"/>
-            </section>
+            <div className={styles.image}>
+                <img src="../../../assets/fondo2.jpg" alt="casa"/>
+            </div>
             <section className={styles.info}>
-                <h1>{name}</h1>
-                <p>{price}</p>
+                <h1>{location}</h1>
+                <p>$ {price} USD</p>
                 <p>{location}</p>
 
                     
