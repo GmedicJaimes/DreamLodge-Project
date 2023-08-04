@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+import styles from "./DetailUser.module.css"
 
 const DetailUser = () => {
 
@@ -18,8 +19,7 @@ const DetailUser = () => {
     return(
         <div>
             <div>
-                <div>
-                    
+                <div className={styles.portada}>
                 </div>
                 <div>
                     <h2>Lionel Messi</h2>

@@ -5,20 +5,20 @@ import styles from "./Card.module.css"
 const Card = ({property}) => {
     const {name, price, location} = property
     return(
+      <Link to={"/rooms"}>
         <div className={styles.container}>
-            <section>
-                <div className={styles.fakeImage}></div>
+            <section className={styles.image}>
+                <img src="filters.jpg" alt="casa"/>
             </section>
-            <section>
+            <section className={styles.info}>
                 <h1>{name}</h1>
                 <p>{price}</p>
                 <p>{location}</p>
 
-                <Link to={"/rooms"}>
-                    <button>More</button>
-                </Link>
+                    
             </section>
         </div>
+      </Link>
     )
 }
 

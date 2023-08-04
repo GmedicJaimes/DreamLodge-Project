@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
+import styles from "./Login.module.css"
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,20 +19,22 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div className={styles.mainContainer}>
+            <header>
+                <h2>Login</h2>
+            </header>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="email">Email:</label>
                     <input
-                        type="email"
+                        type="text"
                         id="email"
                         value={email}
                         onChange={handleEmailChange}
                         required
                     />
                 </div>
-                <div>
+                <div className={styles.formGroup}>
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
@@ -44,7 +47,7 @@ const Login = () => {
                 <Link>
                     <p>Forgot password?</p>
                 </Link>
-                <button type="submit">Login</button>
+                <button className={styles.btn} type="submit">Login</button>
                 <p>Don't have an account?</p>
                 <Link>
                     <p>Sign up now</p>

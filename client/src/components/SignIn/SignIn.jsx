@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from "./SignIn.module.css"
 
 const SignIn = () => {
   const [firstName, setFirstName] = useState('');
@@ -33,10 +34,12 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <h2>Create your account</h2>
+    <div className={styles.mainContainer}>
+      <header>
+        <h2>Create your account</h2>
+      </header>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="firstName">First Name:</label>
           <input
             type="text"
@@ -46,7 +49,7 @@ const SignIn = () => {
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="lastName">Last Name:</label>
           <input
             type="text"
@@ -56,10 +59,10 @@ const SignIn = () => {
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={handleEmailChange}
@@ -67,7 +70,7 @@ const SignIn = () => {
           />
         </div>
         
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -77,7 +80,7 @@ const SignIn = () => {
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label htmlFor="phone">Phone:</label>
           <input
             type="tel"
@@ -87,7 +90,7 @@ const SignIn = () => {
             required
           />
         </div>
-        <button type="submit">Sign In</button>
+        <button className={styles.btn} type="submit">Sign In</button>
       </form>
     </div>
   );

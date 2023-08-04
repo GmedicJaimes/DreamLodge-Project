@@ -11,7 +11,7 @@ const Homepage = () => {
 
     const {
         allProperties
-    } = useSelector( state => state)
+    } = useSelector( (state) => state)
 
     useEffect(() => {
         dispatch(getAllProperties())
