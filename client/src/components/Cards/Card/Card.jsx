@@ -8,12 +8,12 @@ const Card = ({property}) => {
       <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
             <div className={styles.image}>
-                <img src="../../../assets/fondo2.jpg" alt="casa"/>
+                <img src="" alt="casa"/>
             </div>
             <section className={styles.info}>
                 <h1>{location}</h1>
                 <p>$ {price} USD</p>
-                <p>{location}</p>
+                <p>{name}</p>
 
                     
             </section>

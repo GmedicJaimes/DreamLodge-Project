@@ -91,10 +91,9 @@
 .footer {
   display: flex;
   justify-content: center;
-  margin-top: 260px;
+  margin-top: 200px;
 
   font-size: 1.3em;
-  
 }
 
 .footer ul{
