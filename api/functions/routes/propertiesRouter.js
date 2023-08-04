@@ -100,21 +100,12 @@ router.get('/properties', async (req, res) => {
 //     }
 // });
 
-//ruta para traer propiedades por ID
-router.get('/properties/:property_id', async(req, res)=>{
-    try {
-        const doc =  db.collection('properties').doc(req.params.property_id);
-        const item = await doc.get();
-        const response = item.data()
-        return res.status(200).json(response)
-    } catch (error) {
-        return res.status(500).send(error)
-    }
-});
+
+
 
 //ruta para crear propiedades
 router.post('/properties', async (req, res) => {
-    console.log(HOLAAAAAAAAAAAAAAAAAAAAAAAAAA, req.body);
+    console.log(`HOLAAAAAAAAAAAAAAAAAAAAAAAAAA`, req.body);
     try {
         const {user_id} = req.body;
 
@@ -148,6 +139,8 @@ router.post('/properties', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+
+
 
 //ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
