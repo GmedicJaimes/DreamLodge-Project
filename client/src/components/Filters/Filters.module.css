@@ -1,11 +1,10 @@
 .container {
-    height: 30vh;
+    /* height: 30vh; */
     background-image: url(../../assets/filters.jpg);
-    /* background-size: contain; */
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-position-y: 50%;
-    background-position-x: 50%;
-    max-width: 100vw;
+    /* background-position-y: 50%; */
+    /* background-position-x: 50%; */
     overflow: hidden;
     position: relative;
     display: flex;
@@ -15,11 +14,11 @@
 .filterContainer {
     position: absolute;
     bottom: 20px;
-    margin: 10px;
+    /* margin: 10px; */
     background-color: #647A6A;
     border: 5px solid #647A6A;
     border-radius: 0.7em;
-    width: 70vw;
+    /* width: 70vw; */
     display: flex;
     justify-content: space-evenly;
 }

@@ -1,13 +1,10 @@
 .container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 14px; 
-    text-decoration: none;
-    padding-left: 20px;
-    padding-top: 30px;
-
-    /* background-color: brown; */
+  /* width: auto; */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px; /* Espacio entre las tarjetas */
+  /* Opcional: Ajusta el ancho del contenedor según tus necesidades */
+  max-width: 80%;
+  /* margin: 0 auto; */
+  padding-top: 10px;
 }
