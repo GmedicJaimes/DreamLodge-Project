@@ -6,13 +6,18 @@ const Card = ({property}) => {
     const {name, price, location} = property
     return(
         <div className={styles.container}>
-            <h1>{name}</h1>
-            <h2>{price}</h2>
-            <h2>{location}</h2>
+            <section>
+                <div className={styles.fakeImage}></div>
+            </section>
+            <section>
+                <h1>{name}</h1>
+                <p>{price}</p>
+                <p>{location}</p>
 
-            <Link to={"/rooms"}>
-                <button>More</button>
-            </Link>
+                <Link to={"/rooms"}>
+                    <button>More</button>
+                </Link>
+            </section>
         </div>
     )
 }

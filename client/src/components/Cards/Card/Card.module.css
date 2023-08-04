@@ -3,11 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: blue;
-  width: 250px;
-  height: 200px;
+  background-color: rgb(198, 198, 198);
+  border-radius: 2em;
   /* margin: 20px; */
-
+  overflow: hidden;
   font-family: 'Lexend Deca';
 }
 
@@ -16,4 +15,11 @@
   height: 25px;
   font-family: 'Lexend Deca';
   font-weight: 500;
+}
+
+.fakeImage{
+  height: 350px;
+  width: 350px;
+  background-color: bisque;
+  
 }

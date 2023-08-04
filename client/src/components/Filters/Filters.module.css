@@ -1,11 +1,15 @@
 .container {
     height: 30vh;
     background-image: url(../../assets/filters.jpg);
-    background-size: contain;
+    /* background-size: contain; */
     background-repeat: no-repeat;
-    background-position-x: center;
-    width: 100vh;
+    background-position-y: 50%;
+    background-position-x: 50%;
+    max-width: 100vw;
+    overflow: hidden;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .filterContainer {
@@ -15,7 +19,7 @@
     background-color: #647A6A;
     border: 5px solid #647A6A;
     border-radius: 0.7em;
-    width: 80vh;
+    width: 70vw;
     display: flex;
     justify-content: space-evenly;
 }
