@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dreamlodge-8517c",
+  "private_key_id": "f25a23adf4e1deb425f16f321593f3ae624b6490",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDop4zCnXKBzvU1\n2uiYjx6iwUq3XPwct+w7ycUfAPhsKJ4E40w1iQ55c6o6X8yfTaPkAXVtRcn5etLS\nhbWiuT8HKJZoQmzyDINhzBk/9z1vL2gn4rQ6KinwRR7aXniD0fnRP9jKSRba8DuW\nzygu+kLcWi3g3Y43lN+9y1yFB9gK12/q+vigsWKOCUfwt1TM/wg0A56/nEMTJ39m\nr7wpcB3j7r1bDzwgGK/OWSpypGyHoH8cw9y9vpszhXywXv9Fvm4QI4C7LViruy94\nS7aFTNp5Tx91w1cq4DxrPBDs2qdDbuPLqDCJUCHvutmTpxH5kJIiXwh9vhqMekex\noNF8quE1AgMBAAECggEAA53oiMqqJzggmhk7SMqKIeKaYZZe+af8Uq5KKQy6pUfO\nXmoVhbbfPuZxl4hkuyHvByePUUcRTZZqD57HhO5B+2pXSECmxpkziQIuGaSjflvW\nJS9COQNDH/qbG6719aqpKmZxMtfcX0P2e9uK7Da0x7iD170/WEAxaEHF6vAvx3Ss\nBPmnPGYPBryOEd3wX6K1LCj1oRyeNm+DPQeH8QgiXEh5e+2cEGy1t5hMIrds7SvN\n+yHqKfNgUbNsW09LXAS02kAuCuT0GQNltie2TO3ZxKc0HbXdHsW50TfN7cLEUR2R\ndkr0zNnBveGOlD/XvdT69pEChvEQCShTYJBCKpPtsQKBgQD8Qo+DbuWk9K5gvEOr\nMpziXwoQfDqeq0GLH6ZWq7jOmTOT6klaoKRgJlslGkWOmT+Je/Vp2YAO3DGEi7U/\nYc/x7FgttzsLmiVv+d1kTYcV5AvEMYryvffWfLbw4nXUBS4xgm4/WMrZVnpYeKtj\nu8jsGuAIM21+j19KkZulpo25XQKBgQDsGpPb3cGquL4+lPpy+bgWdD7VOnumke3T\nTxfkvhA+ZNzOdtJcxyoRWVd/f+4Nu0V9v1HfAy6b0QxX8X38iOoJUjqP7eC23Fv7\n06v6B3266IYK1yzVq84o+LUqCHXO4CPSsVBIF8xegg9u7+kMFnwGzClrwuafMymt\n4MAZPefRuQKBgEE4NEKW+WicmjkIc7Zfb5BXYhLBC6baQCfoFulxnGZN1bf4at6z\nicwSHp6JHFKx7GtvURP8187/vw210TaB43F42ZN4PBvTzroUr9iu8q4GN8SRyorX\n8qvRsrq00iHu9PJ39mkKW+e1JAybpjQy6M+iYym7oiOGjeyJmORLG3lBAoGAf/mr\n+XoK1oHKxNs1oYqP6MPbpvJLQa9JrMbrWZZX8an0MYkgXx+pQrwdfEOYgiLm+NDy\nDKKJ6fV27lg8hNyllqXWjltO+W8aALbsOdtDoEMXHNsjNzInzfd5Iy5wxNCjOjnY\nHSuhH/z5ZpVtyZqKYZjaPsnm/ZXa2p+/IC947ykCgYAhbcwKoqJ1MfUB5iCFCwjq\ndxVqzBGRRnKX0OxsldKS2UXg8xp87q0pNZ2q38/ytQPY2imq2hKfPTohIFXyW2MS\nemPkTl4cSUgmCxKP4ZMKi+VRgz3wcQtANFQ+4U3NLgM2yr7/0ON17AZh6An9bv2R\nHZSU9wfeMQXywEQVyBJtKA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-qeqbo@dreamlodge-8517c.iam.gserviceaccount.com",
+  "client_id": "117452603342461577461",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qeqbo%40dreamlodge-8517c.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
