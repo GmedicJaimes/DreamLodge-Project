@@ -1,0 +1,6 @@
+.portada {
+    background-image: url(../../../assets/portada.webp);
+    height: 30vh;
+    background-position-y: 45%;
+    background-position-x: 50%;
+}

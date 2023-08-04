@@ -1,0 +1,10 @@
+.bigContainer{
+    background-color: #f3f3f3;
+    width: 86vw;
+    height: 86vh;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+

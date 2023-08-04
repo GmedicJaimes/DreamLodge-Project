@@ -100,37 +100,33 @@ router.get('/properties', async (req, res) => {
 //     }
 // });
 
-//ruta para traer propiedades por ID
-router.get('/properties/:property_id', async(req, res)=>{
-    try {
-        const doc =  db.collection('properties').doc(req.params.property_id);
-        const item = await doc.get();
-        const response = item.data()
-        return res.status(200).json(response)
-    } catch (error) {
-        return res.status(500).send(error)
-    }
-});
+
+
 
 //ruta para crear propiedades
 router.post('/properties', async (req, res) => {
+    console.log(`HOLAAAAAAAAAAAAAAAAAAAAAAAAAA`, req.body);
     try {
         const {user_id} = req.body;
 
         const newProperty = {
             name: req.body.name,
-            image: req.body.image || imageMomentary,
-            location: req.body.location,
+            types: req.body.types, // ['casa playa', 'mansion', 'casa montania', 'casa grande']
+            location: {
+                country: req.body.location.country,
+                estado: req.body.location.estado,
+                direction: req.body.location.direction,
+            },
+            rooms:{
+                guests: req.body.rooms.guests,
+                dormitorio: req.body.rooms.dormitorio,
+                bathrooms: req.body.rooms.bathrooms,
+                bed: req.body.rooms.bed
+            },
+            services: req.body.services, // ['wifi', 'tv', 'kitchen', 'aire acondicionado']
+            image: req.body.image,
             description: req.body.description,
-            rooms: req.body.rooms,
-            guests:req.body.guests,
-            technologies: req.body.technologies,
-            extraAmenities: req.body.extraAmenities || null,
-            specialServices: req.body.specialServices || false,
-            views: req.body.views,
             price: req.body.price,
-            comment: req.body.comment || null,
-            type: req.body.type,
         };
         const userRef = db.collection("users").doc(user_id);
 
@@ -143,6 +139,7 @@ router.post('/properties', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+
 
 
 //ruta para borrar propiedades

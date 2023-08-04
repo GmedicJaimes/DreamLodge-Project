@@ -1,0 +1,10 @@
+.container{
+  /* width: auto; */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px; /* Espacio entre las tarjetas */
+  /* Opcional: Ajusta el ancho del contenedor según tus necesidades */
+  max-width: 80%;
+  /* margin: 0 auto; */
+  padding-top: 10px;
+}
