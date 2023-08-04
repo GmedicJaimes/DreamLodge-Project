@@ -19,7 +19,7 @@ const Homepage = () => {
 
     return(
         <div>
-            <div className={styles.container}>
+            <div className={styles.containerHome}>
                 <Filters/>
                 <Cards allProperties={allProperties}/>
             </div>
