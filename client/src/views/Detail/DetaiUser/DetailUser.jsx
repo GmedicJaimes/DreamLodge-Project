@@ -18,19 +18,25 @@ const DetailUser = () => {
 
     return(
         <div>
-            <div>
-                <div className={styles.portada}>
-                </div>
-                <div>
-                    <h2>Lionel Messi</h2>
-                    <p>Owner</p>
-                    <p>Argebtuba</p>
-                </div>
-                <div>
-                    <h3>Score</h3>
-                    <p>5 Stars</p>
-                    <h3>Years as owner</h3>
-                    <p>7</p>
+            <div className={styles.portada}></div>
+            <div className={styles.containerInfo}>
+                <div className={styles.fotoPerfil}></div>
+                <div className={styles.dataUser}>
+                    <div>
+                        <div className={styles.nameTittle}>
+                            <h3>Lionel Messi</h3>
+                            <p>Owner</p>
+                        </div>
+                        <p>Argentina</p>
+                    </div>
+                    <div>
+                        <h3>Score</h3>
+                        <p>5 Stars</p>
+                    </div>
+                    <div>
+                        <h3>Years as owner</h3>
+                        <p>7</p>
+                    </div>
                 </div>
             </div>
             <div>
