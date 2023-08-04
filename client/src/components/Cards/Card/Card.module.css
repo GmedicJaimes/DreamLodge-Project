@@ -2,18 +2,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  background-color: blue;
-  width: 250px;
-  height: 200px;
-  /* margin: 20px; */
-
+  background-color: rgba(255, 222, 222, 0.904);
+  border-radius: 10px;
+  overflow: hidden;
   font-family: 'Lexend Deca';
+
+  /* width: 2s50px; */
+  /* height: 500px; */
 }
 
-.container button{
-  width: 80px;
-  height: 25px;
-  font-family: 'Lexend Deca';
-  font-weight: 500;
+
+.image{
+  /* height: 350px;
+  width: 350px; */
+  background-color: bisque;
+  
 }
+
