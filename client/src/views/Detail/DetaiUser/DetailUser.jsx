@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { getDetailUser } from "../../../redux/actions"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 const DetailUser = () => {
 
@@ -16,7 +19,7 @@ const DetailUser = () => {
         <div>
             <div>
                 <div>
-                    <img src="" alt="" />
+                    
                 </div>
                 <div>
                     <h2>Lionel Messi</h2>
@@ -44,7 +47,9 @@ const DetailUser = () => {
                         <div>
                             <h4>Rooms: 2</h4>
                             <h4>Precio por noche: $200</h4>
-                            <button>Ver mas</button>
+                            <Link to={"/rooms"}>
+                                <button>Ver mas</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

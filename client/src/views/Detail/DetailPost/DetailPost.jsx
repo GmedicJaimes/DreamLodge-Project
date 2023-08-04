@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailPropertie } from "../../../redux/actions";
+import { Link } from "react-router-dom";
 
 const DetailPost = () => {
 
@@ -17,7 +18,7 @@ const DetailPost = () => {
         description: "Esta es una propiedad de es developer",
         extraAmenities: null,
         location: "Mar de Las Pampas",
-        comment: null,
+        comment: [],
         specialServices: false,
         views: 150,
         rooms: 4,
@@ -34,7 +35,8 @@ const DetailPost = () => {
                 <header className={styles.head}>
                     <div>
                         <h1>{propertie.name}</h1>
-                        <p>Departamento lindo blablabla ubicado frente al mar etc</p>
+                        <p>{propertie.location}</p>
+                        <Link to={"/user"}>Owner</Link>
                     </div>
                     <div>
                         <h2>{propertie.price}</h2>
@@ -48,7 +50,7 @@ const DetailPost = () => {
                 <div className={styles.detailContainer}>
                     <div>
                         <h2>Overview</h2>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni enim nostrum, neque laudantium culpa maiores pariatur dolorem possimus officia amet sint quisquam vel, tenetur, cum cupiditate consequatur? Consequuntur, enim blanditiis.</p>
+                        <p>{propertie.description}</p>
                     </div>
                     <div>
                         <div className={styles.ratingBox}>
@@ -86,11 +88,13 @@ const DetailPost = () => {
                     <h2>Opinions</h2>
                     <div>
                         <ul>
-                            <li>Nice</li>
-                            <li>Bad</li>
-                            <li>xD</li>
-                            <li>:v</li>
-                            <li>:'v</li>
+                            {
+                                propertie.comment.map((com) => {
+                                    return(
+                                        <li>{com}</li>
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
                 </section>
