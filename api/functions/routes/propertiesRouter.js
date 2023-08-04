@@ -146,22 +146,22 @@ router.delete('/properties/:properties_id', async(req, res)=>{
 
 //ruta para actualizar propiedades
 router.put('/properties/:properties_id', async(req, res)=>{
+    console.log(`A VEEEEEEEEEEEEEEEEEER`, req.body);
     try {
-        const document = db.collection('properties').doc(req.params.properties_id);
-        await document.update({
+        const {user_id} = req.body;
+        const propertyId = req.params.properties_id;
+
+        const propertyRef = db.collection("users").doc(user_id).collection("properties").doc(propertyId)
+        const propertyDoc = await propertyRef.get();
+
+        if (!propertyDoc.exists) {
+            return res.status(404).json({ message: 'No se encontró la propiedad especificada.' });
+        }
+        await propertyRef.update({
             name: req.body.name,
             types: req.body.types, 
-            location: [{
-                country: req.body.location.country,
-                estado: req.body.location.estado,
-                direction: req.body.location.direction,
-            }],
-            rooms:[{
-                guests: req.body.rooms.guests,
-                dormitorio: req.body.rooms.dormitorio,
-                bathrooms: req.body.rooms.bathrooms,
-                bed: req.body.rooms.bed
-            }],
+            location: req.body.location,
+            rooms:req.body.rooms,
             services: req.body.services, 
             image: req.body.image,
             description: req.body.description,
