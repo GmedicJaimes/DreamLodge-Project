@@ -16,7 +16,7 @@
   ],
   "emulators": {
     "functions": {
-      "port": 5000
+      "port": 5001
     },
     "firestore": {
       "port": 8080
