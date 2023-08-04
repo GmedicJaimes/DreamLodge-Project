@@ -2,8 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
-
-
+const imageMomentary = "https://img.freepik.com/iconos-gratis/hogar-pintura_318-42261.jpg"
 
 const db = admin.firestore();
 router.get('/properties', async (req, res) => {
@@ -54,8 +53,54 @@ router.get('/properties', async (req, res) => {
     } catch (error) {
         return res.status(500).send(error);
     }
-}); 
+});
 
+// // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
+// router.get('/properties', async (req, res) => {
+//     try {
+//         const { rooms, location, guests, types } = req.query;
+       
+//         if (rooms) {
+//             const roomsNumber = parseInt(rooms);
+//             if (isNaN(roomsNumber)) {
+//                 return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
+//             }
+
+//             const roomsQuerySnapshot = await db.collection('properties').where("rooms", "==", roomsNumber).get();
+
+//             if (roomsQuerySnapshot.empty) {
+//                 return res.status(404).json({ message: 'No se encontraron propiedades con el número de habitaciones especificado.' });
+//             }
+
+//             const response = [];
+//             roomsQuerySnapshot.forEach((doc) => {
+//                 const data = doc.data();
+//                 response.push(data);
+//             });
+
+//             return res.status(200).json(response);
+//         } else {
+//             // Si no se proporciona el parámetro 'rooms', se obtienen todas las propiedades
+//             const querySnapshot = await db.collection('properties').get();
+//             const docs = querySnapshot.docs;
+
+//             const response = docs.map((doc) => ({
+//                 name: doc.data().name,
+//                 location: doc.data().location,
+//                 description: doc.data().description,
+//                 rooms: doc.data().rooms,
+//                 technologies: doc.data().technologies,
+//                 views: doc.data().views,
+//                 price: doc.data().price,
+//             }));
+//             return res.status(200).json(response);
+//         }
+//     } catch (error) {
+//         return res.status(500).send(error);
+//     }
+// });
+
+//ruta para traer propiedades por ID
 router.get('/properties/:property_id', async(req, res)=>{
     try {
         const doc =  db.collection('properties').doc(req.params.property_id);
