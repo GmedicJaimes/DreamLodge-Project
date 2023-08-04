@@ -2,9 +2,9 @@ const { Router } = require('express');
 const router = Router();
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
-const imageMomentary = "https://img.freepik.com/iconos-gratis/hogar-pintura_318-42261.jpg"
 
 const db = admin.firestore();
+
 router.get('/properties', async (req, res) => {
     try {
         const { rooms, location, guests, types} = req.query;
@@ -114,23 +114,28 @@ router.get('/properties/:property_id', async(req, res)=>{
 
 //ruta para crear propiedades
 router.post('/properties', async (req, res) => {
+    console.log(HOLAAAAAAAAAAAAAAAAAAAAAAAAAA, req.body);
     try {
         const {user_id} = req.body;
 
         const newProperty = {
             name: req.body.name,
-            image: req.body.image || imageMomentary,
-            location: req.body.location,
+            types: req.body.types, // ['casa playa', 'mansion', 'casa montania', 'casa grande']
+            location: {
+                country: req.body.location.country,
+                estado: req.body.location.estado,
+                direction: req.body.location.direction,
+            },
+            rooms:{
+                guests: req.body.rooms.guests,
+                dormitorio: req.body.rooms.dormitorio,
+                bathrooms: req.body.rooms.bathrooms,
+                bed: req.body.rooms.bed
+            },
+            services: req.body.services, // ['wifi', 'tv', 'kitchen', 'aire acondicionado']
+            image: req.body.image,
             description: req.body.description,
-            rooms: req.body.rooms,
-            guests:req.body.guests,
-            technologies: req.body.technologies,
-            extraAmenities: req.body.extraAmenities || null,
-            specialServices: req.body.specialServices || false,
-            views: req.body.views,
             price: req.body.price,
-            comment: req.body.comment || null,
-            type: req.body.type,
         };
         const userRef = db.collection("users").doc(user_id);
 
@@ -143,7 +148,6 @@ router.post('/properties', async (req, res) => {
         return res.status(500).send(error);
     }
 });
-
 
 //ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
@@ -162,13 +166,22 @@ router.put('/properties/:properties_id', async(req, res)=>{
         const document = db.collection('properties').doc(req.params.properties_id);
         await document.update({
             name: req.body.name,
-            location: req.body.location,
+            types: req.body.types, 
+            location: {
+                country: req.body.location.country,
+                estado: req.body.location.estado,
+                direction: req.body.location.direction,
+            },
+            rooms:{
+                guests: req.body.rooms.guests,
+                dormitorio: req.body.rooms.dormitorio,
+                bathrooms: req.body.rooms.bathrooms,
+                bed: req.body.rooms.bed
+            },
+            services: req.body.services, 
+            image: req.body.image,
             description: req.body.description,
-            rooms: req.body.rooms,
-            technologies: req.body.technologies,
-            views: req.body.views,
             price: req.body.price,
-            type: req.body.type,
         });
         return res.status(200).json("se ha actualizado correctamente la propiedad")
     } catch (error) {
