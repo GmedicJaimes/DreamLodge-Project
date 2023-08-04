@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { getDetailUser } from "../../../redux/actions"
+// import { getDetailUser } from "../../../redux/actions"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
