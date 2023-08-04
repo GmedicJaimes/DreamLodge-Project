@@ -4,11 +4,13 @@ const Filters = () => {
 
     return(
         <div className={styles.container}>
-            <button>CABINS</button>
-            <button>BEACHFRONT</button>
-            <button>MANSIONS</button>
-            <button>COUNTRYSIDE</button>
-            <button>ROOMS</button>
+            <div className={styles.filterContainer}>
+                <button className={styles.btn}>CABINS</button>
+                <button className={styles.btn}>BEACHFRONT</button>
+                <button className={styles.btn}>MANSIONS</button>
+                <button className={styles.btn}>COUNTRYSIDE</button>
+                <button className={styles.btn}>ROOMS</button>
+            </div>
         </div>
     )
 }
