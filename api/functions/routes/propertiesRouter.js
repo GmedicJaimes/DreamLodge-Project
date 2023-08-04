@@ -111,19 +111,10 @@ router.post('/properties', async (req, res) => {
 
         const newProperty = {
             name: req.body.name,
-            types: req.body.types, // ['casa playa', 'mansion', 'casa montania', 'casa grande']
-            location: {
-                country: req.body.location.country,
-                estado: req.body.location.estado,
-                direction: req.body.location.direction,
-            },
-            rooms:{
-                guests: req.body.rooms.guests,
-                dormitorio: req.body.rooms.dormitorio,
-                bathrooms: req.body.rooms.bathrooms,
-                bed: req.body.rooms.bed
-            },
-            services: req.body.services, // ['wifi', 'tv', 'kitchen', 'aire acondicionado']
+            types: req.body.types, 
+            location: req.body.location,
+            rooms:req.body.rooms,
+            services: req.body.services, 
             image: req.body.image,
             description: req.body.description,
             price: req.body.price,
@@ -136,7 +127,7 @@ router.post('/properties', async (req, res) => {
 
         return res.status(204).json();
     } catch (error) {
-        return res.status(500).send(error);
+        return res.status(500).json({ message: "Error al postear propiedad"});
     }
 });
 
@@ -160,17 +151,17 @@ router.put('/properties/:properties_id', async(req, res)=>{
         await document.update({
             name: req.body.name,
             types: req.body.types, 
-            location: {
+            location: [{
                 country: req.body.location.country,
                 estado: req.body.location.estado,
                 direction: req.body.location.direction,
-            },
-            rooms:{
+            }],
+            rooms:[{
                 guests: req.body.rooms.guests,
                 dormitorio: req.body.rooms.dormitorio,
                 bathrooms: req.body.rooms.bathrooms,
                 bed: req.body.rooms.bed
-            },
+            }],
             services: req.body.services, 
             image: req.body.image,
             description: req.body.description,
