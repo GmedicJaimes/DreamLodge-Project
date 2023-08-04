@@ -1,6 +1,13 @@
 .container{
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 14px; 
     text-decoration: none;
+    padding-left: 20px;
+    padding-top: 30px;
+
+    /* background-color: brown; */
 }

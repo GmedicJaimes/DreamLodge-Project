@@ -21,7 +21,7 @@ const Card = () => {
             <h2>{propertie.location}</h2>
 
             <Link to={"/rooms"}>
-                <button>more</button>
+                <button>More</button>
             </Link>
         </div>
     )

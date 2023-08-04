@@ -7,7 +7,7 @@ const Landing = () => {
     <div className={style.container}>
       <header className={style.header}>
         <h1>DreamLodge</h1>
-        <Link to={"/home"}><button>Login</button></Link>
+        <Link to={"/login"}><button>Login</button></Link>
       </header>
 
       <section className={style.section}>

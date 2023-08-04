@@ -1,31 +1,19 @@
 .container {
-    border: 1px solid #ffffff22;
-    border-radius: .7rem;
-    box-shadow: 0 7px 26px 5px #00000088;
-    margin: 2rem auto;
-    transition: .5s all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  width: 250px;
+  height: 200px;
+  /* margin: 20px; */
+
+  font-family: 'Lexend Deca';
 }
 
-.container::before{
-    position: fixed;
-    content: "";
-    box-shadow: 0 0 100px 40px #ffffff08;
-    top: -10%;
-    left: -100%;
-    transform: rotate(-45deg);
-    height: 60rem;
-    transition: .7s all;
+.container button{
+  width: 80px;
+  height: 25px;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
 }
-
-.container:hover {
-    border: 1px solid #ffffff44;
-    box-shadow: 0 7px 50px 10px #000000aa;
-    transform: scale(1.015);
-    filter: brightness(1.3);
-  }
-
-  .container:hover::before {
-    filter: brightness(.5);
-    top: -100%;
-    left: 200%;
-  }
