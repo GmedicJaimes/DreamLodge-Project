@@ -18,13 +18,13 @@ const Landing = () => {
       </section>
 
       <footer className={style.footer}>
-        <row>
+        <ul>
           <li>&copy; 2023 DreamLogde</li>
           <li><a href="">Privacidad</a></li>
           <li><a href="">Terminos</a></li>
           <li><a href="">Mapa de sitio</a></li>
           <li><a href="">Datos de la empresa</a></li>
-        </row>
+        </ul>
       </footer>
 
     </div>
