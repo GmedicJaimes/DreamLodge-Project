@@ -1,0 +1,5 @@
+{
+    "watch": ["./functions"],
+    "ext": "js,ts,json",
+    "exec": "firebase emulators:start --only functions"
+ }
