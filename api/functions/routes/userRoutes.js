@@ -29,29 +29,62 @@ router.get('/users', async(req, res)=>{
 });
 
 
+// router.post('/users', async (req, res) => {
+//     try {
+    
+//         const newUser = {
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             username: req.body.username,
+//             email: req.body.email,
+//             password: req.body.password,
+//             createdAt: new Date().toLocaleDateString()
+
+//           };
+          
+
+//         // Agregar un ID único para el documento
+//         const newUserID = uuidv4();
+//         await db.collection('users').doc(newUserID).set(newUser);
+
+//         return res.status(204).json();
+//     } catch (error) {
+//         return res.status(500).send(error);
+//     }
+// });
+
+// ------------------------------------- PRUEBA CHRIS
+
+
 router.post('/users', async (req, res) => {
     try {
-    
+        // Validar los datos del usuario (puedes expandir esto según tus necesidades)
         const newUser = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            createdAt: new Date().toLocaleDateString()
-
-          };
-          
+                         firstName: req.body.firstName,
+                         lastName: req.body.lastName,
+                         username: req.body.username,
+                         email: req.body.email,
+                         password: req.body.password,
+                         createdAt: new Date().toLocaleDateString()
+            
+            };
 
         // Agregar un ID único para el documento
         const newUserID = uuidv4();
         await db.collection('users').doc(newUserID).set(newUser);
 
-        return res.status(204).json();
+        return res.status(201).json({ userId: newUserID }); // responder con el ID del usuario
     } catch (error) {
         return res.status(500).send(error);
     }
 });
+
+
+
+
+
+
+// ------------------------------------- PRUEBA CHRIS
 
 router.get('/users/:user_id/', async (req, res) => {
     try {

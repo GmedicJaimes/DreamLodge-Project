@@ -104,8 +104,7 @@ router.get('/properties', async (req, res) => {
 
 
 //ruta para crear propiedades
-router.post('/properties', async (req, res) => {
-    console.log(`HOLAAAAAAAAAAAAAAAAAAAAAAAAAA`, req.body);
+/* router.post('/properties', async (req, res) => {
     try {
         const {user_id} = req.body;
 
@@ -131,8 +130,54 @@ router.post('/properties', async (req, res) => {
     }
 });
 
+ */
 
 
+router.post('/properties', async (req, res) => {
+    try {
+        const { user_id } = req.body;
+
+        // Validar que el usuario existe
+        const userRef = db.collection("users").doc(user_id);
+        const userSnapshot = await userRef.get();
+        if (!userSnapshot.exists) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        const newProperty = {
+            userID: user_id, // Establecer la relación con el usuario
+            name: req.body.name,
+            types: req.body.types,
+            location: req.body.location,
+            rooms: req.body.rooms,
+            services: req.body.services,
+            image: req.body.image,
+            description: req.body.description,
+            price: req.body.price,
+        };
+
+        // Agregar un ID único para el documento
+        const newPropertyId = uuidv4();
+        await db.collection('properties').doc(newPropertyId).set(newProperty);
+
+        return res.status(201).json({ propertyId: newPropertyId });
+    } catch (error) {
+        return res.status(500).json({ message: "Error al postear propiedad" });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------- PRUEBA CHRISTIAN
 //ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
     try {
