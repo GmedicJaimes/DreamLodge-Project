@@ -53,18 +53,40 @@ router.post('/users', async (req, res) => {
     }
 });
 
-
-router.get('/users/:users_id', async(req, res)=>{
+router.get('/users/:user_id/', async (req, res) => {
     try {
-        const doc =  db.collection('users').doc(req.params.users_id);
-        const item = await doc.get();
-        const response = item.data()
-        return res.status(200).json(response)
+        const { user_id} = req.params;
+        const userRef = db.collection('users').doc(user_id);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'Propiedad no encontrada' });
+        }
+
+        const response = userDoc.data();
+        return res.status(200).json(response);
     } catch (error) {
-        return res.status(500).send(error)
+        return res.status(500).send(error);
     }
 });
 
+router.get('/users/:user_id/properties/:property_id', async (req, res) => {
+    try {
+        const { user_id, property_id } = req.params;
+        const userRef = db.collection('users').doc(user_id);
+        const propertyRef = userRef.collection('properties').doc(property_id);
+        const propertyDoc = await propertyRef.get();
+
+        if (!propertyDoc.exists) {
+            return res.status(404).json({ message: 'Propiedad no encontrada' });
+        }
+
+        const response = propertyDoc.data();
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
 
 
 router.delete('/users/:users_id', async(req, res)=>{
