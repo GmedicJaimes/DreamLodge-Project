@@ -1,3 +1,4 @@
+import './App.css';
 import { Route, Routes } from 'react-router-dom'
 import Landing from "./views/Landing/Landing"
 import Homepage from './views/Homepage/Homepage'
@@ -8,14 +9,13 @@ import DetailUser from "./views/Detail/DetaiUser/DetailUser"
 import { useLocation } from 'react-router-dom'
 import { LoginSignin } from './views/LoginSignin/LoginSignin'
 
-// import './App.css'
 
 function App() {
 
   const location = useLocation();
 
   return (
-    <div>
+    <div className="App">
       {
         location.pathname !== '/' ? <Navbar/> : null
       }

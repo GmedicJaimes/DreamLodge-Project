@@ -1,0 +1,7 @@
+.container {
+    height: 30vh;
+    background-image: url(../../assets/filters.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+}
