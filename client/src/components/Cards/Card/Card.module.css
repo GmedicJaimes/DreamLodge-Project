@@ -1,21 +1,39 @@
+.link {
+  text-decoration: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background-color: rgba(255, 222, 222, 0.904);
+  justify-content: space-between;
+  /* background-color: rgba(255, 222, 222, 0.904); */
   border-radius: 10px;
   overflow: hidden;
   font-family: 'Lexend Deca';
 
-  /* width: 2s50px; */
-  /* height: 500px; */
+  width: 330px;
+  height: 400px;
+  color: black;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.562);
 }
 
-
-.image{
-  /* height: 350px;
-  width: 350px; */
-  background-color: bisque;
-  
+.info{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  background-color: rgb(255, 236, 195);
+  height: 30%;
+  padding: 10px;
 }
 
+.info h1{
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.image {
+  background-color: blue;
+  width: auto;
+  height: 100%;
+}
