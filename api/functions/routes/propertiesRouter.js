@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
 
 
-
+//hola
 const db = admin.firestore();
 router.get('/properties', async (req, res) => {
     try {
