@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
 // import { getDetailUser } from "../../../redux/actions"
 import { useParams } from "react-router-dom"
-import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import styles from "./DetailUser.module.css"
+import About from "../../../components/About/About"
 
 const DetailUser = () => {
 
@@ -40,10 +40,10 @@ const DetailUser = () => {
                 </div>
             </div>
             <div className={styles.bodyContainer}>
-                <div>
-                        <h4>My Properties</h4>
-                        <h4>Reviews</h4>
-                        <h4>Photos and Videos</h4>
+                <div className={styles.containerHead}>
+                    <Link><h4>My Properties</h4></Link>
+                    <Link><h4>Reviews</h4></Link>
+                    <Link><h4>Photos and Videos</h4></Link> 
                 </div>
                 <div className={styles.propertieContainer}>
                     <div className={styles.propertieBox}>
@@ -60,6 +60,7 @@ const DetailUser = () => {
                     </div>
                 </div>
             </div>
+            <About/>
         </div>
     )
 }
