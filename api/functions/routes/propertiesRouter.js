@@ -2,13 +2,12 @@ const { Router } = require('express');
 const router = Router();
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
-
-
+const imageMomentary = "https://img.freepik.com/iconos-gratis/hogar-pintura_318-42261.jpg"
 
 const db = admin.firestore();
 router.get('/properties', async (req, res) => {
     try {
-        const { rooms, location, guests} = req.query;
+        const { rooms, location, guests, types} = req.query;
 
         let query = db.collectionGroup('properties');
 
@@ -31,12 +30,18 @@ router.get('/properties', async (req, res) => {
             query = query.where('guests', '==', guestsNumber);
         }
 
+        if (types) {
+            if (!Array.isArray(types)) {
+                return res.status(400).json({ error: 'El valor de "type" debe ser un array.' });
+            }
+            query = query.where('type', 'array-contains-any', types);
+        }
 
         const querySnapshot = await query.get();
 
         if (querySnapshot.empty) {
             return res.status(404).json({ message: 'No se encontraron propiedades que coincidan con los filtros especificados.' });
-        }
+        } 
 
         const response = [];
         querySnapshot.forEach((doc) => {
@@ -114,6 +119,7 @@ router.post('/properties', async (req, res) => {
 
         const newProperty = {
             name: req.body.name,
+            image: req.body.image || imageMomentary,
             location: req.body.location,
             description: req.body.description,
             rooms: req.body.rooms,
@@ -124,6 +130,7 @@ router.post('/properties', async (req, res) => {
             views: req.body.views,
             price: req.body.price,
             comment: req.body.comment || null,
+            type: req.body.type,
         };
         const userRef = db.collection("users").doc(user_id);
 
@@ -161,6 +168,7 @@ router.put('/properties/:properties_id', async(req, res)=>{
             technologies: req.body.technologies,
             views: req.body.views,
             price: req.body.price,
+            type: req.body.type,
         });
         return res.status(200).json("se ha actualizado correctamente la propiedad")
     } catch (error) {
