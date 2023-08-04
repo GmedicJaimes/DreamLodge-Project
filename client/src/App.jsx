@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom'
 import Landing from "./views/Landing/Landing"
 import Homepage from './views/Homepage/Homepage'

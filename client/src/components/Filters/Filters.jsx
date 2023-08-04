@@ -1,4 +1,6 @@
 import styles from "./Filters.module.css"
+import React from 'react';
+
 
 const Filters = () => {
 

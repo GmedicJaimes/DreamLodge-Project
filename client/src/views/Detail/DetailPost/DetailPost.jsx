@@ -1,4 +1,5 @@
 import styles from "./DetailPost.module.css"
+import React from 'react';
 import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";

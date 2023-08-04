@@ -4,6 +4,8 @@ import Cards from "../../components/Cards/Cards"
 import {useEffect} from "react"
 import { getAllProperties } from "../../redux/actions"
 import Filters from "../../components/Filters/Filters"
+import React from 'react';
+
 
 const Homepage = () => {
 
