@@ -26,7 +26,7 @@ function App() {
 
         <Route path='/login' element={<LoginSignin/>}/>
 
-        <Route path='/rooms' element={<DetailPost/>}/>
+        <Route path='/users/:user_id/properties/:property_id' element={<DetailPost/>}/>
         <Route path='/user' element={<DetailUser/>}/>     
       </Routes>
     </div>
