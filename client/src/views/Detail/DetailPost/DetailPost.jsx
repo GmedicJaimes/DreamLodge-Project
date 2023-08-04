@@ -8,17 +8,41 @@ import { Link } from "react-router-dom";
 
 const DetailPost = () => {
 
+
+//     const dispatch = useDispatch();
+//   const { userId, propertyId } = useParams(); // Obtener userId y propertyId de los parámetros de la URL
+
+//   // Puedes obtener la propiedad de Redux usando el useSelector
+//   const property = useSelector((state) => state.detailPropertie);
+
+//   // Llamar a la acción para obtener los detalles de la propiedad
+//   useEffect(() => {
+//     dispatch(getDetailPropertie(userId, propertyId));
+//   }, [dispatch, userId, propertyId]);
+
+//   return (
+//     <div>
+//       {/* Aquí puedes mostrar los detalles de la propiedad */}
+//       <h2>{property.name}</h2>
+//       <p>{property.description}</p>
+//       {/* ...otros detalles de la propiedad */}
+//     </div>
+//   );
+// };
+
     const { id } = useParams()
     const dispatch = useDispatch()
 
     const propertie = useSelector((state) => state.detailPropertie)
+    const user = useSelector((state) => state.detailUser)
 
     useEffect(() => {
         dispatch(getDetailPropertie(id))
+        // dispatch(getDetailUser(userId))
     }, [ dispatch ])
 
     return(
-        <div className={styles.maincontainer}>
+        <div>
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
@@ -91,5 +115,4 @@ const DetailPost = () => {
         </div>
     )
 }
-
 export default DetailPost;

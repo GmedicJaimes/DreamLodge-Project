@@ -10,7 +10,10 @@ const Navbar = () => {
             <Searchbar/>
             
             {/* <Link to={"/signin"}>Sign In</Link> */}
+            
+            <Link to={"/post"} className={styles.link}>Post Lodge</Link>
             <Link to={"/login"} className={styles.link}>Login</Link>
+            
         </div>
     )
 }

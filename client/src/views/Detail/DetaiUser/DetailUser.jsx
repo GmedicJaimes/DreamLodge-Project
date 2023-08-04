@@ -12,9 +12,9 @@ const DetailUser = () => {
 
     const user = useSelector((state) => state.detailUser)
     
-    // useEffect(() => {
-    //     dispatch(getDetailUser(id))
-    // }, [ dispatch ])
+    useEffect(() => {
+        dispatch(getDetailUser(id))
+    }, [ dispatch ])
 
     return(
         <div>
