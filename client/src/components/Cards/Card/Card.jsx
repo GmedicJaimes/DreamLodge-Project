@@ -3,7 +3,7 @@ import styles from "./Card.module.css"
 
 
 const Card = ({property}) => {
-    const {name, price, location} = property
+    const {name, price, location,} = property
     return(
       <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
@@ -11,7 +11,7 @@ const Card = ({property}) => {
                 <img src="" alt="casa"/>
             </div>
             <section className={styles.info}>
-                <h1>{location}</h1>
+                <h1>{location.country}</h1>
                 <p>$ {price} USD</p>
                 <p>{name}</p>
 
