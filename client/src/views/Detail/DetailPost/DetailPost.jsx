@@ -43,9 +43,6 @@ const DetailPost = () => {
 
     return(
         <div>
-        {
-            user?.propertie.map((prop) => (
-                <div className={styles.maincontainer} prop={prop}>
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
@@ -117,10 +114,5 @@ const DetailPost = () => {
             <About/>
         </div>
     )
-            )
-        }
-        </div>
-    )       
 }
-
 export default DetailPost;
