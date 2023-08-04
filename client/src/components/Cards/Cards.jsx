@@ -1,24 +1,16 @@
+
 import Card from "./Card/Card"
 import styles from "./Cards.module.css"
 
-const Cards = () => {
+const Cards = ({allProperties}) => {
+
     return(
         <div className={styles.container}>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
+            {
+                allProperties?.map((property)=> (
+                    <Card property={property} key={property.id}/>
+                ))
+            }
         </div>
     )
 }

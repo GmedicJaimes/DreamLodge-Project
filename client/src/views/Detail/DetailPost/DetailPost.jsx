@@ -11,19 +11,7 @@ const DetailPost = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    // const propertie = useSelector((state) => state.detailPropertie)
-    const propertie = {
-        technologies: "Jacuzzi",
-        name: "Cabañita",
-        description: "Esta es una propiedad de es developer",
-        extraAmenities: null,
-        location: "Mar de Las Pampas",
-        comment: [],
-        specialServices: false,
-        views: 150,
-        rooms: 4,
-        price: 20
-    }
+    const propertie = useSelector((state) => state.detailPropertie)
 
     useEffect(() => {
         dispatch(getDetailPropertie(id))
@@ -88,13 +76,13 @@ const DetailPost = () => {
                     <h2>Opinions</h2>
                     <div>
                         <ul>
-                            {
-                                propertie.comment.map((com) => {
+                            {/* {
+                                propertie?.comment.map((com) => {
                                     return(
                                         <li>{com}</li>
                                     )
                                 })
-                            }
+                            } */}
                         </ul>
                     </div>
                 </section>

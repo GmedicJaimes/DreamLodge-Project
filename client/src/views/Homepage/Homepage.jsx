@@ -9,7 +9,7 @@ const Homepage = () => {
     const dispatch = useDispatch()
 
     const {
-        allPropertys
+        allProperties
     } = useSelector( state => state)
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const Homepage = () => {
     return(
         <div>
             <Filters/>
-            <Cards/>
+            <Cards allProperties={allProperties}/>
         </div>
     )
 }
