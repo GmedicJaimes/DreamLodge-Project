@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  width: 250px;
+  height: 200px;
+  /* margin: 20px; */
+
+  font-family: 'Lexend Deca';
+}
+
+.container button{
+  width: 80px;
+  height: 25px;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
+}
