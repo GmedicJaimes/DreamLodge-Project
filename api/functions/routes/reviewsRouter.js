@@ -178,7 +178,7 @@ const db = admin.firestore();
 
 
 router.post('/reviews', async (req, res) => {
-    const { FieldValue } = require('@google-cloud/firestore');
+   
 
     try {
         const { property_id, author, rating, comment } = req.body;
@@ -195,7 +195,7 @@ router.post('/reviews', async (req, res) => {
         }
 
         const ReviewId = uuidv4();
-        const reviewData = { author, rating, comment, newReviewId };
+        const reviewData = { author, rating, comment, ReviewId };
 
         // Agregar la nueva reseña en la colección "reviews" y referenciar la propiedad
         await db.collection('reviews').doc(ReviewId).set({
