@@ -12,7 +12,6 @@ export const getAllProperties = () => {
         return dispatch({type: GET_ALL_PROPERTIES, payload: data})
     }
 }
-//hola cojonudo
 
 export const getDetailProperty = ( id ) => {
     return async (dispatch) => {
@@ -34,4 +33,3 @@ export const getDetailUser = ( id ) => {
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
 }
-

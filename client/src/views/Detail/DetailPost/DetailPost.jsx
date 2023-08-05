@@ -28,13 +28,14 @@ const DetailPost = () => {
     useEffect(() => {
         dispatch(getDetailProperty(id))
         // dispatch(getDetailUser(userId))
-    }, [ dispatch ])
+    }, [ dispatch, id ])
 
     return(
         <div>
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
+                        <Link to={"/user"}>Owner</Link>
                         <h1>{property.name}</h1>
                         <p>{property.location?.address}</p>
                         <p>{property.location?.city}</p>
