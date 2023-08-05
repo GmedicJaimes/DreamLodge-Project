@@ -5,6 +5,11 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = admin.firestore();
 
+
+
+
+////////////////////////////////// OBTENER PROPERTIES / FILTRADO
+
 router.get('/properties', async (req, res) => {
     try {
         const { rooms, location, guests, types} = req.query;
@@ -58,6 +63,9 @@ router.get('/properties', async (req, res) => {
 
 
 
+////////////////////////////////// OBTENER PROPERTY BY ID
+
+
 router.get('/properties/:property_id', async (req, res) => {
     try {
         const { property_id } = req.params;
@@ -89,6 +97,10 @@ router.get('/properties/:property_id', async (req, res) => {
     }
 });
 
+
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
 
 // // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
 // router.get('/properties', async (req, res) => {
@@ -135,11 +147,13 @@ router.get('/properties/:property_id', async (req, res) => {
 //     }
 // });
 
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
+////////////////////////////////// --------------------- NO BORRE ESTA POR SI LA NECESITAN POR FILTRADO
 
 
 
-//ruta para crear propiedades
-
+////////////////////////////////// CREATE PROPERTIES
 
 router.post('/properties', async (req, res) => {
 
@@ -184,12 +198,8 @@ router.post('/properties', async (req, res) => {
     }
 });
 
+////////////////////////////////// DELETE PROPERTIES
 
-
-
-
-//-------------------------------------- PRUEBA CHRISTIAN
-//ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
@@ -200,32 +210,53 @@ router.delete('/properties/:properties_id', async(req, res)=>{
     }
 });
 
-//ruta para actualizar propiedades
-router.put('/properties/:properties_id', async(req, res)=>{
+
+////////////////////////////////// MODIFICAR RUTAS
+
+router.put('/properties/:properties_id', async (req, res) => {
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
-        await document.update({
-            name: req.body.name,
-            types: req.body.types, 
-            location: [{
-                country: req.body.location.country,
-                estado: req.body.location.estado,
-                direction: req.body.location.direction,
-            }],
-            rooms:[{
-                guests: req.body.rooms.guests,
-                dormitorio: req.body.rooms.dormitorio,
-                bathrooms: req.body.rooms.bathrooms,
-                bed: req.body.rooms.bed
-            }],
-            services: req.body.services, 
-            image: req.body.image,
-            description: req.body.description,
-            price: req.body.price,
-        });
-        return res.status(200).json("se ha actualizado correctamente la propiedad")
+
+        const {
+            name,
+            types,
+            location,
+            rooms,
+            services,
+            image,
+            description,
+            price
+        } = req.body;
+
+        // Validar que se proporcionen al menos algunos campos para actualizar
+        if (!name && !types && !location && !rooms && !services && !image && !description && !price) {
+            return res.status(400).json({ error: "No se proporcionaron campos para actualizar" });
+        }
+
+        const updates = {};
+
+        if (name) updates.name = name;
+        if (types) updates.types = types;
+        if (location) updates.location = location;
+        if (rooms) updates.rooms = rooms;
+        if (services) updates.services = services;
+        if (image) updates.image = image;
+        if (description) updates.description = description;
+        if (price) updates.price = price;
+        updates.lastUpdated = new Date().toLocaleDateString();
+
+        await document.update(updates);
+
+        // Obtener los datos actualizados de la propiedad después de la actualización
+        const snapshot = await document.get();
+        if (!snapshot.exists) {
+            return res.status(404).json({ error: "Propiedad no encontrada" });
+        }
+        const updatedProperty = snapshot.data();
+
+        return res.status(200).json(updatedProperty);
     } catch (error) {
-        return res.status(500).send(error)
+        return res.status(500).send(error);
     }
 });
 
