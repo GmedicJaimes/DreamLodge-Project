@@ -1,8 +1,8 @@
 import axios from "axios"
 import {
-    GET_DETAIL_PROPERTY,
-    // GET_DETAIL_USER,
-    GET_ALL_PROPERTIES
+    GET_DETAIL_USER,
+    GET_ALL_PROPERTIES,
+    GET_DETAIL_PROPERTY
 } from "./action-types"
 
 
@@ -13,13 +13,16 @@ export const getAllProperties = () => {
     }
 }
 
-export const getDetailProperty = ( property_id ) => {
+export const getDetailProperty = ( id ) => {
     return async (dispatch) => {
-
-          const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${property_id}`);
-          console.log(data);
+        try {
+          const response = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${id}`);
+          const propertyData = response.data;
           // Aquí puedes realizar cualquier otra lógica necesaria antes de enviar la propiedad a los reducers
-          return dispatch({ type: GET_DETAIL_PROPERTY, payload: data });
+          dispatch({ type: GET_DETAIL_PROPERTY, payload: propertyData });
+        } catch (error) {
+          dispatch({ type: GET_DETAIL_PROPERTY, payload: error.message });
+        }
       };
     };
 

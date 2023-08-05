@@ -4,7 +4,7 @@ import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailProperty} from "../../../redux/actions";
+import { getDetailProperty } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
@@ -37,9 +37,10 @@ const DetailPost = () => {
                     <div>
                         <Link to={"/user"}>Owner</Link>
                         <h1>{property.name}</h1>
-                        <p>{property.location?.country}</p>
-                        <p>{property.location?.estado}</p>
-                        <p>{property.location?.direction}</p>
+                        <p>{property.location?.address}</p>
+                        <p>{property.location?.city}</p>
+                        <p>{property.location?.state}</p>
+                        <Link to={"/user"}>Owner</Link>
                     </div>
                     <div>
                         <h2>{property.price}</h2>
@@ -56,7 +57,7 @@ const DetailPost = () => {
                         {
                             property.types?.map((type) => {
                                 return(
-                                    <p>{type}</p>
+                                    <p key={type}>{type}</p>
                                 )
                             })
                         }
@@ -77,10 +78,10 @@ const DetailPost = () => {
                     <div className={styles.srvcContainer}>
                         <div className={styles.containerList}>
                             <ul>
-                                <li>Bathrooms: {property.bathrooms}</li>
-                                <li>Bed: {property.bed}</li>
-                                <li>Rooms: {property.rooms}</li>
-                                <li>Dormitorios: {property.dormitorio}</li>
+                                <li>Bathrooms: {property.rooms?.[0]}</li>
+                                <li>Bed: {property.rooms?.[1]}</li>
+                                <li>Rooms: {property.rooms?.[2]}</li>
+                                <li>Dormitorios: {property.rooms?.[3]}</li>
                             </ul>
                         </div>
                     </div>
