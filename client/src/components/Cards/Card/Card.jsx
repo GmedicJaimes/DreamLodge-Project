@@ -5,11 +5,7 @@ import React from 'react';
 
 
 const Card = ({property}) => {
-<<<<<<< HEAD
-    const {name, price, image, location, id} = property
-=======
     const {id, name, price, types, image, location} = property
->>>>>>> 5ba320e28bf67309bc2c1815cb74a09a56a9c265
     return(
       <Link to={`/rooms/${id}`} className={styles.link}>
         <div className={styles.container}>
