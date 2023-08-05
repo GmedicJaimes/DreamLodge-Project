@@ -1,19 +1,42 @@
 .container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 15px;
-  background-color: rgb(80, 151, 127);
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.548);
+  height: 60px;
+  /* padding: 15px; */
+  background-color: #727272;
 
   font-family: 'Lexend Deca';
 }
 
-.link{
+.logo{
   text-decoration: none;
-  color: white;
-  font-size: 1em;
+  color: #fdfdfd;
+  font-size: 1.2em;
   font-weight: 500;
 }
+
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+}
+
+.login{
+  text-decoration: none;
+  color: #fdfdfd;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.post {
+  margin-right: 40px;
+  text-decoration: none;
+  color: #fdfdfd;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
 
