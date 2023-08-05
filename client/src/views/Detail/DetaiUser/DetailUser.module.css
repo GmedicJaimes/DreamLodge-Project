@@ -1,5 +1,5 @@
 .portada {
-    height: 20vh;
+    height: 30vh;
     width: 100vw;
     background-position-y: 45%;
     background-position-x: 50%;
@@ -19,7 +19,7 @@
 }
 
 .containerInfo{
-    background-color: rgb(128, 0, 255);
+    height: 16vh;
 }
 
 .dataUser{
