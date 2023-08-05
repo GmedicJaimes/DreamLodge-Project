@@ -124,53 +124,117 @@ const db = admin.firestore();
 
 
 
-router.post('/reviews', async (req, res) => {
-    try {
-        const { user_id, property_id, author, rating, comment } = req.body;
+// router.post('/reviews', async (req, res) => {
+//     try {
+//         const { user_id, property_id, author, rating, comment } = req.body;
 
-        if (!user_id || !property_id || !author || !rating || !comment) {
+//         if (!user_id || !property_id || !author || !rating || !comment) {
+//             return res.status(400).json({ error: 'Todos los campos son requeridos para crear una reseña.' });
+//         }
+
+//         const userRef = await db.collection("users").doc(user_id).get();
+
+//         if (!userRef.exists) {
+//             return res.status(400).json({ error: 'user id no existe.' });
+//         }
+
+//         const propertyRef = db.collection('properties').doc(property_id)
+//         const propertyDoc = await propertyRef.get();
+//         console.log('HOLAAAAAAAAAAAAAAAAAA',propertyDoc)
+//         console.log('USERRRRRID',userRef.data())
+//         console.log('PROPERTYYYID',propertyRef)
+
+//         if (!propertyDoc.exists) {
+//             console.log('HOLAAAAAAAAAAAAAAAAAA',propertyDoc.exists)
+//             return res.status(404).json({ error: 'La propiedad con el ID proporcionado no existe.' });
+//         }
+
+//         // Supongo que quieres verificar si la propiedad está asociada con el usuario, así que necesitarías acceder a una estructura que la vincule con el usuario
+//         const propertyDocSnapshot = await userRef.ref.collection("properties").doc(property_id).get();
+
+//         if (!propertyDocSnapshot.exists) {
+//             return res.status(404).json({ error: 'La propiedad no está asociada al usuario proporcionado.' });
+//         }
+
+//         const newReviewId = uuidv4();
+//         const reviewData = { author, rating, comment };
+
+//         // Agregar la nueva reseña en la subcolección "reviews" dentro del documento de la propiedad
+//         await propertyRef.collection('reviews').doc(newReviewId).set({
+//             property_id,
+//             ...reviewData
+//         });
+
+//         return res.status(200).json({ message: 'Reseña creada con éxito.' });
+//     } catch (error) {
+//         console.error("Error al crear la reseña:", error);
+//         return res.status(500).send(`Error al crear la reseña: ${error.message}`);
+//     }
+// });
+
+
+// CHRISTIAN PRUEBA -------------------------------------------------
+
+
+
+router.post('/reviews', async (req, res) => {
+
+    try {
+        const { property_id, author, rating, comment } = req.body;
+
+        if (!property_id || !author || !rating || !comment) {
             return res.status(400).json({ error: 'Todos los campos son requeridos para crear una reseña.' });
         }
 
-        const userRef = await db.collection("users").doc(user_id).get();
-
-        if (!userRef.exists) {
-            return res.status(400).json({ error: 'user id no existe.' });
-        }
-
-        const propertyRef = db.collection('properties').doc(property_id)
+        const propertyRef = db.collection('properties').doc(property_id);
         const propertyDoc = await propertyRef.get();
-        console.log('HOLAAAAAAAAAAAAAAAAAA',propertyDoc)
-        console.log('USERRRRRID',userRef.data())
-        console.log('PROPERTYYYID',propertyRef)
 
         if (!propertyDoc.exists) {
-            console.log('HOLAAAAAAAAAAAAAAAAAA',propertyDoc.exists)
             return res.status(404).json({ error: 'La propiedad con el ID proporcionado no existe.' });
         }
 
-        // Supongo que quieres verificar si la propiedad está asociada con el usuario, así que necesitarías acceder a una estructura que la vincule con el usuario
-        const propertyDocSnapshot = await userRef.ref.collection("properties").doc(property_id).get();
+        const ReviewId = uuidv4();
+        const reviewData = { author, rating, comment, ReviewId };
 
-        if (!propertyDocSnapshot.exists) {
-            return res.status(404).json({ error: 'La propiedad no está asociada al usuario proporcionado.' });
-        }
-
-        const newReviewId = uuidv4();
-        const reviewData = { author, rating, comment };
-
-        // Agregar la nueva reseña en la subcolección "reviews" dentro del documento de la propiedad
-        await propertyRef.collection('reviews').doc(newReviewId).set({
+        // Agregar la nueva reseña en la colección "reviews" y referenciar la propiedad
+        await db.collection('reviews').doc(ReviewId).set({
             property_id,
             ...reviewData
         });
 
-        return res.status(200).json({ message: 'Reseña creada con éxito.' });
+        // Actualizar el documento de la propiedad para incluir el ID de la reseña
+        const propertyData = propertyDoc.data();
+        let propertyReviews = propertyData.reviews || [];
+        propertyReviews.push(ReviewId);
+        await propertyRef.update({ reviews: propertyReviews });
+
+        return res.status(200).json({ message: 'Reseña creada con éxito.', reviewId: ReviewId });
     } catch (error) {
         console.error("Error al crear la reseña:", error);
         return res.status(500).send(`Error al crear la reseña: ${error.message}`);
     }
 });
+
+
+
+
+
+
+
+// CHRISTIAN PRUEBA -------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -187,6 +251,8 @@ router.get('/reviews', async (req, res) => {
             author: doc.data().author,
             rating: doc.data().rating,
             comment: doc.data().comment,
+            id:doc.data().ReviewId,
+            propertyId:doc.data().property_id
         }));
         return res.status(200).json(response);
 

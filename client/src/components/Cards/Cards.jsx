@@ -1,6 +1,8 @@
 
 import Card from "./Card/Card"
 import styles from "./Cards.module.css"
+import React from 'react';
+
 
 const Cards = ({allProperties}) => {
 

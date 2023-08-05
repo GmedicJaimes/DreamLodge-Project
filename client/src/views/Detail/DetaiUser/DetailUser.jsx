@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 // import { getDetailUser } from "../../../redux/actions"
+import React from 'react';
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import styles from "./DetailUser.module.css"

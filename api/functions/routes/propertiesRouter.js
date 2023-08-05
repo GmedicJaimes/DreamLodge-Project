@@ -53,7 +53,42 @@ router.get('/properties', async (req, res) => {
     } catch (error) {
         return res.status(500).send(error);
     }
+    
 });
+
+
+
+router.get('/properties/:property_id', async (req, res) => {
+    try {
+        const { property_id } = req.params;
+
+        const propertyRef = db.collection('properties').doc(property_id);
+        const propertyDoc = await propertyRef.get();
+
+        if (!propertyDoc.exists) {
+            return res.status(404).json({ message: 'Propiedad no encontrada' });
+        }
+
+        let propertyData = propertyDoc.data();
+
+        if (propertyData.reviews && propertyData.reviews.length > 0) {
+            let reviews = [];
+            for (const reviewId of propertyData.reviews) {
+                const reviewDoc = await db.collection('reviews').doc(reviewId).get();
+                if (reviewDoc.exists) {
+                    reviews.push(reviewDoc.data());
+                }
+            }
+
+            propertyData = { ...propertyData, reviews }; // Agregar las reseñas a los datos de la propiedad
+        }
+
+        return res.status(200).json(propertyData);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
+
 
 // // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
 // router.get('/properties', async (req, res) => {
@@ -104,35 +139,56 @@ router.get('/properties', async (req, res) => {
 
 
 //ruta para crear propiedades
+
+
 router.post('/properties', async (req, res) => {
-    console.log(`HOLAAAAAAAAAAAAAAAAAAAAAAAAAA`, req.body);
+
     try {
-        const {user_id} = req.body;
+        const { user_id, name, types, location, rooms, services, image, description, price } = req.body;
+
+        const PropertyId = uuidv4();
 
         const newProperty = {
-            name: req.body.name,
-            types: req.body.types, 
-            location: req.body.location,
-            rooms:req.body.rooms,
-            services: req.body.services, 
-            image: req.body.image,
-            description: req.body.description,
-            price: req.body.price,
+            id: PropertyId, // Propiedad id
+            user_id, 
+            name, 
+            types, 
+            location, 
+            rooms, 
+            services, 
+            image, 
+            description, 
+            price
         };
+
         const userRef = db.collection("users").doc(user_id);
 
-        // Agregar un ID único para el documento
-        const newPropertyId = uuidv4();
-        await userRef.collection('properties').doc(newPropertyId).set(newProperty);
+        const doc = await userRef.get();
+        if (!doc.exists) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
 
-        return res.status(204).json();
+        // Crear la propiedad en una nueva colección 'properties'
+        await db.collection('properties').doc(PropertyId).set(newProperty);
+
+        // Actualizar el documento del usuario para incluir la propiedad completa
+        const userDoc = await userRef.get();
+        let userProperties = userDoc.data().properties || [];
+        userProperties.push(newProperty);
+        await userRef.update({ properties: userProperties });
+
+        return res.status(201).json(newProperty);
     } catch (error) {
-        return res.status(500).json({ message: "Error al postear propiedad"});
+        console.log(error)
+        return res.status(500).json({ message: "Error al postear propiedad" });
     }
 });
 
 
 
+
+
+//-------------------------------------- PRUEBA CHRISTIAN
 //ruta para borrar propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
     try {

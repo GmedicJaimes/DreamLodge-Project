@@ -1,8 +1,9 @@
 import axios from "axios"
 import {
     GET_DETAIL_PROPERTIE,
-    // GET_DETAIL_USER,
-    GET_ALL_PROPERTIES
+     GET_DETAIL_USER,
+    GET_ALL_PROPERTIES,
+    GET_DETAIL_PROPERTY
 } from "./action-types"
 
 
@@ -33,3 +34,4 @@ export const getDetailUser = ( userId ) => {
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
 }
+
