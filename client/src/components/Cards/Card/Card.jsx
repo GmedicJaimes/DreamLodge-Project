@@ -3,7 +3,7 @@ import styles from "./Card.module.css"
 
 
 const Card = ({property}) => {
-    const {name, price, description, image} = property
+    const {name, price, types, image, location} = property
     return(
       <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
@@ -11,11 +11,10 @@ const Card = ({property}) => {
                 <img src={image} alt="" />
             </div>
             <section className={styles.info}>
-                <h3>{name}</h3>
-                <p>$ {price} USD</p>
-                <p>{description}</p>
-
-                    
+                <h3>{location.state}, {location.city}</h3>
+                <p>{name}</p>
+                <p>$ {price} USD noche</p>
+   
             </section>
         </div>
       </Link>

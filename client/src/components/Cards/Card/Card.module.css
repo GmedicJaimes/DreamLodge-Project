@@ -29,7 +29,7 @@
   justify-content: left;
   align-items: flex-start;
   background-color: rgb(255, 236, 195);
-  height: 30%;
+  height:120px;
   padding: 10px;
 }
 .info h3{
@@ -42,7 +42,7 @@
   text-align: left;
 }
 
-.image {
+/* .image {
   width: auto;
   height: 100%;
-}
+} */
