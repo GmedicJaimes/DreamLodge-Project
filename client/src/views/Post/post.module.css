@@ -1,11 +1,20 @@
+.bigContainer{
+    background-color: #f3f3f3;
+    width: 86vw;
+    min-height: 50em;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .mainContainer {
     border: 1px solid black;
-    height: 80vh;
-    width: 35vw;
+    width: 35%;
     max-width: 500px;
     border-radius: .7rem;
     box-shadow: 0 7px 20px 5px #52525288;
-    
+    min-height: 45em;
 }
 
 .mainContainer header{
@@ -20,6 +29,7 @@
 .mainContainer form{
     padding: 16px;
     margin-top: 10%;
+    margin-bottom: 2em;
 }
 
 .formGroup {
@@ -41,6 +51,90 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    max-width: 300px;
+    width: 300px;
 }
 
+.formGroup textarea[type="text"]{
+    width: 75%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    margin-left: 13px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer
+}
+
+.btn:hover {
+    background-color: #ccc;
+    color: #333;
+    font-weight: 500;
+}
+
+.range {
+    -webkit-appearance: none;
+    appearance: none; 
+    width: 80%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 15px;
+    height: 2px;
+    background: #fffefe;
+  }
+  
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; 
+    height: 25px;
+    width: 25px;
+    background-color: #333;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+  }
+  
+  .range::-mz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: rgb(185, 185, 185);
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+  }
+
+
+select {
+
+    /* styling */
+    background-color: white;
+    border: thin solid #333;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+
+    /* reset */
+
+    margin: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.roomsSelects {
+    display: flex;
+}

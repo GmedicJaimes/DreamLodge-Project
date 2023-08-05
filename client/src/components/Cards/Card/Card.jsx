@@ -5,19 +5,18 @@ import React from 'react';
 
 
 const Card = ({property}) => {
-    const {name, price, location} = property
+    const {name, price, types, image, location} = property
     return(
       <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
             <div className={styles.image}>
-                <img src="" alt="casa"/>
+                <img src={image} alt="" />
             </div>
             <section className={styles.info}>
-                <h1>{location}</h1>
-                <p>$ {price} USD</p>
+                <h3>{location.state}, {location.city}</h3>
                 <p>{name}</p>
-
-                    
+                <p>$ {price} USD noche</p>
+   
             </section>
         </div>
       </Link>

@@ -1,25 +1,42 @@
 .container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 20px;
+  height: 60px;
+  /* padding: 15px; */
   background-color: #727272;
-  max-width: 100%;
 
   font-family: 'Lexend Deca';
 }
 
-.link{
+.logo{
   text-decoration: none;
   color: #fdfdfd;
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: 500;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 
-/* .link:hover{
-  color: #FFA69E;
-} */
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 300px;
+}
+
+.login{
+  text-decoration: none;
+  color: #fdfdfd;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.post {
+  margin-right: 40px;
+  text-decoration: none;
+  color: #fdfdfd;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
 
