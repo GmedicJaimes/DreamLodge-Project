@@ -9,31 +9,19 @@ import { Link } from "react-router-dom";
 const DetailPost = () => {
 
 
-//     const dispatch = useDispatch();
 //   const { userId, propertyId } = useParams(); // Obtener userId y propertyId de los parámetros de la URL
 
-//   // Puedes obtener la propiedad de Redux usando el useSelector
 //   const property = useSelector((state) => state.detailPropertie);
 
-//   // Llamar a la acción para obtener los detalles de la propiedad
 //   useEffect(() => {
 //     dispatch(getDetailPropertie(userId, propertyId));
 //   }, [dispatch, userId, propertyId]);
 
-//   return (
-//     <div>
-//       {/* Aquí puedes mostrar los detalles de la propiedad */}
-//       <h2>{property.name}</h2>
-//       <p>{property.description}</p>
-//       {/* ...otros detalles de la propiedad */}
-//     </div>
-//   );
-// };
 
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const propertie = useSelector((state) => state.detailPropertie)
+    const property = useSelector((state) => state.detailPropertie)
     const user = useSelector((state) => state.detailUser)
 
     useEffect(() => {
@@ -46,23 +34,32 @@ const DetailPost = () => {
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
-                        <h1>{propertie.name}</h1>
-                        <p>{propertie.location}</p>
+                        <h1>{property.name}</h1>
+                        <p>{property.location?.country}</p>
+                        <p>{property.location?.estado}</p>
+                        <p>{property.location?.direction}</p>
                         <Link to={"/user"}>Owner</Link>
                     </div>
                     <div>
-                        <h2>{propertie.price}</h2>
+                        <h2>{property.price}</h2>
                         <button className={styles.btn}>Reserve</button>
                     </div>
                 </header>
                 <div>
-                    <img src="" alt="" />
+                    <img src={property.image} alt={property.name} />
                 </div>
                 <div className={styles.line}></div>
                 <div className={styles.detailContainer}>
                     <div>
                         <h2>Overview</h2>
-                        <p>{propertie.description}</p>
+                        {
+                            property.types?.map((type) => {
+                                return(
+                                    <p>{type}</p>
+                                )
+                            })
+                        }
+                        <p>{property.description}</p>
                     </div>
                     <div>
                         <div className={styles.ratingBox}>
@@ -74,23 +71,34 @@ const DetailPost = () => {
                 <div className={styles.line}></div>
                 <section className={styles.division}>
                     <div>
+                        <h2>Rooms</h2>
+                    </div>
+                    <div className={styles.srvcContainer}>
+                        <div className={styles.containerList}>
+                            <ul>
+                                <li>Bathrooms: {property.bathrooms}</li>
+                                <li>Bed: {property.bed}</li>
+                                <li>Rooms: {property.rooms}</li>
+                                <li>Dormitorios: {property.dormitorio}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <div className={styles.line}></div>
+                <section className={styles.division}>
+                    <div>
                         <h2>Services</h2>
                     </div>
                     <div className={styles.srvcContainer}>
                         <div className={styles.containerList}>
                             <ul>
-                                <li>Restaurant</li>
-                                <li>Cafeteria</li>
-                                <li>Wifi</li>
-                                <li>TV</li>
-                                <li>Bathroom</li>
-                                <li>Safety deposit box</li>
-                                <li>Garage</li>
-                                <li>Room Service</li>
-                                <li>Pets allowed</li>
-                                <li>Heating</li>
-                                <li>Washer</li>
-                                <li>Kitchen</li>
+                                {
+                                    property.services?.map((serv) => {
+                                        return(
+                                            <li>{serv}</li>
+                                        )
+                                    })
+                                }
                             </ul>
                         </div>
                     </div>
@@ -98,10 +106,11 @@ const DetailPost = () => {
                 <div className={styles.line}></div>
                 <section className={styles.division}>
                     <h2>Opinions</h2>
+                    <p>From {property.guests} guests</p>
                     <div>
                         <ul>
                             {/* {
-                                propertie?.comment.map((com) => {
+                                property?.comment.map((com) => {
                                     return(
                                         <li>{com}</li>
                                     )
