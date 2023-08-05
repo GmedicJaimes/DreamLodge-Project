@@ -7,51 +7,31 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = admin.firestore();
 
-router.get('/users', async(req, res)=>{
+router.get('/users', async (req, res) => {
     try {
-        const query = db.collection('users');
-        const querySnapshot = await query.get();
-        const docs = querySnapshot.docs;
-        
-        const response = docs.map(doc=>({
-            firstName:doc.data().firstName, 
-            lastName:doc.data().lastName,
-            username:doc.data().username,
-            email:doc.data().email,
-            password:doc.data().password,
-            createdAt: doc.data().createdAt
-         
-        }));
-        return res.status(200).json(response)
+        const usersRef = db.collection('users');
+        const snapshot = await usersRef.get();
+
+        if (snapshot.empty) {
+            return res.status(404).json({ message: 'No se encontraron usuarios' });
+        }  
+
+        let users = [];
+        snapshot.forEach(doc => {
+            let id = doc.id;
+            let data = doc.data();
+            data.id = id; // Agregar la propiedad ID al objeto que se va a devolver
+            users.push(data);
+        });
+
+        return res.status(200).json(users);
     } catch (error) {
-        return res.status(500).send(error)
+        return res.status(500).send(error);
     }
 });
 
 
-// router.post('/users', async (req, res) => {
-//     try {
-    
-//         const newUser = {
-//             firstName: req.body.firstName,
-//             lastName: req.body.lastName,
-//             username: req.body.username,
-//             email: req.body.email,
-//             password: req.body.password,
-//             createdAt: new Date().toLocaleDateString()
 
-//           };
-          
-
-//         // Agregar un ID único para el documento
-//         const newUserID = uuidv4();
-//         await db.collection('users').doc(newUserID).set(newUser);
-
-//         return res.status(204).json();
-//     } catch (error) {
-//         return res.status(500).send(error);
-//     }
-// });
 
 // ------------------------------------- PRUEBA CHRIS
 
@@ -67,7 +47,7 @@ router.post('/users', async (req, res) => {
                          email: req.body.email,
                          password: req.body.password,
                          createdAt: new Date().toLocaleDateString(),
-                         id:newUserID
+                         id:UserID
             
             };
 
@@ -86,8 +66,7 @@ router.post('/users', async (req, res) => {
 
 
 // ------------------------------------- PRUEBA CHRIS
-
-router.get('/users/:user_id/', async (req, res) => {
+router.get('/users/:user_id', async (req, res) => {
     try {
         const { user_id} = req.params;
         const userRef = db.collection('users').doc(user_id);
@@ -101,10 +80,11 @@ router.get('/users/:user_id/', async (req, res) => {
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).send(error);
-    }
-});
+    } 
+}); 
 
-router.get('/users/:user_id', async (req, res) => {
+
+/* router.get('/users/:user_id', async (req, res) => {
     try {
         const { user_id } = req.params;
         const userRef = db.collection('users').doc(user_id);
@@ -131,7 +111,7 @@ router.get('/users/:user_id', async (req, res) => {
     } catch (error) {
         return res.status(500).send(error);
     }
-});
+}); */
 
 
 

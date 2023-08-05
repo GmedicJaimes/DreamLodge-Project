@@ -142,7 +142,6 @@ router.get('/properties/:property_id', async (req, res) => {
 
 
 router.post('/properties', async (req, res) => {
-    const { FieldValue } = require('@google-cloud/firestore');
 
     try {
         const { user_id, name, types, location, rooms, services, image, description, price } = req.body;
