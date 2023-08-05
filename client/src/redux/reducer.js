@@ -7,7 +7,7 @@ import {
 
 const initialState = {
     allProperties : [],
-    detailPropertie : [],
+    detailProperty : {},
     detailUser: []
 }
 
@@ -21,10 +21,10 @@ const reducer = ( state = initialState, actions) => {
                 allProperties: payload,
             }
 
-        case GET_DETAIL_PROPERTIE:
+        case GET_DETAIL_PROPERTY:
             return {
                 ...state,
-                detailPropertie : payload
+                detailProperty : payload
             }
         
         case GET_DETAIL_USER: 

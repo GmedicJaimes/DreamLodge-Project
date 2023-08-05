@@ -4,7 +4,7 @@ import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailPropertie } from "../../../redux/actions";
+import { getDetailProperty} from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
@@ -22,24 +22,24 @@ const DetailPost = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const property = useSelector((state) => state.detailPropertie)
+    const property = useSelector((state) => state.detailProperty)
     const user = useSelector((state) => state.detailUser)
 
     useEffect(() => {
-        dispatch(getDetailPropertie(id))
+        dispatch(getDetailProperty(id))
         // dispatch(getDetailUser(userId))
-    }, [ dispatch ])
+    }, [ dispatch, id ])
 
     return(
         <div>
             <div className={styles.container}>
                 <header className={styles.head}>
                     <div>
+                        <Link to={"/user"}>Owner</Link>
                         <h1>{property.name}</h1>
                         <p>{property.location?.country}</p>
                         <p>{property.location?.estado}</p>
                         <p>{property.location?.direction}</p>
-                        <Link to={"/user"}>Owner</Link>
                     </div>
                     <div>
                         <h2>{property.price}</h2>

@@ -10,7 +10,7 @@ const Navbar = () => {
             <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
             
             <Searchbar/>
-            /*Veamos si funciona esto */
+            
             {/* <Link to={"/signin"}>Sign In</Link> */}
             <div className={styles.button}>
               <Link to={"/post"} className={styles.post}>Post Lodge</Link>

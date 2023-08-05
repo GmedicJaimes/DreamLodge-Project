@@ -5,9 +5,9 @@ import React from 'react';
 
 
 const Card = ({property}) => {
-    const {name, price, types, image, location} = property
+    const {name, price, image, location, id} = property
     return(
-      <Link to={"/rooms"} className={styles.link}>
+      <Link to={`/rooms/${id}`} className={styles.link}>
         <div className={styles.container}>
             <div className={styles.image}>
                 <img src={image} alt="" />
