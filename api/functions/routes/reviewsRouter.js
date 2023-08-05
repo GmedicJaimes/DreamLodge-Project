@@ -178,7 +178,10 @@ const db = admin.firestore();
 
 
 router.post('/reviews', async (req, res) => {
+<<<<<<< HEAD
    
+=======
+>>>>>>> main
 
     try {
         const { property_id, author, rating, comment } = req.body;
@@ -252,6 +255,8 @@ router.get('/reviews', async (req, res) => {
             author: doc.data().author,
             rating: doc.data().rating,
             comment: doc.data().comment,
+            id:doc.data().ReviewId,
+            propertyId:doc.data().property_id
         }));
         return res.status(200).json(response);
 

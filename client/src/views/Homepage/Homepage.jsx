@@ -1,19 +1,17 @@
-import styles from "./Homepage.module.css"
-import { useDispatch, useSelector } from "react-redux"
-import Cards from "../../components/Cards/Cards"
-import {useEffect} from "react"
-import { getAllProperties } from "../../redux/actions"
 import Filters from "../../components/Filters/Filters"
-import React from 'react';
+import Cards from "../../components/Cards/Cards"
 
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { getAllProperties } from "../../redux/actions"
+
+import styles from "./Homepage.module.css"
 
 const Homepage = () => {
 
     const dispatch = useDispatch()
 
-    const {
-        allProperties
-    } = useSelector( (state) => state)
+    const allProperties = useSelector( (state) => state.allProperties)
 
     useEffect(() => {
         dispatch(getAllProperties())
@@ -21,7 +19,7 @@ const Homepage = () => {
 
     return(
         <div>
-            <div className={styles.container}>
+            <div className={styles.containerHome}>
                 <Filters/>
                 <Cards allProperties={allProperties}/>
             </div>

@@ -1,38 +1,48 @@
-.container {
-    /* height: 30vh; */
-    background-image: url(../../assets/filters.jpg);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    /* background-position-y: 50%; */
-    /* background-position-x: 50%; */
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    justify-content: center;
+.containerFilter{
+  /* margin-top: 2px; */
+  height: 30vh;
+  margin-bottom: 20px;
+
+  background-image: url(../../assets/pexels-andrea-davis-12931939.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  background-position-x: 50%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
 }
 
-.filterContainer {
-    position: absolute;
-    bottom: 20px;
-    /* margin: 10px; */
-    background-color: #647A6A;
-    border: 5px solid #647A6A;
-    border-radius: 0.7em;
-    /* width: 70vw; */
-    display: flex;
-    justify-content: space-evenly;
+.filter {
+  position: absolute;
+  bottom: 70px;
+  background-color: #adadad9c;
+  border-radius: 5px;
+  padding: 5px 30px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.btn{
-    background-color: #D9D9D9;
-    border-radius: .2em;
-    border: none;
-    transition: background-color 0.2s ease-in-out;
-    font-size: 1.1em;
+.filter button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.btn:hover {
-    background-color: #000000;
-    color: #fcfcfc;
-    
-  }
+.filter button img{
+  padding-bottom: 4px;
+  width: 3em;
+  /* filter: invert(100%) sepia(0%) saturate(7499%) hue-rotate(184deg) brightness(108%) contrast(96%); */
+}
+
