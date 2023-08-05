@@ -178,11 +178,12 @@ const db = admin.firestore();
 
 
 router.post('/reviews', async (req, res) => {
+    const { FieldValue } = require('@google-cloud/firestore');
+
     try {
         const { property_id, author, rating, comment } = req.body;
 
         if (!property_id || !author || !rating || !comment) {
-            console.log("HOLAAAAAAAAAAA A A A A A A A  A A A A A ",req.body)
             return res.status(400).json({ error: 'Todos los campos son requeridos para crear una reseña.' });
         }
 
@@ -193,16 +194,22 @@ router.post('/reviews', async (req, res) => {
             return res.status(404).json({ error: 'La propiedad con el ID proporcionado no existe.' });
         }
 
-        const newReviewId = uuidv4();
-        const reviewData = { author, rating, comment };
+        const ReviewId = uuidv4();
+        const reviewData = { author, rating, comment, newReviewId };
 
         // Agregar la nueva reseña en la colección "reviews" y referenciar la propiedad
-        await db.collection('reviews').doc(newReviewId).set({
+        await db.collection('reviews').doc(ReviewId).set({
             property_id,
             ...reviewData
         });
 
-        return res.status(200).json({ message: 'Reseña creada con éxito.', reviewId: newReviewId });
+        // Actualizar el documento de la propiedad para incluir el ID de la reseña
+        const propertyData = propertyDoc.data();
+        let propertyReviews = propertyData.reviews || [];
+        propertyReviews.push(ReviewId);
+        await propertyRef.update({ reviews: propertyReviews });
+
+        return res.status(200).json({ message: 'Reseña creada con éxito.', reviewId: ReviewId });
     } catch (error) {
         console.error("Error al crear la reseña:", error);
         return res.status(500).send(`Error al crear la reseña: ${error.message}`);

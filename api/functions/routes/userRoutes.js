@@ -59,21 +59,22 @@ router.get('/users', async(req, res)=>{
 router.post('/users', async (req, res) => {
     try {
         // Validar los datos del usuario (puedes expandir esto según tus necesidades)
+        const UserID = uuidv4();
         const newUser = {
                          firstName: req.body.firstName,
                          lastName: req.body.lastName,
                          username: req.body.username,
                          email: req.body.email,
                          password: req.body.password,
-                         createdAt: new Date().toLocaleDateString()
+                         createdAt: new Date().toLocaleDateString(),
+                         id:newUserID
             
             };
 
         // Agregar un ID único para el documento
-        const newUserID = uuidv4();
-        await db.collection('users').doc(newUserID).set(newUser);
+        await db.collection('users').doc(UserID).set(newUser);
 
-        return res.status(201).json({ userId: newUserID }); // responder con el ID del usuario
+        return res.status(201).json({ userId: UserID }); // responder con el ID del usuario
     } catch (error) {
         return res.status(500).send(error);
     }
@@ -103,23 +104,35 @@ router.get('/users/:user_id/', async (req, res) => {
     }
 });
 
-router.get('/users/:user_id/properties/:property_id', async (req, res) => {
+router.get('/users/:user_id', async (req, res) => {
     try {
-        const { user_id, property_id } = req.params;
+        const { user_id } = req.params;
         const userRef = db.collection('users').doc(user_id);
-        const propertyRef = userRef.collection('properties').doc(property_id);
-        const propertyDoc = await propertyRef.get();
+        const userDoc = await userRef.get();
 
-        if (!propertyDoc.exists) {
-            return res.status(404).json({ message: 'Propiedad no encontrada' });
+        if (!userDoc.exists) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        const response = propertyDoc.data();
-        return res.status(200).json(response);
+        const userData = userDoc.data();
+        if (!userData.properties || userData.properties.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron propiedades para este usuario' });
+        }
+
+        let properties = [];
+        for (const propertyId of userData.properties) {
+            const propertyDoc = await db.collection('properties').doc(propertyId).get();
+            if (propertyDoc.exists) {
+                properties.push(propertyDoc.data());
+            }
+        }
+
+        return res.status(200).json(properties);
     } catch (error) {
         return res.status(500).send(error);
     }
 });
+
 
 
 router.delete('/users/:users_id', async(req, res)=>{
