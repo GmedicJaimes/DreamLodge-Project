@@ -8,10 +8,7 @@ const db = admin.firestore();
 ////////////////////////////////// CREAR REVIEWS
 
 router.post('/reviews', async (req, res) => {
-<<<<<<< HEAD
    
-=======
->>>>>>> main
 
     try {
         const { property_id, author, rating, comment } = req.body;
