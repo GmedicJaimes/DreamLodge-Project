@@ -39,7 +39,7 @@ const DetailPost = () => {
                         <p>{property.location?.address}</p>
                         <p>{property.location?.city}</p>
                         <p>{property.location?.state}</p>
-                        <Link to={"/user"}>Owner</Link>
+                        <Link to={`/user/${user_id}`}>Owner</Link>
                     </div>
                     <div>
                         <h2>{property.price}</h2>

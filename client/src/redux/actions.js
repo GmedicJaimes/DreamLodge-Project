@@ -27,9 +27,9 @@ export const getDetailProperty = ( id ) => {
       };
     };
 
-export const getDetailUser = ( userId ) => {
+export const getDetailUser = ( id ) => {
     return async function(dispatch) {
-        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${userId}`)
+        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${id}`)
         console.log(data, 'data')
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
