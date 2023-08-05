@@ -36,19 +36,18 @@ const DetailUser = () => {
                         <p>5 Stars</p>
                     </div>
                     <div className={styles.blockDU}>
-                        {/* <h5>Years as owner</h5>
-                        <p>7</p> */}
                         <h5>Member since: </h5>
                         <p>{user.createdAt}</p>
                     </div>
                 </div>
             </div>
-                    <h4>My Properties</h4>
             <div className={styles.bodyContainer}>
                 <div className={styles.containerHead}>
+                    <h4>My Properties</h4>
                     {/* <Link><h4>Reviews</h4></Link>
                     <Link><h4>Photos and Videos</h4></Link>  */}
                 </div>
+                <div>
                 {
                     user.properties?.map(( property ) => { 
                         return( 
@@ -67,6 +66,7 @@ const DetailUser = () => {
                         </div>
                     )})
                 }
+                </div>
             </div>
             <About/>
         </div>
