@@ -1,4 +1,7 @@
 .container{
-    background-color: #549C8F;
+    background-color: #727272;
     height: 10vh;
+    padding: 4vh;
+    font-size: 1.3em;
+    color: white;
 }

@@ -7,7 +7,7 @@ import React from 'react';
 const Cards = ({allProperties}) => {
 
     return(
-        <div className={styles.container}>
+        <div className={styles.containerCards}>
             {
                 allProperties?.map((property)=> (
                     <Card property={property} key={property.id}/>

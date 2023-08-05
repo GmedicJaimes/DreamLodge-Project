@@ -7,15 +7,15 @@ import React from 'react';
 const Card = ({property}) => {
     const {name, price, location} = property
     return(
-      <Link to={"/users/:user_id/properties/:property_id"}>
+      <Link to={"/rooms"} className={styles.link}>
         <div className={styles.container}>
-            <section className={styles.image}>
-                <img src="filters.jpg" alt="casa"/>
-            </section>
+            <div className={styles.image}>
+                <img src="" alt="casa"/>
+            </div>
             <section className={styles.info}>
-                <h1>{name}</h1>
-                <p>{price}</p>
-                <p>{location}</p>
+                <h1>{location}</h1>
+                <p>$ {price} USD</p>
+                <p>{name}</p>
 
                     
             </section>
