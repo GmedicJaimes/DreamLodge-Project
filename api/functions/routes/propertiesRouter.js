@@ -57,7 +57,7 @@ const db = admin.firestore();
 
 router.get('/properties', async (req, res) => {
     try {
-        const { rooms, location, guests, types} = req.query;
+        const { rooms, state, guests, types} = req.query;
 
         let query = db.collectionGroup('properties');
 
@@ -69,25 +69,9 @@ router.get('/properties', async (req, res) => {
             query = query.where('rooms', '==', roomsNumber);
         }
 
-        // if (location) {
-        //     query = query.where('location', '==', location);
-        // };
-        if (guests) {
-            const guestsNumber = parseInt(guests);
-            if (isNaN(guestsNumber)) {
-                return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
-            }
-            query = query.where('guests', '==', guestsNumber);
-        }
-
-        // if (guests) {
-        //     const guestsNumber = parseInt(guests);
-        //     if (isNaN(guestsNumber)) {
-        //         return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
-        //     }
-        //     query = query.where('guests', '==', guestsNumber);
-        // }
-
+        if (state) {
+            query = query.where('location.state', '==', state);
+        };
         if (types) {
             if (!Array.isArray(types)) {
                 return res.status(400).json({ error: 'El valor de "types" debe ser un array.' });
