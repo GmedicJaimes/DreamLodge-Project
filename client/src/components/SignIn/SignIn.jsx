@@ -1,35 +1,32 @@
 import React, { useState } from 'react';
 import styles from "./SignIn.module.css"
+import { useDispatch } from 'react-redux';
+import { userRegister } from '../../redux/actions';
 
 const SignIn = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
 
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
+  const dispatch = useDispatch()
 
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
+  const [ register, setRegister ] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    country: "",
+    username: "",
+    Language: ["español"]
+  })
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
+  const handleRegisterForm = (event) => {
+    setRegister({
+      ...register,
+      [event.target.name] : event.target.value
+    })
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch(userRegister(register))
     //db
   };
 
@@ -44,8 +41,9 @@ const SignIn = () => {
           <input
             type="text"
             id="firstName"
-            value={firstName}
-            onChange={handleFirstNameChange}
+            name='firstName'
+            value={register.firstName}
+            onChange={handleRegisterForm}
             required
           />
         </div>
@@ -54,8 +52,9 @@ const SignIn = () => {
           <input
             type="text"
             id="lastName"
-            value={lastName}
-            onChange={handleLastNameChange}
+            name='lastName'
+            value={register.lastName}
+            onChange={handleRegisterForm}
             required
           />
         </div>
@@ -64,8 +63,9 @@ const SignIn = () => {
           <input
             type="text"
             id="email"
-            value={email}
-            onChange={handleEmailChange}
+            name='email'
+            value={register.email}
+            onChange={handleRegisterForm}
             required
           />
         </div>
@@ -75,18 +75,42 @@ const SignIn = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={handlePasswordChange}
+            name='password'
+            value={register.password}
+            onChange={handleRegisterForm}
             required
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Phone:</label>
+          <label htmlFor="phone">Country:</label>
           <input
-            type="tel"
-            id="phone"
-            value={phone}
-            onChange={handlePhoneChange}
+            type="text"
+            id="country"
+            name='country'
+            value={register.country}
+            onChange={handleRegisterForm}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="phone">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name='username'
+            value={register.username}
+            onChange={handleRegisterForm}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="phone">Languajes:</label>
+          <input
+            type="text"
+            id="Language"
+            name='Language'
+            value={register.Language}
+            onChange={handleRegisterForm}
             required
           />
         </div>

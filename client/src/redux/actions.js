@@ -34,3 +34,11 @@ export const getDetailUser = ( id ) => {
     }
 }
 
+export const userLogin = ( data ) => {
+    console.log(`email: ${data.email}, password: ${data.password}`);
+}
+
+export const userRegister = async ( data ) => {
+    // const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/`)
+    console.log(data);
+}
