@@ -7,6 +7,8 @@ const { v4: uuidv4 } = require('uuid');
 
 const db = admin.firestore();
 
+////////////////////////////////// OBTENER USUARIOS
+
 router.get('/users', async (req, res) => {
     try {
         const usersRef = db.collection('users');
@@ -20,8 +22,13 @@ router.get('/users', async (req, res) => {
         snapshot.forEach(doc => {
             let id = doc.id;
             let data = doc.data();
-            data.id = id; // Agregar la propiedad ID al objeto que se va a devolver
+            data.country = doc.data().country;
+            data.image = doc.data().image;
+            data.languague = doc.data().languague;
+            data.banner = doc.data().banner
             users.push(data);
+            data.id = id; // Agregar la propiedad ID al objeto que se va a devolver
+            // Incluir los campos adicionales en el objeto de datos
         });
 
         return res.status(200).json(users);
@@ -33,23 +40,48 @@ router.get('/users', async (req, res) => {
 
 
 
-// ------------------------------------- PRUEBA CHRIS
 
+
+
+////////////////////////////////// CREAR  USUARIO
 
 router.post('/users', async (req, res) => {
     try {
         // Validar los datos del usuario (puedes expandir esto según tus necesidades)
+        const {
+            firstName,
+            lastName,
+            country,
+            image,
+            banner,
+            languague,
+            username,
+            email,
+            password
+          } = req.body;
+          console.log(req.body)
+
+          if (!firstName || !lastName || !country || !username || !email || !password) {
+            return res.status(404).json({ error: "missing some info" });
+        }
+        
+
+
         const UserID = uuidv4();
         const newUser = {
-                         firstName: req.body.firstName,
-                         lastName: req.body.lastName,
-                         username: req.body.username,
-                         email: req.body.email,
-                         password: req.body.password,
-                         createdAt: new Date().toLocaleDateString(),
-                         id:UserID
-            
-            };
+            firstName: firstName,
+            lastName: lastName,
+            country: country,
+            image: image ?? '', 
+            banner: banner ?? '', 
+            languague: [languague] ?? [], 
+            username: username,
+            email: email,
+            password: password,
+            createdAt: new Date().toLocaleDateString(),
+            id: UserID
+        };
+            console.log(newUser)
 
         // Agregar un ID único para el documento
         await db.collection('users').doc(UserID).set(newUser);
@@ -65,7 +97,9 @@ router.post('/users', async (req, res) => {
 
 
 
-// ------------------------------------- PRUEBA CHRIS
+////////////////////////////////// OBTENER USUARIO BY ID
+
+
 router.get('/users/:user_id', async (req, res) => {
     try {
         const { user_id} = req.params;
@@ -84,35 +118,8 @@ router.get('/users/:user_id', async (req, res) => {
 }); 
 
 
-/* router.get('/users/:user_id', async (req, res) => {
-    try {
-        const { user_id } = req.params;
-        const userRef = db.collection('users').doc(user_id);
-        const userDoc = await userRef.get();
 
-        if (!userDoc.exists) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-
-        const userData = userDoc.data();
-        if (!userData.properties || userData.properties.length === 0) {
-            return res.status(404).json({ message: 'No se encontraron propiedades para este usuario' });
-        }
-
-        let properties = [];
-        for (const propertyId of userData.properties) {
-            const propertyDoc = await db.collection('properties').doc(propertyId).get();
-            if (propertyDoc.exists) {
-                properties.push(propertyDoc.data());
-            }
-        }
-
-        return res.status(200).json(properties);
-    } catch (error) {
-        return res.status(500).send(error);
-    }
-}); */
-
+////////////////////////////////// DELETE USUARIO
 
 
 router.delete('/users/:users_id', async(req, res)=>{
@@ -125,26 +132,39 @@ router.delete('/users/:users_id', async(req, res)=>{
     }
 });
 
+////////////////////////////////// MODIFICAR USUARIO
+
 router.put('/users/:users_id', async (req, res) => {
     try {
-      const document = db.collection('users').doc(req.params.users_id);
-  
-      const updates = {};
-      if (req.body.firstName) updates.firstName = req.body.firstName;
-      if (req.body.lastName) updates.lastName = req.body.lastName;
-      if (req.body.username) updates.username = req.body.username;
-      if (req.body.email) updates.email = req.body.email;
-      if (req.body.password) updates.password = req.body.password;
-      updates.lastUpdated = new Date().toLocaleDateString();
-  
-      await document.update(updates);
-  
-      return res.status(200).json("Se ha actualizado correctamente el usuario");
+        const document = db.collection('users').doc(req.params.users_id);
+
+        const updates = {};
+        if (req.body.firstName) updates.firstName = req.body.firstName;
+        if (req.body.lastName) updates.lastName = req.body.lastName;
+        if (req.body.country) updates.country = req.body.country;
+        if (req.body.image) updates.image = req.body.image ?? '';
+        if (req.body.banner) updates.banner = req.body.banner ?? '';
+        if (req.body.languague) updates.languague = [req.body.languague] ?? [];
+        if (req.body.username) updates.username = req.body.username;
+        if (req.body.email) updates.email = req.body.email;
+        if (req.body.password) updates.password = req.body.password;
+        updates.lastUpdated = new Date().toLocaleDateString();
+
+        await document.update(updates);
+
+        // Obtener los datos actualizados del usuario después de la actualización
+        const snapshot = await document.get();
+        if (!snapshot.exists) {
+            return res.status(404).json({ error: "Usuario no encontrado" });
+        }
+        const updatedUser = snapshot.data();
+
+        return res.status(200).json(updatedUser);
     } catch (error) {
-      return res.status(500).send(error);
+        return res.status(500).send(error);
     }
-  });
-  
+});
+
 
 
 module.exports= router; 
