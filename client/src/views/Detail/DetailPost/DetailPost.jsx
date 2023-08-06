@@ -32,23 +32,26 @@ const DetailPost = () => {
 
     return(
         <div>
-            <div className={styles.container}>
+            <div className={styles.containerPost}>
                 <header className={styles.head}>
-                    <div>
-                        <Link to={"/user"}>Owner</Link>
+                    <div className={styles.headLeft}>
                         <h1>{property.name}</h1>
-                        <p>{property.location?.address}</p>
-                        <p>{property.location?.city}</p>
-                        <p>{property.location?.state}</p>
-                        <Link to={"/user"}>Owner</Link>
+                        <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
                     </div>
-                    <div>
-                        <h2>{property.price}</h2>
+                    <div className={styles.headRigth}>
+                        <p>$ {property.price} USD noche</p>
                         <button className={styles.btn}>Reserve</button>
                     </div>
                 </header>
-                <div>
-                    <img src={property.image} alt={property.name} />
+                <div className={styles.image}>
+                    <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                    <div className={styles.sectionOne}>
+                      <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                      <div className={styles.sectionTwo}>
+                        <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                      </div>
+                      
+                    </div>
                 </div>
                 <div className={styles.line}></div>
                 <div className={styles.detailContainer}>
