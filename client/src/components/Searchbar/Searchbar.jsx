@@ -1,14 +1,17 @@
-import React from 'react';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styles from "./SearchBar.module.css";
 
+const SearchBar = () => {
+  return (
+    <div className={styles.searchContainer}>
+      <input type="text" className={styles.inputSearch} placeholder="Buscar..." />
+      <span className={styles.searchIcon}>
+        <FontAwesomeIcon icon={faSearch} />
+      </span>
+    </div>
+  );
+};
 
-
-const Searchbar = () => {
-    return(
-        <div>
-            <input type="text" />
-            <button>Search</button>
-        </div>
-    )
-}
-
-export default Searchbar
+export default SearchBar;

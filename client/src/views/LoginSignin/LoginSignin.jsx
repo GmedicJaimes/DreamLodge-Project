@@ -9,7 +9,7 @@ export const LoginSignin = () => {
     <div >
       <div className={styles.bigContainer}>
         <Login/>
-        <SignIn/>
+        {/* <SignIn/> */}
       </div>
         <About/>
     </div>

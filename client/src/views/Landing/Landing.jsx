@@ -12,20 +12,22 @@ const Landing = () => {
       </header>
 
       <section className={style.section}>
-        <h1>WELCOME HOME</h1>
-        <p>Explore the beauty of the world and rest at DreamLodge: <br /> the destination of adventures and dreamers</p>
+        <h1>Welcome home</h1>
+        <p>Explore the beauty of the world and <br />rest at DreamLodge: the destination  <br />of adventures and dreamers</p>
 
-        <Link to={"/home"}><button>Enter</button></Link>
+        <Link to={"/home"}><button>Explore</button></Link>
       </section>
 
       <footer className={style.footer}>
-        <ul>
-          <li>&copy; 2023 DreamLogde</li>
-          <li><a href="">Privacidad</a></li>
-          <li><a href="">Terminos</a></li>
-          <li><a href="">Mapa de sitio</a></li>
-          <li><a href="">Datos de la empresa</a></li>
-        </ul>
+        <div className={style.footerTitle}>
+          <span>&copy; 2023 DreamLogde</span>
+          </div>
+          <div className={style.footerText}>
+          <span><a href="">Privacidad</a></span>
+          <span><a href="">Terminos</a></span>
+          <span><a href="">Mapa de sitio</a></span>
+          <span><a href="">Datos de la empresa</a></span>
+        </div>
       </footer>
 
     </div>

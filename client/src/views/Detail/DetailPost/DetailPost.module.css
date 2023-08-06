@@ -72,6 +72,14 @@
   padding-right: 10px;
 }
 
+.division{
+  height: 200px;
+}
+section div h2, section h2{
+  margin: 1rem;
+  text-decoration: underline;
+}
+
 .sectionOne{
   display: flex;
   flex-direction: column;

@@ -39,7 +39,7 @@ export const Post = () => {
           <h2>Create your account</h2>
         </header>
         <div className={styles.formGroup}>
-          <label>
+          <label className={styles.labelName}>
             Name:
             <input type="text" name="name" value={formData.name} onChange={handleChange} />
           </label>
@@ -147,7 +147,7 @@ export const Post = () => {
         <div className={styles.formGroup}>
           <label>
             Image:
-            <input type="text" name="image" value={formData.image} onChange={handleChange} />
+            <input type="file" name="image" value={formData.image} onChange={handleChange} />
           </label>
         </div>
         <div className={styles.formGroup}>

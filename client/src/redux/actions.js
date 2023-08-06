@@ -33,3 +33,4 @@ export const getDetailUser = ( id ) => {
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
 }
+
