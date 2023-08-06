@@ -42,18 +42,20 @@ const DetailUser = () => {
                 </div>
             </div>
             <div className={styles.bodyContainer}>
-                <div className={styles.containerHead}>
-                    <h4>My Properties</h4>
-                    {/* <Link><h4>Reviews</h4></Link>
-                    <Link><h4>Photos and Videos</h4></Link>  */}
+                <div className={styles.menuSide}>
+                    <div className={styles.containerHead}>
+                        <h4>My Properties</h4>
+                        {/* <Link><h4>Reviews</h4></Link>
+                        <Link><h4>Photos and Videos</h4></Link>  */}
+                    </div>
                 </div>
-                <div>
+                <div className={styles.propertiesSide}>
                 {
                     user.properties?.map(( property ) => { 
                         return( 
                         <div className={styles.propertieContainer}>
                             <div className={styles.propertieBox}>
-                                <img src={property.image} alt={property.name} />
+                                <img src={property.image} alt={property.name} className={styles.imageA}/>
                             </div>
                             <div className={styles.propertieBox}>
                                     <h2>{property.name}</h2>

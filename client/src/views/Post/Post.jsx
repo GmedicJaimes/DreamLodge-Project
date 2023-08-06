@@ -147,7 +147,7 @@ export const Post = () => {
         <div className={styles.formGroup}>
           <label>
             Image:
-            <input type="text" name="image" value={formData.image} onChange={handleChange} />
+            <input type="file" name="image" value={formData.image} onChange={handleChange} />
           </label>
         </div>
         <div className={styles.formGroup}>
