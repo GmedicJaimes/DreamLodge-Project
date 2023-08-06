@@ -43,6 +43,11 @@
     color: #333;
     font-weight: bold;
     margin-bottom: 1px;
+
+}
+
+.labelName{
+    margin-top: 1rem;
 }
 
 .formGroup input {
