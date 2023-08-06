@@ -6,7 +6,6 @@
   max-width: 70%;
   margin: 0 auto;
 
-  font-family: 'Lexend Deca';
 }
 
 .head{
@@ -38,8 +37,7 @@
   padding: 8px 30px;
   border: none;
   border-radius: 20px;
-  background-color: #588157;
-  font-family: 'Lexend Deca';
+  background-color: #CD5A3E;
   font-size: 1em;
   font-weight: 500;
   margin-top: 5px;
@@ -49,7 +47,10 @@
 
 .headRigth button:hover{
   cursor: pointer;
-  background-color: #486347;
+}
+
+.line{
+  background-color: #CD5A3E;
 }
 
 .image{
@@ -74,6 +75,7 @@
 
 .division{
   height: 200px;
+
 }
 section div h2, section h2{
   margin: 1rem;
@@ -118,6 +120,7 @@ section div h2, section h2{
   padding: 0 30px;
   width: 90%;
   border-radius: 10px;
+  background-color: #EADCCF;
 }
 
 .sectionOverOne{
@@ -150,7 +153,7 @@ section div h2, section h2{
 }
 
 .ratingBox{
-  background-color: #588157;
+  background-color: #CD5A3E;
   margin: 0 auto;
   width: 40%;
   height: 100px;
@@ -159,8 +162,9 @@ section div h2, section h2{
 
 .ratingBox p{
   font-size: 2em;
+  margin-top: 1rem;
   font-weight: 600;
-  text-align: left;
+  text-align: center;
   padding: 10px;
   color: white;
 }
