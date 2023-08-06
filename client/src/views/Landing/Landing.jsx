@@ -23,10 +23,9 @@ const Landing = () => {
           <span>&copy; 2023 DreamLogde</span>
           </div>
           <div className={style.footerText}>
-          <span><a href="">Privacidad</a></span>
-          <span><a href="">Terminos</a></span>
-          <span><a href="">Mapa de sitio</a></span>
-          <span><a href="">Datos de la empresa</a></span>
+          <Link to={'/privacy&termns'}> <span>Privacy</span></Link>
+         <Link to={'/privacy&termns'}> <span>Terms</span></Link>
+         <Link to={'/privacy&termns'}> <span>Company Data</span></Link>
         </div>
       </footer>
 
@@ -35,3 +34,5 @@ const Landing = () => {
 }
 
 export default Landing;
+
+

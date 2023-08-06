@@ -1,0 +1,35 @@
+.containerFooter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 1500px;
+    background-color: #EADCCF;;
+
+}
+
+.ctnFooter{
+    height: 1300px;
+    width: 65%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 25px;
+    padding: 2rem;
+    text-align: left;
+}
+
+.ctnFooter h3{
+    margin: 1rem;
+    text-decoration: underline;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.ctnFooter h3 p{
+
+line-height: 0.2rem;
+letter-spacing: 0.1rem;
+text-align: left;
+}
