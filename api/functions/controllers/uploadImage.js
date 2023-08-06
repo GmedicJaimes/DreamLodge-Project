@@ -38,7 +38,7 @@ const uploadImageToStorage = async (imageFile) => {
   fs.unlinkSync(tempFilePath);
 
   // Retornar la URL de la imagen en el Firebase Storage
-  return `https://storage.googleapis.com/${bucket.name}/${options.destination}`;
+  return `gs://dreamlodge-8517c.appspot.com${bucket.name}/${options.destination}`;
 };
 
 module.exports = { uploadImageToStorage };
