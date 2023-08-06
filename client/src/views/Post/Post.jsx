@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { createProperty } from '../redux/actions/propertyActions';
+import { createPost } from '../../redux/actions';
 
 const Post= () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Post= () => {
     formData.append('imageFile', data.imageFile[0]); // la propiedad por ahora tendra una sola foto asi que tomamos la primer opcion nomas
 
     try {
-      await dispatch(createProperty(formData));
+      await dispatch(createPost(formData));
       alert('Property created successfully!');
     } catch (error) {
       console.error(error);

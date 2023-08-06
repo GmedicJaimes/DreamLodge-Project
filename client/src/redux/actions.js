@@ -1,67 +1,99 @@
-import axios from "axios"
-import {
-    GET_DETAIL_PROPERTIE,
-     GET_DETAIL_USER,
-    GET_ALL_PROPERTIES,
-    GET_DETAIL_PROPERTY
-} from "./action-types"
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createPost } from '../../redux/actions';
 
+const Post = () => {
+  const dispatch = useDispatch();
 
-export const getAllProperties = () => {
-    return async function(dispatch){
-        const { data } = await axios.get("http://localhost:5000/dreamlodge-8517c/us-central1/app/properties")
-        return dispatch({type: GET_ALL_PROPERTIES, payload: data})
-    }
-}
-//hola cojonudo
+  const [formData, setFormData] = useState({
+    user_id: '',
+    name: '',
+    types: '',
+    location: '',
+    rooms: 0,
+    services: '',
+    description: '',
+    price: 0,
+    imageFile: null,
+  });
 
-export const getDetailPropertie = (user_id, property_id ) => {
-    return async (dispatch) => {
-        try {
-          const response = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${user_id}/properties/${property_id}`);
-          const propertyData = response.data;
-          // Aquí puedes realizar cualquier otra lógica necesaria antes de enviar la propiedad a los reducers
-          dispatch({ type: 'GET_PROPERTY_BY_ID_SUCCESS', payload: propertyData });
-        } catch (error) {
-          dispatch({ type: 'GET_PROPERTY_BY_ID_ERROR', payload: error.message });
-        }
-      };
-};
-
-export const getDetailUser = ( userId ) => {
-    return async function(dispatch) {
-        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${userId}`)
-        console.log(data, 'data')
-        return dispatch({ type: GET_DETAIL_USER, payload: data})
-    }
-};
-
-export const createPost = (formData) => {
-    return async function (dispatch) {
-      try {
-        const { imageFile, ...otherData } = formData;
-        const formDataWithoutImage = { ...otherData };
-  
-        const response = await axios.post(
-          `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties`,
-          formDataWithoutImage
-        );
-  
-        // Ahora, sube la imagen a Firebase Storage y obtén su URL
-        const imageURL = await uploadImageToStorage(imageFile);
-  
-        // Actualiza la propiedad creada con la URL de la imagen
-        await axios.patch(
-          `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${response.data.id}`,
-          { image: imageURL }
-        );
-  
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
-  
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFormData({
+      ...formData,
+      imageFile: file,
+    });
+  };
 
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formDataWithImage = new FormData();
+    for (const key in formData) {
+      if (key === 'imageFile') {
+        formDataWithImage.append(key, formData[key]);
+      } else {
+        formDataWithImage.append(key, JSON.stringify(formData[key]));
+      }
+    }
+
+    try {
+      await dispatch(createPost(formDataWithImage));
+      alert('Property created successfully!');
+    } catch (error) {
+      console.error(error);
+      alert('Failed to create property. Please try again.');
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div>
+        <label>User ID:</label>
+        <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Property Name:</label>
+        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Property Types:</label>
+        <input type="text" name="types" value={formData.types} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Location:</label>
+        <input type="text" name="location" value={formData.location} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Rooms:</label>
+        <input type="number" name="rooms" value={formData.rooms} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Services:</label>
+        <input type="text" name="services" value={formData.services} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Description:</label>
+        <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Price:</label>
+        <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
+      </div>
+      <div>
+        <label>Image:</label>
+        <input type="file" name="imageFile" onChange={handleFileChange} required />
+      </div>
+      <button type="submit">Create Property</button>
+    </form>
+  );
+};
+
+export default Post;
