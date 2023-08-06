@@ -21,10 +21,13 @@
 }
 
 .header h1{
-  font-weight: 300;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   letter-spacing: 0.1rem;
+  font-weight: 400;
   margin-left: 2rem;
+  color: #1E1E23;
+  font-family: 'Montserrat' !important;
+;
 }
 
 .header button{
@@ -57,9 +60,8 @@
 
 
 .section h1{
-  font-family: sans-serif;
+  font-family: 'Montserrat';
   font-size: 3.5rem;
-  font-weight: 100;
 }
 
 .section p{
@@ -98,7 +100,7 @@ cursor: pointer;
 
 .footer .footerTitle {
   margin-left: 1rem;
-  font-family: MONTSERRAT ;
+  font-family: 'Montserrat'; 
   font-weight: bold;
 
 }
@@ -108,17 +110,16 @@ cursor: pointer;
 }
 
 .footer .footerText span {
-  margin: 0 0.5rem;
-  padding: 0 1rem;
-  border-right: 1px solid #EADCCF
-}
-
-/* Eliminar el borde derecho solo en el último span dentro del .footerText */
-.footer .footerText span:last-child {
-  border-right: none;
-}
-
-.footer a {
-  text-decoration: none;
+  font-weight: 100;
+  margin: 0 0.1rem;
+  padding: 0 0.5rem;
   color: #EADCCF;
+  text-decoration: none;
+
+}
+
+
+
+a{
+  text-decoration: none;
 }

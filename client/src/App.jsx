@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useLocation } from 'react-router-dom'
 import { LoginSignin } from './views/LoginSignin/LoginSignin'
 import { SignInView } from './views/signing/SignInView';
+import { FooterLinks } from './views/FooterLinks/FooterLinks';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/signin' element={<SignInView/>}/>
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>
+        <Route path='/privacy&termns' element={<FooterLinks/>}/>
         <Route path='/post' element={<Post/>}/>  
          
       </Routes>
