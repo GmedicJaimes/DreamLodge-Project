@@ -14,6 +14,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp({
     credential: admin.credential.cert('./permisos.json'),
+    storageBucket: 'your-storage-bucket-url.appspot.com',
 });
 
 

@@ -229,58 +229,65 @@ router.get('/properties/:property_id', async (req, res) => {
 
 router.post('/properties', async (req, res) => {
     try {
-        const { user_id, name, types, location, rooms, services, description, price } = req.body;
-        const imageFile = req.file; // el front si o si debe enviar por file
-
-        // validamos que si o si exista la foto
-
-
-        if (!imageFile) {
-            return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
-        }
-
-        const imageURL = await uploadImageToStorage(imageFile)
-
-        // 
-        const PropertyId = uuidv4();
-
-        const newProperty = {
-            id: PropertyId, // Propiedad id
-            user_id, 
-            name, 
-            types, 
-            location, 
-            rooms, 
-            services, 
-            description, 
-            price,
-            image: imageURL // Agrega la URL de la imagen a la propiedad
-        };
-
-        // ... Resto de la lógica para crear la propiedad y guardarla en Firestore ...
-
-        const userRef = db.collection("users").doc(user_id);
-
-        const doc = await userRef.get();
-        if (!doc.exists) {
-            return res.status(404).json({ message: "Usuario no encontrado" });
-        }
-
-        // Crear la propiedad en una nueva colección 'properties'
-        await db.collection('properties').doc(PropertyId).set(newProperty);
-
-        // Actualizar el documento del usuario para incluir la propiedad completa
-        const userDoc = await userRef.get();
-        let userProperties = userDoc.data().properties || [];
-        userProperties.push(newProperty);
-        await userRef.update({ properties: userProperties });
-
-        return res.status(201).json(newProperty);
+      // Extraer datos del cuerpo de la solicitud (request body)
+      const { user_id, name, types, location, rooms, services, description, price } = req.body;
+  
+      // Obtener el archivo de imagen enviado desde el cliente
+      const imageFile = req.file; // El front-end debe enviar el archivo como 'file'
+  
+      // Validar si se proporcionó una imagen
+      if (!imageFile) {
+        return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+      }
+  
+      // Subir la imagen a Firebase Storage y obtener su URL
+      const imageURL = await uploadImageToStorage(imageFile);
+  
+      // Generar un nuevo ID para la propiedad
+      const PropertyId = uuidv4();
+  
+      // Crear un objeto con los datos de la nueva propiedad
+      const newProperty = {
+        id: PropertyId, // Propiedad id
+        user_id, 
+        name, 
+        types, 
+        location, 
+        rooms, 
+        services, 
+        description, 
+        price,
+        image: imageURL // Agrega la URL de la imagen a la propiedad
+      };
+  
+      // Resto de la lógica para crear la propiedad y guardarla en Firestore ...
+  
+      // Obtener una referencia al documento del usuario
+      const userRef = db.collection("users").doc(user_id);
+  
+      // Verificar si el usuario existe
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+  
+      // Crear la propiedad en una nueva colección 'properties' en Firestore
+      await db.collection('properties').doc(PropertyId).set(newProperty);
+  
+      // Actualizar el documento del usuario para incluir la nueva propiedad
+      const userDoc = await userRef.get();
+      let userProperties = userDoc.data().properties || [];
+      userProperties.push(newProperty);
+      await userRef.update({ properties: userProperties });
+  
+      // Responder con el objeto de la nueva propiedad creada
+      return res.status(201).json(newProperty);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Error al postear propiedad" });
+      // Manejar cualquier error que ocurra durante el proceso de creación de la propiedad
+      console.log(error);
+      return res.status(500).json({ message: "Error al postear propiedad" });
     }
-});
+  })
 
 
 
