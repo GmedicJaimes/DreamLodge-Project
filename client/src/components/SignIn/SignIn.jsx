@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from "./SignIn.module.css"
 import { useDispatch } from 'react-redux';
 import { userRegister } from '../../redux/actions';
+import { Link } from "react-router-dom"
 
 const SignIn = () => {
 
@@ -31,7 +32,6 @@ const SignIn = () => {
     event.preventDefault();
     console.log(register);
     dispatch(userRegister(register))
-    //db
   };
 
   return (
@@ -118,8 +118,9 @@ const SignIn = () => {
             required
           />
         </div>
-        <button className={styles.btn} type="submit">Sign In</button>
+        <button className={styles.btn} type="submit">Create my account</button>
       </form>
+      <p>Already have an account? <Link>Log in</Link></p>
     </div>
   );
 };

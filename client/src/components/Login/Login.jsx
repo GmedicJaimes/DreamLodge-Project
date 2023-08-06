@@ -56,12 +56,11 @@ const Login = () => {
                     />
                 </div>
                 <Link>
-                    <p>Forgot password?</p>
+                    <p className={styles.small}>Forgot password?</p>
                 </Link>
-                <button className={styles.btn} type="submit">Login</button>
-                <p>Don't have an account?</p>
+                    <button className={styles.btnLogin} type="submit">Login</button>
                 <Link to={"/signin"}>
-                    <p >Sign up now</p>
+                    <button className={styles.btnCreateAcc}>Sign up now</button>
                 </Link>
             </form>
         </div>
