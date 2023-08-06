@@ -10,11 +10,14 @@ const SignIn = () => {
   const [ register, setRegister ] = useState({
     firstName: "",
     lastName: "",
-    email: "",
-    password: "",
     country: "",
+    //imagen y banner hardcodeado, hay que hacer logica para que se randomize mas
+    image: "https://randomuser.me/api/portraits/women/32.jpg",
+    banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+    languague: ["español"],
     username: "",
-    Language: ["español"]
+    email: "",
+    password: ""
   })
 
   const handleRegisterForm = (event) => {
@@ -26,6 +29,7 @@ const SignIn = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(register);
     dispatch(userRegister(register))
     //db
   };
@@ -107,9 +111,9 @@ const SignIn = () => {
           <label htmlFor="phone">Languajes:</label>
           <input
             type="text"
-            id="Language"
-            name='Language'
-            value={register.Language}
+            id="languague"
+            name='languague'
+            value={register.languague}
             onChange={handleRegisterForm}
             required
           />
