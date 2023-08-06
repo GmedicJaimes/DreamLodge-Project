@@ -35,22 +35,21 @@
 }
 
 .headRigth button{
-  /* text-align: right; */
   padding: 8px 30px;
   border: none;
   border-radius: 20px;
-  background-color: rgba(163, 163, 163, 0.911);
+  background-color: #588157;
   font-family: 'Lexend Deca';
   font-size: 1em;
   font-weight: 500;
   margin-top: 5px;
-  color: rgb(0, 0, 0);
+  color: rgb(252, 252, 252);
   box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
 }
 
 .headRigth button:hover{
   cursor: pointer;
-  background-color: rgba(114, 114, 114, 0.747);
+  background-color: #486347;
 }
 
 .image{
@@ -58,7 +57,6 @@
   flex-direction: row;
   /* justify-content: space-between; */
   align-items: center;
-  /* background-color: aqua; */
   width: 100%;
   height: 400px;
 }
@@ -69,11 +67,9 @@
 
 .image img{
   background-color: transparent;
-  width: 90%;
+  width: 100%;
   height: 100%;
   padding-right: 10px;
-  /* border-radius: 1.4em; */
-  
 }
 
 .sectionOne{
@@ -81,15 +77,12 @@
   flex-direction: column;
   width: 50%;
   height: 100%;
-  /* background-color: blue; */
-  /* margin-bottom: 10px; */
 }
 
 .sectionOne img{
   width: 100%;
   height: 200px;
   padding-bottom: 10px;
-  /* border-radius: 10px; */
 }
 
 .sectionTwo{
@@ -100,5 +93,66 @@
   width: 100%;
   height: 190px;
   padding: 0;
-  /* border-radius: 10px; */
+}
+
+.line{
+  border: 1px solid rgba(207, 207, 207, 0.856);
+  width: 100%;
+  margin: 50px auto;
+}
+
+.overview{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  align-items: flex-start;
+  background-color: rgb(218, 218, 218);
+  padding: 0 30px;
+  width: 90%;
+  border-radius: 10px;
+}
+
+.sectionOverOne{
+  width: 60%;
+}
+
+.sectionOverOne h2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.sectionOverOne p{
+  font-size: .9em;
+  font-weight: 400;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.sectionOverTwo{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.sectionOverTwo h2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.ratingBox{
+  background-color: #588157;
+  margin: 0 auto;
+  width: 40%;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.ratingBox p{
+  font-size: 2em;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px;
+  color: white;
 }

@@ -28,7 +28,7 @@ const DetailPost = () => {
     useEffect(() => {
         dispatch(getDetailProperty(id))
         // dispatch(getDetailUser(userId))
-    }, [ dispatch, id ])
+    }, [ dispatch, id])
 
     return(
         <div>
@@ -54,21 +54,14 @@ const DetailPost = () => {
                     </div>
                 </div>
                 <div className={styles.line}></div>
-                <div className={styles.detailContainer}>
-                    <div>
+                <div className={styles.overview}>
+                    <div className={styles.sectionOverOne}>
                         <h2>Overview</h2>
-                        {
-                            property.types?.map((type) => {
-                                return(
-                                    <p key={type}>{type}</p>
-                                )
-                            })
-                        }
                         <p>{property.description}</p>
                     </div>
-                    <div>
+                    <div className={styles.sectionOverTwo}>
+                        <h2>Rating</h2>
                         <div className={styles.ratingBox}>
-                            <h2>Rating</h2>
                             <p>4,20</p>
                         </div>
                     </div>

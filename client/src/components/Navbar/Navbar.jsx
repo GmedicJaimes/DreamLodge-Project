@@ -7,16 +7,18 @@ import React from 'react';
 const Navbar = () => {
     return(
         <div className={styles.container}> 
-            <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
-            
-            <Searchbar/>
-            
-            {/* <Link to={"/signin"}>Sign In</Link> */}
-            <div className={styles.button}>
-              <Link to={"/post"} className={styles.post}>Post Lodge</Link>
-              <Link to={"/login"} className={styles.login}>Login</Link>
-            </div>
-            
+          <div className={styles.containertwo}>
+              <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
+              
+              <Searchbar/>
+              
+              {/* <Link to={"/signin"}>Sign In</Link> */}
+              <div className={styles.button}>
+                <Link to={"/post"} className={styles.post}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.login}>Login</Link>
+              </div>
+
+          </div>
         </div>
     )
 }
