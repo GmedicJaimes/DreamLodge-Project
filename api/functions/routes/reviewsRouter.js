@@ -177,11 +177,7 @@ const db = admin.firestore();
 
 
 
-router.post('/reviews', async (req, res) => {
-<<<<<<< HEAD
-   
-=======
->>>>>>> main
+router.post('/reviews', async (req, res) => {  
 
     try {
         const { property_id, author, rating, comment } = req.body;

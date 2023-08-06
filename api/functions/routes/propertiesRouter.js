@@ -2,12 +2,66 @@ const { Router } = require('express');
 const router = Router();
 const admin = require('firebase-admin');
 const { v4: uuidv4 } = require('uuid');
+const os = require('os');
+const path = require('path');
+const fs = require('fs');
+const { uploadImageToStorage } = require('../controllers/uploadImage');
+const { getImageURLFromStorage } = require('../controllers/getImage');
 
-const db = admin.firestore();
+// ruta para RESPONDER TODAS LAS PROPIEDADES(incluida la img)
+// router.get('/properties', async (req, res) => {
+//     try {
+//         const { rooms, location, guests, types} = req.query;
 
+//         let query = db.collectionGroup('properties');
+
+//         if (rooms) {
+//             const roomsNumber = parseInt(rooms);
+//             if (isNaN(roomsNumber)) {
+//                 return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
+//             }
+//             query = query.where('rooms', '==', roomsNumber);
+//         }
+
+//         if (location) {
+//             query = query.where('location', '==', location);
+//         };
+//         if (guests) {
+//             const guestsNumber = parseInt(guests);
+//             if (isNaN(guestsNumber)) {
+//                 return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
+//             }
+//             query = query.where('guests', '==', guestsNumber);
+//         }
+
+//         if (types) {
+//             if (!Array.isArray(types)) {
+//                 return res.status(400).json({ error: 'El valor de "type" debe ser un array.' });
+//             }
+//             query = query.where('type', 'array-contains-any', types);
+//         }
+
+//         const querySnapshot = await query.get();
+
+//         if (querySnapshot.empty) {
+//             return res.status(404).json({ message: 'No se encontraron propiedades que coincidan con los filtros especificados.' });
+//         } 
+
+//         const response = [];
+//         querySnapshot.forEach((doc) => {
+//             const data = doc.data();
+//             response.push(data);
+//         });
+
+//         return res.status(200).json(response);
+//     } catch (error) {
+//         return res.status(500).send(error);
+//     }
+    
+// });
 router.get('/properties', async (req, res) => {
     try {
-        const { rooms, location, guests, types} = req.query;
+        const { rooms, location, guests, types } = req.query;
 
         let query = db.collectionGroup('properties');
 
@@ -21,7 +75,7 @@ router.get('/properties', async (req, res) => {
 
         if (location) {
             query = query.where('location', '==', location);
-        };
+        }
         if (guests) {
             const guestsNumber = parseInt(guests);
             if (isNaN(guestsNumber)) {
@@ -41,23 +95,61 @@ router.get('/properties', async (req, res) => {
 
         if (querySnapshot.empty) {
             return res.status(404).json({ message: 'No se encontraron propiedades que coincidan con los filtros especificados.' });
-        } 
+        }
 
         const response = [];
-        querySnapshot.forEach((doc) => {
+        for (const doc of querySnapshot.docs) {
             const data = doc.data();
+
+            // Obtener la URL de la imagen asociada a la propiedad desde el Storage
+            const imageURL = await getImageURLFromStorage(data.image);
+            data.image = imageURL;
+
             response.push(data);
-        });
+        }
 
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).send(error);
     }
-    
 });
+// ============================================================
+// 00000000000000000000000000000000000000000000000000000000000
+// ============================================================
+//ruta para BUSCAR PROPIEDAD
+// ============================================================
+// 00000000000000000000000000000000000000000000000000000000000
+// ===========================================================
+// router.get('/properties/:property_id', async (req, res) => {
+//     try {
+//         const { property_id } = req.params;
 
+//         const propertyRef = db.collection('properties').doc(property_id);
+//         const propertyDoc = await propertyRef.get();
 
+//         if (!propertyDoc.exists) {
+//             return res.status(404).json({ message: 'Propiedad no encontrada' });
+//         }
 
+//         let propertyData = propertyDoc.data();
+
+//         if (propertyData.reviews && propertyData.reviews.length > 0) {
+//             let reviews = [];
+//             for (const reviewId of propertyData.reviews) {
+//                 const reviewDoc = await db.collection('reviews').doc(reviewId).get();
+//                 if (reviewDoc.exists) {
+//                     reviews.push(reviewDoc.data());
+//                 }
+//             }
+
+//             propertyData = { ...propertyData, reviews }; // Agregar las reseñas a los datos de la propiedad
+//         }
+
+//         return res.status(200).json(propertyData);
+//     } catch (error) {
+//         return res.status(500).send(error);
+//     }
+// });
 router.get('/properties/:property_id', async (req, res) => {
     try {
         const { property_id } = req.params;
@@ -71,6 +163,16 @@ router.get('/properties/:property_id', async (req, res) => {
 
         let propertyData = propertyDoc.data();
 
+        // si la propiedad tiene un atributo image
+        if (propertyData.image) {
+            // obtenemos la url
+            const imageURL = propertyData.image;
+
+            // Ah toda la informacion que nos llega de la propiedad, le agregamos un atributo image con la url para responder a la peticion
+            propertyData = { ...propertyData, image: imageURL };
+        }
+
+        //hacemos la misma validacion para las
         if (propertyData.reviews && propertyData.reviews.length > 0) {
             let reviews = [];
             for (const reviewId of propertyData.reviews) {
@@ -88,64 +190,67 @@ router.get('/properties/:property_id', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+// ============================================================
+// 00000000000000000000000000000000000000000000000000000000000
+// ============================================================
+//ruta para CREAR propiedades
+// router.post('/properties', async (req, res) => {
 
-
-// // Ruta para obtener propiedades, filtradas por rooms si se proporciona el parámetro
-// router.get('/properties', async (req, res) => {
 //     try {
-//         const { rooms, location, guests, types } = req.query;
-       
-//         if (rooms) {
-//             const roomsNumber = parseInt(rooms);
-//             if (isNaN(roomsNumber)) {
-//                 return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
-//             }
+//         const { user_id, name, types, location, rooms, services, image, description, price } = req.body;
 
-//             const roomsQuerySnapshot = await db.collection('properties').where("rooms", "==", roomsNumber).get();
+//         const PropertyId = uuidv4();
 
-//             if (roomsQuerySnapshot.empty) {
-//                 return res.status(404).json({ message: 'No se encontraron propiedades con el número de habitaciones especificado.' });
-//             }
+//         const newProperty = {
+//             id: PropertyId, // Propiedad id
+//             user_id, 
+//             name, 
+//             types, 
+//             location, 
+//             rooms, 
+//             services, 
+//             image, 
+//             description, 
+//             price
+//         };
 
-//             const response = [];
-//             roomsQuerySnapshot.forEach((doc) => {
-//                 const data = doc.data();
-//                 response.push(data);
-//             });
+//         const userRef = db.collection("users").doc(user_id);
 
-//             return res.status(200).json(response);
-//         } else {
-//             // Si no se proporciona el parámetro 'rooms', se obtienen todas las propiedades
-//             const querySnapshot = await db.collection('properties').get();
-//             const docs = querySnapshot.docs;
-
-//             const response = docs.map((doc) => ({
-//                 name: doc.data().name,
-//                 location: doc.data().location,
-//                 description: doc.data().description,
-//                 rooms: doc.data().rooms,
-//                 technologies: doc.data().technologies,
-//                 views: doc.data().views,
-//                 price: doc.data().price,
-//             }));
-//             return res.status(200).json(response);
+//         const doc = await userRef.get();
+//         if (!doc.exists) {
+//             return res.status(404).json({ message: "Usuario no encontrado" });
 //         }
+
+//         // Crear la propiedad en una nueva colección 'properties'
+//         await db.collection('properties').doc(PropertyId).set(newProperty);
+
+//         // Actualizar el documento del usuario para incluir la propiedad completa
+//         const userDoc = await userRef.get();
+//         let userProperties = userDoc.data().properties || [];
+//         userProperties.push(newProperty);
+//         await userRef.update({ properties: userProperties });
+
+//         return res.status(201).json(newProperty);
 //     } catch (error) {
-//         return res.status(500).send(error);
+//         console.log(error)
+//         return res.status(500).json({ message: "Error al postear propiedad" });
 //     }
 // });
-
-
-
-
-//ruta para crear propiedades
-
-
 router.post('/properties', async (req, res) => {
-
     try {
-        const { user_id, name, types, location, rooms, services, image, description, price } = req.body;
+        const { user_id, name, types, location, rooms, services, description, price } = req.body;
+        const imageFile = req.file; // el front si o si debe enviar por file
 
+        // validamos que si o si exista la foto
+
+
+        if (!imageFile) {
+            return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+        }
+
+        const imageURL = await uploadImageToStorage(imageFile)
+
+        // 
         const PropertyId = uuidv4();
 
         const newProperty = {
@@ -156,10 +261,12 @@ router.post('/properties', async (req, res) => {
             location, 
             rooms, 
             services, 
-            image, 
             description, 
-            price
+            price,
+            image: imageURL // Agrega la URL de la imagen a la propiedad
         };
+
+        // ... Resto de la lógica para crear la propiedad y guardarla en Firestore ...
 
         const userRef = db.collection("users").doc(user_id);
 
@@ -179,17 +286,14 @@ router.post('/properties', async (req, res) => {
 
         return res.status(201).json(newProperty);
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.status(500).json({ message: "Error al postear propiedad" });
     }
 });
-
-
-
-
-
-//-------------------------------------- PRUEBA CHRISTIAN
-//ruta para borrar propiedades
+// ============================================================
+// 00000000000000000000000000000000000000000000000000000000000
+// ============================================================
+// ruta para BORRAR propiedades
 router.delete('/properties/:properties_id', async(req, res)=>{
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
@@ -199,8 +303,10 @@ router.delete('/properties/:properties_id', async(req, res)=>{
         return res.status(500).send(error)
     }
 });
-
-//ruta para actualizar propiedades
+// ============================================================
+// 00000000000000000000000000000000000000000000000000000000000
+// ============================================================
+//ruta para ACTUALIZAR PROPIEDAD
 router.put('/properties/:properties_id', async(req, res)=>{
     try {
         const document = db.collection('properties').doc(req.params.properties_id);
@@ -228,7 +334,7 @@ router.put('/properties/:properties_id', async(req, res)=>{
         return res.status(500).send(error)
     }
 });
-
+// ===============================================================
 module.exports= router;
 
 
