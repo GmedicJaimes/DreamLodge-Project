@@ -4,8 +4,8 @@ import React from 'react';
 
 
 
-const Card = ({property}) => {
-    const {id, name, price, types, image, location} = property
+const Card = ({card}) => {
+    const {id, name, price, image, location} = card
     return(
       <Link to={`/rooms/${id}`} className={styles.link}>
         <div className={styles.container}>
