@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { createProperty } from '../redux/actions/propertyActions';
+import { createProperty } from '../../redux/actions';
 
 const Post= () => {
   const dispatch = useDispatch();
