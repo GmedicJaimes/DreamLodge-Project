@@ -12,34 +12,35 @@ const db = admin.firestore();
 
 router.get('/properties', async (req, res) => {
     try {
-        const { rooms, location, guests, types} = req.query;
+        const { rooms, state, guests, types} = req.query;
 
         let query = db.collectionGroup('properties');
 
-        if (rooms) {
-            const roomsNumber = parseInt(rooms);
-            if (isNaN(roomsNumber)) {
-                return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
-            }
-            query = query.where('rooms', '==', roomsNumber);
+        // if (rooms) {
+        //     const roomsNumber = parseInt(rooms);
+        //     if (isNaN(roomsNumber)) {
+        //         return res.status(400).json({ error: 'El valor de "rooms" debe ser un número válido.' });
+        //     }
+        //     query = query.where('rooms', '==', roomsNumber);
+        // }
+
+        if (state) {
+            query = query.where('location.state', '==', state);
         }
 
-        if (location) {
-            query = query.where('location', '==', location);
-        };
-        if (guests) {
-            const guestsNumber = parseInt(guests);
-            if (isNaN(guestsNumber)) {
-                return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
-            }
-            query = query.where('guests', '==', guestsNumber);
-        }
+        // if (guests) {
+        //     const guestsNumber = parseInt(guests);
+        //     if (isNaN(guestsNumber)) {
+        //         return res.status(400).json({ error: 'El valor de "guests" debe ser un número válido.' });
+        //     }
+        //     query = query.where('guests', '==', guestsNumber);
+        // }
 
         if (types) {
             if (!Array.isArray(types)) {
-                return res.status(400).json({ error: 'El valor de "type" debe ser un array.' });
+                return res.status(400).json({ error: 'El valor de "types" debe ser un array.' });
             }
-            query = query.where('type', 'array-contains-any', types);
+            query = query.where('types', 'array-contains-any', types);
         }
 
         const querySnapshot = await query.get();
