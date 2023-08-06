@@ -7,7 +7,7 @@ import {
 const initialState = {
     allProperties : [],
     detailProperty : {},
-    detailUser: []
+    detailUser: {}
 }
 
 const reducer = ( state = initialState, actions) => {

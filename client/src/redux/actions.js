@@ -18,7 +18,7 @@ export const getDetailProperty = ( id ) => {
         try {
           const response = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${id}`);
           const propertyData = response.data;
-          // Aquí puedes realizar cualquier otra lógica necesaria antes de enviar la propiedad a los reducers
+
           dispatch({ type: GET_DETAIL_PROPERTY, payload: propertyData });
         } catch (error) {
           dispatch({ type: GET_DETAIL_PROPERTY, payload: error.message });
@@ -26,10 +26,10 @@ export const getDetailProperty = ( id ) => {
       };
     };
 
-export const getDetailUser = ( userId ) => {
+export const getDetailUser = ( id ) => {
     return async function(dispatch) {
-        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${userId}`)
-        console.log(data, 'data')
+        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${id}`)
+
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
 }
