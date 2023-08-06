@@ -1,26 +1,42 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createProperty } from '../../redux/actions';
+import { createPost } from '../../redux/actions';
 
-const Post= () => {
+const Post = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append('user_id', data.user_id);
-    formData.append('name', data.name);
-    formData.append('types', JSON.stringify(data.types));
-    formData.append('location', data.location);
-    formData.append('rooms', data.rooms);
-    formData.append('services', JSON.stringify(data.services));
-    formData.append('description', data.description);
-    formData.append('price', data.price);
-    formData.append('imageFile', data.imageFile[0]); // la propiedad por ahora tendra una sola foto asi que tomamos la primer opcion nomas
+  const [formData, setFormData] = useState({
+    user_id: '',
+    name: '',
+    types: '',
+    location: '',
+    rooms: 0,
+    services: '',
+    description: '',
+    price: 0,
+    imageFile: null,
+  });
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFormData({
+      ...formData,
+      imageFile: file,
+    });
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
     try {
-      await dispatch(createProperty(formData));
+      await dispatch(createPost(formData)); // Enviar el objeto formData completo
       alert('Property created successfully!');
     } catch (error) {
       console.error(error);
@@ -29,51 +45,42 @@ const Post= () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <div>
         <label>User ID:</label>
-        <input type="text" name="user_id" ref={register({ required: true })} />
-        {errors.user_id && <span>This field is required.</span>}
+        <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Property Name:</label>
-        <input type="text" name="name" ref={register({ required: true })} />
-        {errors.name && <span>This field is required.</span>}
+        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Property Types:</label>
-        <input type="text" name="types" ref={register({ required: true })} />
-        {errors.types && <span>This field is required.</span>}
+        <input type="text" name="types" value={formData.types} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Location:</label>
-        <input type="text" name="location" ref={register({ required: true })} />
-        {errors.location && <span>This field is required.</span>}
+        <input type="text" name="location" value={formData.location} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Rooms:</label>
-        <input type="number" name="rooms" ref={register({ required: true })} />
-        {errors.rooms && <span>This field is required.</span>}
+        <input type="number" name="rooms" value={formData.rooms} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Services:</label>
-        <input type="text" name="services" ref={register({ required: true })} />
-        {errors.services && <span>This field is required.</span>}
+        <input type="text" name="services" value={formData.services} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Description:</label>
-        <input type="text" name="description" ref={register({ required: true })} />
-        {errors.description && <span>This field is required.</span>}
+        <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Price:</label>
-        <input type="number" name="price" ref={register({ required: true })} />
-        {errors.price && <span>This field is required.</span>}
+        <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
       </div>
       <div>
         <label>Image:</label>
-        <input type="file" name="imageFile" ref={register({ required: true })} />
-        {errors.imageFile && <span>This field is required.</span>}
+        <input type="file" name="imageFile" onChange={handleFileChange} required />
       </div>
       <button type="submit">Create Property</button>
     </form>
@@ -81,6 +88,7 @@ const Post= () => {
 };
 
 export default Post;
+
 
 
 

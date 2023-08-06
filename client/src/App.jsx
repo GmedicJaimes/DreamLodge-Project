@@ -7,7 +7,6 @@ import Navbar from './components/Navbar/Navbar'
 import DetailPost from "./views/Detail/DetailPost/DetailPost"
 import DetailUser from "./views/Detail/DetaiUser/DetailUser"
 import Post from './views/Post/Post';
-
 import { useLocation } from 'react-router-dom'
 import { LoginSignin } from './views/LoginSignin/LoginSignin'
 
