@@ -8,6 +8,7 @@ const fs = require('fs');
 const { uploadImageToStorage } = require('../controllers/uploadImage');
 const { getImageURLFromStorage } = require('../controllers/getImage');
 
+const db = admin.firestore();
 // ruta para RESPONDER TODAS LAS PROPIEDADES(incluida la img)
 // router.get('/properties', async (req, res) => {
 //     try {
@@ -53,7 +54,6 @@ const { getImageURLFromStorage } = require('../controllers/getImage');
 //             response.push(data);
 //         });
 
-const db = admin.firestore();
 
 router.get('/properties', async (req, res) => {
     try {
@@ -230,18 +230,18 @@ router.get('/properties/:property_id', async (req, res) => {
 router.post('/properties', async (req, res) => {
     try {
       // Extraer datos del cuerpo de la solicitud (request body)
-      const { user_id, name, types, location, rooms, services, description, price } = req.body;
+      const { userId, name, types, location, rooms, services, description, price } = req.body;
   
       // Obtener el archivo de imagen enviado desde el cliente
-      const imageFile = req.file; // El front-end debe enviar el archivo como 'file'
+      const image = req.file; // El front-end debe enviar el archivo como 'file'
   
       // Validar si se proporcionó una imagen
-      if (!imageFile) {
+      if (!image) {
         return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
       }
   
       // Subir la imagen a Firebase Storage y obtener su URL
-      const imageURL = await uploadImageToStorage(imageFile);
+      const imageURL = await uploadImageToStorage(image);
   
       // Generar un nuevo ID para la propiedad
       const PropertyId = uuidv4();
@@ -249,7 +249,7 @@ router.post('/properties', async (req, res) => {
       // Crear un objeto con los datos de la nueva propiedad
       const newProperty = {
         id: PropertyId, // Propiedad id
-        user_id, 
+        userId, 
         name, 
         types, 
         location, 
@@ -263,7 +263,7 @@ router.post('/properties', async (req, res) => {
       // Resto de la lógica para crear la propiedad y guardarla en Firestore ...
   
       // Obtener una referencia al documento del usuario
-      const userRef = db.collection("users").doc(user_id);
+      const userRef = db.collection("users").doc(userId);
   
       // Verificar si el usuario existe
       const doc = await userRef.get();
@@ -287,11 +287,7 @@ router.post('/properties', async (req, res) => {
       console.log(error);
       return res.status(500).json({ message: "Error al postear propiedad" });
     }
-  })
-
-
-
-
+  });
 
 //-------------------------------------- PRUEBA CHRISTIAN
 //ruta para borrar propiedades
