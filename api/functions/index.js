@@ -11,23 +11,18 @@ const {onRequest} = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const express = require('express');
 const admin = require('firebase-admin');
-
+const multer = require('multer');
+const upload = multer()
 admin.initializeApp({
     credential: admin.credential.cert('./permisos.json'),
     storageBucket: 'your-storage-bucket-url.appspot.com',
 });
 
 
-const app = express()
-
-
-
-// app.post('/users', async(req, res)=>{
-//     await db.collection('users')
-//     .doc('/' + req.body.id + '/')
-//     .create({name:req.body.name});
-//     return res.status(204).json()
-// });
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(upload.single('image'));
 
 app.use(require('./routes/propertiesRouter'));
 app.use(require('./routes/reviewsRouter'));
