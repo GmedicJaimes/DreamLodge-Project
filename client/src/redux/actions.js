@@ -4,7 +4,9 @@ import {
     GET_ALL_PROPERTIES,
     GET_DETAIL_PROPERTY,
     NEW_ACCOUNT,
-    NEW_POST
+    NEW_POST,
+    GET_DETAIL_CLEAR,
+    SEARCH_PROPERTY 
 } from "./action-types"
 
 
@@ -27,6 +29,25 @@ export const getDetailProperty = ( id ) => {
         }
       };
 };
+
+export const searchProperty = (location) =>{
+  return async function(dispatch){
+    const  {data} = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?location=${location}`)
+    return dispatch({
+      type:SEARCH_PROPERTY,
+      payload: data
+    })
+
+  }
+
+}
+
+export const getDetailClean = () => {
+  return {
+    type: GET_DETAIL_CLEAR
+  };
+}
+
 
 export const getDetailUser = ( id ) => {
     return async function(dispatch) {
