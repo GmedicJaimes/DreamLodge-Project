@@ -3,8 +3,7 @@ import React from 'react';
 import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getDetailPropertie } from "../../../redux/actions";
+
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
