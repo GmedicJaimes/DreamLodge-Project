@@ -2,7 +2,8 @@ import {
     GET_ALL_PROPERTIES,
     GET_DETAIL_USER,
     GET_DETAIL_PROPERTY,
-    NEW_ACCOUNT
+    NEW_ACCOUNT, 
+    NEW_POST
 } from "./action-types"
 
 const initialState = {
@@ -33,9 +34,12 @@ const reducer = ( state = initialState, actions) => {
                 detailProperty: payload 
             }
         case NEW_ACCOUNT: 
+            return console.log(payload);
+
+        case NEW_POST: 
+        console.log(allProperties)
             return {
-                ...state,
-                accCreated: [...state.accCreated, payload]
+              ...state, allProperties: [...allProperties, payload]
             }
         default:
             return { ...state }
