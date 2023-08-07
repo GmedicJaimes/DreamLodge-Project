@@ -3,8 +3,8 @@ import React from 'react';
 import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getDetailPropertie } from "../../../redux/actions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getDetailProperty, getDetailUser,getDetailClean } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
@@ -19,78 +19,79 @@ const DetailPost = () => {
 //   }, [dispatch, userId, propertyId]);
 
 
-    const { id } = useParams()
-    const dispatch = useDispatch()
+    const { id, user_id } = useParams()
+    // const dispatch = useDispatch()
 
-    const property = useSelector((state) => state.detailPropertie)
-    const user = useSelector((state) => state.detailUser)
+    const property = useSelector((state) => state.detailProperty)
+    // const user = useSelector((state) => state.detailUser)
 
-    useEffect(() => {
-        dispatch(getDetailPropertie(id))
-        // dispatch(getDetailUser(userId))
-    }, [ dispatch ])
+    // useEffect(() => {
+    //     dispatch(getDetailProperty(id))
+    //     dispatch(getDetailUser(user_id))
+    //     return () => {
+    //         dispatch(getDetailClean());
+    //     };
+    // }, [ dispatch, id])
 
     return(
         <div>
-            <div className={styles.container}>
+            <div className={styles.containerPost}>
                 <header className={styles.head}>
-                    <div>
+                    <div className={styles.headLeft}>
                         <h1>{property.name}</h1>
-                        <p>{property.location?.country}</p>
-                        <p>{property.location?.estado}</p>
-                        <p>{property.location?.direction}</p>
-                        <Link to={"/user"}>Owner</Link>
+                        <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
                     </div>
-                    <div>
-                        <h2>{property.price}</h2>
-                        <button className={styles.btn}>Reserve</button>
+                    <div className={styles.headRigth}>
+                        <p>$ {property.price} USD noche</p>
+                        <button >Reserve</button>
                     </div>
                 </header>
-                <div>
-                    <img src={property.image} alt={property.name} />
+                <div className={styles.image}>
+                    <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                    <div className={styles.sectionOne}>
+                      <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                      <div className={styles.sectionTwo}>
+                        <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                      </div>
+                      
+                    </div>
                 </div>
                 <div className={styles.line}></div>
-                <div className={styles.detailContainer}>
-                    <div>
+                <div className={styles.overview}>
+                    <div className={styles.sectionOverOne}>
                         <h2>Overview</h2>
-                        {
-                            property.types?.map((type) => {
-                                return(
-                                    <p>{type}</p>
-                                )
-                            })
-                        }
                         <p>{property.description}</p>
                     </div>
-                    <div>
+                    <div className={styles.sectionOverTwo}>
+                        <h2>Rating</h2>
                         <div className={styles.ratingBox}>
-                            <h2>Rating</h2>
                             <p>4,20</p>
                         </div>
                     </div>
                 </div>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
-                    <div>
+                <section className={styles.Rooms}>
+                    <div className={styles.title}>
                         <h2>Rooms</h2>
+                        <Link to={`/user/${property.user_id}`} className={styles.titleLink}>
+                            <button className={styles.btn}>Anfitrion</button>
+                        </Link>
                     </div>
-                    <div className={styles.srvcContainer}>
-                        <div className={styles.containerList}>
-                            <ul>
-                                <li>Bathrooms: {property.bathrooms}</li>
-                                <li>Bed: {property.bed}</li>
-                                <li>Rooms: {property.rooms}</li>
-                                <li>Dormitorios: {property.dormitorio}</li>
-                            </ul>
-                        </div>
+                    <div className={styles.containerRooms}>
+                        <ul>
+                            <li>Guest: {property.rooms?.[0]}</li>
+                            <li>Rooms: {property.rooms?.[1]}</li>
+                            <li>Bathrooms: {property.rooms?.[2]}</li>
+                            <li>Bed: {property.rooms?.[3]}</li>
+                        </ul>
                     </div>
                 </section>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
-                    <div>
+                <section className={styles.Services}>
+                    <div className={styles.titleServices}>
                         <h2>Services</h2>
                     </div>
-                    <div className={styles.srvcContainer}>
+                    <div className={styles.containerServices}>
                         <div className={styles.containerList}>
                             <ul>
                                 {
@@ -105,13 +106,13 @@ const DetailPost = () => {
                     </div>
                 </section>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
+                <section className={styles.Opinions}>
                     <h2>Opinions</h2>
                     <p>From {property.guests} guests</p>
                     <div>
                         <ul>
                             {/* {
-                                property?.comment.map((com) => {
+                                property?.reviews.map((com) => {
                                     return(
                                         <li>{com}</li>
                                     )

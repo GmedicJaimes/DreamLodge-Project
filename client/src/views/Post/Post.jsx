@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createPost } from '../../redux/actions';
+// import { createPost } from '../../redux/actions';
 import { createProp } from '../../firebase/handlers';
+import styles from "./post.module.css"
+import About from "../../components/About/About"
 
 const Post = () => {
-  const dispatch = useDispatch();
-
+  // const dispatch = useDispatch();
+  //hola perros
   const [formData, setFormData] = useState({
-    user_id: '',
-    name: '',
-    types: '',
-    location: '',
-    rooms: 0,
-    services: '',
-    description: '',
+    // user_id: '',
+    name: "",
+    types: [],
+    location: {
+      adress: "",
+      city: "",
+      state: ""
+    },
+    rooms: [0,0,0,0],
+    services: [],
+    description: "",
     price: 0,
-    imageUrl: null,
+    // imageFile: null,
   });
+
+  const typeProperties = ["Cabins", "Beachfront", "Mansions", "Countryside", "Rooms"]
+  const citys = [ "Los Santos", "San Fierro", "Las Venturas", "Liberty City", "Vice City", "Carcer City"]
+  const states = ["Peru", "Mexico", "Bolivia"]
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -36,6 +46,7 @@ const Post = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    console.log(formData);
     try {
       await createProp(formData, formData.imageUrl);
       // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
