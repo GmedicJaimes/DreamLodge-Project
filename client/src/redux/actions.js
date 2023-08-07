@@ -2,7 +2,8 @@ import axios from "axios"
 import {
     GET_DETAIL_USER,
     GET_ALL_PROPERTIES,
-    GET_DETAIL_PROPERTY
+    GET_DETAIL_PROPERTY,
+    NEW_ACCOUNT
 } from "./action-types"
 
 
@@ -63,3 +64,18 @@ export const createPost = (formData) => {
   
 
 
+export const userLogin = ( data ) => {
+    console.log(`email: ${data.email}, password: ${data.password}`);
+}
+
+export const userRegister = async ( register ) => {
+    return async function(dispatch){
+        try {
+            const { data } = await axios.post("http://localhost:5000/dreamlodge-8517c/us-central1/app/users", register)
+            window.alert(`Cuenta creada con exito`)
+            return dispatch({ type: NEW_ACCOUNT, payload: data})
+        } catch (error) {
+            window.alert(`Error al crear cuenta, ${error}`)
+        }
+    }
+}

@@ -54,7 +54,7 @@ router.post('/users', async (req, res) => {
             country,
             image,
             banner,
-            languague,
+            language,
             username,
             email,
             password
@@ -74,7 +74,7 @@ router.post('/users', async (req, res) => {
             country: country,
             image: image ?? '', 
             banner: banner ?? '', 
-            languague: [languague] ?? [], 
+            language: language ?? [], 
             username: username,
             email: email,
             password: password,
@@ -144,7 +144,7 @@ router.put('/users/:users_id', async (req, res) => {
         if (req.body.country) updates.country = req.body.country;
         if (req.body.image) updates.image = req.body.image ?? '';
         if (req.body.banner) updates.banner = req.body.banner ?? '';
-        if (req.body.languague) updates.languague = [req.body.languague] ?? [];
+        if (req.body.languague) updates.language = [req.body.language] ?? [];
         if (req.body.username) updates.username = req.body.username;
         if (req.body.email) updates.email = req.body.email;
         if (req.body.password) updates.password = req.body.password;
