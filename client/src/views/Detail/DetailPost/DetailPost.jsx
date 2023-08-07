@@ -3,7 +3,8 @@ import React from 'react';
 import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
-
+// import { useDispatch, useSelector } from "react-redux";
+// import { getDetailProperty, getDetailUser,getDetailClean } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
@@ -19,18 +20,18 @@ const DetailPost = () => {
 
 
     const { id, user_id } = useParams()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const property = useSelector((state) => state.detailProperty)
     // const user = useSelector((state) => state.detailUser)
 
-    useEffect(() => {
-        dispatch(getDetailProperty(id))
-        dispatch(getDetailUser(user_id))
-        return () => {
-            dispatch(getDetailClean());
-        };
-    }, [ dispatch, id])
+    // useEffect(() => {
+    //     dispatch(getDetailProperty(id))
+    //     dispatch(getDetailUser(user_id))
+    //     return () => {
+    //         dispatch(getDetailClean());
+    //     };
+    // }, [ dispatch, id])
 
     return(
         <div>

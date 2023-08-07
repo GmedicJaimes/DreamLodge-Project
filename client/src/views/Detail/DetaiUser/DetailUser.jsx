@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
-import { getDetailUser,getDetailClean } from "../../../redux/actions"
+// import { useDispatch, useSelector } from "react-redux"
+// import { getDetailUser,getDetailClean } from "../../../redux/actions"
 import React from 'react';
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -10,16 +10,16 @@ import { useEffect } from "react";
 const DetailUser = () => {
 
     const { id } = useParams()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const user = useSelector((state) => state.detailUser)
     
-    useEffect(() => {
-        dispatch(getDetailUser(id));
-        return () => {
-            dispatch(getDetailClean());
-        };
-    }, [id, dispatch]);
+    // useEffect(() => {
+    //     dispatch(getDetailUser(id));
+    //     return () => {
+    //         dispatch(getDetailClean());
+    //     };
+    // }, [id, dispatch]);
     
 
     return(

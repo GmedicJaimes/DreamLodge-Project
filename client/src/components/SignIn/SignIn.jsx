@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styles from "./SignIn.module.css"
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+// import { userRegister } from '../../redux/actions';
 import { Link } from "react-router-dom"
 
 const SignIn = () => {
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const [ register, setRegister ] = useState({
     firstName: "",
