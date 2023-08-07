@@ -1,20 +1,18 @@
 .mainContainer {
-    border: 1px solid black;
-    height: 50vh;
-    width: 35vw;
-    max-width: 500px;
+    background-color: #EADCCF;
+    max-width: 440px;
     border-radius: .7rem;
     box-shadow: 0 7px 20px 5px #52525288;
     
 }
 
 .mainContainer header{
+    color: #333;
     padding: 16px;
+    margin-top: 2em;
     text-align: center;
     border-radius: 4px;
     font-size: 18px;
-    color: rgb(255, 255, 255);
-    background-color: #333;
 }
 
 .mainContainer form{
@@ -29,10 +27,12 @@
 
 .formGroup label {
     display: block;
-    font-size: 14px;
+    font-size: 1em;
     color: #333;
-    font-weight: bold;
+    font-weight: 900;
     margin-bottom: 1px;
+    text-align: start;
+    margin-left: 2em;
 }
 
 .formGroup input {
@@ -44,16 +44,14 @@
     max-width: 300px;
 }
 
-.btn {
-    padding: 12px 24px;
-    margin-left: 13px;
+.btnLogin {
+    padding: 11px 115px;
+    margin: 1px;
     font-size: 16px;
     border: none;
-    border-radius: 4px;
-    background-color: #333;
+    border-radius: 1px;
+    background-color: #CD5A3E;
     color: #fff;
-    text-transform: uppercase;
-    transition: background-color 0.2s ease-in-out;
     cursor: pointer
 }
 
@@ -61,4 +59,21 @@
     background-color: #ccc;
     color: #333;
     font-weight: 500;
+}
+
+.btnCreateAcc{
+    background-color: #99997A;
+    padding: 12px 90px;
+    margin: 13px;
+    font-size: 16px;
+    border: none;
+    border-radius: 1px;
+    color: white;
+    cursor: pointer
+}
+
+.small{
+    font-size: 0.77em;
+    color: #99997A;
+    padding-bottom: 1em;
 }

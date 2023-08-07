@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../redux/actions';
+import styles from "./post.module.css"
+import About from "../../components/About/About"
 
 const Post = () => {
   const dispatch = useDispatch();
-
+  //hola perros
   const [formData, setFormData] = useState({
-    user_id: '',
-    name: '',
-    types: '',
-    location: '',
-    rooms: 0,
-    services: '',
-    description: '',
+    // user_id: '',
+    name: "",
+    types: [],
+    location: {
+      adress: "",
+      city: "",
+      state: ""
+    },
+    rooms: [0,0,0,0],
+    services: [],
+    description: "",
     price: 0,
-    imageFile: null,
+    // imageFile: null,
   });
+
+  const typeProperties = ["Cabins", "Beachfront", "Mansions", "Countryside", "Rooms"]
+  const citys = [ "Los Santos", "San Fierro", "Las Venturas", "Liberty City", "Vice City", "Carcer City"]
+  const states = ["Peru", "Mexico", "Bolivia"]
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,65 +35,112 @@ const Post = () => {
     });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFormData({
-      ...formData,
-      imageFile: file,
-    });
-  };
+  const handleType = (event) => {
+    const type = event.target.value
+  
+    if (formData.types.includes(type)) {
+      setFormData({
+        ...formData, 
+        types : formData.types.filter((typeIn) => typeIn != type)
+      })
+    } else {
+      setFormData({ ...formData, types: [...formData.types, type]})
+    }
+}
+
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setFormData({
+  //     ...formData,
+  //     imageFile: file,
+  //   });
+  // };
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    console.log(formData);
     try {
       await dispatch(createPost(formData)); // Enviar el objeto formData completo
+      
       alert('Property created successfully!');
     } catch (error) {
       console.error(error);
-      alert('Failed to create property. Please try again.');
+      // alert('Failed to create property. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label>User ID:</label>
-        <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
+    <div>
+      <div className={styles.mainContainer}>
+        <header>
+          <h2>Post your lodge</h2>
+        </header>
+        <form onSubmit={onSubmit}>
+          {/* <div className={styles.formGroup}>
+            <label>User ID:</label>
+            <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
+          </div> */}
+          <div className={styles.formGroup}>
+            <label>Property Name:</label>
+            <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Property Types:</label>
+            <select name="" onChange={handleType}>
+              {
+                  typeProperties.map((type) => {
+                    return(
+                      <option key={type} value={type}>{type}</option>
+                    )})
+              }
+            </select>
+          </div>
+          <div className={styles.formGroup}>
+            <label>Location:</label>
+            <input type="text" value={formData.types} readOnly/>
+            <div className={styles.forcedLine}></div>
+            <select name="" onChange={handleType}>
+              {
+                  citys.map((city) => {
+                    return(
+                      <option key={city} value={city}>{city}</option>
+                    )})
+              }
+            </select>
+            <select name="" onChange={handleType}>
+              {
+                  states.map((state) => {
+                    return(
+                      <option key={state} value={state}>{state}</option>
+                    )})
+              }
+            </select>
+          </div>
+          <div className={styles.formGroup}>
+            <label>Rooms:</label>
+            <input type="number" name="rooms" value={formData.rooms} onChange={handleInputChange} required />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Services:</label>
+            <input type="text" name="services" value={formData.services} onChange={handleInputChange} required />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Description:</label>
+            <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Price:</label>
+            <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
+          </div>
+          {/* <div className={styles.formGroup}>
+            <label>Image:</label>
+            <input type="file" name="imageFile" onChange={handleFileChange} required />
+          </div> */}
+          <button className={styles.btn} type="submit">Create Property</button>
+        </form>
       </div>
-      <div>
-        <label>Property Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Property Types:</label>
-        <input type="text" name="types" value={formData.types} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Location:</label>
-        <input type="text" name="location" value={formData.location} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Rooms:</label>
-        <input type="number" name="rooms" value={formData.rooms} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Services:</label>
-        <input type="text" name="services" value={formData.services} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Description:</label>
-        <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Price:</label>
-        <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
-      </div>
-      <div>
-        <label>Image:</label>
-        <input type="file" name="imageFile" onChange={handleFileChange} required />
-      </div>
-      <button type="submit">Create Property</button>
-    </form>
+      <About/>
+    </div>
   );
 };
 

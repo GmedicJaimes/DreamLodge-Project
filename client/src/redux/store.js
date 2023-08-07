@@ -9,3 +9,21 @@ const store = createStore(
     composeEnhacer(applyMiddleware(thunkMiddleware))); // Esta linea nos permite hacer peticiones a un servidor
 
 export default store
+
+
+// import { createStore, applyMiddleware } from 'redux';
+// import thunkMiddleware from 'redux-thunk';
+// import reducer from './reducer'; // Tu archivo del reductor raíz
+
+// const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
+// export default store
+
+
+// import { createStore, applyMiddleware } from 'redux';
+// import thunkMiddleware from 'redux-thunk';
+// import reducer from './reducer'; // Tu archivo del reductor raíz
+
+// const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
+// export default store

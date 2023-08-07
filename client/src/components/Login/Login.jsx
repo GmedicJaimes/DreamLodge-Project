@@ -2,22 +2,29 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styles from "./Login.module.css"
 import React from 'react';
+import { useDispatch } from "react-redux"
+import { userLogin } from '../../redux/actions';
 
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    };
+    const dispatch = useDispatch()
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
+
+    const [loginData, setLoginData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const handleChange  = (event) => {
+        setLoginData({
+            ...loginData,
+            [event.target.name] : event.target.value
+    })};
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch(userLogin(loginData))
     };
 
     return (
@@ -31,8 +38,9 @@ const Login = () => {
                     <input
                         type="text"
                         id="email"
-                        value={email}
-                        onChange={handleEmailChange}
+                        name='email'
+                        value={loginData.email}
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -41,18 +49,18 @@ const Login = () => {
                     <input
                         type="password"
                         id="password"
-                        value={password}
-                        onChange={handlePasswordChange}
+                        name='password'
+                        value={loginData.password}
+                        onChange={handleChange}
                         required
                     />
                 </div>
                 <Link>
-                    <p>Forgot password?</p>
+                    <p className={styles.small}>Forgot password?</p>
                 </Link>
-                <button className={styles.btn} type="submit">Login</button>
-                <p>Don't have an account?</p>
-                <Link>
-                    <p>Sign up now</p>
+                    <button className={styles.btnLogin} type="submit">Login</button>
+                <Link to={"/signin"}>
+                    <button className={styles.btnCreateAcc}>Sign up now</button>
                 </Link>
             </form>
         </div>

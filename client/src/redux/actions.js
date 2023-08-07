@@ -1,9 +1,10 @@
 import axios from "axios"
 import {
-    GET_DETAIL_PROPERTIE,
-     GET_DETAIL_USER,
+    GET_DETAIL_USER,
     GET_ALL_PROPERTIES,
-    GET_DETAIL_PROPERTY
+    GET_DETAIL_PROPERTY,
+    NEW_ACCOUNT,
+    NEW_POST,
 } from "./action-types"
 
 
@@ -13,25 +14,43 @@ export const getAllProperties = () => {
         return dispatch({type: GET_ALL_PROPERTIES, payload: data})
     }
 }
-//hola cojonudo
 
-export const getDetailPropertie = (user_id, property_id ) => {
+export const getDetailProperty = ( id ) => {
     return async (dispatch) => {
         try {
-          const response = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${user_id}/properties/${property_id}`);
+          const response = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${id}`);
           const propertyData = response.data;
-          // Aquí puedes realizar cualquier otra lógica necesaria antes de enviar la propiedad a los reducers
-          dispatch({ type: 'GET_PROPERTY_BY_ID_SUCCESS', payload: propertyData });
+
+          dispatch({ type: GET_DETAIL_PROPERTY, payload: propertyData });
         } catch (error) {
-          dispatch({ type: 'GET_PROPERTY_BY_ID_ERROR', payload: error.message });
+          dispatch({ type: GET_DETAIL_PROPERTY, payload: error.message });
         }
       };
 };
 
-export const getDetailUser = ( userId ) => {
+export const searchProperty = (location) =>{
+  return async function(dispatch){
+    const  {data} = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?location=${location}`)
+    return dispatch({
+      type:SEARCH_PROPERTY,
+      payload: data
+    })
+
+  }
+
+}
+
+export const getDetailClean = () => {
+  return {
+    type: GET_DETAIL_CLEAR
+  };
+}
+
+
+export const getDetailUser = ( id ) => {
     return async function(dispatch) {
-        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${userId}`)
-        console.log(data, 'data')
+        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${id}`)
+
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
 };
@@ -39,24 +58,28 @@ export const getDetailUser = ( userId ) => {
 export const createPost = (formData) => {
     return async function (dispatch) {
       try {
-        const { imageFile, ...otherData } = formData;
-        const formDataWithoutImage = { ...otherData };
+        // const { imageFile, ...otherData } = formData;
+        // const formDataWithoutImage = { ...otherData };
   
         const response = await axios.post(
           `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties`,
-          formDataWithoutImage
+          formData
         );
+
+        console.log(response)
   
-        // Ahora, sube la imagen a Firebase Storage y obtén su URL
-        const imageURL = await uploadImageToStorage(imageFile);
+        // // Ahora, sube la imagen a Firebase Storage y obtén su URL
+        // const imageURL = await uploadImageToStorage(imageFile);
   
-        // Actualiza la propiedad creada con la URL de la imagen
-        await axios.patch(
-          `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${response.data.id}`,
-          { image: imageURL }
-        );
+        // // Actualiza la propiedad creada con la URL de la imagen
+        // await axios.patch(
+        //   `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${response.data.id}`,
+        //   { image: imageURL }
+        // );
   
-        return response;
+        return dispatch({
+          type: NEW_POST, payload: response
+        });
       } catch (error) {
         console.log(error);
       }
@@ -65,3 +88,28 @@ export const createPost = (formData) => {
   
 
 
+export const userLogin = ( data ) => {
+    console.log(`email: ${data.email}, password: ${data.password}`);
+}
+
+export const userRegister = ( registerData ) => {
+    return async function(dispatch){
+        try {
+          const response = await axios.post("http://localhost:5000/dreamlodge-8517c/us-central1/app/users", registerData);
+            return dispatch({ type: NEW_ACCOUNT, payload: response.data})
+        } catch (error) {
+            return
+        }
+    }
+}
+
+export const filterLocation = (state) => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get( `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?state=${state}`);
+      return dispatch({ type: GET_ALL_PROPERTIES, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
