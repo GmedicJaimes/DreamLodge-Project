@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
-
-// import { createProp } from '../../config/handlers';
+import { useDispatch } from 'react-redux';
+// import { createPost } from '../../redux/actions';
+import { createProp } from '../../firebase/handlers';
+import styles from "./post.module.css"
+import About from "../../components/About/About"
 
 const Post = () => {
- 
-
+  // const dispatch = useDispatch();
+  //hola perros
   const [formData, setFormData] = useState({
-    user_id: '',
-    name: '',
-    types: '',
-    location: '',
-    rooms: 0,
-    services: '',
-    description: '',
+    // user_id: '',
+    name: "",
+    types: [],
+    location: {
+      adress: "",
+      city: "",
+      state: ""
+    },
+    rooms: [0,0,0,0],
+    services: [],
+    description: "",
     price: 0,
-    imageUrl: null,
+    // imageFile: null,
   });
+
+  // const [formData, setFormData] = useState({
+  //   user_id: '',
+  //   name: '',
+  //   types: '',
+  //   location: '',
+  //   rooms: 0,
+  //   services: '',
+  //   description: '',
+  //   price: 0,
+  //   imageUrl: null,
+  // });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
