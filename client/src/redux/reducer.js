@@ -8,7 +8,8 @@ import {
 const initialState = {
     allProperties : [],
     detailProperty : {},
-    detailUser: {}
+    detailUser: {},
+    accCreated: []
 }
 
 const reducer = ( state = initialState, actions) => {
@@ -32,7 +33,10 @@ const reducer = ( state = initialState, actions) => {
                 detailProperty: payload 
             }
         case NEW_ACCOUNT: 
-            return console.log(payload);
+            return {
+                ...state,
+                accCreated: [...state.accCreated, payload]
+            }
         default:
             return { ...state }
     }

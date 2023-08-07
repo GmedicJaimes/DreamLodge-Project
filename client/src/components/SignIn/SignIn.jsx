@@ -12,10 +12,9 @@ const SignIn = () => {
     firstName: "",
     lastName: "",
     country: "",
-    //imagen y banner hardcodeado, hay que hacer logica para que se randomize mas
     image: "https://randomuser.me/api/portraits/women/32.jpg",
     banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
-    languague: ["español"],
+    language: ["español"],
     username: "",
     email: "",
     password: ""
@@ -31,7 +30,11 @@ const SignIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(register);
-    dispatch(userRegister(register))
+    try {
+      dispatch(userRegister(register))
+    } catch (error) {
+      console.error('Error al enviar formulario:', error);
+    }
   };
 
   return (
@@ -44,7 +47,7 @@ const SignIn = () => {
           <label htmlFor="firstName">First Name:</label>
           <input
             type="text"
-            id="firstName"
+            // id="firstName"
             name='firstName'
             value={register.firstName}
             onChange={handleRegisterForm}
@@ -55,7 +58,7 @@ const SignIn = () => {
           <label htmlFor="lastName">Last Name:</label>
           <input
             type="text"
-            id="lastName"
+            // id="lastName"
             name='lastName'
             value={register.lastName}
             onChange={handleRegisterForm}
@@ -66,7 +69,7 @@ const SignIn = () => {
           <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="email"
+            // id="email"
             name='email'
             value={register.email}
             onChange={handleRegisterForm}
@@ -78,7 +81,7 @@ const SignIn = () => {
           <label htmlFor="password">Password:</label>
           <input
             type="password"
-            id="password"
+            // id="password"
             name='password'
             value={register.password}
             onChange={handleRegisterForm}
@@ -89,7 +92,7 @@ const SignIn = () => {
           <label htmlFor="phone">Country:</label>
           <input
             type="text"
-            id="country"
+            // id="country"
             name='country'
             value={register.country}
             onChange={handleRegisterForm}
@@ -100,7 +103,7 @@ const SignIn = () => {
           <label htmlFor="phone">Username:</label>
           <input
             type="text"
-            id="username"
+            // id="username"
             name='username'
             value={register.username}
             onChange={handleRegisterForm}
@@ -108,19 +111,19 @@ const SignIn = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Languajes:</label>
+          <label htmlFor="language">Languajes:</label>
           <input
             type="text"
-            id="languague"
-            name='languague'
-            value={register.languague}
+            // id="language"
+            name='language'
+            value={register.language}
             onChange={handleRegisterForm}
-            required
+            // required
           />
         </div>
         <button className={styles.btn} type="submit">Create my account</button>
+        <p className={styles.foot}>Already have an account? <Link className={styles.linkfoot} to={"/login"}>Log in</Link></p>
       </form>
-      <p>Already have an account? <Link>Log in</Link></p>
     </div>
   );
 };
