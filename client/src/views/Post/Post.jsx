@@ -8,7 +8,7 @@ const Post = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    user_id: '',
+    // user_id: '',
     name: '',
     types: '',
     location: '',
@@ -16,7 +16,7 @@ const Post = () => {
     services: '',
     description: '',
     price: 0,
-    imageFile: null,
+    // imageFile: null,
   });
 
   const handleInputChange = (event) => {
@@ -44,7 +44,7 @@ const Post = () => {
       alert('Property created successfully!');
     } catch (error) {
       console.error(error);
-      alert('Failed to create property. Please try again.');
+      // alert('Failed to create property. Please try again.');
     }
   };
 

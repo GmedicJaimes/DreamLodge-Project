@@ -13,17 +13,22 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* background-color: blue; */
   width: 88%;
 }
+
+.containeSearch{
+  display: flex;
+  justify-content: center;
+
+}
+
+
 .logo{
   font-family: 'Montserrat';
   font-size: 1.5rem;
   letter-spacing: 0.1rem;
   margin-left: 2rem;
   color: #1E1E23;
-
-
 }
 
 .button{
@@ -34,12 +39,11 @@
 
 }
 
-
-
 .login{
   display: block; 
   letter-spacing: 0.1rem;
   font-size: 1rem;
+  font-weight: bold;
   padding: 0.8rem;
   margin-right: 2rem;
   width: 125px;
@@ -50,23 +54,22 @@
 }
 
 .postBtn{
-  margin-top: 1rem;
+  margin-top: .8rem;
   width: 150px;
   
-  }
+}
 
-  .post {
-    text-decoration: none;
-    width: 100px;
-    color: #fdfdfd;
-    font-weight: 500;
-    padding: 0.8rem;
-    border-radius: 45px;
-    transition: background-color 0.3s ease; /* Add a smooth transition effect */
-    font-size: 1.1rem;
-  }
+.post {
+  text-decoration: none;
+  width: 100px;
+  color: #fdfdfd;
+  font-weight: 500;
+  padding: 0.8rem;
+  border-radius: 45px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+  font-size: 1.1rem;
+}
   
-
 .post:hover{
   background-color: rgba(205, 90, 62, 0.9); /* Semi-transparent #CD5A3E color with 90% opacity */
   border: #CD5A3E;

@@ -3,7 +3,8 @@ import {
     GET_DETAIL_USER,
     GET_ALL_PROPERTIES,
     GET_DETAIL_PROPERTY,
-    NEW_ACCOUNT
+    NEW_ACCOUNT,
+    NEW_POST
 } from "./action-types"
 
 
@@ -38,24 +39,28 @@ export const getDetailUser = ( id ) => {
 export const createPost = (formData) => {
     return async function (dispatch) {
       try {
-        const { imageFile, ...otherData } = formData;
-        const formDataWithoutImage = { ...otherData };
+        // const { imageFile, ...otherData } = formData;
+        // const formDataWithoutImage = { ...otherData };
   
         const response = await axios.post(
           `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties`,
-          formDataWithoutImage
+          formData
         );
+
+        console.log(response)
   
-        // Ahora, sube la imagen a Firebase Storage y obtén su URL
-        const imageURL = await uploadImageToStorage(imageFile);
+        // // Ahora, sube la imagen a Firebase Storage y obtén su URL
+        // const imageURL = await uploadImageToStorage(imageFile);
   
-        // Actualiza la propiedad creada con la URL de la imagen
-        await axios.patch(
-          `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${response.data.id}`,
-          { image: imageURL }
-        );
+        // // Actualiza la propiedad creada con la URL de la imagen
+        // await axios.patch(
+        //   `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties/${response.data.id}`,
+        //   { image: imageURL }
+        // );
   
-        return response;
+        return dispatch({
+          type: NEW_POST, payload: response
+        });
       } catch (error) {
         console.log(error);
       }

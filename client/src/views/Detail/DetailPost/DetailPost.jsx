@@ -67,11 +67,11 @@ const DetailPost = () => {
                     </div>
                 </div>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
+                <section className={styles.Rooms}>
                     <div>
                         <h2>Rooms</h2>
                     </div>
-                    <div className={styles.srvcContainer}>
+                    <div className={styles.containerRooms}>
                         <div className={styles.containerList}>
                             <ul>
                                 <li>Bathrooms: {property.rooms?.[0]}</li>
