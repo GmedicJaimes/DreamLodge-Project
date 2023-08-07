@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 const SignIn = () => {
 
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const [ register, setRegister ] = useState({
     firstName: "",
@@ -59,25 +59,25 @@ const handleLang = (event) => {
 
 }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(register);
-    try {
-      dispatch(userRegister(register))
-      setRegister({
-        firstName: "",
-        lastName: "",
-        country: "",
-        image: "",
-        language: [],
-        username: "",
-        email: "",
-        password: ""
-      })
-    } catch (error) {
-      console.error('Error al enviar formulario:', error);
-    }
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(register);
+  //   try {
+  //     dispatch(userRegister(register))
+  //     setRegister({
+  //       firstName: "",
+  //       lastName: "",
+  //       country: "",
+  //       image: "",
+  //       language: [],
+  //       username: "",
+  //       email: "",
+  //       password: ""
+  //     })
+  //   } catch (error) {
+  //     console.error('Error al enviar formulario:', error);
+  //   }
+  // };
 
   return (
     <div className={styles.mainContainer}>

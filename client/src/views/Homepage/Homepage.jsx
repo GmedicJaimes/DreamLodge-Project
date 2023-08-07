@@ -7,8 +7,6 @@ import { useEffect, useState } from "react"
 
 import styles from "./Homepage.module.css"
 
-import InfiniteScroll from 'react-infinite-scroll-component'
-
 const Homepage = () => {
 
     // const dispatch = useDispatch()
@@ -25,15 +23,12 @@ const Homepage = () => {
 
 
     return(
-      <InfiniteScroll dataLength={host.length} hasMore={true} next={() => setPage((prevPage) => prevPage + 1)}>
         <div>
             <div className={styles.containerHome}>
                 <Filters/>
                 {/* <Cards allProperties={allProperties}/> */}
             </div>
         </div>
-      </InfiniteScroll>
-        
     )
 }
 
