@@ -6,7 +6,7 @@ const Post = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    user_id: '',
+    // user_id: '',
     name: '',
     types: '',
     location: '',
@@ -14,7 +14,7 @@ const Post = () => {
     services: '',
     description: '',
     price: 0,
-    imageFile: null,
+    // imageFile: null,
   });
 
   const handleInputChange = (event) => {
@@ -36,20 +36,20 @@ const Post = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await dispatch(createPost(formData)); // Enviar el objeto formData completo
-      alert('Property created successfully!');
+      dispatch(createPost(formData)); // Enviar el objeto formData completo
+      // alert('Property created successfully!');
     } catch (error) {
       console.error(error);
-      alert('Failed to create property. Please try again.');
+      // alert('Failed to create property. Please try again.');
     }
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <div>
+      {/* <div>
         <label>User ID:</label>
         <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
-      </div>
+      </div> */}
       <div>
         <label>Property Name:</label>
         <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
@@ -78,10 +78,10 @@ const Post = () => {
         <label>Price:</label>
         <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
       </div>
-      <div>
+      {/* <div>
         <label>Image:</label>
         <input type="file" name="imageFile" onChange={handleFileChange} required />
-      </div>
+      </div> */}
       <button type="submit">Create Property</button>
     </form>
   );
