@@ -233,3 +233,63 @@ section div h2, section h2{
   font-family: 'Lexend Deca';
   padding-right: 20px;
 }
+
+
+.Services{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98%;
+  padding: 0 30px;
+}
+
+/* .titleServices{
+  display: flex;
+  justify-content: start;
+  margin: 0;
+} */
+
+
+.titleServices h2{
+  margin: 0;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.containerServices{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EADCCF;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.containerServices ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: left;
+}
+
+.containerServices li{
+  list-style: none;
+  text-align: left;
+  font-size: 1.3em;
+  font-weight: 400;
+  font-family: 'Lexend Deca';
+  padding-right: 20px;
+}
+
+.Opinions{
+  margin-bottom: 20px;
+  width: 97%;
+  height: 200px;
+}
+
+.Opinions h2{
+  text-decoration: none;
+}
