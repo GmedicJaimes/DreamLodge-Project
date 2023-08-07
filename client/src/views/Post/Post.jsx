@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { createPost } from '../../redux/actions';
+import { createProp } from '../../firebase/handlers';
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -151,6 +153,7 @@ const Post = () => {
 };
 
 export default Post;
+
 
 
 
