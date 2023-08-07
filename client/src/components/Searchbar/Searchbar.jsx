@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SearchBar.module.css";
 import { useDispatch } from "react-redux";
-import { filterLocation } from "../../redux/actions";
 
 const SearchBar = () => {
 
