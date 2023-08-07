@@ -24,13 +24,13 @@ const DetailPost = () => {
     const property = useSelector((state) => state.detailProperty)
     // const user = useSelector((state) => state.detailUser)
 
-    useEffect(() => {
-        dispatch(getDetailProperty(id))
-        dispatch(getDetailUser(user_id))
-        return () => {
-            dispatch(getDetailClean());
-        };
-    }, [ dispatch, id])
+    // useEffect(() => {
+    //     dispatch(getDetailProperty(id))
+    //     dispatch(getDetailUser(user_id))
+    //     return () => {
+    //         dispatch(getDetailClean());
+    //     };
+    // }, [ dispatch, id])
 
     return(
         <div>

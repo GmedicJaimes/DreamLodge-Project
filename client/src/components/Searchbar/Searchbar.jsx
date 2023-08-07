@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SearchBar.module.css";
 import { useDispatch } from "react-redux";
-import { filterLocation } from "../../redux/actions";
+
 
 const SearchBar = () => {
 
@@ -16,15 +16,6 @@ const SearchBar = () => {
     setSearchValue(value)
   }
 
-
-  function handleSubmit(event){
-    event.preventDefault()
-    dispatch(filterLocation(searchValue))
-  }
-
-  useEffect(() => {
-    dispatch(filterLocation());
-  }, [ dispatch]);
 
   return (
     <div className={styles.searchContainer}>
