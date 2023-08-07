@@ -4,7 +4,7 @@ import {
     GET_ALL_PROPERTIES,
     GET_DETAIL_PROPERTY,
     NEW_ACCOUNT,
-    NEW_POST
+    NEW_POST,
 } from "./action-types"
 
 
@@ -85,3 +85,14 @@ export const userRegister = async ( registerData ) => {
         }
     }
 }
+
+export const filterLocation = (state) => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get( `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?state=${state}`);
+      return dispatch({ type: GET_ALL_PROPERTIES, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
