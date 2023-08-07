@@ -70,7 +70,7 @@ const DetailPost = () => {
                 <section className={styles.Rooms}>
                     <div className={styles.title}>
                         <h2>Rooms</h2>
-                        <Link to={`/users/${property.user_id}`} className={styles.titleLink}>
+                        <Link to={`/user/${property.user_id}`} className={styles.titleLink}>
                             <button className={styles.btn}>Anfitrion</button>
                         </Link>
                     </div>

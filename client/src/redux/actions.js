@@ -30,7 +30,7 @@ export const getDetailProperty = ( id ) => {
 
 export const getDetailUser = ( id ) => {
     return async function(dispatch) {
-        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/user/${id}`)
+        const { data } = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/users/${id}`)
 
         return dispatch({ type: GET_DETAIL_USER, payload: data})
     }
