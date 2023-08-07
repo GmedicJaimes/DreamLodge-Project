@@ -6,7 +6,7 @@ import About from "../../components/About/About"
 
 const Post = () => {
   const dispatch = useDispatch();
-
+  //hola perros
   const [formData, setFormData] = useState({
     // user_id: '',
     name: "",
