@@ -53,19 +53,18 @@ const DetailUser = () => {
                 {
                     user.properties?.map(( property ) => { 
                         return( 
-                        <div className={styles.propertieContainer}>
-                            <div className={styles.propertieBox}>
-                                <img src={property.image} alt={property.name} className={styles.imageA}/>
-                            </div>
-                            <div className={styles.propertieBox}>
-                                    <h2>{property.name}</h2>
-                                    <h4>Rooms: {property.rooms?.reduce((a, n) => a + n, 0)}</h4>
-                                    <h4>Price per night: {property.price}</h4>
-                                    <Link to={`/rooms/${property.id}`}>
-                                        <button className={styles.seeMbtn}>See more</button>
-                                    </Link>
-                            </div>
-                        </div>
+                            <Link key={property.id}  to={`/rooms/${property.id}`} className={styles.link}>
+                                <div className={styles.container}>
+                                    <div className={styles.image}>
+                                        <img src={property.image} alt="pic of the house" />
+                                    </div>
+                                    <section className={styles.info}>
+                                        <h3>{property.location.state}, {property.location.city}</h3>
+                                        <p className={styles.infoName}>{property.name}</p>
+                                        <p className={styles.infoPrice}>$ {property.price} USD noche</p>
+                                    </section>
+                                </div>
+                            </Link>
                     )})
                 }
                 </div>

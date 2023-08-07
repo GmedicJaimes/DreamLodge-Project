@@ -4,7 +4,7 @@ import About from "../../../components/About/About";
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailProperty } from "../../../redux/actions";
+import { getDetailProperty, getDetailUser } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
 const DetailPost = () => {
@@ -19,15 +19,15 @@ const DetailPost = () => {
 //   }, [dispatch, userId, propertyId]);
 
 
-    const { id } = useParams()
+    const { id, user_id } = useParams()
     const dispatch = useDispatch()
 
     const property = useSelector((state) => state.detailProperty)
-    const user = useSelector((state) => state.detailUser)
+    // const user = useSelector((state) => state.detailUser)
 
     useEffect(() => {
         dispatch(getDetailProperty(id))
-        // dispatch(getDetailUser(userId))
+        dispatch(getDetailUser(user_id))
     }, [ dispatch, id])
 
     return(
@@ -40,7 +40,7 @@ const DetailPost = () => {
                     </div>
                     <div className={styles.headRigth}>
                         <p>$ {property.price} USD noche</p>
-                        <button className={styles.btn}>Reserve</button>
+                        <button >Reserve</button>
                     </div>
                 </header>
                 <div className={styles.image}>
@@ -68,26 +68,27 @@ const DetailPost = () => {
                 </div>
                 <div className={styles.line}></div>
                 <section className={styles.Rooms}>
-                    <div>
+                    <div className={styles.title}>
                         <h2>Rooms</h2>
+                        <Link to={`/user/${property.user_id}`} className={styles.titleLink}>
+                            <button className={styles.btn}>Anfitrion</button>
+                        </Link>
                     </div>
                     <div className={styles.containerRooms}>
-                        <div className={styles.containerList}>
-                            <ul>
-                                <li>Bathrooms: {property.rooms?.[0]}</li>
-                                <li>Bed: {property.rooms?.[1]}</li>
-                                <li>Rooms: {property.rooms?.[2]}</li>
-                                <li>Dormitorios: {property.rooms?.[3]}</li>
-                            </ul>
-                        </div>
+                        <ul>
+                            <li>Guest: {property.rooms?.[0]}</li>
+                            <li>Rooms: {property.rooms?.[1]}</li>
+                            <li>Bathrooms: {property.rooms?.[2]}</li>
+                            <li>Bed: {property.rooms?.[3]}</li>
+                        </ul>
                     </div>
                 </section>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
-                    <div>
+                <section className={styles.Services}>
+                    <div className={styles.titleServices}>
                         <h2>Services</h2>
                     </div>
-                    <div className={styles.srvcContainer}>
+                    <div className={styles.containerServices}>
                         <div className={styles.containerList}>
                             <ul>
                                 {
@@ -102,13 +103,13 @@ const DetailPost = () => {
                     </div>
                 </section>
                 <div className={styles.line}></div>
-                <section className={styles.division}>
+                <section className={styles.Opinions}>
                     <h2>Opinions</h2>
                     <p>From {property.guests} guests</p>
                     <div>
                         <ul>
                             {/* {
-                                property?.comment.map((com) => {
+                                property?.reviews.map((com) => {
                                     return(
                                         <li>{com}</li>
                                     )

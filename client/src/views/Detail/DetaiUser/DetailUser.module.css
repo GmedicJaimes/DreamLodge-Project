@@ -16,35 +16,41 @@
 }
 
 .containerInfo{
-    background-color: rgb(255, 236, 195);
-    border: 1px solid white;
+    /* background-color: rgb(210, 210, 210);
+    border: 1px solid rgb(183, 183, 181); */
     height: 16vh;
-    width: 99vw;
+    min-width: 65em;
+    max-width: 80em;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 0.6em;
 }
 
 .dataUser{
     display: flex;
-    width: 60%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    /* width: 60%; */
+    margin: 200px;
     height: 13vh;
-    border-radius: 5em;
+    border-radius: 1em;
     border: 4px solid white;
     margin: auto;
-    background-color: rgb(210, 210, 210);
-    display: flex;
-    justify-content: space-evenly;
+    background-color: #CD5A3E;
 }
-
+/* rgb(210, 210, 210) */
 .nameTittle {
     font-size: 2em;
     display: flex;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: brown;
+    color: #1E1E23;
 }
 
 .nameTittle p{
     font-size: 0.5em;
-    color: rgb(140, 140, 140);
-    margin: 0.2em;
+    color: rgb(0, 0, 0);
+    margin: 0.7em;
 }
 
 .blockDU {
@@ -58,16 +64,16 @@
 }
 
 .bodyContainer{
-    background-color: rgb(248, 207, 192);
+    background-color: #EADCCF;
     display: flex;
     padding: 7em 8%;
     margin: 0 20%;
     max-width: 40%;
     border-radius: 0.3em;
 }
-
-.propertieContainer{
-    background-color: rgb(255, 236, 195);
+/* 99997A 1E1E23  EADCCF CD5A3E*/
+/* .propertieContainer{
+    background-color: #CD5A3E;
     border-radius: 5px;
     width: 50vh;
     max-width: 25em;
@@ -78,6 +84,7 @@
     margin-top: 1em;
     margin-bottom: 1em;
     transition: .5s all;
+    padding: 2em;
 }
 
 .propertieContainer::before {
@@ -100,18 +107,19 @@
     filter: brightness(.5);
     top: -100%;
     left: 200%;
-  }
+  } */
 
-
+/* 
 .propertieBox {
     max-width: 12.5em;
-}
+    margin: 1em
+} */
 
-.imageA{
+/* .imageA{
     height: 100%;
     overflow: hidden;
     width: 100%;
-}
+} */
 
 .containerHead{
     margin-bottom: 1em;
@@ -122,7 +130,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.seeMbtn {
+/* .seeMbtn {
     padding: 1em;
     border-radius: 5px;
     background-color: antiquewhite;
@@ -131,18 +139,83 @@
 .seeMbtn:hover {
     background-color: rgb(132, 137, 100);
     color: white;
-}
+} */
 
 .menuSide{
     min-width: 40%;
-    border: 4px double white;
     display: flex;
     justify-content: center;
-    border-radius: 2em 0 0 2em;
+    padding-top: 6em;
 }
 
 .propertiesSide{
     min-width: 60%;
-    border: 4px double white;
-    border-radius: 0 2em 2em 0;
 }
+
+.link {
+    text-decoration: none;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background-color: rgba(255, 222, 222, 0.904); */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+    width: 330px;
+    height: 400px;
+    color: black;
+    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
+    transition: 0.3s ease; /* Add a smooth transition effect */
+  
+  }
+  
+  .container:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+  }
+  
+  .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    background-color: #f7f3f0;
+    height:120px;
+    padding: 1rem;
+  }
+  .info h3{
+    font-size: 1.3rem;
+    font-family: 'Montserrat' !important;
+  
+  
+  }
+  
+  .infoName{
+    margin: 1rem 0;
+    font-weight: 500;
+    text-align: left;
+    color: #59595b;
+  }
+  
+  .infoPrice{
+    color: black;
+    font-weight: 600;
+    font-family: 'Montserrat';
+  }
+  
+  .image {
+    width: 330px; /* Ajusta el ancho deseado */
+    height: 250px; /* Ajusta el alto deseado */
+    overflow: hidden; /* Ocultar el contenido que desborda del contenedor */
+  }
+  
+  .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Escala la imagen para que cubra todo el contenedor */
+    object-position: center; /* Centra la imagen en el contenedor */
+  }
