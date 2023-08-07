@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { createPost } from '../../redux/actions';
-import { createProp } from '../../firebase/handlers';
+import  createProp  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
 
@@ -52,27 +52,27 @@ const Post = () => {
     });
   };
 
-  // const onSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     await createProp(formData, formData.imageUrl);
-  //     // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
-  //     // Por ejemplo, limpiar el formulario o redirigir a otra página.
-  //     setFormData({
-  //       user_id: '',
-  //       name: '',
-  //       types: '',
-  //       location: '',
-  //       rooms: 0,
-  //       services: '',
-  //       description: '',
-  //       price: 0,
-  //       imageUrl: null,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await createProp(formData, formData.imageUrl);
+      // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
+      // Por ejemplo, limpiar el formulario o redirigir a otra página.
+      setFormData({
+        user_id: '',
+        name: '',
+        types: '',
+        location: '',
+        rooms: 0,
+        services: '',
+        description: '',
+        price: 0,
+        imageUrl: null,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <form onSubmit={onSubmit}>
