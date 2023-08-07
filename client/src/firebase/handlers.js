@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
@@ -10,19 +11,19 @@ const propertiesCollectionRef= collection(db, "properties");
 const imageUrlRef = ref(storage, 'properties/')
 
 // ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("");
-const [propertiesList, setPropertiesList] = useState([]);
-const [newPropName, setNewPropName] = useState("");
-const [newPropRooms, setNewPropRooms] = useState(0);
-const [newPropDisponible, setNewPropDisponible] = useState(false); 
-const [newPropType, setNewPropType] = useState([]);
-const [updateNameProp, setUpdateNameProp] = useState("");
-const [file, setFile] = useState(null);
-const [image, setImage] = useState([]);
+// const [email, setEmail] = useState("")
+// const [password, setPassword] = useState("");
+// const [propertiesList, setPropertiesList] = useState([]);
+// const [newPropName, setNewPropName] = useState("");
+// const [newPropRooms, setNewPropRooms] = useState(0);
+// const [newPropDisponible, setNewPropDisponible] = useState(false); 
+// const [newPropType, setNewPropType] = useState([]);
+// const [updateNameProp, setUpdateNameProp] = useState("");
+// const [file, setFile] = useState(null);
+// const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
-const signIn = async()=>{
+export const signIn = async()=>{
     try {
         await createUserWithEmailAndPassword(auth, email, password);      
     } catch (error) {
@@ -30,7 +31,7 @@ const signIn = async()=>{
     }
 };
 // funcion para SIGNIN CON GOOGLE
-const signInGoogle = async()=>{
+export const signInGoogle = async()=>{
     try {
         await signInWithPopup(auth, googleProvider)
     } catch (error) {
@@ -38,7 +39,7 @@ const signInGoogle = async()=>{
     }
 };
 // funcion para LOGOUT
-const logOut = async()=>{
+export const logOut = async()=>{
     try {
         await signOut(auth)
     } catch (error) {
@@ -46,48 +47,41 @@ const logOut = async()=>{
     }
 };
 // funcion para POSTEAR PROPIEDADES
-const onSubmitProp = async () => {
+export const createProp = async (formData, file) => {
     try {
       // subimos la imagen al storage y obtenemos su url
       if (file) {
-        const folderRef = ref(storage, `properties/${file.name + v4()}`);
+        const folderRef = ref(db, `properties/${file.name + v4()}`);
         await uploadBytes(folderRef, file);
         const imageUrl = await getDownloadURL(folderRef);
-
+  
         // creamos la propiedad y le agregamos la propiedad imageUrl
         await addDoc(propertiesCollectionRef, {
-          name: newPropName,
-          rooms: newPropRooms,
-          disponible: newPropDisponible,
-          location: newPropType,
+          name: formData.name,
+          rooms: formData.rooms,
+          disponible: formData.disponible,
+          location: formData.location,
           userId: auth?.currentUser?.uid,
-          imageUrl: imageUrl // <====|| ACA TA LA URL
+          imageUrl: imageUrl,
         });
       } else {
-        // por ahora, si no hay img se crea igual, pero podriamos agregarle una por defecto
+        // por ahora, si no hay img se crea igual, pero podríamos agregarle una por defecto
         await addDoc(propertiesCollectionRef, {
-          name: newPropName,
-          rooms: newPropRooms,
-          disponible: newPropDisponible,
-          location: newPropType,
+          name: formData.name,
+          rooms: formData.rooms,
+          disponible: formData.disponible,
+          location: formData.location,
           userId: auth?.currentUser?.uid,
         });
       }
-
-      // se limpia el estado 
-      setNewPropName("");
-      setNewPropRooms(0);
-      setNewPropDisponible(false);
-      setNewPropType([]);
-      setFile(null);
-
-      alert('Ahora si papu, alta app nos hicimos');
+      alert('¡Propiedad creada exitosamente!');
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert('Error al crear la propiedad.');
     }
   };
 //funcion para ACTUALIZAR PROPIEDADES
-const updateProperty = async(id)=>{
+export const updateProperty = async(id)=>{
     try {
         const property = doc(db, 'properties', id);
           await updateDoc(property, {name: updateNameProp})
@@ -96,7 +90,7 @@ const updateProperty = async(id)=>{
     }
 };
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-const getPropertiesList = async () => {
+export const getPropertiesList = async () => {
     try {
       const data = await getDocs(propertiesCollectionRef);
       const filterData = await Promise.all(
@@ -121,7 +115,7 @@ const getPropertiesList = async () => {
   };
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
-const uploadFile = async()=>{
+export const uploadFile = async()=>{
     if(!file) return;
     const folderRef = ref(storage, `properties/${file.name + v4()}`);
     try {
@@ -133,7 +127,8 @@ const uploadFile = async()=>{
     }
   };
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
-listAll(imageUrlRef).then((response) => {
+export const dowloadImg = ()=> {
+    listAll(imageUrlRef).then((response) => {
     const urls = [];
     response.items.forEach((item) => {
       getDownloadURL(item).then((url) => {
@@ -142,3 +137,4 @@ listAll(imageUrlRef).then((response) => {
       })
     })
   })
+};

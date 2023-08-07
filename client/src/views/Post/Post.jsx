@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../redux/actions';
+import { createProp } from '../../firebase/handlers';
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Post = () => {
     services: '',
     description: '',
     price: 0,
-    imageFile: null,
+    imageUrl: null,
   });
 
   const handleInputChange = (event) => {
@@ -29,18 +30,29 @@ const Post = () => {
     const file = event.target.files[0];
     setFormData({
       ...formData,
-      imageFile: file,
+      imageUrl: file,
     });
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await dispatch(createPost(formData)); // Enviar el objeto formData completo
-      alert('Property created successfully!');
+      await createProp(formData, formData.imageUrl);
+      // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
+      // Por ejemplo, limpiar el formulario o redirigir a otra página.
+      setFormData({
+        user_id: '',
+        name: '',
+        types: '',
+        location: '',
+        rooms: 0,
+        services: '',
+        description: '',
+        price: 0,
+        imageUrl: null,
+      });
     } catch (error) {
-      console.error(error);
-      alert('Failed to create property. Please try again.');
+      console.log(error);
     }
   };
 
@@ -48,39 +60,92 @@ const Post = () => {
     <form onSubmit={onSubmit}>
       <div>
         <label>User ID:</label>
-        <input type="text" name="user_id" value={formData.user_id} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="user_id"
+          value={formData.user_id}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Property Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Property Types:</label>
-        <input type="text" name="types" value={formData.types} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="types"
+          value={formData.types}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Location:</label>
-        <input type="text" name="location" value={formData.location} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="location"
+          value={formData.location}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Rooms:</label>
-        <input type="number" name="rooms" value={formData.rooms} onChange={handleInputChange} required />
+        <input
+          type="number"
+          name="rooms"
+          value={formData.rooms}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Services:</label>
-        <input type="text" name="services" value={formData.services} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="services"
+          value={formData.services}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Description:</label>
-        <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Price:</label>
-        <input type="number" name="price" value={formData.price} onChange={handleInputChange} required />
+        <input
+          type="number"
+          name="price"
+          value={formData.price}
+          onChange={handleInputChange}
+          required
+        />
       </div>
       <div>
         <label>Image:</label>
-        <input type="file" name="imageFile" onChange={handleFileChange} required />
+        <input
+          type="file"
+          name="imageFile"
+          onChange={handleFileChange}
+          required
+        />
       </div>
       <button type="submit">Create Property</button>
     </form>
@@ -88,6 +153,7 @@ const Post = () => {
 };
 
 export default Post;
+
 
 
 
