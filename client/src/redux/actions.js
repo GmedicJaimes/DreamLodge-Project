@@ -4,7 +4,7 @@ import {
     GET_ALL_PROPERTIES,
     GET_DETAIL_PROPERTY,
     NEW_ACCOUNT,
-    NEW_POST
+    NEW_POST,
 } from "./action-types"
 
 
@@ -27,6 +27,25 @@ export const getDetailProperty = ( id ) => {
         }
       };
 };
+
+export const searchProperty = (location) =>{
+  return async function(dispatch){
+    const  {data} = await axios.get(`http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?location=${location}`)
+    return dispatch({
+      type:SEARCH_PROPERTY,
+      payload: data
+    })
+
+  }
+
+}
+
+export const getDetailClean = () => {
+  return {
+    type: GET_DETAIL_CLEAR
+  };
+}
+
 
 export const getDetailUser = ( id ) => {
     return async function(dispatch) {
@@ -73,15 +92,24 @@ export const userLogin = ( data ) => {
     console.log(`email: ${data.email}, password: ${data.password}`);
 }
 
-export const userRegister = async ( registerData ) => {
+export const userRegister = ( registerData ) => {
     return async function(dispatch){
         try {
           const response = await axios.post("http://localhost:5000/dreamlodge-8517c/us-central1/app/users", registerData);
-            window.alert(`Cuenta creada con exito`)
             return dispatch({ type: NEW_ACCOUNT, payload: response.data})
         } catch (error) {
-            window.alert(`Error al crear cuenta, ${error}`)
             return
         }
     }
 }
+
+export const filterLocation = (state) => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get( `http://localhost:5000/dreamlodge-8517c/us-central1/app/properties?state=${state}`);
+      return dispatch({ type: GET_ALL_PROPERTIES, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
