@@ -57,6 +57,7 @@ const DetailPost = () => {
                 <div className={styles.overview}>
                     <div className={styles.sectionOverOne}>
                         <h2>Overview</h2>
+                        <Link to={`/user/${property.user_id}`}>Ola</Link>
                         <p>{property.description}</p>
                     </div>
                     <div className={styles.sectionOverTwo}>
