@@ -73,14 +73,12 @@ export const userLogin = ( data ) => {
     console.log(`email: ${data.email}, password: ${data.password}`);
 }
 
-export const userRegister = async ( registerData ) => {
+export const userRegister = ( registerData ) => {
     return async function(dispatch){
         try {
           const response = await axios.post("http://localhost:5000/dreamlodge-8517c/us-central1/app/users", registerData);
-            window.alert(`Cuenta creada con exito`)
             return dispatch({ type: NEW_ACCOUNT, payload: response.data})
         } catch (error) {
-            window.alert(`Error al crear cuenta, ${error}`)
             return
         }
     }
