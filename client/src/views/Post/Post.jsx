@@ -24,9 +24,17 @@ const Post = () => {
     // imageFile: null,
   });
 
-  const typeProperties = ["Cabins", "Beachfront", "Mansions", "Countryside", "Rooms"]
-  const citys = [ "Los Santos", "San Fierro", "Las Venturas", "Liberty City", "Vice City", "Carcer City"]
-  const states = ["Peru", "Mexico", "Bolivia"]
+  // const [formData, setFormData] = useState({
+  //   user_id: '',
+  //   name: '',
+  //   types: '',
+  //   location: '',
+  //   rooms: 0,
+  //   services: '',
+  //   description: '',
+  //   price: 0,
+  //   imageUrl: null,
+  // });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -46,7 +54,6 @@ const Post = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
     try {
       await createProp(formData, formData.imageUrl);
       // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
@@ -164,6 +171,7 @@ const Post = () => {
 };
 
 export default Post;
+
 
 
 
