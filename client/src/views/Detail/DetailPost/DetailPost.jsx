@@ -10,12 +10,14 @@ const DetailPost = () => {
 
   const [property, setPropertyDetail] = useState([])
   console.log(property);
-
+  console.log(detailId)
 
   useEffect(() => {
     async function propertiesDetail() {
       const detailPost = await detailId();
+      console.log(detailPost)
       setPropertyDetail(detailPost)
+      console.log(property);
     }
     propertiesDetail();
   }, [])
@@ -25,7 +27,7 @@ const DetailPost = () => {
           <div className={styles.containerPost}>
               <header className={styles.head}>
                   <div className={styles.headLeft}>
-                      <h1>{property.name}</h1>
+                      <h1>{property.data.name}</h1>
                       <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
                   </div>
                   <div className={styles.headRigth}>

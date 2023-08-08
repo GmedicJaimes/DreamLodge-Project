@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
+import {getDocs, collection, addDoc, updateDoc, doc, getDoc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
@@ -81,7 +81,7 @@ export const createProp = async (formData, file) => {
     });
 
 
-    getPropertiesList();o
+    getPropertiesList();
 
     alert('¡Es el fin del backend!');
   } catch (error) {
@@ -157,8 +157,12 @@ export const getPropertiesList = async () => {
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
 export const detailId = async(propertyId) =>{
   try {
-    const property = doc(db, 'properties', propertyId)
-    return await getDocs(property)
+    const propertySnapshot = await getDoc(getPropertiesList());
+    console.log(propertySnapshot);
+    if(propertySnapshot.exists()){
+      const propertyData = propertySnapshot.data()
+      console.log( 'mi data is: ', propertyData)
+    }
   } catch (error) {
     console.log(error)
   }

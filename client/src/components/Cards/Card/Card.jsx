@@ -10,7 +10,7 @@ import imagen4 from '../../../assets/imagen4.jpeg';
 
 const Card = ({ property }) => {
   const { id, name, rooms, location } = property;
-  console.log(id,name,rooms,location)
+  // console.log(id,name,rooms,location)
   const imageUrls = [landingImg, FondoLanding, imagen1, imagen2, imagen3, imagen4];
 
   const randomIndex = Math.floor(Math.random() * imageUrls.length);
