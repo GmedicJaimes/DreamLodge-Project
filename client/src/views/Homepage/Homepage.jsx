@@ -4,7 +4,7 @@ import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getPropertiesList } from "../../config/handlers"
+import { getPropertiesList } from "../../config/handlers.js";
 
 const Homepage = () => {
   const [host, setHost] = useState([]);

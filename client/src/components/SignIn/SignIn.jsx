@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import styles from "./SignIn.module.css"
-// import { useDispatch } from 'react-redux';
-// import { userRegister } from '../../redux/actions';
 import { Link } from "react-router-dom"
+import { signIn } from '../../config/handlers';
+import { auth } from '../../config/firebase';
 
 const SignIn = () => {
 
-  const dispatch = useDispatch()
-
   const [ register, setRegister ] = useState({
-    firstName: "",
-    lastName: "",
-    country: "",
-    image: "",
-    banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
-    language: [],
-    username: "",
+    // firstName: "",
+    // lastName: "",
+    // country: "",
+    // image: "",
+    // banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+    // language: [],
+    // username: "",
     email: "",
     password: ""
   })
-
-  const supportedLenguajes = [ "Spanish", "English", "German", "Italian","Based", "French", "Chinesse","Facts"]
 
   const handleRegisterForm = (event) => {
     setRegister({
@@ -28,56 +24,49 @@ const SignIn = () => {
       [event.target.name] : event.target.value
     })
   }
-
-  const handleGender = (event) => {
-    let gender = event.target.value
-
-    if (gender === "other") {
-      setRegister({
-        ...register,
-        image : "https://i.pinimg.com/564x/48/5d/34/485d3490861e058d4af3c69c7f41eb2d.jpg"
-      })
-      return
-    } 
-    setRegister({
-        ...register,
-        image : `https://randomuser.me/api/portraits/${gender}/${Math.round((Math.random()*98))}.jpg`
-    })
-}
-
-const handleLang = (event) => {
-  const lang = event.target.value
-
-  if (register.language.includes(lang)) {
-    setRegister({
-      ...register, 
-      language : register.language.filter((langIn) => langIn != lang)
-    })
-  } else {
-    setRegister({ ...register, language: [...register.language, lang]})
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      signIn(auth, register.email, register.password)
+    } catch (error) {
+      console.log(error);
+    }
   }
+  // const supportedLenguajes = [ "Spanish", "English", "German", "Italian","Based", "French", "Chinesse","Facts"]
 
-}
+//   const handleGender = (event) => {
+//     let gender = event.target.value
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log(register);
-  //   try {
-  //     dispatch(userRegister(register))
-  //     setRegister({
-  //       firstName: "",
-  //       lastName: "",
-  //       country: "",
-  //       image: "",
-  //       language: [],
-  //       username: "",
-  //       email: "",
-  //       password: ""
-  //     })
-  //   } catch (error) {
-  //     console.error('Error al enviar formulario:', error);
-  //   }
-  // };
+//     if (gender === "other") {
+//       setRegister({
+//         ...register,
+//         image : "https://i.pinimg.com/564x/48/5d/34/485d3490861e058d4af3c69c7f41eb2d.jpg"
+//       })
+//       return
+//     } 
+//     setRegister({
+//         ...register,
+//         image : `https://randomuser.me/api/portraits/${gender}/${Math.round((Math.random()*98))}.jpg`
+//     })
+// }
+
+// const handleLang = (event) => {
+//   const lang = event.target.value
+
+//   if (register.language.includes(lang)) {
+//     setRegister({
+//       ...register, 
+//       language : register.language.filter((langIn) => langIn != lang)
+//     })
+//   } else {
+//     setRegister({ ...register, language: [...register.language, lang]})
+//   }
+
+// }
+
+
+ 
 
   return (
     <div className={styles.mainContainer}>
@@ -85,7 +74,7 @@ const handleLang = (event) => {
         <h2>Create your account</h2>
       </header>
       <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label htmlFor="firstName">First Name:</label>
           <input
             type="text"
@@ -106,18 +95,18 @@ const handleLang = (event) => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="email">Gender:</label>
+          <label htmlFor="gender">Gender:</label>
           <select onChange={handleGender} >
             <option value="men">Male</option>
             <option value="women">Female</option>
             <option value="other">Other</option>
           </select>
-        </div>
+        </div> */}
         <div className={styles.formGroup}>
           <label htmlFor="email">Email:</label>
           <input
-            type="text"
-            name='email'
+            type="email"
+            name="email"
             value={register.email}
             onChange={handleRegisterForm}
             required
@@ -128,13 +117,13 @@ const handleLang = (event) => {
           <label htmlFor="password">Password:</label>
           <input
             type="password"
-            name='password'
+            name="password"
             value={register.password}
             onChange={handleRegisterForm}
             required
           />
         </div>
-        <div className={styles.formGroup}>
+        {/* <div className={styles.formGroup}>
           <label htmlFor="phone">Country:</label>
           <input
             type="text"
@@ -166,7 +155,7 @@ const handleLang = (event) => {
                   )})
              }
           </select>
-        </div>
+        </div> */}
         <button className={styles.btn} type="submit">Create my account</button>
         <p className={styles.foot}>Already have an account? <Link className={styles.linkfoot} to={"/login"}>Log in</Link></p>
       </form>
