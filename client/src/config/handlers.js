@@ -148,7 +148,11 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       rooms: formData.rooms,
       disponible: formData.disponible,
-      location: formData.location,
+      location: {
+        adress: formData.adress,
+        state: formData.state,
+        city: formData.city,
+      },
       imageUrl: imageUrl,
       description: formData.description
     });
