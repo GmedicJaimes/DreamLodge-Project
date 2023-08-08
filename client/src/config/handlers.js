@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -23,13 +23,23 @@ const imageUrlRef = ref(storage, 'properties/')
 // const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
-export const signIn = async()=>{
+export const signIn = async(auth, email, password) => {
     try {
         await createUserWithEmailAndPassword(auth, email, password);      
     } catch (error) {
         console.log(error)
     }
 };
+
+// funcion para LOGIN 
+export const logIn = async(auth, email, password)=>{
+  try {
+      await signInWithEmailAndPassword(auth, email, password);      
+  } catch (error) {
+      console.log(error)
+  }
+};
+
 // funcion para SIGNIN CON GOOGLE
 export const signInGoogle = async()=>{
     try {
