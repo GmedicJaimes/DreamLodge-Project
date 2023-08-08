@@ -2,13 +2,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styles from "./Login.module.css"
 import React from 'react';
-// import { useDispatch } from "react-redux"
-
+import { Auth } from 'firebase/auth';
+import { logIn } from '../../firebase/handlers';
+import { auth } from '../../firebase/firebase';
 
 const Login = () => {
-
-    // const dispatch = useDispatch()
-
 
     const [loginData, setLoginData] = useState({
         email: "",
@@ -23,7 +21,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // dispatch(userLogin(loginData))
+        logIn(auth, loginData.email, loginData.password)
     };
 
     return (
