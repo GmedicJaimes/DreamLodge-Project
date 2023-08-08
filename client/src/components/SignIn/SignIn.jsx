@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./SignIn.module.css"
 import { Link } from "react-router-dom"
-import { signIn } from '../../config/handlers';
+import { signIn, signInGoogle } from '../../config/handlers';
 import { auth } from '../../config/firebase';
 
 const SignIn = () => {
@@ -156,6 +156,8 @@ const SignIn = () => {
              }
           </select>
         </div> */}
+        <button className={styles.loginWG} onClick={signInGoogle}>Sign In With Google</button>
+        <br />
         <button className={styles.btn} type="submit">Create my account</button>
         <p className={styles.foot}>Already have an account? <Link className={styles.linkfoot} to={"/login"}>Log in</Link></p>
       </form>

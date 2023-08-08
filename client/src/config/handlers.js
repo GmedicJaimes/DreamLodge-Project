@@ -85,6 +85,9 @@ export const logIn = async(auth, email, password)=>{
 };
 
 // funcion para SIGNIN CON GOOGLE
+
+//hardcodeofeo
+
 export const signInGoogle = async()=>{
     try {
         await signInWithPopup(auth, googleProvider)
@@ -92,27 +95,6 @@ export const signInGoogle = async()=>{
         console.log(error)
     }
 };
-
-
-export const signInDB = async(auth, email, password) => {
-  try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Guardar detalles en Firestore
-      const userRef = doc(db, 'users', user.uid);
-      await setDoc(userRef, {
-          uid: user.uid,
-          email: user.email,
-          name: user.name
-          // otros campos que quieras guardar
-      });
-  } catch (error) {
-      console.log(error)
-  }
-};
-
-
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
@@ -278,4 +260,5 @@ export const dowloadImg = ()=> {
     })
   })
 };
+
 

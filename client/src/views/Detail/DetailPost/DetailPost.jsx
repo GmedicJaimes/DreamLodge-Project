@@ -33,11 +33,13 @@ const DetailPost = () => {
               <header className={styles.head}>
                   <div className={styles.headLeft}>
                       <h1>{property.name}</h1>
-                      <p>{property.location}, {property.location?.state}.</p>
-                  </div>
+                       <p>{property.location}, {property.location?.state}.</p>
+                   </div>
                   <div className={styles.headRigth}>
                       <p>$ {property.price} USD noche</p>
+                      <Link to={`/reserve/${id}`}>
                       <button >Reserve</button>
+                      </Link>
                   </div>
               </header>
               <div className={styles.image}>

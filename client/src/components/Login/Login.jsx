@@ -23,12 +23,25 @@ const Login = () => {
         logIn(auth, loginData.email, loginData.password)
     };
 
+    const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
+
+    React.useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+        setCurrentUser(user);
+        });
+
+        return () => unsubscribe();
+    }, [auth]);
+
     return (
         <div className={styles.mainContainer}>
             <header>
                 <h2>Login</h2>
             </header>
-            <form onSubmit={handleSubmit}>
+            {
+                currentUser === null 
+                ?
+                <form onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
                     <label htmlFor="email">Email:</label>
                     <input
@@ -59,6 +72,10 @@ const Login = () => {
                     <button className={styles.btnCreateAcc}>Sign up now</button>
                 </Link>
             </form>
+                :
+                <h1>ya esta loggeado parse</h1>
+            }
+            
         </div>
     );
 };
