@@ -41,6 +41,9 @@ export const logIn = async(auth, email, password)=>{
 };
 
 // funcion para SIGNIN CON GOOGLE
+
+//hardcodeofeo
+
 export const signInGoogle = async()=>{
     try {
         await signInWithPopup(auth, googleProvider)
@@ -48,6 +51,8 @@ export const signInGoogle = async()=>{
         console.log(error)
     }
 };
+
+
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
