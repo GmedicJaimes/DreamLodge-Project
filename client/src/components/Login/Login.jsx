@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styles from "./Login.module.css"
 import React from 'react';
-import { Auth } from 'firebase/auth';
-import { logIn } from '../../firebase/handlers';
-import { auth } from '../../firebase/firebase';
+import { logIn } from '../../config/handlers';
+import { auth } from '../../config/firebase';
 
 const Login = () => {
 
