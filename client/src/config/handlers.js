@@ -48,38 +48,37 @@ export const logOut = async()=>{
 };
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
-    try {
-      // subimos la imagen al storage y obtenemos su url
-      if (file) {
-        const folderRef = ref(db, `properties/${file.name + v4()}`);
-        await uploadBytes(folderRef, file);
-        const imageUrl = await getDownloadURL(folderRef);
-  
-        // creamos la propiedad y le agregamos la propiedad imageUrl
-        await addDoc(propertiesCollectionRef, {
-          name: formData.name,
-          rooms: formData.rooms,
-          disponible: formData.disponible,
-          location: formData.location,
-          userId: auth?.currentUser?.uid,
-          imageUrl: imageUrl,
-        });
-      } else {
-        // por ahora, si no hay img se crea igual, pero podríamos agregarle una por defecto
-        await addDoc(propertiesCollectionRef, {
-          name: formData.name,
-          rooms: formData.rooms,
-          disponible: formData.disponible,
-          location: formData.location,
-          userId: auth?.currentUser?.uid,
-        });
-      }
-      alert('¡Propiedad creada exitosamente!');
-    } catch (error) {
-      console.log(error);
-      alert('Error al crear la propiedad.');
+  try {
+    let imageUrl = null;
+    // Subimos la imagen al storage y obtenemos su URL si hay un archivo seleccionado
+    if (file) {
+      const folderRef = ref(storage, `properties/${file.name + v4()}`);
+      await uploadBytes(folderRef, file);
+      imageUrl = await getDownloadURL(folderRef);
     }
-  };
+
+    // Obtenemos el userId del usuario actual
+    const userId = auth?.currentUser?.uid;
+
+
+    await addDoc(propertiesCollectionRef, {
+      name: formData.name,
+      rooms: formData.rooms,
+      disponible: formData.disponible,
+      location: formData.location,
+      imageUrl: imageUrl,
+    });
+
+
+    getPropertiesList();o
+
+    alert('¡Es el fin del backend!');
+  } catch (error) {
+    console.log(error);
+    alert(`La pifiamo'`);
+  }
+};
+
 //funcion para ACTUALIZAR PROPIEDADES
 export const updateProperty = async(id)=>{
     try {
