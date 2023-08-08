@@ -15,12 +15,13 @@ const DetailPost = () => {
   // console.log(property);
   // console.log(detailId)
 
+  console.log(property)
+
   useEffect(() => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
-      console.log('caremonda funciona' , detailPost)
       setPropertyDetail(detailPost)
-      // console.log(property);
+
     }
     propertiesDetail();
   }, [])
@@ -68,7 +69,7 @@ const DetailPost = () => {
               <section className={styles.Rooms}>
                   <div className={styles.title}>
                       <h2>Rooms</h2>
-                      <Link to={`/user/${property.user_id}`} className={styles.titleLink}>
+                      <Link to={`/user/${property.userId}`} className={styles.titleLink}>
                           <button className={styles.btn}>Anfitrion</button>
                       </Link>
                   </div>

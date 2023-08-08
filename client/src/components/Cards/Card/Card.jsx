@@ -15,6 +15,7 @@ const Card = ({ property }) => {
 
   const randomIndex = Math.floor(Math.random() * imageUrls.length);
   const randomImageUrl = imageUrls[randomIndex];
+  console.log(randomImageUrl)
 
   return (
     <Link to={`/rooms/${id}`} className={styles.link}>

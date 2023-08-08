@@ -3,7 +3,11 @@ import Card from "./Card/Card";
   import React, { useEffect, useState } from 'react';
   import styles from "./Cards.module.css";
   import { useInfiniteQuery } from "@tanstack/react-query";
+<<<<<<< HEAD
+  import { getPropertiesList } from "../../config/handlers";
+=======
   import { getPropertiesList } from "../../config/handlers.js";
+>>>>>>> fbc21a511c0c71ef70c5cef7acd2a47310cfee07
   
   const Cards = () => {
     const [propertiesList, setPropertiesList] = useState([]);
