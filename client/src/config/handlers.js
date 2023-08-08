@@ -8,6 +8,7 @@ import { storage, db, auth, googleProvider } from './firebase';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
+// const propertiesDetailId = collection(db, `properties/${documentId}`)
 const imageUrlRef = ref(storage, 'properties/')
 
 // ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
@@ -79,6 +80,7 @@ export const createProp = async (formData, file) => {
   }
 };
 
+
 //funcion para ACTUALIZAR PROPIEDADES
 export const updateProperty = async(id)=>{
     try {
@@ -115,7 +117,6 @@ export const updateProperty = async(id)=>{
 
    */
 
-
 // handlers.js
 export const getPropertiesList = async () => {
   try {
@@ -143,15 +144,15 @@ export const getPropertiesList = async () => {
   }
 };
 
-
-
-
-
-
-
-
-
-
+//* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
+export const detailId = async(propertyId) =>{
+  try {
+    const property = doc(db, 'properties', propertyId)
+    return await getDocs(property)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
 export const uploadFile = async()=>{
@@ -165,6 +166,7 @@ export const uploadFile = async()=>{
       console.log(error)
     }
   };
+
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
 export const dowloadImg = ()=> {
     listAll(imageUrlRef).then((response) => {
@@ -177,3 +179,4 @@ export const dowloadImg = ()=> {
     })
   })
 };
+
