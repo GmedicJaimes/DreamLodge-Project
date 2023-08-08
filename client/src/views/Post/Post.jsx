@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import  { createProp }  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Post = () => {
   const [formData, setFormData] = useState({
@@ -14,9 +16,11 @@ const Post = () => {
     services: '',
     description: '',
     price: 0,
-    imageFile: null, // Agrega el estado para almacenar el archivo de imagen
-    disponible: false, // Agrega el estado para almacenar el valor "disponible"
+    imageFile: null, 
+    disponible: false, 
+    avaibleDates: []
   });
+
 
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
@@ -24,13 +28,16 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
+      const avaibleDatesArray = formData.avaibleDates.split(',').map(date=> date.trim())
+
       const formDataWithDefaultValues = {
         ...formData,
         disponible: formData.hasOwnProperty('disponible') ? formData.disponible : false,
+        avaibleDates: avaibleDatesArray
       };
-      await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
-      // Limpiar el formulario después de crear la propiedad
+
+      await createProp(formDataWithDefaultValues, formData.imageFile); 
+      
       setFormData({
         name: '',
         type: [],
@@ -41,6 +48,7 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
         price: 0,
         imageFile: null,
         disponible: false,
+        avaibleDates: []
       });
     } catch (error) {
       console.log(error);
@@ -52,7 +60,7 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
     if (name === 'imageFile') {
       setFormData((prevData) => ({
         ...prevData,
-        [name]: files[0], // Almacena el archivo de imagen en el estado
+        [name]: files[0],
       }));
     } else {
       setFormData((prevData) => ({
@@ -136,6 +144,17 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
           </div>
           <div className={styles.formGroup}>
             <label>
+              Available Dates:
+              <DatePicker
+                selected={formData.availableDates}
+                onChange={(date) => handleChange('availableDates', date)}
+                selectsRange
+                inline
+              />
+            </label>
+          </div>
+          {/* <div className={styles.formGroup}>
+            <label>
               Description:
               <textarea
                 name="description"
@@ -143,7 +162,7 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
                 onChange={handleChange}
               />
             </label>
-          </div>
+          </div> */}
           <div className={styles.formGroup}>
             <label>
               Price:
