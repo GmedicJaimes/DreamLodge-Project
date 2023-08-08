@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { createPost } from '../../redux/actions';
-import  createProp  from '../../config/handlers';
+import  {createProp}  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
 
