@@ -1,14 +1,56 @@
 
 import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
+import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 const imageUrlRef = ref(storage, 'properties/')
+
+
+
+
+export const getUserByUID = async (targetUID) => {
+  const db = getFirestore();
+
+  // Obtener el documento del usuario de Firestore
+  const userDocRef = doc(db, 'users', targetUID);
+  const userDocSnapshot = await getDoc(userDocRef);
+
+  if (userDocSnapshot.exists()) {
+    const userProperties = await getUserProperties(targetUID); // Obtener las propiedades del usuario
+    return {
+      ...userDocSnapshot.data(),  // Todos los campos almacenados en Firestore para ese usuario
+      uid: targetUID,  // Añadimos el UID al objeto resultante
+      properties: userProperties  // Agregamos las propiedades al objeto resultante
+    };
+  } else {
+    // El documento no existe, puedes manejar este caso como prefieras
+    console.error(`No user found for UID: ${targetUID}`);
+    return null;
+  }
+};
+
+
+
+// Función para obtener las propiedades de un usuario
+const getUserProperties = async (targetUID) => {
+  const propertiesQuery = query(propertiesCollectionRef, where('userId', '==', targetUID));
+  const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+  
+  const userProperties = propertiesQuerySnapshot.docs.map((doc) => {
+    const propertyData = doc.data();
+    return {
+      ...propertyData,
+      id: doc.id
+    };
+  });
+
+  return userProperties;
+};
 
 // ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
 // const [email, setEmail] = useState("")
@@ -48,6 +90,27 @@ export const signInGoogle = async()=>{
         console.log(error)
     }
 };
+
+
+export const signInDB = async(auth, email, password) => {
+  try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Guardar detalles en Firestore
+      const userRef = doc(db, 'users', user.uid);
+      await setDoc(userRef, {
+          uid: user.uid,
+          email: user.email,
+          name: user.name
+          // otros campos que quieras guardar
+      });
+  } catch (error) {
+      console.log(error)
+  }
+};
+
+
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
@@ -56,6 +119,13 @@ export const logOut = async()=>{
         console.log(error)
     }
 };
+
+
+
+
+
+
+
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
   try {
@@ -152,14 +222,6 @@ export const getPropertiesList = async () => {
     return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
   }
 };
-
-
-
-
-
-
-
-
 
 
 
