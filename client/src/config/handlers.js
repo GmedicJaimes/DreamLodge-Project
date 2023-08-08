@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc, getDoc} from 'firebase/firestore';
+import { getDocs, collection, addDoc, updateDoc, doc, getDoc, query, where } from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
@@ -131,10 +131,11 @@ export const updateProperty = async(id)=>{
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    console.log("Fetching properties...", data)
+    // console.log("Fetching properties...", data)
     const filterData = await Promise.all(
       data.docs.map(async (doc) => {
         const propertyData = doc.data();
+        console.log(propertyData);
         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
@@ -146,7 +147,7 @@ export const getPropertiesList = async () => {
         };
       })
     );
-    console.log(filterData);
+    // console.log(filterData);
     return filterData; // Asegúrate de retornar el array de propiedades
   } catch (error) {
     console.log(error);
@@ -155,13 +156,20 @@ export const getPropertiesList = async () => {
 };
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
-export const detailId = async(propertyId) =>{
+export const detailId = async (id) =>{
   try {
-    const propertySnapshot = await getDoc(getPropertiesList());
-    console.log(propertySnapshot);
+    const refProperty = doc(db, 'properties' , id)
+    console.log(refProperty)
+    const propertySnapshot = await getDoc(refProperty);
+    console.log(propertySnapshot.exists());
+
+   
     if(propertySnapshot.exists()){
-      const propertyData = propertySnapshot.data()
-      console.log( 'mi data is: ', propertyData)
+      
+      console.log( 'Document data:  ', propertySnapshot.data())
+      return propertySnapshot.data();
+    } else {
+      console.log( 'no existe nada de info') 
     }
   } catch (error) {
     console.log(error)

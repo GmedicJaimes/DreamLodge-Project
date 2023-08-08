@@ -3,32 +3,36 @@ import React, { useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
 const DetailPost = () => {
 
+  const { id } = useParams()
+
+  //? estado que guarda la propiedad traida por params
   const [property, setPropertyDetail] = useState([])
-  console.log(property);
-  console.log(detailId)
+  // console.log(property);
+  // console.log(detailId)
 
   useEffect(() => {
-    async function propertiesDetail() {
-      const detailPost = await detailId();
-      console.log(detailPost)
+    const propertiesDetail = async () => {
+      const detailPost = await detailId(id);
+      console.log('caremonda funciona' , detailPost)
       setPropertyDetail(detailPost)
-      console.log(property);
+      // console.log(property);
     }
     propertiesDetail();
   }, [])
 
   return(
+    
       <div>
           <div className={styles.containerPost}>
               <header className={styles.head}>
                   <div className={styles.headLeft}>
-                      <h1>{property.data.name}</h1>
-                      <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
+                      <h1>{property.name}</h1>
+                      <p>{property.location}, {property.location?.state}.</p>
                   </div>
                   <div className={styles.headRigth}>
                       <p>$ {property.price} USD noche</p>
@@ -36,11 +40,11 @@ const DetailPost = () => {
                   </div>
               </header>
               <div className={styles.image}>
-                  <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                  <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
                   <div className={styles.sectionOne}>
-                    <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                    <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
                     <div className={styles.sectionTwo}>
-                      <img src={property.image} alt={property.name} className={styles.imgOne}/>
+                      <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
                     </div>
                     
                   </div>
@@ -72,6 +76,11 @@ const DetailPost = () => {
                           <li>Rooms: {property.rooms?.[1]}</li>
                           <li>Bathrooms: {property.rooms?.[2]}</li>
                           <li>Bed: {property.rooms?.[3]}</li>
+                          <li>Status: 
+                            {
+                              property.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
+                            }
+                          </li>
                       </ul>
                   </div>
               </section>
