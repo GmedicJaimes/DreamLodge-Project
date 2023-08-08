@@ -70,7 +70,7 @@ export const createProp = async (formData, file) => {
     });
 
 
-    getPropertiesList();o
+    getPropertiesList();
 
     alert('¡Es el fin del backend!');
   } catch (error) {
