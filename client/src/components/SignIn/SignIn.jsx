@@ -6,6 +6,11 @@ import { auth } from '../../firebase/firebase';
 
 const SignIn = () => {
 
+<<<<<<< HEAD
+=======
+  const dispatch = useDispatch()
+
+>>>>>>> 13e8ea6f77a35d4766ca63f394b83c93a750dabb
   const [ register, setRegister ] = useState({
     // firstName: "",
     // lastName: "",
@@ -24,6 +29,7 @@ const SignIn = () => {
       [event.target.name] : event.target.value
     })
   }
+<<<<<<< HEAD
   
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -67,6 +73,58 @@ const SignIn = () => {
 
 
  
+=======
+
+  const handleGender = (event) => {
+    let gender = event.target.value
+
+    if (gender === "other") {
+      setRegister({
+        ...register,
+        image : "https://i.pinimg.com/564x/48/5d/34/485d3490861e058d4af3c69c7f41eb2d.jpg"
+      })
+      return
+    } 
+    setRegister({
+        ...register,
+        image : `https://randomuser.me/api/portraits/${gender}/${Math.round((Math.random()*98))}.jpg`
+    })
+}
+
+const handleLang = (event) => {
+  const lang = event.target.value
+
+  if (register.language.includes(lang)) {
+    setRegister({
+      ...register, 
+      language : register.language.filter((langIn) => langIn != lang)
+    })
+  } else {
+    setRegister({ ...register, language: [...register.language, lang]})
+  }
+
+}
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(register);
+  //   try {
+  //     dispatch(userRegister(register))
+  //     setRegister({
+  //       firstName: "",
+  //       lastName: "",
+  //       country: "",
+  //       image: "",
+  //       language: [],
+  //       username: "",
+  //       email: "",
+  //       password: ""
+  //     })
+  //   } catch (error) {
+  //     console.error('Error al enviar formulario:', error);
+  //   }
+  // };
+>>>>>>> 13e8ea6f77a35d4766ca63f394b83c93a750dabb
 
   return (
     <div className={styles.mainContainer}>

@@ -1,172 +1,170 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { createPost } from '../../redux/actions';
-import { createProp } from '../../firebase/handlers';
+import  { createProp }  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
 
 const Post = () => {
-  // const dispatch = useDispatch();
-  //hola perros
   const [formData, setFormData] = useState({
-    // user_id: '',
-    name: "",
-    types: [],
-    location: {
-      adress: "",
-      city: "",
-      state: ""
-    },
-    rooms: [0,0,0,0],
-    services: [],
-    description: "",
+    name: '',
+    type: '',
+    location: '',
+    rooms: 0,
+    services: '',
+    description: '',
     price: 0,
-    // imageFile: null,
+    imageFile: null, // Agrega el estado para almacenar el archivo de imagen
+    disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
 
-  // const [formData, setFormData] = useState({
-  //   user_id: '',
-  //   name: '',
-  //   types: '',
-  //   location: '',
-  //   rooms: 0,
-  //   services: '',
-  //   description: '',
-  //   price: 0,
-  //   imageUrl: null,
-  // });
+  const opciones = [0, 1, 2, 3, 4, 5, 6];
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFormData({
-      ...formData,
-      imageUrl: file,
-    });
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await createProp(formData, formData.imageUrl);
-      // Puedes agregar otras acciones aquí después de crear la propiedad si es necesario
-      // Por ejemplo, limpiar el formulario o redirigir a otra página.
+      // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
+      const formDataWithDefaultValues = {
+        ...formData,
+        disponible: formData.hasOwnProperty('disponible') ? formData.disponible : false,
+      };
+      await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
+      // Limpiar el formulario después de crear la propiedad
       setFormData({
-        user_id: '',
         name: '',
-        types: '',
+        type: '',
         location: '',
         rooms: 0,
         services: '',
         description: '',
         price: 0,
-        imageUrl: null,
+        imageFile: null,
+        disponible: false,
       });
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'imageFile') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files[0], // Almacena el archivo de imagen en el estado
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <label>User ID:</label>
-        <input
-          type="text"
-          name="user_id"
-          value={formData.user_id}
-          onChange={handleInputChange}
-          required
-        />
+    <div>
+      <div className={styles.bigContainer}>
+        <form onSubmit={handleSubmit} className={styles.mainContainer}>
+          <header>
+            <h2>Create your account</h2>
+          </header>
+          <div className={styles.formGroup}>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Type:
+              <input
+                type="text"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Location:
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Rooms:
+              <select name="rooms" value={formData.rooms} onChange={handleChange}>
+                {opciones.map((op) => (
+                  <option key={op} value={op}>
+                    {op}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Services:
+              <input
+                type="text"
+                name="services"
+                value={formData.services}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Description:
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Price:
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className={styles.formGroup}>
+            <label>
+              Image:
+              <input
+                className={styles.range}
+                onChange={handleChange}
+                type="file"
+                name="imageFile"
+                accept="image/*"
+              />
+              <p>{formData.imageFile?.name || 'No se ha seleccionado ninguna imagen'}</p>
+            </label>
+          </div>
+          <button className={styles.btn} type="submit">
+            Crear Propiedad
+          </button>
+        </form>
       </div>
-      <div>
-        <label>Property Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Property Types:</label>
-        <input
-          type="text"
-          name="types"
-          value={formData.types}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Location:</label>
-        <input
-          type="text"
-          name="location"
-          value={formData.location}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Rooms:</label>
-        <input
-          type="number"
-          name="rooms"
-          value={formData.rooms}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Services:</label>
-        <input
-          type="text"
-          name="services"
-          value={formData.services}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Description:</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Price:</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Image:</label>
-        <input
-          type="file"
-          name="imageFile"
-          onChange={handleFileChange}
-          required
-        />
-      </div>
-      <button type="submit">Create Property</button>
-    </form>
+      {/* <About /> */}
+    </div>
   );
 };
 

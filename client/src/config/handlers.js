@@ -58,38 +58,37 @@ export const logOut = async()=>{
 };
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
-    try {
-      // subimos la imagen al storage y obtenemos su url
-      if (file) {
-        const folderRef = ref(db, `properties/${file.name + v4()}`);
-        await uploadBytes(folderRef, file);
-        const imageUrl = await getDownloadURL(folderRef);
-  
-        // creamos la propiedad y le agregamos la propiedad imageUrl
-        await addDoc(propertiesCollectionRef, {
-          name: formData.name,
-          rooms: formData.rooms,
-          disponible: formData.disponible,
-          location: formData.location,
-          userId: auth?.currentUser?.uid,
-          imageUrl: imageUrl,
-        });
-      } else {
-        // por ahora, si no hay img se crea igual, pero podríamos agregarle una por defecto
-        await addDoc(propertiesCollectionRef, {
-          name: formData.name,
-          rooms: formData.rooms,
-          disponible: formData.disponible,
-          location: formData.location,
-          userId: auth?.currentUser?.uid,
-        });
-      }
-      alert('¡Propiedad creada exitosamente!');
-    } catch (error) {
-      console.log(error);
-      alert('Error al crear la propiedad.');
+  try {
+    let imageUrl = null;
+    // Subimos la imagen al storage y obtenemos su URL si hay un archivo seleccionado
+    if (file) {
+      const folderRef = ref(storage, `properties/${file.name + v4()}`);
+      await uploadBytes(folderRef, file);
+      imageUrl = await getDownloadURL(folderRef);
     }
-  };
+
+    // Obtenemos el userId del usuario actual
+    const userId = auth?.currentUser?.uid;
+
+
+    await addDoc(propertiesCollectionRef, {
+      name: formData.name,
+      rooms: formData.rooms,
+      disponible: formData.disponible,
+      location: formData.location,
+      imageUrl: imageUrl,
+    });
+
+
+    getPropertiesList();o
+
+    alert('¡Es el fin del backend!');
+  } catch (error) {
+    console.log(error);
+    alert(`La pifiamo'`);
+  }
+};
+
 //funcion para ACTUALIZAR PROPIEDADES
 export const updateProperty = async(id)=>{
     try {
@@ -100,7 +99,7 @@ export const updateProperty = async(id)=>{
     }
 };
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-export const getPropertiesList = async () => {
+/*  export const getPropertiesList = async () => {
     try {
       const data = await getDocs(propertiesCollectionRef);
       const filterData = await Promise.all(
@@ -122,7 +121,47 @@ export const getPropertiesList = async () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
+
+   */
+
+
+// handlers.js
+export const getPropertiesList = async () => {
+  try {
+    const data = await getDocs(propertiesCollectionRef);
+    console.log("Fetching properties...", data)
+    const filterData = await Promise.all(
+      data.docs.map(async (doc) => {
+        const propertyData = doc.data();
+        // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
+        if (propertyData.imageUrl) {
+          const imageUrlRef = ref(storage, propertyData.imageUrl);
+          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+        }
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      })
+    );
+    console.log(filterData);
+    return filterData; // Asegúrate de retornar el array de propiedades
+  } catch (error) {
+    console.log(error);
+    return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+  }
+};
+
+
+
+
+
+
+
+
+
+
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
 export const uploadFile = async()=>{
