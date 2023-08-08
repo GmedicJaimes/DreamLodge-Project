@@ -17,7 +17,7 @@ const Card = ({property}) => {
 
 
   const randomIndex = Math.floor(Math.random() * imageUrls.length);
-const randomImageUrl = imageUrls[randomIndex];
+  const randomImageUrl = imageUrls[randomIndex];
 
 
     const {id, name, price, types, image, location} = property
