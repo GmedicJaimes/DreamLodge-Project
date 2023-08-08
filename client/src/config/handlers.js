@@ -6,6 +6,7 @@ import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
@@ -74,10 +75,12 @@ export const createProp = async (formData, file) => {
 
     await addDoc(propertiesCollectionRef, {
       name: formData.name,
+      type: formData.type,
       rooms: formData.rooms,
       disponible: formData.disponible,
       location: formData.location,
       imageUrl: imageUrl,
+      description: formData.description
     });
 
 
