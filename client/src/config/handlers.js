@@ -6,8 +6,10 @@ import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
+// const propertiesDetailId = collection(db, `properties/${documentId}`)
 const imageUrlRef = ref(storage, 'properties/')
 
 
@@ -143,14 +145,16 @@ export const createProp = async (formData, file) => {
 
     await addDoc(propertiesCollectionRef, {
       name: formData.name,
+      type: formData.type,
       rooms: formData.rooms,
       disponible: formData.disponible,
       location: formData.location,
       imageUrl: imageUrl,
+      description: formData.description
     });
 
 
-    getPropertiesList();o
+    getPropertiesList();
 
     alert('¡Es el fin del backend!');
   } catch (error) {
@@ -158,6 +162,7 @@ export const createProp = async (formData, file) => {
     alert(`La pifiamo'`);
   }
 };
+
 
 //funcion para ACTUALIZAR PROPIEDADES
 export const updateProperty = async(id)=>{
@@ -195,15 +200,15 @@ export const updateProperty = async(id)=>{
 
    */
 
-
 // handlers.js
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    console.log("Fetching properties...", data)
+    // console.log("Fetching properties...", data)
     const filterData = await Promise.all(
       data.docs.map(async (doc) => {
         const propertyData = doc.data();
+        console.log(propertyData);
         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
@@ -215,7 +220,7 @@ export const getPropertiesList = async () => {
         };
       })
     );
-    console.log(filterData);
+    // console.log(filterData);
     return filterData; // Asegúrate de retornar el array de propiedades
   } catch (error) {
     console.log(error);
@@ -223,7 +228,26 @@ export const getPropertiesList = async () => {
   }
 };
 
+//* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
+export const detailId = async (id) =>{
+  try {
+    const refProperty = doc(db, 'properties' , id)
+    console.log(refProperty)
+    const propertySnapshot = await getDoc(refProperty);
+    console.log(propertySnapshot.exists());
 
+   
+    if(propertySnapshot.exists()){
+      
+      console.log( 'Document data:  ', propertySnapshot.data())
+      return propertySnapshot.data();
+    } else {
+      console.log( 'no existe nada de info') 
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
 export const uploadFile = async()=>{
@@ -237,6 +261,7 @@ export const uploadFile = async()=>{
       console.log(error)
     }
   };
+
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
 export const dowloadImg = ()=> {
     listAll(imageUrlRef).then((response) => {
@@ -249,3 +274,4 @@ export const dowloadImg = ()=> {
     })
   })
 };
+
