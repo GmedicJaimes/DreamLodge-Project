@@ -8,7 +8,7 @@ import About from "../../components/About/About"
 const Post = () => {
   const [formData, setFormData] = useState({
     name: '',
-    type: '',
+    type: [],
     location: '',
     rooms: 0,
     services: '',
@@ -18,7 +18,8 @@ const Post = () => {
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
 
-  const opciones = [0, 1, 2, 3, 4, 5, 6];
+const opciones = [0, 1, 2, 3, 4, 5, 6];
+const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const Post = () => {
       // Limpiar el formulario después de crear la propiedad
       setFormData({
         name: '',
-        type: '',
+        type: [],
         location: '',
         rooms: 0,
         services: '',
@@ -60,6 +61,13 @@ const Post = () => {
       }));
     }
   };
+  const handleTypes =(e)=>{
+    const selectType = e.target.value
+    setFormData({
+      ...formData,
+      type:[...formData.type, selectType]
+  })
+  };
 
   return (
     <div>
@@ -82,12 +90,14 @@ const Post = () => {
           <div className={styles.formGroup}>
             <label>
               Type:
-              <input
-                type="text"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-              />
+              <select name="type" value={formData.type} onChange={(e)=>handleTypes(e)}>
+                {types.map((op) => (
+                  <option key={op} value={op}>
+                    {op}
+                  </option>
+                ))}
+              </select>
+                <ul><li>{formData.type.map(el=> el+" - ")}</li></ul>
             </label>
           </div>
           <div className={styles.formGroup}>

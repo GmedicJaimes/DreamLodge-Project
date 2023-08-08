@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { LoginSignin } from './views/LoginSignin/LoginSignin'
 import { SignInView } from './views/signing/SignInView';
 import { FooterLinks } from './views/FooterLinks/FooterLinks';
+import Reserve from './views/Reserve/Reserve';
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
       <Routes>  
         <Route path='/' element={<Landing/>}/>
         <Route path='/home' element={<Homepage/>}/>
-
+        <Route path='/reserve/:id' element={<Reserve/>}/>
         <Route path='/login' element={<LoginSignin/>}/>
         <Route path='/signin' element={<SignInView/>}/>
         <Route path='/rooms/:id' element={<DetailPost/>}/>

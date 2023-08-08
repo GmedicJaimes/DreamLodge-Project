@@ -1,14 +1,58 @@
 
 import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
+import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
+
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
+// const propertiesDetailId = collection(db, `properties/${documentId}`)
 const imageUrlRef = ref(storage, 'properties/')
+
+
+
+
+export const getUserByUID = async (targetUID) => {
+  const db = getFirestore();
+
+  // Obtener el documento del usuario de Firestore
+  const userDocRef = doc(db, 'users', targetUID);
+  const userDocSnapshot = await getDoc(userDocRef);
+
+  if (userDocSnapshot.exists()) {
+    const userProperties = await getUserProperties(targetUID); // Obtener las propiedades del usuario
+    return {
+      ...userDocSnapshot.data(),  // Todos los campos almacenados en Firestore para ese usuario
+      uid: targetUID,  // Añadimos el UID al objeto resultante
+      properties: userProperties  // Agregamos las propiedades al objeto resultante
+    };
+  } else {
+    // El documento no existe, puedes manejar este caso como prefieras
+    console.error(`No user found for UID: ${targetUID}`);
+    return null;
+  }
+};
+
+
+
+// Función para obtener las propiedades de un usuario
+const getUserProperties = async (targetUID) => {
+  const propertiesQuery = query(propertiesCollectionRef, where('userId', '==', targetUID));
+  const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+  
+  const userProperties = propertiesQuerySnapshot.docs.map((doc) => {
+    const propertyData = doc.data();
+    return {
+      ...propertyData,
+      id: doc.id
+    };
+  });
+
+  return userProperties;
+};
 
 // ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
 // const [email, setEmail] = useState("")
@@ -51,8 +95,6 @@ export const signInGoogle = async()=>{
         console.log(error)
     }
 };
-
-
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
@@ -61,6 +103,13 @@ export const logOut = async()=>{
         console.log(error)
     }
 };
+
+
+
+
+
+
+
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
   try {
@@ -78,14 +127,16 @@ export const createProp = async (formData, file) => {
 
     await addDoc(propertiesCollectionRef, {
       name: formData.name,
+      type: formData.type,
       rooms: formData.rooms,
       disponible: formData.disponible,
       location: formData.location,
       imageUrl: imageUrl,
+      description: formData.description
     });
 
 
-    getPropertiesList();o
+    getPropertiesList();
 
     alert('¡Es el fin del backend!');
   } catch (error) {
@@ -93,6 +144,7 @@ export const createProp = async (formData, file) => {
     alert(`La pifiamo'`);
   }
 };
+
 
 //funcion para ACTUALIZAR PROPIEDADES
 export const updateProperty = async(id)=>{
@@ -130,15 +182,15 @@ export const updateProperty = async(id)=>{
 
    */
 
-
 // handlers.js
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    console.log("Fetching properties...", data)
+    // console.log("Fetching properties...", data)
     const filterData = await Promise.all(
       data.docs.map(async (doc) => {
         const propertyData = doc.data();
+        console.log(propertyData);
         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
@@ -150,7 +202,7 @@ export const getPropertiesList = async () => {
         };
       })
     );
-    console.log(filterData);
+    // console.log(filterData);
     return filterData; // Asegúrate de retornar el array de propiedades
   } catch (error) {
     console.log(error);
@@ -158,15 +210,26 @@ export const getPropertiesList = async () => {
   }
 };
 
+//* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
+export const detailId = async (id) =>{
+  try {
+    const refProperty = doc(db, 'properties' , id)
+    console.log(refProperty)
+    const propertySnapshot = await getDoc(refProperty);
+    console.log(propertySnapshot.exists());
 
-
-
-
-
-
-
-
-
+   
+    if(propertySnapshot.exists()){
+      
+      console.log( 'Document data:  ', propertySnapshot.data())
+      return propertySnapshot.data();
+    } else {
+      console.log( 'no existe nada de info') 
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
 export const uploadFile = async()=>{
@@ -180,6 +243,7 @@ export const uploadFile = async()=>{
       console.log(error)
     }
   };
+
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
 export const dowloadImg = ()=> {
     listAll(imageUrlRef).then((response) => {
@@ -192,3 +256,5 @@ export const dowloadImg = ()=> {
     })
   })
 };
+
+
