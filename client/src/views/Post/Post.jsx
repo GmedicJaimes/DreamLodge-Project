@@ -9,7 +9,11 @@ const Post = () => {
   const [formData, setFormData] = useState({
     name: '',
     type: [],
-    location: '',
+    location: {
+      adress: '',
+      state: '',
+      city: '',
+    },
     rooms: 0,
     services: '',
     description: '',
@@ -17,7 +21,7 @@ const Post = () => {
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
-
+console.log(formData)
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 
@@ -31,10 +35,15 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
       };
       await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
       // Limpiar el formulario después de crear la propiedad
+       // Llama a getPropertiesList aquí para actualizar la lista de propiedades
       setFormData({
         name: '',
         type: [],
-        location: '',
+        location: {
+          adress: '',
+          state: '',
+          city: '',
+        },
         rooms: 0,
         services: '',
         description: '',
@@ -54,6 +63,15 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
         ...prevData,
         [name]: files[0], // Almacena el archivo de imagen en el estado
       }));
+    } else if (name === 'location.adress' || name === 'location.state' || name === 'location.city') {
+      // const locationFieldName = name.split('.')[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        location: {
+          ...prevData.location,
+          [name]: value,
+        },
+      }));
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -61,6 +79,8 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
       }));
     }
   };
+
+
   const handleTypes =(e)=>{
     const selectType = e.target.value
     setFormData({
@@ -101,16 +121,39 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
             </label>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Location:
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-              />
-            </label>
-          </div>
+  <label>
+    Adress:
+    <input
+      type="text"
+      name="location.adress"
+      value={location.adress}
+      onChange={handleChange}
+    />
+  </label>
+</div>
+<div className={styles.formGroup}>
+  <label>
+    State:
+    <input
+      type="text"
+      name="location.state"
+      value={location.state}
+      onChange={handleChange}
+    />
+  </label>
+</div>
+<div className={styles.formGroup}>
+  <label>
+    City:
+    <input
+      type="text"
+      name="location.city"
+      value={location.city}
+      onChange={handleChange}
+    />
+  </label>
+</div>
+
           <div className={styles.formGroup}>
             <label>
               Rooms:
