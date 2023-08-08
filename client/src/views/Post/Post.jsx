@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { createProp } from '../../config/handlers'; // Importa la función para crear una propiedad
-import styles from './post.module.css';
+import { useDispatch } from 'react-redux';
+// import { createPost } from '../../redux/actions';
+import  { createProp }  from '../../config/handlers';
+import styles from "./post.module.css"
+import About from "../../components/About/About"
 
 const Post = () => {
   const [formData, setFormData] = useState({

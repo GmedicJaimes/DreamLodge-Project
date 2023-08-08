@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -23,13 +23,23 @@ const imageUrlRef = ref(storage, 'properties/')
 // const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
-export const signIn = async()=>{
+export const signIn = async(auth, email, password) => {
     try {
         await createUserWithEmailAndPassword(auth, email, password);      
     } catch (error) {
         console.log(error)
     }
 };
+
+// funcion para LOGIN 
+export const logIn = async(auth, email, password)=>{
+  try {
+      await signInWithEmailAndPassword(auth, email, password);      
+  } catch (error) {
+      console.log(error)
+  }
+};
+
 // funcion para SIGNIN CON GOOGLE
 export const signInGoogle = async()=>{
     try {
@@ -89,7 +99,7 @@ export const updateProperty = async(id)=>{
     }
 };
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-export const getPropertiesList = async () => {
+/*  export const getPropertiesList = async () => {
     try {
       const data = await getDocs(propertiesCollectionRef);
       const filterData = await Promise.all(
@@ -111,7 +121,47 @@ export const getPropertiesList = async () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
+
+   */
+
+
+// handlers.js
+export const getPropertiesList = async () => {
+  try {
+    const data = await getDocs(propertiesCollectionRef);
+    console.log("Fetching properties...", data)
+    const filterData = await Promise.all(
+      data.docs.map(async (doc) => {
+        const propertyData = doc.data();
+        // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
+        if (propertyData.imageUrl) {
+          const imageUrlRef = ref(storage, propertyData.imageUrl);
+          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+        }
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      })
+    );
+    console.log(filterData);
+    return filterData; // Asegúrate de retornar el array de propiedades
+  } catch (error) {
+    console.log(error);
+    return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+  }
+};
+
+
+
+
+
+
+
+
+
+
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
 export const uploadFile = async()=>{
