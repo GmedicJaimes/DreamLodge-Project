@@ -19,19 +19,21 @@ const [ estado, setEstado ] = React.useState({
     ciudad: "kansas",
     pais: "EEUU"
 })
-const test = "random"
+
+const [ edit, setEdit ] = React.useState(true)
 
     const handleChange = (event) => {
         const { name, value } = event.target
 
         setEstado({
             ...estado,
-            name : value
+            [name] : value
         })
     }
 
   const editarButton = (event) => {
-        console.log(event);
+        console.log(event.target);
+        setEdit(!edit)
   }
 
     return(
@@ -58,7 +60,7 @@ const test = "random"
                         onChange={handleChange} 
                         type="text" 
                         value={estado.ciudad} 
-                        disabled
+                        disabled={edit}
                     />
                     <button 
                         name="ciudad" 
@@ -68,7 +70,7 @@ const test = "random"
                         onChange={handleChange} 
                         type="text" 
                         value={estado.pais} 
-                        disabled
+                        disabled={edit}
                     />
                     <button 
                         name="pais" 
