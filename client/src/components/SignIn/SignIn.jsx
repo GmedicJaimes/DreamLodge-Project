@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
 import { signIn, signInGoogle,registerUserInFirestore } from "../../config/handlers";
 import { auth } from "../../config/firebase";
-import Homepage from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
+import Homepage from "../../views/Homepage/Homepage"; 
 import { useNavigate } from "react-router-dom";
-import { storage } from "../../config/firebase"; // Asegúrate de tener la importación correcta
+import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
 import {
   isValidName,
@@ -134,8 +134,10 @@ const SignIn = () => {
         console.log(userToSave)
   
         await registerUserInFirestore(uid, userToSave);
+        navigate(<Homepage/>);
       }
-  
+
+
       setRegister({
         email: "",
         password: "",
@@ -155,7 +157,6 @@ const SignIn = () => {
     const handleAuthSuccess = (event) => {
       if (event.data === "auth-success") {
         console.log("Autenticación exitosa en la ventana emergente.");
-        navigate(Homepage);
       }
     };
 
