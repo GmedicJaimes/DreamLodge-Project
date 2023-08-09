@@ -5,6 +5,8 @@ import { signIn, signInGoogle,registerUserInFirestore } from "../../config/handl
 import { auth } from "../../config/firebase";
 import Homepage from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
 import { useNavigate } from "react-router-dom";
+import { storage } from "../../config/firebase"; // Asegúrate de tener la importación correcta
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
 
 const SignIn = () => {
   const [register, setRegister] = useState({
@@ -13,7 +15,8 @@ const SignIn = () => {
     name: "",
     lastName: "",
     country: "", 
-    languages: []
+    languages: [],
+    imageFile: null,
 
   });
   const languagesAvailable = [
@@ -55,47 +58,66 @@ const SignIn = () => {
       setRegister({ ...register, languages: [...register.languages, lang] });
     }
   };
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+
+    if (name === 'imageFile') {
+      setRegister({
+        ...register,
+        [name]: files[0], // Almacena el archivo de imagen en el estado
+      });
+    } else {
+      setRegister({
+        ...register,
+        [name]: value,
+      });
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        const  userCredential = await signIn(auth, register.email, register.password);
-        
-        // Verificar si se creó el usuario con éxito
-
-
-        if (userCredential?.user?.uid) {
-            const { uid, email } = userCredential.user;
-            const userToSave = {
-                uid,
-                email,
-                name: register.name,
-                lastName: register.lastName,
-                country: register.country,
-                languages: register.languages,
-                createdAt: new Date().toLocaleDateString()
-            };
-            
-            await registerUserInFirestore(uid, userToSave);
-
-
-          
-            
+      const userCredential = await signIn(auth, register.email, register.password);
+  
+      if (userCredential?.user?.uid) {
+        const { uid, email } = userCredential.user;
+  
+        // Manejar la subida de la imagen a Firebase Storage
+        let imageURL = ""; // Variable para almacenar la URL de la imagen
+        if (register.imageFile) {
+          const imageRef = ref(storage, `users/${uid}`); // Ruta en Storage
+          await uploadBytes(imageRef, register.imageFile);
+          imageURL = await getDownloadURL(imageRef);
         }
-
-        
-        setRegister({
-            email: "",
-            password: "",
-            name: "",
-            lastName: "",
-            country: "", 
-            languages: []
-        });      
+  console.log(imageURL)
+        const userToSave = {
+          uid,
+          email,
+          name: register.name,
+          lastName: register.lastName,
+          country: register.country,
+          image: imageURL, // Asigna la URL de la imagen
+          languages: register.languages,
+          createdAt: new Date().toLocaleDateString(),
+        };
+        console.log(userToSave)
+  
+        await registerUserInFirestore(uid, userToSave);
+      }
+  
+      setRegister({
+        email: "",
+        password: "",
+        name: "",
+        lastName: "",
+        country: "",
+        languages: [],
+        imageFile: null, // Reinicia el archivo de imagen después de guardar
+      });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-};
+  };
 
 
   useEffect(() => {
@@ -190,7 +212,17 @@ const SignIn = () => {
             placeholder="Languages"
           />
         </div>
-
+        <div className={styles.formGroup}>
+            <input
+              className={styles.range}
+              onChange={handleChange}
+              type="file"
+              name="imageFile"
+              accept="image/*"
+              placeholder="Profile Image"
+            />
+            <p>{register.imageFile?.name || "No image selected"}</p>
+          </div>
         <div className={styles.formGroup}>
           <input
             type="email"
