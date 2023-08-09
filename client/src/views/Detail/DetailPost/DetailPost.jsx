@@ -2,20 +2,63 @@ import styles from "./DetailPost.module.css"
 import React, { useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import axios from 'axios'
 
-import { Link, useParams } from "react-router-dom";
+import {useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
-const DetailPost = () => {
-
+const DetailPost = () => {  
   const { id } = useParams()
-
-  //? estado que guarda la propiedad traida por params
   const [property, setPropertyDetail] = useState([])
   // console.log(property);
   // console.log(detailId)
+  console.log(property);
 
-  console.log(property)
+
+
+
+  // CONFIGURACION DEL PAGO=======================================
+  const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${totalPrice}`,
+                quantity: `${selectedDays}`,
+                currency_id: "ARS",
+            });
+
+            const { id } = response.data;
+
+            return id
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const handleBuy = async()=>{
+        const id = await createPreference();
+        if (id){
+            setPreferenceId(id)
+        }
+    }
+
+
+
+  //CALCULAR EL PRECIO p/dias========================================
+  const [selectedDays, setSelectedDays] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const handleCalculatePrice = () => {
+    const pricePerDay = property.price;
+    const calculatedPrice = selectedDays * pricePerDay;
+    setTotalPrice(calculatedPrice);
+  }; //CALCULAR EL PRECIO
+  //=============================================================
+  //
+
+  
+  
 
   useEffect(() => {
     const propertiesDetail = async () => {
@@ -27,18 +70,28 @@ const DetailPost = () => {
   }, [])
 
   return(
-      // <div></div>
+    
       <div>
           <div className={styles.containerPost}>
               <header className={styles.head}>
                   <div className={styles.headLeft}>
                       <h1>{property.name}</h1>
-                      <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
-                 </div>
+                       <p>{property.location?.city}, {property.location?.state}.</p>
+                   </div>
                   <div className={styles.headRigth}>
-                      <p>$ {property.price} USD noche</p>
+                      <p>$ {property.price} USD/noche</p>
+                      <h3>Seleccione la cantidad de días de reserva:</h3>
+              <input
+                type="number"
+                min="1"
+                value={selectedDays}
+                onChange={(e) => setSelectedDays(Number(e.target.value))}
+              />
+              <button onClick={handleCalculatePrice}>Calcular Precio</button>
+              {totalPrice > 0 && <p>Total a pagar: $ {totalPrice}</p>}
                       
-                      <button >Reserve</button>
+                      <button onClick={handleBuy}>Reserve</button>
+                      {preferenceId && <Wallet initialization={{ preferenceId: preferenceId}} />}
                       
                   </div>
               </header>
@@ -75,10 +128,10 @@ const DetailPost = () => {
                   </div>
                   <div className={styles.containerRooms}>
                       <ul>
-                          <li>Guest: {property.stances?.guest}</li>
-                          <li>Rooms: {property.stances?.rooms}</li>
-                          <li>Bathrooms: {property.stances?.bathrooms}</li>
-                          <li>Bed: {property.stances?.beds}</li>
+                          <li>Guest: {property.rooms?.[0]}</li>
+                          <li>Rooms: {property.rooms?.[1]}</li>
+                          <li>Bathrooms: {property.rooms?.[2]}</li>
+                          <li>Bed: {property.rooms?.[3]}</li>
                           <li>Status: 
                             {
                               property.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
