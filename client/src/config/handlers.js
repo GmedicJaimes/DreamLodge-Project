@@ -133,12 +133,10 @@ export const signInGoogle = async () => {
     if (result.user) {
       const user = result.user;
 
-      // Divide el displayName para obtener el nombre y apellido
       const nameParts = user.displayName.split(' ');
       const firstName = nameParts[0];
       const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-      // Genera un nombre de usuario basado en el email
       const userNameGenerated = user.email.split('@')[0];
 
       const userData = {
@@ -146,16 +144,17 @@ export const signInGoogle = async () => {
         name: firstName,
         lastName: lastName,
         id: user.uid,
+        country: "USA", 
+        language: ["english"], 
         image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
         createdAt: new Date().toLocaleDateString(),
         banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
-        userName: userNameGenerated
       };
 
       // Pide al usuario información adicional
-      const additionalData = await requestAdditionalData();
-      userData.country = additionalData.country;
-      userData.language = additionalData.language;
+      // const additionalData = await requestAdditionalData();
+      // userData.country = additionalData.country;
+      // userData.language = additionalData.language;
 
       await setDoc(doc(db, 'users', user.uid), userData);
 
@@ -171,32 +170,33 @@ export const signInGoogle = async () => {
   }
 };
 
-const requestAdditionalData = async () => {
-  // Aquí deberías mostrar un formulario para recoger los datos del usuario.
-  // Esto es un ejemplo muy simplificado, y probablemente necesitarás usar una biblioteca o framework para mostrar el formulario.
+
+//-------------------------------------CHRISTIAN PRUEBA
+
+// const requestAdditionalData = async () => {
+//   // Aquí deberías mostrar un formulario para recoger los datos del usuario.
+//   // Esto es un ejemplo muy simplificado, y probablemente necesitarás usar una biblioteca o framework para mostrar el formulario.
   
-  const country = prompt("Por favor, ingresa tu país:");
-  const language = prompt("Por favor, ingresa tu idioma:");
+//   const country = prompt("Por favor, ingresa tu país:");
+//   const language = prompt("Por favor, ingresa tu idioma:");
 
-  return {
-    country,
-    language: [language]
-  };
-};
-
-
-
-
-
-
-
-
-
-
-
-
+//   return {
+//     country,
+//     language: [language]
+//   };
+// };
 
 /////////////////////////////// PRUEBA CHRIS
+
+//-------------------------------------CHRISTIAN PRUEBA
+
+
+
+
+
+
+
+
 
 
 // funcion para LOGOUT
