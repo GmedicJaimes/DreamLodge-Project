@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SignIn.module.css';
 import { signIn, signInGoogle } from '../../config/handlers';
 import { auth } from '../../config/firebase';
+import  Homepage  from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const SignIn = () => {
   const [register, setRegister] = useState({
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
+
 
   const handleRegisterForm = (event) => {
     setRegister({
@@ -27,12 +35,11 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    // Agrega un listener para el mensaje de autenticación exitosa
     const handleAuthSuccess = (event) => {
       if (event.data === 'auth-success') {
-        // Realiza acciones después de la autenticación exitosa
         console.log('Autenticación exitosa en la ventana emergente.');
-        // Puedes redirigir, actualizar datos, etc.
+        navigate(Homepage)
+
       }
     };
 
@@ -41,6 +48,7 @@ const SignIn = () => {
     // Limpia el listener cuando el componente se desmonta
     return () => {
       window.removeEventListener('message', handleAuthSuccess);
+
     };
   }, []);
 
@@ -91,6 +99,39 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

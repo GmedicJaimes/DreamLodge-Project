@@ -100,7 +100,7 @@ export const logIn = async(auth, email, password)=>{
 /////////////////////////////// PRUEBA CHRIS
 
 // Dentro de la función signInGoogle
-export const signInGoogle = async () => {
+/* export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
 
@@ -124,21 +124,79 @@ export const signInGoogle = async () => {
   } catch (error) {
     console.log('Error durante la autenticación con Google:', error);
   }
+}; */
+
+export const signInGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+
+    if (result.user) {
+      const user = result.user;
+
+      const nameParts = user.displayName.split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+      const userNameGenerated = user.email.split('@')[0];
+
+      const userData = {
+        email: user.email,
+        name: firstName,
+        lastName: lastName,
+        id: user.uid,
+        country: "USA", 
+        language: ["english"], 
+        image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+        createdAt: new Date().toLocaleDateString(),
+        banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+      };
+
+      // Pide al usuario información adicional
+      // const additionalData = await requestAdditionalData();
+      // userData.country = additionalData.country;
+      // userData.language = additionalData.language;
+
+      await setDoc(doc(db, 'users', user.uid), userData);
+
+      // Envía un mensaje al padre indicando autenticación exitosa
+      if (window.opener) {
+        window.opener.postMessage('auth-success', window.location.origin);
+    } else {
+        console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+    }
+    }
+  } catch (error) {
+    console.log('Error durante la autenticación con Google:', error);
+  }
 };
 
 
+//-------------------------------------CHRISTIAN PRUEBA
 
+// const requestAdditionalData = async () => {
+//   // Aquí deberías mostrar un formulario para recoger los datos del usuario.
+//   // Esto es un ejemplo muy simplificado, y probablemente necesitarás usar una biblioteca o framework para mostrar el formulario.
+  
+//   const country = prompt("Por favor, ingresa tu país:");
+//   const language = prompt("Por favor, ingresa tu idioma:");
 
-
-
-
-
-
-
-
-
+//   return {
+//     country,
+//     language: [language]
+//   };
+// };
 
 /////////////////////////////// PRUEBA CHRIS
+
+//-------------------------------------CHRISTIAN PRUEBA
+
+
+
+
+
+
+
+
 
 
 // funcion para LOGOUT
@@ -187,8 +245,7 @@ export const createProp = async (formData, file) => {
 
     alert('¡Propiedad creada!');
   } catch (error) {
-    console.log(error);
-    alert(`La propiedad no pudo ser creada`);
+    alert(`La pifiamo'`);
   }
 };
 
