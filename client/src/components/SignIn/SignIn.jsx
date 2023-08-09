@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
-import { signIn, signInGoogle,registerUserInFirestore } from "../../config/handlers";
+import { signIn, signInGoogle,registerUserInFirestore,doesEmailExistInFirestore } from "../../config/handlers";
 import { auth } from "../../config/firebase";
 import Homepage from "../../views/Homepage/Homepage"; 
 import { useNavigate } from "react-router-dom";
@@ -91,6 +91,7 @@ const SignIn = () => {
     const newErrors = {};
 
     try {
+            // Validaciones existentes
       if (!isValidName(register.name))  newErrors.name = "Only letters allowed and up to 20 characters.";
       if (!isValidName(register.lastName)) newErrors.lastName = "Only letters allowed and up to 20 characters.";
       if (!isCountrySelected(register.country)) newErrors.country = "Country selection is mandatory.";
@@ -98,7 +99,15 @@ const SignIn = () => {
       if (!hasImageSelected(register.imageFile)) newErrors.imageFile = "Selecting an image is mandatory.";
       if (!isValidEmail(register.email)) newErrors.email = "Invalid email. No special characters allowed.";
       if (!isValidPassword(register.password)) newErrors.password = " Minimum 8 characters and only letters and numbers.";
-  
+
+      // Validación para verificar si el correo ya existe en Firestore
+      const emailExists = await doesEmailExistInFirestore(register.email);
+      if(emailExists) {
+        newErrors.email = "This email is already in use.";
+        console.log(errors.email)
+      }
+
+        // Si hay errores, muestralos
       if (Object.keys(newErrors).length > 0) {
   setErrors(newErrors);
   
@@ -108,7 +117,7 @@ const SignIn = () => {
   }, 3000);
   
   return;
-}
+}      // Intentar registrar al usuario con Firebase Auth
       const userCredential = await signIn(auth, register.email, register.password);
   
       if (userCredential?.user?.uid) {
@@ -121,6 +130,8 @@ const SignIn = () => {
           await uploadBytes(imageRef, register.imageFile);
           imageURL = await getDownloadURL(imageRef);
         }
+
+                // Datos del usuario para guardar en Firestore
         const userToSave = {
           uid,
           email,
@@ -133,11 +144,12 @@ const SignIn = () => {
         };
         console.log(userToSave)
   
+                // Guardar el usuario en Firestore
         await registerUserInFirestore(uid, userToSave);
         navigate(<Homepage/>);
       }
 
-
+      // Resetear el estado del formulario
       setRegister({
         email: "",
         password: "",

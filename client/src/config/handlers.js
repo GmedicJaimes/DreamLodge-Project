@@ -7,6 +7,7 @@ import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sig
 import { storage, db, auth, googleProvider } from './firebase';
 
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
@@ -110,21 +111,15 @@ export const logIn = async (auth, email, password) => {
 };
 
 
+//FUNCTION SI EL EMAIL YA EXISTE EN FIRESTORES
 
-// funcion para SIGNIN CON GOOGLE
+export const doesEmailExistInFirestore = async (email) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const snapshot = await getDocs(q);
 
-//hardcodeofeo
+  return snapshot.size > 0;
+};
 
-// export const signInGoogle = async()=>{
-//     try {
-//         await signInWithPopup(auth, googleProvider)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
-
-
-/////////////////////////////// PRUEBA CHRIS
 
 
 export const signInGoogle = async () => {
@@ -169,13 +164,6 @@ export const signInGoogle = async () => {
     console.log('Error durante la autenticación con Google:', error);
   }
 };
-
-
-//-------------------------------------CHRISTIAN PRUEBA
-
-
-//-------------------------------------CHRISTIAN PRUEBA
-
 
 
 
