@@ -27,8 +27,8 @@ const DetailPost = () => {
                 description: `${property.name}`,
                 price: `${totalPrice}`,
                 quantity: `${selectedDays}`,
-                currency_id: "ARS"
-            })
+                currency_id: "ARS",
+            });
 
             const { id } = response.data;
 
