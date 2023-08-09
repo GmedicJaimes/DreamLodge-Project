@@ -27,7 +27,7 @@ const DetailPost = () => {
   }, [])
 
   return(
-    
+      // <div></div>
       <div>
           <div className={styles.containerPost}>
               <header className={styles.head}>
