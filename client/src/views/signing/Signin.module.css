@@ -1,7 +1,10 @@
 .viewSign{
-    height: 80vh;
+    height: 744px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.view{
+    height: 800px;
+}
