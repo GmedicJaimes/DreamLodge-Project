@@ -41,7 +41,6 @@ const Login = () => {
       {currentUser === null ? (
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label htmlFor="email">Email:</label>
             <input
               type="text"
               id="email"
@@ -49,14 +48,15 @@ const Login = () => {
               value={loginData.email}
               onChange={handleChange}
               required
+              placeholder="Email"
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password:</label>
             <input
               type="password"
               id="password"
               name="password"
+              placeholder="Password"
               value={loginData.password}
               onChange={handleChange}
               required
@@ -77,10 +77,11 @@ const Login = () => {
           </button>
           <Link>
           </Link>
+          <p className={styles.small}>Dont have an account? </p>
+
           <Link to={"/signin"}>
             <button className={styles.btnCreateAcc}>Sign up now</button>
           </Link>
-          <p className={styles.small}>Dont have an account? </p>
 
         </form>
       ) : (

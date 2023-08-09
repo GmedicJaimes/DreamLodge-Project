@@ -1,33 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './SignIn.module.css';
-import { signIn, signInGoogle } from '../../config/handlers';
-import { auth } from '../../config/firebase';
-import  Homepage  from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
-import { useNavigate } from 'react-router-dom';
-
-
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styles from "./SignIn.module.css";
+import { signIn, signInGoogle } from "../../config/handlers";
+import { auth } from "../../config/firebase";
+import Homepage from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [register, setRegister] = useState({
-    email: '',
-    password: '',
-    name: '',
-    lastName: '',
-    country: '', // Por defecto, pero puede cambiarse
+    email: "",
+    password: "",
+    name: "",
+    lastName: "",
+    country: "", // Por defecto, pero puede cambiarse
     languages: [], // Por defecto, pero puede añadirse más idiomas
-    image: '', // Puede ser una URL o un archivo subido
-    banner: '',
+    image: "", // Puede ser una URL o un archivo subido
+    banner: "",
   });
-  const languagesAvailable = ["English", "Spanish", "French", "Portuguese", "German", "Italian", "Russian"];
+  const languagesAvailable = [
+    "English",
+    "Spanish",
+    "French",
+    "Portuguese",
+    "German",
+    "Italian",
+    "Russian",
+  ];
+  const countriesAvailable = [
+    "USA",
+    "Argentina",
+    "Colombia",
+    "Brazil",
+    "France",
+    "Canada",
+    "Spain",
+  ];
 
   const navigate = useNavigate();
 
-
   const handleRegisterForm = (event) => {
     const { name, value } = event.target;
-    if (name === 'language') {
+    if (name === "language") {
       setRegister({
         ...register,
         language: [value],
@@ -43,14 +56,14 @@ const SignIn = () => {
     const lang = event.target.value;
 
     if (register.languages.includes(lang)) {
-        setRegister({
-            ...register,
-            languages: register.languages.filter((langIn) => langIn !== lang)
-        });
+      setRegister({
+        ...register,
+        languages: register.languages.filter((langIn) => langIn !== lang),
+      });
     } else {
-        setRegister({ ...register, languages: [...register.languages, lang] });
+      setRegister({ ...register, languages: [...register.languages, lang] });
     }
-};
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,19 +76,17 @@ const SignIn = () => {
 
   useEffect(() => {
     const handleAuthSuccess = (event) => {
-      if (event.data === 'auth-success') {
-        console.log('Autenticación exitosa en la ventana emergente.');
-        navigate(Homepage)
-
+      if (event.data === "auth-success") {
+        console.log("Autenticación exitosa en la ventana emergente.");
+        navigate(Homepage);
       }
     };
 
-    window.addEventListener('message', handleAuthSuccess);
+    window.addEventListener("message", handleAuthSuccess);
 
     // Limpia el listener cuando el componente se desmonta
     return () => {
-      window.removeEventListener('message', handleAuthSuccess);
-
+      window.removeEventListener("message", handleAuthSuccess);
     };
   }, []);
 
@@ -85,15 +96,14 @@ const SignIn = () => {
         <h2>Create your account</h2>
       </header>
       <form onSubmit={handleSubmit}>
-
-      <div className={styles.formGroup}>
+        <div className={styles.formGroup}>
           <input
             type="text"
             name="name"
             value={register.name}
             onChange={handleRegisterForm}
             required
-            placeholder='Your first name'
+            placeholder="Your first name"
           />
         </div>
 
@@ -104,50 +114,58 @@ const SignIn = () => {
             value={register.lastName}
             onChange={handleRegisterForm}
             required
-            placeholder='Your last name'
-
+            placeholder="Your last name"
           />
         </div>
 
         <div className={styles.formGroup}>
-          <input
-            type="text"
+          <select
             name="country"
             value={register.country}
             onChange={handleRegisterForm}
             required
-            placeholder='Country'
-          />
+            placeholder="Country"
+          >
+            <option value="" disabled >
+              Select Country
+            </option>
+            <option value="Argentina">Argentina</option>
+            <option value="Canada">Canada</option>
+            <option value="Chile">Chile</option>
+            <option value="USA">USA</option>
+            <option value="France">France</option>
+            <option value="Spain">Spain</option>
+            <option value="Uruguay">Uruguay</option>
+          </select>
         </div>
 
         <div className={styles.formGroup}>
-    
-</div>
+          <div className={styles.forcedLine}></div>
+          <select
+            name="languages"
+            value={register.languages}
+            onChange={handleLanguages}
+          >
+            <option value="" disabled>
+              Select Language
+            </option>
 
-<div className={styles.formGroup}>
-
-    <div className={styles.forcedLine}></div>
-    <select name="languages" value={register.languages} onChange={handleLanguages}>
-    <option value="" disabled>
-      Select Language
-    </option>
-
-        {
-          
-            languagesAvailable.map((lang) => {
-                return (
-                    <option key={lang} value={lang}>{lang}</option>
-                );
-            })
-        }
-    </select>
-
-</div>
-<div className={styles.formGroup}>
-
-<input type="text" value={register.languages.join(', ')}placeholder='Languages'/>
-
-</div>
+            {languagesAvailable.map((lang) => {
+              return (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            value={register.languages.join(", ")}
+            placeholder="Languages"
+          />
+        </div>
 
         <div className={styles.formGroup}>
           <input
@@ -155,7 +173,7 @@ const SignIn = () => {
             name="email"
             value={register.email}
             onChange={handleRegisterForm}
-            placeholder='Email'
+            placeholder="Email"
             required
           />
         </div>
@@ -164,7 +182,7 @@ const SignIn = () => {
           <input
             type="password"
             name="password"
-            placeholder='Password'
+            placeholder="Password"
             value={register.password}
             onChange={handleRegisterForm}
             required
@@ -179,8 +197,8 @@ const SignIn = () => {
           Create my account
         </button>
         <p className={styles.foot}>
-          Already have an account?{' '}
-          <Link className={styles.linkfoot} to={'/login'}>
+          Already have an account?{" "}
+          <Link className={styles.linkfoot} to={"/login"}>
             Log in
           </Link>
         </p>
@@ -191,14 +209,6 @@ const SignIn = () => {
 
 export default SignIn;
 
-
-
-
-
-
-
-
-
 //  import React, { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom';
 // import styles from './SignIn.module.css';
@@ -207,9 +217,6 @@ export default SignIn;
 // import  Homepage  from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
 // import { useNavigate } from 'react-router-dom';
 
-
-
-
 // const SignIn = () => {
 //   const [register, setRegister] = useState({
 //     email: '',
@@ -217,7 +224,6 @@ export default SignIn;
 //   });
 
 //   const navigate = useNavigate();
-
 
 //   const handleRegisterForm = (event) => {
 //     setRegister({
@@ -301,51 +307,6 @@ export default SignIn;
 
 // export default SignIn;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from 'react';
 // import styles from "./SignIn.module.css"
 // import { Link } from "react-router-dom"
@@ -372,7 +333,7 @@ export default SignIn;
 //       [event.target.name] : event.target.value
 //     })
 //   }
-  
+
 //   const handleSubmit = async (event) => {
 //     event.preventDefault()
 //     try {
@@ -392,7 +353,7 @@ export default SignIn;
 // //         image : "https://i.pinimg.com/564x/48/5d/34/485d3490861e058d4af3c69c7f41eb2d.jpg"
 // //       })
 // //       return
-// //     } 
+// //     }
 // //     setRegister({
 // //         ...register,
 // //         image : `https://randomuser.me/api/portraits/${gender}/${Math.round((Math.random()*98))}.jpg`
@@ -404,7 +365,7 @@ export default SignIn;
 
 // //   if (register.language.includes(lang)) {
 // //     setRegister({
-// //       ...register, 
+// //       ...register,
 // //       language : register.language.filter((langIn) => langIn != lang)
 // //     })
 // //   } else {
@@ -412,9 +373,6 @@ export default SignIn;
 // //   }
 
 // // }
-
-
- 
 
 //   return (
 //     <div className={styles.mainContainer}>
@@ -460,7 +418,7 @@ export default SignIn;
 //             required
 //           />
 //         </div>
-        
+
 //         <div className={styles.formGroup}>
 //           <label htmlFor="password">Password:</label>
 //           <input
