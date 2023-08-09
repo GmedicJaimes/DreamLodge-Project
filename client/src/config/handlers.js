@@ -188,7 +188,7 @@ export const createProp = async (formData, file) => {
     alert('¡Propiedad creada!');
   } catch (error) {
     console.log(error);
-    alert(`La pifiamo'`);
+    alert(`La propiedad no pudo ser creada`);
   }
 };
 

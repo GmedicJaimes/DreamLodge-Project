@@ -37,7 +37,7 @@ const DetailPost = () => {
                    </div>
                   <div className={styles.headRigth}>
                       <p>$ {property.price} USD noche</p>
-                      <Link to={`/reserve/${id}`}>
+                      <Link to={`/reserve/${id}?price=${property.price}`}>
                       <button >Reserve</button>
                       </Link>
                   </div>
