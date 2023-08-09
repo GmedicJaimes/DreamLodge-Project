@@ -99,7 +99,7 @@ export const logIn = async(auth, email, password)=>{
 
 /////////////////////////////// PRUEBA CHRIS
 
-// Dentro de la función signInGoogle
+
 export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -107,19 +107,37 @@ export const signInGoogle = async () => {
     if (result.user) {
       const user = result.user;
 
+      const nameParts = user.displayName.split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+      const userNameGenerated = user.email.split('@')[0];
+
       const userData = {
         email: user.email,
-        name: user.displayName,
+        name: firstName,
+        lastName: lastName,
         id: user.uid,
-        image: user.photoURL,
-        createdAt: new Date().toISOString(),
+        country: "USA", 
+        language: ["english"], 
+        image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+        createdAt: new Date().toLocaleDateString(),
+        banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
       };
+
+      // Pide al usuario información adicional
+      // const additionalData = await requestAdditionalData();
+      // userData.country = additionalData.country;
+      // userData.language = additionalData.language;
 
       await setDoc(doc(db, 'users', user.uid), userData);
 
       // Envía un mensaje al padre indicando autenticación exitosa
-      window.opener.postMessage('auth-success', window.location.origin);
-      window.close();
+      if (window.opener) {
+        window.opener.postMessage('auth-success', window.location.origin);
+    } else {
+        console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+    }
     }
   } catch (error) {
     console.log('Error durante la autenticación con Google:', error);
@@ -127,18 +145,12 @@ export const signInGoogle = async () => {
 };
 
 
+//-------------------------------------CHRISTIAN PRUEBA
 
 
+//-------------------------------------CHRISTIAN PRUEBA
 
 
-
-
-
-
-
-
-
-/////////////////////////////// PRUEBA CHRIS
 
 
 // funcion para LOGOUT
@@ -149,10 +161,6 @@ export const logOut = async()=>{
         console.log(error)
     }
 };
-
-
-
-
 
 
 
@@ -176,22 +184,18 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       stances: formData.stances,
       disponible: formData.disponible,
-      location: {
-        adress: formData.adress,
-        state: formData.state,
-        city: formData.city,
-      },
+      location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
-      price: formData.price
+      price: formData.price,
+      userId: userId
     });
 
 
     getPropertiesList();
 
-    alert('¡Es el fin del backend!');
+    alert('¡Propiedad creada!');
   } catch (error) {
-    console.log(error);
     alert(`La pifiamo'`);
   }
 };
