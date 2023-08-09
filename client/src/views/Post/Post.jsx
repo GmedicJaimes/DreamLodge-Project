@@ -18,19 +18,20 @@ const Post = () => {
       bathrooms: 0,
       beds: 0
     },
-    services: ["wifi"],
+    services: [],
     description: '',
     price: 0,//10 400
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
-  });
-console.log(formData)
+  })
+
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
       const formDataWithDefaultValues = {
@@ -46,8 +47,13 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
           state: "",
           adress: ""
         },
-        stances: [0,0,0,0],
-        services: [""],
+        stances: {
+          guest: 0,
+          rooms: 0,
+          bathrooms: 0,
+          beds: 0
+        },
+        services: [],
         description: '',
         price: 0,
         imageFile: null,
@@ -62,27 +68,18 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
     const { name, value, files } = event.target;
 
     if (name === 'imageFile') {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData({
+        ...formData,
         [name]: files[0], // Almacena el archivo de imagen en el estado
-        
-      }));
-    } else if (name === 'location.adress' || name === 'location.state' || name === 'location.city') {
-      // const locationFieldName = name.split('.')[1];
-      setFormData((prevData) => ({
-        ...prevData,
-        location: {
-          ...prevData.location,
-          [name]: value,
-        },
-      }));
+      });
     } else {
       setFormData({
         ...formData,
         [name]: value,
       });
     }
-  };
+  }
+  
   const handleTypes = (event) => {
     const typ = event.target.value
   
@@ -213,7 +210,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
             <label>Services:</label>
             <input type="text" value={formData.services} readOnly/>
             <div className={styles.forcedLine}></div>
-            <select name="type" value={formData.services} onChange={handleServices}>
+            <select name="services" value={formData.services} onChange={handleServices}>
               {
                   servicesAvailable.map((srv) => {
                     return(

@@ -176,11 +176,7 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       stances: formData.stances,
       disponible: formData.disponible,
-      location: {
-        adress: formData.adress,
-        state: formData.state,
-        city: formData.city,
-      },
+      location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price
@@ -189,7 +185,7 @@ export const createProp = async (formData, file) => {
 
     getPropertiesList();
 
-    alert('¡Es el fin del backend!');
+    alert('¡Propiedad creada!');
   } catch (error) {
     console.log(error);
     alert(`La pifiamo'`);
