@@ -9,7 +9,7 @@ import imagen3 from '../../../assets/imagen3.jpeg';
 import imagen4 from '../../../assets/imagen4.jpeg';
 
 const Card = ({ property }) => {
-  const { id, name, rooms, location, userId, imageUrl } = property;
+  const { id, name, rooms, location,price, userId, imageUrl } = property;
 
   const imageUrls = [landingImg, FondoLanding, imagen1, imagen2, imagen3, imagen4];
   const randomIndex = Math.floor(Math.random() * imageUrls.length);
@@ -25,7 +25,7 @@ const Card = ({ property }) => {
         <section className={styles.info}>
           <h3>{location?.state}, {location?.city}</h3> 
           <p className={styles.infoName}>{name}</p>
-          <p className={styles.infoPrice}>$ {rooms} USD noche</p>
+          <p className={styles.infoPrice}>$ {price} USD noche</p>
         </section>
       </div>
     </Link>
