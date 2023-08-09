@@ -2,63 +2,20 @@ import styles from "./DetailPost.module.css"
 import React, { useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-import axios from 'axios'
 
-import {useParams, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
-const DetailPost = () => {  
+const DetailPost = () => {
+
   const { id } = useParams()
+
+  //? estado que guarda la propiedad traida por params
   const [property, setPropertyDetail] = useState([])
   // console.log(property);
   // console.log(detailId)
-  console.log(property);
 
-
-
-
-  // CONFIGURACION DEL PAGO=======================================
-  const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff") //<<<<<====||| ACA VA EL "TOKEN" DEL OWNER QUE DEBERIA ESTAR EN EL ESTADO LOCAL DE "property.tokken"
-    const createPreference = async()=>{
-        try {
-            const response = await axios.post(`http://localhost:3001/createorder`, {
-                description: `${property.name}`,
-                price: `${totalPrice}`,
-                quantity: `${selectedDays}`,
-                currency_id: "ARS"
-            })
-
-            const { id } = response.data;
-
-            return id
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handleBuy = async()=>{
-        const id = await createPreference();
-        if (id){
-            setPreferenceId(id)
-        }
-    }
-
-
-
-  //CALCULAR EL PRECIO p/dias========================================
-  const [selectedDays, setSelectedDays] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const handleCalculatePrice = () => {
-    const pricePerDay = property.price;
-    const calculatedPrice = selectedDays * pricePerDay;
-    setTotalPrice(calculatedPrice);
-  }; //CALCULAR EL PRECIO
-  //=============================================================
-  //? estado que guarda la propiedad traida por params
-
-  
-  
+  console.log(property)
 
   useEffect(() => {
     const propertiesDetail = async () => {
@@ -79,19 +36,9 @@ const DetailPost = () => {
                       <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
                  </div>
                   <div className={styles.headRigth}>
-                      <p>$ {property.price} USD/noche</p>
-                      <h3>Seleccione la cantidad de días de reserva:</h3>
-              <input
-                type="number"
-                min="1"
-                value={selectedDays}
-                onChange={(e) => setSelectedDays(Number(e.target.value))}
-              />
-              <button onClick={handleCalculatePrice}>Calcular Precio</button>
-              {totalPrice > 0 && <p>Total a pagar: $ {totalPrice}</p>}
+                      <p>$ {property.price} USD noche</p>
                       
-                      <button onClick={handleBuy}>Reserve</button>
-                      {preferenceId && <Wallet initialization={{ preferenceId: preferenceId}} />}
+                      <button >Reserve</button>
                       
                   </div>
               </header>
