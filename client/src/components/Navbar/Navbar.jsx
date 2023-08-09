@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom"
 import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
-import React from 'react';
+import React, {useState} from 'react';
 import { auth } from "../../config/firebase";
 import { logOut } from "../../config/handlers";
 
 const Navbar = () => {
 
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
-
+ 
+  
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
@@ -16,6 +17,8 @@ const Navbar = () => {
 
     return () => unsubscribe();
   }, [auth]);
+
+
 
     return(
       <div className={styles.container}> 

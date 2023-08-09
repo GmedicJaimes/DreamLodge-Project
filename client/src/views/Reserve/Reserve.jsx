@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos del datepicker
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css'; // Importa los estilos del datepicker
 
 // import { createMercadoPagoPayment } from '../../config/mercadopago'; 
 
