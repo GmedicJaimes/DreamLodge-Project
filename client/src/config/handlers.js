@@ -94,13 +94,22 @@ export const registerUserInFirestore = async (uid, user) => {
 
 
 // funcion para LOGIN 
-export const logIn = async(auth, email, password)=>{
+
+export const logIn = async (auth, email, password) => {
   try {
-      await signInWithEmailAndPassword(auth, email, password);      
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-      console.log(error)
+    if (error.code === "auth/wrong-password") {
+      throw new Error("Wrong password!");
+    } else if (error.code === "auth/user-not-found") {
+      throw new Error("Email not exist!");
+    } else {
+      throw new Error("Authentication error!"); // Maneja todos los otros errores posibles
+    }
   }
 };
+
+
 
 // funcion para SIGNIN CON GOOGLE
 
