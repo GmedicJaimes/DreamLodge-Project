@@ -7,6 +7,7 @@ import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sig
 import { storage, db, auth, googleProvider } from './firebase';
 
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
@@ -67,39 +68,60 @@ const getUserProperties = async (targetUID) => {
 // const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
-export const signIn = async(auth, email, password) => {
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);      
-    } catch (error) {
-        console.log(error)
-    }
-};
 
-// funcion para LOGIN 
-export const logIn = async(auth, email, password)=>{
+
+export const signIn = async(auth, email, password) => {
   try {
-      await signInWithEmailAndPassword(auth, email, password);      
+      return await createUserWithEmailAndPassword(auth, email, password);      
   } catch (error) {
       console.log(error)
+      throw error;
   }
 };
 
-// funcion para SIGNIN CON GOOGLE
-
-//hardcodeofeo
-
-// export const signInGoogle = async()=>{
-//     try {
-//         await signInWithPopup(auth, googleProvider)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
 
 
-/////////////////////////////// PRUEBA CHRIS
+export const registerUserInFirestore = async (uid, user) => {
+  const usersCollectionRef = collection(db, "users");
+  try {
+    await setDoc(doc(usersCollectionRef, uid), user); // Utiliza el uid como ID de documento
+    console.log("Usuario registrado con éxito en Firestore.");
+  } catch (error) {
+    console.error("Error al registrar al usuario en Firestore:", error);
+  }
+};
 
-// Dentro de la función signInGoogle
+
+
+
+// funcion para LOGIN 
+
+export const logIn = async (auth, email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    if (error.code === "auth/wrong-password") {
+      throw new Error("Wrong password!");
+    } else if (error.code === "auth/user-not-found") {
+      throw new Error("Email not exist!");
+    } else {
+      throw new Error("Authentication error!"); // Maneja todos los otros errores posibles
+    }
+  }
+};
+
+
+//FUNCTION SI EL EMAIL YA EXISTE EN FIRESTORES
+
+export const doesEmailExistInFirestore = async (email) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const snapshot = await getDocs(q);
+
+  return snapshot.size > 0;
+};
+
+
+
 export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -107,38 +129,42 @@ export const signInGoogle = async () => {
     if (result.user) {
       const user = result.user;
 
+      const nameParts = user.displayName.split(' ');
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+
       const userData = {
         email: user.email,
-        name: user.displayName,
+        name: firstName,
+        lastName: lastName,
         id: user.uid,
-        image: user.photoURL,
-        createdAt: new Date().toISOString(),
+        country: "USA", 
+        language: ["english"], 
+        image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+        createdAt: new Date().toLocaleDateString(),
+        banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
       };
+
+      // Pide al usuario información adicional
+      // const additionalData = await requestAdditionalData();
+      // userData.country = additionalData.country;
+      // userData.language = additionalData.language;
 
       await setDoc(doc(db, 'users', user.uid), userData);
 
       // Envía un mensaje al padre indicando autenticación exitosa
-      window.opener.postMessage('auth-success', window.location.origin);
-      window.close();
+      if (window.opener) {
+        window.opener.postMessage('auth-success', window.location.origin);
+    } else {
+        console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+    }
     }
   } catch (error) {
     console.log('Error durante la autenticación con Google:', error);
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////// PRUEBA CHRIS
 
 
 // funcion para LOGOUT
@@ -171,22 +197,19 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       stances: formData.stances,
       disponible: formData.disponible,
-      location: {
-        adress: formData.adress,
-        state: formData.state,
-        city: formData.city,
-      },
+      location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
-      price: formData.price
+      price: formData.price,
+      tokenMp: formData.tokenMp,
+      userId: userId
     });
 
 
     getPropertiesList();
 
-    alert('¡Es el fin del backend!');
+    alert('¡Propiedad creada!');
   } catch (error) {
-    console.log(error);
     alert(`La pifiamo'`);
   }
 };
