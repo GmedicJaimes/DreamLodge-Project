@@ -30,7 +30,17 @@
     font-weight: bold;
     margin-bottom: 0.8;
     text-align: start;
-    margin-left: 1.2em;
+    /* margin-left: 1em */
+}
+
+textarea{
+    width: 90%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    background-color: #f4e9de;
 }
 
 .formGroup input {
@@ -66,4 +76,17 @@
 
 .forcedLine{
     height: 6px;
+}
+
+.roomSelect{
+    width: 20%;
+}
+
+.roomsBox{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.inputContainer {
+    margin: 0 5em;
 }

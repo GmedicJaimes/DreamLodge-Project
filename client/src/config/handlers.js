@@ -88,13 +88,59 @@ export const logIn = async(auth, email, password)=>{
 
 //hardcodeofeo
 
-export const signInGoogle = async()=>{
-    try {
-        await signInWithPopup(auth, googleProvider)
-    } catch (error) {
-        console.log(error)
+// export const signInGoogle = async()=>{
+//     try {
+//         await signInWithPopup(auth, googleProvider)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// };
+
+
+/////////////////////////////// PRUEBA CHRIS
+
+// Dentro de la función signInGoogle
+export const signInGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+
+    if (result.user) {
+      const user = result.user;
+
+      const userData = {
+        email: user.email,
+        name: user.displayName,
+        id: user.uid,
+        image: user.photoURL,
+        createdAt: new Date().toISOString(),
+      };
+
+      await setDoc(doc(db, 'users', user.uid), userData);
+
+      // Envía un mensaje al padre indicando autenticación exitosa
+      window.opener.postMessage('auth-success', window.location.origin);
+      window.close();
     }
+  } catch (error) {
+    console.log('Error durante la autenticación con Google:', error);
+  }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////// PRUEBA CHRIS
+
+
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
@@ -128,7 +174,7 @@ export const createProp = async (formData, file) => {
     await addDoc(propertiesCollectionRef, {
       name: formData.name,
       type: formData.type,
-      rooms: formData.rooms,
+      stances: formData.stances,
       disponible: formData.disponible,
       location: {
         adress: formData.adress,
@@ -136,7 +182,8 @@ export const createProp = async (formData, file) => {
         city: formData.city,
       },
       imageUrl: imageUrl,
-      description: formData.description
+      description: formData.description,
+      price: formData.price
     });
 
 
