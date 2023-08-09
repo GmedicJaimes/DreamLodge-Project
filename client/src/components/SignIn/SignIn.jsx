@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
-import { signIn, signInGoogle,registerUserInFirestore,doesEmailExistInFirestore } from "../../config/handlers";
+import {
+  signIn,
+  signInGoogle,
+  registerUserInFirestore,
+  doesEmailExistInFirestore,
+} from "../../config/handlers";
 import { auth } from "../../config/firebase";
-import Homepage from "../../views/Homepage/Homepage"; 
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../config/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   isValidName,
   isCountrySelected,
@@ -14,7 +18,7 @@ import {
   hasImageSelected,
   isValidEmail,
   isValidPassword,
-} from './validations';
+} from "./validations";
 
 const SignIn = () => {
   const [register, setRegister] = useState({
@@ -22,13 +26,13 @@ const SignIn = () => {
     password: "",
     name: "",
     lastName: "",
-    country: "", 
+    country: "",
     languages: [],
     imageFile: null,
   });
 
   const [errors, setErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+
 
 
   const languagesAvailable = [
@@ -40,7 +44,6 @@ const SignIn = () => {
     "Italian",
     "Russian",
   ];
-  
 
   const navigate = useNavigate();
 
@@ -73,7 +76,7 @@ const SignIn = () => {
   const handleChange = (event) => {
     const { name, value, files } = event.target;
 
-    if (name === 'imageFile') {
+    if (name === "imageFile") {
       setRegister({
         ...register,
         [name]: files[0], // Almacena el archivo de imagen en el estado
@@ -84,45 +87,57 @@ const SignIn = () => {
         [name]: value,
       });
     }
-  }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newErrors = {};
 
     try {
-            // Validaciones existentes
-      if (!isValidName(register.name))  newErrors.name = "Only letters allowed and up to 20 characters.";
-      if (!isValidName(register.lastName)) newErrors.lastName = "Only letters allowed and up to 20 characters.";
-      if (!isCountrySelected(register.country)) newErrors.country = "Country selection is mandatory.";
-      if (!hasAtLeastOneLanguage(register.languages)) newErrors.languages = "Selecting at least one language.";
-      if (!hasImageSelected(register.imageFile)) newErrors.imageFile = "Selecting an image is mandatory.";
-      if (!isValidEmail(register.email)) newErrors.email = "Invalid email. No special characters allowed.";
-      if (!isValidPassword(register.password)) newErrors.password = " Minimum 8 characters and only letters and numbers.";
+      // Validaciones existentes
+      if (!isValidName(register.name))
+        newErrors.name = "Only letters allowed and up to 20 characters.";
+      if (!isValidName(register.lastName))
+        newErrors.lastName = "Only letters allowed and up to 20 characters.";
+      if (!isCountrySelected(register.country))
+        newErrors.country = "Country selection is mandatory.";
+      if (!hasAtLeastOneLanguage(register.languages))
+        newErrors.languages = "Selecting at least one language.";
+      if (!hasImageSelected(register.imageFile))
+        newErrors.imageFile = "Selecting an image is mandatory.";
+      if (!isValidEmail(register.email))
+        newErrors.email = "Invalid email. No special characters allowed.";
+      if (!isValidPassword(register.password))
+        newErrors.password =
+          " Minimum 8 characters and only letters and numbers.";
 
       // Validación para verificar si el correo ya existe en Firestore
       const emailExists = await doesEmailExistInFirestore(register.email);
-      if(emailExists) {
+      if (emailExists) {
         newErrors.email = "This email is already in use.";
-        console.log(errors.email)
+        console.log(errors.email);
       }
 
-        // Si hay errores, muestralos
+      // Si hay errores, muestralos
       if (Object.keys(newErrors).length > 0) {
-  setErrors(newErrors);
-  
-  // Usar setTimeout para limpiar los errores después de 3 segundos
-  setTimeout(() => {
-    setErrors({});
-  }, 3000);
-  
-  return;
-}      // Intentar registrar al usuario con Firebase Auth
-      const userCredential = await signIn(auth, register.email, register.password);
-  
+        setErrors(newErrors);
+
+        // Usar setTimeout para limpiar los errores después de 3 segundos
+        setTimeout(() => {
+          setErrors({});
+        }, 3000);
+
+        return;
+      } // Intentar registrar al usuario con Firebase Auth
+      const userCredential = await signIn(
+        auth,
+        register.email,
+        register.password
+      );
+
       if (userCredential?.user?.uid) {
         const { uid, email } = userCredential.user;
-  
+
         // Manejar la subida de la imagen a Firebase Storage
         let imageURL = ""; // Variable para almacenar la URL de la imagen
         if (register.imageFile) {
@@ -131,7 +146,7 @@ const SignIn = () => {
           imageURL = await getDownloadURL(imageRef);
         }
 
-                // Datos del usuario para guardar en Firestore
+        // Datos del usuario para guardar en Firestore
         const userToSave = {
           uid,
           email,
@@ -142,11 +157,11 @@ const SignIn = () => {
           languages: register.languages,
           createdAt: new Date().toLocaleDateString(),
         };
-        console.log(userToSave)
-  
-                // Guardar el usuario en Firestore
+        console.log(userToSave);
+
+        // Guardar el usuario en Firestore
         await registerUserInFirestore(uid, userToSave);
-        prompt(`usuario creado`)
+
         navigate(`/home`);
       }
 
@@ -165,7 +180,6 @@ const SignIn = () => {
     }
   };
 
-
   useEffect(() => {
     const handleAuthSuccess = (event) => {
       if (event.data === "auth-success") {
@@ -180,28 +194,18 @@ const SignIn = () => {
       window.removeEventListener("message", handleAuthSuccess);
     };
   }, []);
-  useEffect(() => {
-    const requiredFields = [
-      register.name,
-      register.lastName,
-      register.country,
-      register.languages.length > 0,
-      register.imageFile,
-      register.email,
-      register.password
+ 
+  const isFormValid = Object.keys(errors).length === 0 && register.email && register.password; // Add other fields as needed
 
-    ];
 
-    setIsFormValid(requiredFields.every(field => Boolean(field)));
-  }, [register]);
-  
+
 
   return (
     <div className={styles.mainContainer}>
       <header>
         <h2>Create your account</h2>
       </header>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div className={styles.formGroup}>
           <input
             type="text"
@@ -210,9 +214,11 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Your first name"
           />
-        {errors.name && <span className={styles.ErrorValid}>{errors.name} </span>}
+          {errors.name && (
+            <span className={styles.ErrorValid}>{errors.name} </span>
+          )}
         </div>
-
+   
 
         <div className={styles.formGroup}>
           <input
@@ -222,7 +228,9 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Your last name"
           />
-        {errors.lastName && <span className={styles.ErrorValid}>{errors.lastName} </span>}
+          {errors.lastName && (
+            <span className={styles.ErrorValid}>{errors.lastName} </span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -230,10 +238,9 @@ const SignIn = () => {
             name="country"
             value={register.country}
             onChange={handleRegisterForm}
-            
             placeholder="Country"
           >
-            <option value="" disabled >
+            <option value="" disabled>
               Select Country
             </option>
             <option value="Argentina">Argentina</option>
@@ -244,8 +251,9 @@ const SignIn = () => {
             <option value="Spain">Spain</option>
             <option value="Uruguay">Uruguay</option>
           </select>
-          {errors.country && <span className={styles.ErrorValid}>{errors.country} </span>}
-
+          {errors.country && (
+            <span className={styles.ErrorValid}>{errors.country} </span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
@@ -274,20 +282,24 @@ const SignIn = () => {
             value={register.languages.join(", ")}
             placeholder="Languages"
           />
-        {errors.language && <span className={styles.ErrorValid}>{errors.language} </span>}
+          {errors.language && (
+            <span className={styles.ErrorValid}>{errors.language} </span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
-            <input
-              className={styles.range}
-              onChange={handleChange}
-              type="file"
-              name="imageFile"
-              accept="image/*"
-              placeholder="Profile Image"
-            />
-            <span className={styles.imageSelect}>{register.imageFile?.name || ""}</span>
-          </div>
+          <input
+            className={styles.range}
+            onChange={handleChange}
+            type="file"
+            name="imageFile"
+            accept="image/*"
+            placeholder="Profile Image"
+          />
+          <span className={styles.imageSelect}>
+            {register.imageFile?.name || ""}
+          </span>
+        </div>
         <div className={styles.formGroup}>
           <input
             type="email"
@@ -296,9 +308,10 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Email"
           />
-        {errors.email && <span className={styles.ErrorValid}>{errors.email} </span>}
+          {errors.email && (
+            <span className={styles.ErrorValid}>{errors.email} </span>
+          )}
         </div>
-
 
         <div className={styles.formGroup}>
           <input
@@ -308,21 +321,23 @@ const SignIn = () => {
             value={register.password}
             onChange={handleRegisterForm}
           />
-        {errors.password && <span className={styles.ErrorValid}>{errors.password}</span>}
+          {errors.password && (
+            <span className={styles.ErrorValid}>{errors.password}</span>
+          )}
         </div>
-
 
         <button className={styles.loginWG} onClick={signInGoogle}>
           Sign In With Google
         </button>
         <br />
-        <button 
-  className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`} 
-  type="submit" 
+        <button
+  className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`}
+  type="submit"
   disabled={!isFormValid}
 >
   Create my account
 </button>
+
 
         <p className={styles.foot}>
           Already have an account?{" "}
