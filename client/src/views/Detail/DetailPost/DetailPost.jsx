@@ -33,13 +33,8 @@ const DetailPost = () => {
               <header className={styles.head}>
                   <div className={styles.headLeft}>
                       <h1>{property.name}</h1>
-<<<<<<< HEAD
                       <p>{property.location?.address}, {property.location?.city}, {property.location?.state}.</p>
-                  </div>
-=======
-                       <p>{property.location}, {property.location?.state}.</p>
-                   </div>
->>>>>>> 8a3b28724f6567365542727718feb8d0e0695862
+                 </div>
                   <div className={styles.headRigth}>
                       <p>$ {property.price} USD noche</p>
                       <Link to={`/reserve/${id}`}>
@@ -48,7 +43,7 @@ const DetailPost = () => {
                   </div>
               </header>
               <div className={styles.image}>
-                  <img src={property.imageFile} alt={property.name} className={styles.imgOne}/>
+                  <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
                   <div className={styles.sectionOne}>
                     <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
                     <div className={styles.sectionTwo}>
@@ -80,10 +75,10 @@ const DetailPost = () => {
                   </div>
                   <div className={styles.containerRooms}>
                       <ul>
-                          <li>Guest: {property.rooms?.[0]}</li>
-                          <li>Rooms: {property.rooms?.[1]}</li>
-                          <li>Bathrooms: {property.rooms?.[2]}</li>
-                          <li>Bed: {property.rooms?.[3]}</li>
+                          <li>Guest: {property.stances?.guest}</li>
+                          <li>Rooms: {property.stances?.rooms}</li>
+                          <li>Bathrooms: {property.stances?.bathrooms}</li>
+                          <li>Bed: {property.stances?.beds}</li>
                           <li>Status: 
                             {
                               property.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
