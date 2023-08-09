@@ -20,7 +20,7 @@ const DetailPost = () => {
 
   // CONFIGURACION DEL PAGO=======================================
   const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff") //<<<<<====||| ACA VA EL "TOKEN" DEL OWNER QUE DEBERIA ESTAR EN EL ESTADO LOCAL DE "property.tokken"
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
     const createPreference = async()=>{
         try {
             const response = await axios.post(`http://localhost:3001/createorder`, {
@@ -55,7 +55,7 @@ const DetailPost = () => {
     setTotalPrice(calculatedPrice);
   }; //CALCULAR EL PRECIO
   //=============================================================
-  //? estado que guarda la propiedad traida por params
+  //
 
   
   
