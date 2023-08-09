@@ -146,7 +146,8 @@ const SignIn = () => {
   
                 // Guardar el usuario en Firestore
         await registerUserInFirestore(uid, userToSave);
-        navigate(<Homepage/>);
+        prompt(`usuario creado`)
+        navigate(`/home`);
       }
 
       // Resetear el estado del formulario
