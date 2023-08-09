@@ -5,7 +5,7 @@ import SignIn from '../../components/SignIn/SignIn'
 
 export const SignInView = () => {
   return (
-    <div >
+    <div>
       <div className={styles.viewSign}>
          <SignIn className={styles.view}/> 
       </div>

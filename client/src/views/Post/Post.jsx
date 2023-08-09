@@ -21,6 +21,7 @@ const Post = () => {
     services: [],
     description: '',
     price: 0,//10 400
+    tokenMp: "",
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   })
@@ -56,6 +57,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
         services: [],
         description: '',
         price: 0,
+        tokenMp: "",
         imageFile: null,
         disponible: false,
       });
@@ -234,6 +236,15 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
               name="price"
               value={formData.price}
               onChange={handleChange}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>Token Mercado Pago</label>
+            <input
+              className={styles.range}
+              onChange={handleChange} 
+              type="text" 
+              name="tokenMp" 
             />
           </div>
           <div className={styles.formGroup}>
