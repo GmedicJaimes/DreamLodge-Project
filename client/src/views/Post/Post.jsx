@@ -47,7 +47,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
           adress: ""
         },
         stances: [0,0,0,0],
-        services: ["wifi"],
+        services: [""],
         description: '',
         price: 0,
         imageFile: null,
@@ -93,6 +93,19 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
       })
     } else {
       setFormData({ ...formData, type: [...formData.type, typ]})
+    }
+  }
+
+  const handleServices = (event) => {
+    const serv = event.target.value
+  
+    if (formData.services.includes(serv)) {
+      setFormData({
+        ...formData, 
+        services : formData.services.filter((servIn) => servIn != serv)
+      })
+    } else {
+      setFormData({ ...formData, services: [...formData.services, serv]})
     }
   }
 
@@ -198,9 +211,9 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
           </div>
           <div className={styles.formGroup}>
             <label>Services:</label>
-            <input type="text" value={formData.type} readOnly/>
+            <input type="text" value={formData.services} readOnly/>
             <div className={styles.forcedLine}></div>
-            <select name="type" value={formData.type} onChange={handleTypes}>
+            <select name="type" value={formData.services} onChange={handleServices}>
               {
                   servicesAvailable.map((srv) => {
                     return(
