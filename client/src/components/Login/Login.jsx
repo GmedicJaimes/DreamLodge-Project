@@ -75,9 +75,13 @@ const Login = () => {
           >
             Login with Google
           </button>
+          <Link>
+          </Link>
           <Link to={"/signin"}>
             <button className={styles.btnCreateAcc}>Sign up now</button>
           </Link>
+          <p className={styles.small}>Dont have an account? </p>
+
         </form>
       ) : (
         <h1>ya esta loggeado parse</h1>

@@ -68,7 +68,8 @@
     border: none;
     border-radius: 1px;
     color: white;
-    cursor: pointer
+    cursor: pointer;
+    margin-bottom: 0.5rem;
 }
 
 .small{
