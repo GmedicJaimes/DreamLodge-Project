@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { createPost } from '../../redux/actions';
 import  { createProp }  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
@@ -9,17 +7,27 @@ const Post = () => {
   const [formData, setFormData] = useState({
     name: '',
     type: [],
-    location: '',
-    rooms: 0,
-    services: '',
+    location: {
+      city: "",
+      state: "",
+      adress: ""
+    },
+    stances: {
+      guest: 0,
+      rooms: 0,
+      bathrooms: 0,
+      beds: 0
+    },
+    services: ["wifi"],
     description: '',
-    price: 0,
+    price: 0,//10 400
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
 
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
+const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,13 +38,16 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
         disponible: formData.hasOwnProperty('disponible') ? formData.disponible : false,
       };
       await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
-      // Limpiar el formulario después de crear la propiedad
       setFormData({
         name: '',
         type: [],
-        location: '',
-        rooms: 0,
-        services: '',
+        location: {
+          city: "",
+          state: "",
+          adress: ""
+        },
+        stances: [0,0,0,0],
+        services: ["wifi"],
         description: '',
         price: 0,
         imageFile: null,
@@ -47,133 +58,181 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+
     if (name === 'imageFile') {
       setFormData((prevData) => ({
         ...prevData,
         [name]: files[0], // Almacena el archivo de imagen en el estado
+        
       }));
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData({
+        ...formData,
         [name]: value,
-      }));
+      });
     }
   };
-  const handleTypes =(e)=>{
-    const selectType = e.target.value
+  const handleTypes = (event) => {
+    const typ = event.target.value
+  
+    if (formData.type.includes(typ)) {
+      setFormData({
+        ...formData, 
+        type : formData.type.filter((typeIn) => typeIn != typ)
+      })
+    } else {
+      setFormData({ ...formData, type: [...formData.type, typ]})
+    }
+  }
+
+  const handleLocation = (event) => {
+    const { name, value } = event.target
+
     setFormData({
       ...formData,
-      type:[...formData.type, selectType]
-  })
-  };
+      location: {...formData.location, [name] : value }
+    })
+  }
+
+  const handelRooms = (event) => {
+    const { name, value } = event.target
+
+    setFormData({
+      ...formData,
+      stances: {...formData.stances, [name] : value }
+    })
+  }
 
   return (
     <div>
       <div className={styles.bigContainer}>
         <form onSubmit={handleSubmit} className={styles.mainContainer}>
           <header>
-            <h2>Create your account</h2>
+            <h2>Post your Lodge</h2>
           </header>
+          <div className={styles.inputContainer}>
           <div className={styles.formGroup}>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Type:
-              <select name="type" value={formData.type} onChange={(e)=>handleTypes(e)}>
-                {types.map((op) => (
-                  <option key={op} value={op}>
-                    {op}
-                  </option>
-                ))}
-              </select>
-                <ul><li>{formData.type.map(el=> el+" - ")}</li></ul>
-            </label>
+            <label>Type:</label>
+            <input type="text" value={formData.type} readOnly/>
+            <div className={styles.forcedLine}></div>
+            <select name="type" value={formData.type} onChange={handleTypes}>
+              {
+                  types.map((op) => {
+                    return(
+                      <option key={op} value={op}>{op}</option>
+                    )})
+              }
+            </select>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Location:
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Location:</label>
+            <input onChange={handleLocation} type="text" name="city" value={location.city} placeholder='City'/>
+            <div className={styles.forcedLine}></div>
+            <input onChange={handleLocation} type="text" name="state" value={location.state} placeholder='State'/>
+            <div className={styles.forcedLine}></div>
+            <input onChange={handleLocation} type="text" name="adress" value={location.adress} placeholder='Adress'/>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Rooms:
-              <select name="rooms" value={formData.rooms} onChange={handleChange}>
+            <div className={styles.roomsBox}>
+            <div className={styles.roomSelect}>
+              <label>Guests:</label>
+              <select name="guest" value={formData.stances.guest} onChange={handelRooms}>
                 {opciones.map((op) => (
                   <option key={op} value={op}>
                     {op}
                   </option>
                 ))}
               </select>
-            </label>
+            </div>
+            <div className={styles.roomSelect}>  
+              <label>Rooms:</label>
+              <select name="rooms" value={formData.stances.rooms} onChange={handelRooms}>
+                {opciones.map((op) => (
+                  <option key={op} value={op}>
+                    {op}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.roomSelect}>
+              <label>Bathrooms:</label>
+              <select name="bathrooms" value={formData.stances.bathrooms} onChange={handelRooms}>
+                {opciones.map((op) => (
+                  <option key={op} value={op}>
+                    {op}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.roomSelect}>
+              <label>Beds:</label>
+              <select name="beds" value={formData.stances.beds} onChange={handelRooms}>
+                {opciones.map((op) => (
+                  <option key={op} value={op}>
+                    {op}
+                  </option>
+                ))}
+              </select>
+            </div>
+            </div>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Services:
-              <input
-                type="text"
-                name="services"
-                value={formData.services}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Services:</label>
+            <input type="text" value={formData.type} readOnly/>
+            <div className={styles.forcedLine}></div>
+            <select name="type" value={formData.type} onChange={handleTypes}>
+              {
+                  servicesAvailable.map((srv) => {
+                    return(
+                      <option key={srv} value={srv}>{srv}</option>
+                    )})
+              }
+            </select>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Description:
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Description:</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Price:
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Price:</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Image:
-              <input
-                className={styles.range}
-                onChange={handleChange}
-                type="file"
-                name="imageFile"
-                accept="image/*"
-              />
-              <p>{formData.imageFile?.name || 'No se ha seleccionado ninguna imagen'}</p>
-            </label>
+            <label>Image:</label>
+            <input
+              className={styles.range}
+              onChange={handleChange}
+              type="file"
+              name="imageFile"
+              accept="image/*"
+            />
+            <p>{formData.imageFile?.name || "No image selected"}</p>
           </div>
-          <button className={styles.btn} type="submit">
-            Crear Propiedad
-          </button>
+          <button className={styles.btn} type="submit">Post Lodge</button>
+          </div>
         </form>
       </div>
-      {/* <About /> */}
+      <About />
     </div>
   );
 };

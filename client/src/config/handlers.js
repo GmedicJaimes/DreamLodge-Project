@@ -128,11 +128,12 @@ export const createProp = async (formData, file) => {
     await addDoc(propertiesCollectionRef, {
       name: formData.name,
       type: formData.type,
-      rooms: formData.rooms,
+      stances: formData.stances,
       disponible: formData.disponible,
       location: formData.location,
       imageUrl: imageUrl,
-      description: formData.description
+      description: formData.description,
+      price: formData.price
     });
 
 

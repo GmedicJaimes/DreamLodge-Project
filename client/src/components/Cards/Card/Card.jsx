@@ -24,8 +24,8 @@ const Card = ({ property }) => {
           <img src={imageUrl} alt="pic of the house" />
         </div>
         <section className={styles.info}>
-          {/* <h3>{location.state}, {location.city}</h3> */}
-          <h3>{location}</h3>
+          <h3>{location.state}, {location.city}</h3>
+          {/* <h3>{location}</h3> */}
           {/* <p>{id}</p>
           <p>{userId}</p> */}
           <p className={styles.infoName}>{name}</p>
