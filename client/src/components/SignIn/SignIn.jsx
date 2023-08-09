@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
-import { signIn, signInGoogle } from "../../config/handlers";
+import { signIn, signInGoogle,registerUserInFirestore } from "../../config/handlers";
 import { auth } from "../../config/firebase";
 import Homepage from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
 import { useNavigate } from "react-router-dom";
@@ -12,10 +12,9 @@ const SignIn = () => {
     password: "",
     name: "",
     lastName: "",
-    country: "", // Por defecto, pero puede cambiarse
-    languages: [], // Por defecto, pero puede añadirse más idiomas
-    image: "", // Puede ser una URL o un archivo subido
-    banner: "",
+    country: "", 
+    languages: []
+
   });
   const languagesAvailable = [
     "English",
@@ -26,15 +25,7 @@ const SignIn = () => {
     "Italian",
     "Russian",
   ];
-  const countriesAvailable = [
-    "USA",
-    "Argentina",
-    "Colombia",
-    "Brazil",
-    "France",
-    "Canada",
-    "Spain",
-  ];
+  
 
   const navigate = useNavigate();
 
@@ -68,11 +59,44 @@ const SignIn = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      signIn(auth, register.email, register.password);
+        const  userCredential = await signIn(auth, register.email, register.password);
+        
+        // Verificar si se creó el usuario con éxito
+
+
+        if (userCredential?.user?.uid) {
+            const { uid, email } = userCredential.user;
+            const userToSave = {
+                uid,
+                email,
+                name: register.name,
+                lastName: register.lastName,
+                country: register.country,
+                languages: register.languages,
+                createdAt: new Date().toLocaleDateString()
+            };
+            
+            await registerUserInFirestore(uid, userToSave);
+
+
+          
+            
+        }
+
+        
+        setRegister({
+            email: "",
+            password: "",
+            name: "",
+            lastName: "",
+            country: "", 
+            languages: []
+        });      
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  };
+};
+
 
   useEffect(() => {
     const handleAuthSuccess = (event) => {

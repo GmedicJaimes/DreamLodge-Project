@@ -67,13 +67,31 @@ const getUserProperties = async (targetUID) => {
 // const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
+
+
 export const signIn = async(auth, email, password) => {
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);      
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+      return await createUserWithEmailAndPassword(auth, email, password);      
+  } catch (error) {
+      console.log(error)
+      throw error;
+  }
 };
+
+
+
+export const registerUserInFirestore = async (uid, user) => {
+  const usersCollectionRef = collection(db, "users");
+  try {
+    await setDoc(doc(usersCollectionRef, uid), user); // Utiliza el uid como ID de documento
+    console.log("Usuario registrado con éxito en Firestore.");
+  } catch (error) {
+    console.error("Error al registrar al usuario en Firestore:", error);
+  }
+};
+
+
+
 
 // funcion para LOGIN 
 export const logIn = async(auth, email, password)=>{
@@ -111,7 +129,6 @@ export const signInGoogle = async () => {
       const firstName = nameParts[0];
       const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-      const userNameGenerated = user.email.split('@')[0];
 
       const userData = {
         email: user.email,
