@@ -18,7 +18,6 @@ const DetailUser = () => {
             const userData = await getUserByUID(id);
             if (userData) {
                 setUser(userData);
-                console.log(user.image)
             } else {
                 console.log("El usuario no existe o no coincide con el UID proporcionado.");
             }
@@ -29,13 +28,18 @@ const DetailUser = () => {
 
     return(
         <div>
-            <img /* src={} */ alt="" className={styles.portada}/>
+<img 
+  src={user?.banner || undefined}
+  alt=""
+  className={styles.portada}
+  style={{ backgroundColor: user?.banner ? 'transparent' : 'gray' }}
+/>
             <div className={styles.containerInfo}>
                 <div className={styles.dataUser}>
                     <img  src={user?.image} className={styles.profilePic} />
                     <div className={styles.blockDU}>
                         <div className={styles.nameTittle}>
-                            <h3>{user?.name}!!!!!</h3>
+                            <h3>{user?.name}</h3>
                             <p>Owner</p>
                         </div>
                         <p>{user?.country}</p>
