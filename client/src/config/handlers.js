@@ -7,6 +7,7 @@ import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sig
 import { storage, db, auth, googleProvider } from './firebase';
 
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
@@ -67,37 +68,58 @@ const getUserProperties = async (targetUID) => {
 // const [image, setImage] = useState([]);
 
 // funcion para SIGNIN normal
-export const signIn = async(auth, email, password) => {
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);      
-    } catch (error) {
-        console.log(error)
-    }
-};
 
-// funcion para LOGIN 
-export const logIn = async(auth, email, password)=>{
+
+export const signIn = async(auth, email, password) => {
   try {
-      await signInWithEmailAndPassword(auth, email, password);      
+      return await createUserWithEmailAndPassword(auth, email, password);      
   } catch (error) {
       console.log(error)
+      throw error;
   }
 };
 
-// funcion para SIGNIN CON GOOGLE
-
-//hardcodeofeo
-
-// export const signInGoogle = async()=>{
-//     try {
-//         await signInWithPopup(auth, googleProvider)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
 
 
-/////////////////////////////// PRUEBA CHRIS
+export const registerUserInFirestore = async (uid, user) => {
+  const usersCollectionRef = collection(db, "users");
+  try {
+    await setDoc(doc(usersCollectionRef, uid), user); // Utiliza el uid como ID de documento
+    console.log("Usuario registrado con éxito en Firestore.");
+  } catch (error) {
+    console.error("Error al registrar al usuario en Firestore:", error);
+  }
+};
+
+
+
+
+// funcion para LOGIN 
+
+export const logIn = async (auth, email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    if (error.code === "auth/wrong-password") {
+      throw new Error("Wrong password!");
+    } else if (error.code === "auth/user-not-found") {
+      throw new Error("Email not exist!");
+    } else {
+      throw new Error("Authentication error!"); // Maneja todos los otros errores posibles
+    }
+  }
+};
+
+
+//FUNCTION SI EL EMAIL YA EXISTE EN FIRESTORES
+
+export const doesEmailExistInFirestore = async (email) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const snapshot = await getDocs(q);
+
+  return snapshot.size > 0;
+};
+
 
 
 export const signInGoogle = async () => {
@@ -111,7 +133,6 @@ export const signInGoogle = async () => {
       const firstName = nameParts[0];
       const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-      const userNameGenerated = user.email.split('@')[0];
 
       const userData = {
         email: user.email,
@@ -143,13 +164,6 @@ export const signInGoogle = async () => {
     console.log('Error durante la autenticación con Google:', error);
   }
 };
-
-
-//-------------------------------------CHRISTIAN PRUEBA
-
-
-//-------------------------------------CHRISTIAN PRUEBA
-
 
 
 
@@ -188,6 +202,7 @@ export const createProp = async (formData, file) => {
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
+      tokenMp: formData.tokenMp,
       userId: userId
     });
 

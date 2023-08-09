@@ -1,56 +1,199 @@
- import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './SignIn.module.css';
-import { signIn, signInGoogle } from '../../config/handlers';
-import { auth } from '../../config/firebase';
-import  Homepage  from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
-import { useNavigate } from 'react-router-dom';
-
-
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styles from "./SignIn.module.css";
+import { signIn, signInGoogle,registerUserInFirestore,doesEmailExistInFirestore } from "../../config/handlers";
+import { auth } from "../../config/firebase";
+import Homepage from "../../views/Homepage/Homepage"; 
+import { useNavigate } from "react-router-dom";
+import { storage } from "../../config/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
+import {
+  isValidName,
+  isCountrySelected,
+  hasAtLeastOneLanguage,
+  hasImageSelected,
+  isValidEmail,
+  isValidPassword,
+} from './validations';
 
 const SignIn = () => {
   const [register, setRegister] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
+    name: "",
+    lastName: "",
+    country: "", 
+    languages: [],
+    imageFile: null,
   });
+
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
+  const languagesAvailable = [
+    "English",
+    "Spanish",
+    "French",
+    "Portuguese",
+    "German",
+    "Italian",
+    "Russian",
+  ];
+  
 
   const navigate = useNavigate();
 
-
   const handleRegisterForm = (event) => {
-    setRegister({
-      ...register,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    if (name === "language") {
+      setRegister({
+        ...register,
+        language: [value],
+      });
+    } else {
+      setRegister({
+        ...register,
+        [name]: value,
+      });
+    }
   };
+  const handleLanguages = (event) => {
+    const lang = event.target.value;
+
+    if (register.languages.includes(lang)) {
+      setRegister({
+        ...register,
+        languages: register.languages.filter((langIn) => langIn !== lang),
+      });
+    } else {
+      setRegister({ ...register, languages: [...register.languages, lang] });
+    }
+  };
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+
+    if (name === 'imageFile') {
+      setRegister({
+        ...register,
+        [name]: files[0], // Almacena el archivo de imagen en el estado
+      });
+    } else {
+      setRegister({
+        ...register,
+        [name]: value,
+      });
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newErrors = {};
+
     try {
-      signIn(auth, register.email, register.password);
+            // Validaciones existentes
+      if (!isValidName(register.name))  newErrors.name = "Only letters allowed and up to 20 characters.";
+      if (!isValidName(register.lastName)) newErrors.lastName = "Only letters allowed and up to 20 characters.";
+      if (!isCountrySelected(register.country)) newErrors.country = "Country selection is mandatory.";
+      if (!hasAtLeastOneLanguage(register.languages)) newErrors.languages = "Selecting at least one language.";
+      if (!hasImageSelected(register.imageFile)) newErrors.imageFile = "Selecting an image is mandatory.";
+      if (!isValidEmail(register.email)) newErrors.email = "Invalid email. No special characters allowed.";
+      if (!isValidPassword(register.password)) newErrors.password = " Minimum 8 characters and only letters and numbers.";
+
+      // Validación para verificar si el correo ya existe en Firestore
+      const emailExists = await doesEmailExistInFirestore(register.email);
+      if(emailExists) {
+        newErrors.email = "This email is already in use.";
+        console.log(errors.email)
+      }
+
+        // Si hay errores, muestralos
+      if (Object.keys(newErrors).length > 0) {
+  setErrors(newErrors);
+  
+  // Usar setTimeout para limpiar los errores después de 3 segundos
+  setTimeout(() => {
+    setErrors({});
+  }, 3000);
+  
+  return;
+}      // Intentar registrar al usuario con Firebase Auth
+      const userCredential = await signIn(auth, register.email, register.password);
+  
+      if (userCredential?.user?.uid) {
+        const { uid, email } = userCredential.user;
+  
+        // Manejar la subida de la imagen a Firebase Storage
+        let imageURL = ""; // Variable para almacenar la URL de la imagen
+        if (register.imageFile) {
+          const imageRef = ref(storage, `users/${uid}`); // Ruta en Storage
+          await uploadBytes(imageRef, register.imageFile);
+          imageURL = await getDownloadURL(imageRef);
+        }
+
+                // Datos del usuario para guardar en Firestore
+        const userToSave = {
+          uid,
+          email,
+          name: register.name,
+          lastName: register.lastName,
+          country: register.country,
+          image: imageURL, // Asigna la URL de la imagen
+          languages: register.languages,
+          createdAt: new Date().toLocaleDateString(),
+        };
+        console.log(userToSave)
+  
+                // Guardar el usuario en Firestore
+        await registerUserInFirestore(uid, userToSave);
+        navigate(<Homepage/>);
+      }
+
+      // Resetear el estado del formulario
+      setRegister({
+        email: "",
+        password: "",
+        name: "",
+        lastName: "",
+        country: "",
+        languages: [],
+        imageFile: "", // null, // Reinicia el archivo de imagen después de guardar
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
     const handleAuthSuccess = (event) => {
-      if (event.data === 'auth-success') {
-        console.log('Autenticación exitosa en la ventana emergente.');
-        navigate(Homepage)
-
+      if (event.data === "auth-success") {
+        console.log("Autenticación exitosa en la ventana emergente.");
       }
     };
 
-    window.addEventListener('message', handleAuthSuccess);
+    window.addEventListener("message", handleAuthSuccess);
 
     // Limpia el listener cuando el componente se desmonta
     return () => {
-      window.removeEventListener('message', handleAuthSuccess);
-
+      window.removeEventListener("message", handleAuthSuccess);
     };
   }, []);
+  useEffect(() => {
+    const requiredFields = [
+      register.name,
+      register.lastName,
+      register.country,
+      register.languages.length > 0,
+      register.imageFile,
+      register.email,
+      register.password
+
+    ];
+
+    setIsFormValid(requiredFields.every(field => Boolean(field)));
+  }, [register]);
+  
 
   return (
     <div className={styles.mainContainer}>
@@ -59,37 +202,130 @@ const SignIn = () => {
       </header>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            name="name"
+            value={register.name}
+            onChange={handleRegisterForm}
+            placeholder="Your first name"
+          />
+        {errors.name && <span className={styles.ErrorValid}>{errors.name} </span>}
+        </div>
+
+
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="lastName"
+            value={register.lastName}
+            onChange={handleRegisterForm}
+            placeholder="Your last name"
+          />
+        {errors.lastName && <span className={styles.ErrorValid}>{errors.lastName} </span>}
+        </div>
+
+        <div className={styles.formGroup}>
+          <select
+            name="country"
+            value={register.country}
+            onChange={handleRegisterForm}
+            
+            placeholder="Country"
+          >
+            <option value="" disabled >
+              Select Country
+            </option>
+            <option value="Argentina">Argentina</option>
+            <option value="Canada">Canada</option>
+            <option value="Chile">Chile</option>
+            <option value="USA">USA</option>
+            <option value="France">France</option>
+            <option value="Spain">Spain</option>
+            <option value="Uruguay">Uruguay</option>
+          </select>
+          {errors.country && <span className={styles.ErrorValid}>{errors.country} </span>}
+
+        </div>
+
+        <div className={styles.formGroup}>
+          <div className={styles.forcedLine}></div>
+          <select
+            name="languages"
+            value={register.languages}
+            onChange={handleLanguages}
+          >
+            <option value="" disabled>
+              Select Language
+            </option>
+
+            {languagesAvailable.map((lang) => {
+              return (
+                <option key={lang} value={lang}>
+                  {lang}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            value={register.languages.join(", ")}
+            placeholder="Languages"
+          />
+        {errors.language && <span className={styles.ErrorValid}>{errors.language} </span>}
+        </div>
+
+        <div className={styles.formGroup}>
+            <input
+              className={styles.range}
+              onChange={handleChange}
+              type="file"
+              name="imageFile"
+              accept="image/*"
+              placeholder="Profile Image"
+            />
+            <span className={styles.imageSelect}>{register.imageFile?.name || ""}</span>
+          </div>
+        <div className={styles.formGroup}>
           <input
             type="email"
             name="email"
             value={register.email}
             onChange={handleRegisterForm}
-            required
+            placeholder="Email"
           />
+        {errors.email && <span className={styles.ErrorValid}>{errors.email} </span>}
         </div>
 
+
         <div className={styles.formGroup}>
-          <label htmlFor="password">Password:</label>
           <input
             type="password"
             name="password"
+            placeholder="Password"
             value={register.password}
             onChange={handleRegisterForm}
-            required
           />
+        {errors.password && <span className={styles.ErrorValid}>{errors.password}</span>}
         </div>
+
 
         <button className={styles.loginWG} onClick={signInGoogle}>
           Sign In With Google
         </button>
         <br />
-        <button className={styles.btn} type="submit">
-          Create my account
-        </button>
+        <button 
+  className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`} 
+  type="submit" 
+  disabled={!isFormValid}
+>
+  Create my account
+</button>
+
         <p className={styles.foot}>
-          Already have an account?{' '}
-          <Link className={styles.linkfoot} to={'/login'}>
+          Already have an account?{" "}
+          <Link className={styles.linkfoot} to={"/login"}>
             Log in
           </Link>
         </p>
@@ -100,50 +336,103 @@ const SignIn = () => {
 
 export default SignIn;
 
+//  import React, { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+// import styles from './SignIn.module.css';
+// import { signIn, signInGoogle } from '../../config/handlers';
+// import { auth } from '../../config/firebase';
+// import  Homepage  from "../../views/Homepage/Homepage"; // No es necesario usar .jsx en la importación
+// import { useNavigate } from 'react-router-dom';
 
+// const SignIn = () => {
+//   const [register, setRegister] = useState({
+//     email: '',
+//     password: '',
+//   });
 
+//   const navigate = useNavigate();
 
+//   const handleRegisterForm = (event) => {
+//     setRegister({
+//       ...register,
+//       [event.target.name]: event.target.value,
+//     });
+//   };
 
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
+//     try {
+//       signIn(auth, register.email, register.password);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
+//   useEffect(() => {
+//     const handleAuthSuccess = (event) => {
+//       if (event.data === 'auth-success') {
+//         console.log('Autenticación exitosa en la ventana emergente.');
+//         navigate(Homepage)
 
+//       }
+//     };
 
+//     window.addEventListener('message', handleAuthSuccess);
 
+//     // Limpia el listener cuando el componente se desmonta
+//     return () => {
+//       window.removeEventListener('message', handleAuthSuccess);
 
+//     };
+//   }, []);
 
+//   return (
+//     <div className={styles.mainContainer}>
+//       <header>
+//         <h2>Create your account</h2>
+//       </header>
+//       <form onSubmit={handleSubmit}>
+//         <div className={styles.formGroup}>
+//           <label htmlFor="email">Email:</label>
+//           <input
+//             type="email"
+//             name="email"
+//             value={register.email}
+//             onChange={handleRegisterForm}
+//             required
+//           />
+//         </div>
 
+//         <div className={styles.formGroup}>
+//           <label htmlFor="password">Password:</label>
+//           <input
+//             type="password"
+//             name="password"
+//             value={register.password}
+//             onChange={handleRegisterForm}
+//             required
+//           />
+//         </div>
 
+//         <button className={styles.loginWG} onClick={signInGoogle}>
+//           Sign In With Google
+//         </button>
+//         <br />
+//         <button className={styles.btn} type="submit">
+//           Create my account
+//         </button>
+//         <p className={styles.foot}>
+//           Already have an account?{' '}
+//           <Link className={styles.linkfoot} to={'/login'}>
+//             Log in
+//           </Link>
+//         </p>
+//       </form>
+//     </div>
+//   );
+// };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// export default SignIn;
 
 // import React, { useState } from 'react';
 // import styles from "./SignIn.module.css"
@@ -171,7 +460,7 @@ export default SignIn;
 //       [event.target.name] : event.target.value
 //     })
 //   }
-  
+
 //   const handleSubmit = async (event) => {
 //     event.preventDefault()
 //     try {
@@ -191,7 +480,7 @@ export default SignIn;
 // //         image : "https://i.pinimg.com/564x/48/5d/34/485d3490861e058d4af3c69c7f41eb2d.jpg"
 // //       })
 // //       return
-// //     } 
+// //     }
 // //     setRegister({
 // //         ...register,
 // //         image : `https://randomuser.me/api/portraits/${gender}/${Math.round((Math.random()*98))}.jpg`
@@ -203,7 +492,7 @@ export default SignIn;
 
 // //   if (register.language.includes(lang)) {
 // //     setRegister({
-// //       ...register, 
+// //       ...register,
 // //       language : register.language.filter((langIn) => langIn != lang)
 // //     })
 // //   } else {
@@ -211,9 +500,6 @@ export default SignIn;
 // //   }
 
 // // }
-
-
- 
 
 //   return (
 //     <div className={styles.mainContainer}>
@@ -259,7 +545,7 @@ export default SignIn;
 //             required
 //           />
 //         </div>
-        
+
 //         <div className={styles.formGroup}>
 //           <label htmlFor="password">Password:</label>
 //           <input

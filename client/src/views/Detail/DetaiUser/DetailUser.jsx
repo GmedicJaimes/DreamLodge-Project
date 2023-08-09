@@ -67,7 +67,7 @@ const DetailUser = () => {
                             <Link key={property.id}  to={`/rooms/${property.id}`} className={styles.link}>
                                 <div className={styles.container}>
                                     <div className={styles.image}>
-                                        <img src={property.image} alt="pic of the house" />
+                                        <img src={property.imageUrl} alt="pic of the house" />
                                     </div>
                                     <section className={styles.info}>
                                         <h3>{property.location.state}, {property.location.city}</h3>

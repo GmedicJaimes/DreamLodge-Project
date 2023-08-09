@@ -1,12 +1,15 @@
 .mainContainer {
     border-radius: 2em;
+    width: 700px;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
-    margin-top: 10em;
+    margin-top: 0.5em;
+    text-align: left;
+
 }
 
 .mainContainer header{
-    padding: 16px;
+    padding: 12px;
     margin-top: 1em;
     text-align: center;
     border-radius: 4px;
@@ -15,7 +18,7 @@
 }
 
 .mainContainer form{
-    padding: 2.1em;
+    padding: 1rem
 }
 
 .formGroup {
@@ -63,14 +66,30 @@
 }
 
 select {
-    width: 100%;
+    width: 48%;
     padding: 1em;
+    height: 50px;
     font-size: 14px;
     border: none;
     border-radius: 4px;
-    max-width: 280px;
+
     background-color: #f4e9de;
 }
+.ErrorValid{
+  color:red;
+  font-size: 14px;
+  margin: 0.2rem;
+}
+
+/* Estilos para el botón deshabilitado */
+.disabledBtn {
+  background-color: #85634ed6; /* Cambiar a tu color deseado */
+  cursor: not-allowed;
+  /* Otros estilos opcionales para hacer que el botón se vea diferente cuando esté deshabilitado */
+  opacity: 0.7;
+  /* Otros estilos visuales que desees agregar */
+}
+
 
 .forcedLine{
     height: 6px;
@@ -82,7 +101,8 @@ select {
 .loginWG {
     transition: background-color .3s, box-shadow .3s;
       
-    width: 90%;
+    width: 45%;
+    margin-left: 15px;
     padding: 12px 16px 12px 42px;
     border: none;
     border-radius: 3px;
