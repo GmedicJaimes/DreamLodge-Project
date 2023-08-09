@@ -82,7 +82,7 @@ const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
       <div className={styles.bigContainer}>
         <form onSubmit={handleSubmit} className={styles.mainContainer}>
           <header>
-            <h2>Create your account</h2>
+            <h2>Create your Lodge</h2>
           </header>
           <div className={styles.formGroup}>
             <label>

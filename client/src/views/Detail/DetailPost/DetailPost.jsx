@@ -33,7 +33,7 @@ const DetailPost = () => {
               <header className={styles.head}>
                   <div className={styles.headLeft}>
                       <h1>{property.name}</h1>
-                      <p>{property.location}, {property.location?.state}.</p>
+                      {/* <p>{property.location}, {property.location?.state}.</p> */}
                   </div>
                   <div className={styles.headRigth}>
                       <p>$ {property.price} USD noche</p>
