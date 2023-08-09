@@ -7,6 +7,14 @@ import Homepage from "../../views/Homepage/Homepage"; // No es necesario usar .j
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../config/firebase"; // Asegúrate de tener la importación correcta
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
+import {
+  isValidName,
+  isCountrySelected,
+  hasAtLeastOneLanguage,
+  hasImageSelected,
+  isValidEmail,
+  isValidPassword,
+} from './validations';
 
 const SignIn = () => {
   const [register, setRegister] = useState({
@@ -17,8 +25,12 @@ const SignIn = () => {
     country: "", 
     languages: [],
     imageFile: null,
-
   });
+
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
   const languagesAvailable = [
     "English",
     "Spanish",
@@ -76,7 +88,27 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newErrors = {};
+
     try {
+      if (!isValidName(register.name))  newErrors.name = "Only letters allowed and up to 20 characters.";
+      if (!isValidName(register.lastName)) newErrors.lastName = "Only letters allowed and up to 20 characters.";
+      if (!isCountrySelected(register.country)) newErrors.country = "Country selection is mandatory.";
+      if (!hasAtLeastOneLanguage(register.languages)) newErrors.languages = "Selecting at least one language.";
+      if (!hasImageSelected(register.imageFile)) newErrors.imageFile = "Selecting an image is mandatory.";
+      if (!isValidEmail(register.email)) newErrors.email = "Invalid email. No special characters allowed.";
+      if (!isValidPassword(register.password)) newErrors.password = " Minimum 8 characters and only letters and numbers.";
+  
+      if (Object.keys(newErrors).length > 0) {
+  setErrors(newErrors);
+  
+  // Usar setTimeout para limpiar los errores después de 3 segundos
+  setTimeout(() => {
+    setErrors({});
+  }, 3000);
+  
+  return;
+}
       const userCredential = await signIn(auth, register.email, register.password);
   
       if (userCredential?.user?.uid) {
@@ -135,6 +167,18 @@ const SignIn = () => {
       window.removeEventListener("message", handleAuthSuccess);
     };
   }, []);
+  useEffect(() => {
+    const requiredFields = [
+      register.name,
+      register.lastName,
+      register.country,
+      register.languages.length > 0,
+      register.imageFile
+    ];
+
+    setIsFormValid(requiredFields.every(field => Boolean(field)));
+  }, [register]);
+  
 
   return (
     <div className={styles.mainContainer}>
@@ -148,10 +192,11 @@ const SignIn = () => {
             name="name"
             value={register.name}
             onChange={handleRegisterForm}
-            required
             placeholder="Your first name"
           />
         </div>
+        {errors.name && <p className={styles.ErrorValid}>{errors.name} </p>}
+
 
         <div className={styles.formGroup}>
           <input
@@ -159,17 +204,17 @@ const SignIn = () => {
             name="lastName"
             value={register.lastName}
             onChange={handleRegisterForm}
-            required
             placeholder="Your last name"
           />
         </div>
+        {errors.lastName && <p className={styles.ErrorValid}>{errors.lastName} </p>}
 
         <div className={styles.formGroup}>
           <select
             name="country"
             value={register.country}
             onChange={handleRegisterForm}
-            required
+            
             placeholder="Country"
           >
             <option value="" disabled >
@@ -183,6 +228,8 @@ const SignIn = () => {
             <option value="Spain">Spain</option>
             <option value="Uruguay">Uruguay</option>
           </select>
+          {errors.country && <p className={styles.ErrorValid}>{errors.country} </p>}
+
         </div>
 
         <div className={styles.formGroup}>
@@ -212,6 +259,8 @@ const SignIn = () => {
             placeholder="Languages"
           />
         </div>
+        {errors.language && <p className={styles.ErrorValid}>{errors.language} </p>}
+
         <div className={styles.formGroup}>
             <input
               className={styles.range}
@@ -221,7 +270,7 @@ const SignIn = () => {
               accept="image/*"
               placeholder="Profile Image"
             />
-            <p>{register.imageFile?.name || "No image selected"}</p>
+            <p className={styles.imageSelect}>{register.imageFile?.name || ""}</p>
           </div>
         <div className={styles.formGroup}>
           <input
@@ -230,9 +279,10 @@ const SignIn = () => {
             value={register.email}
             onChange={handleRegisterForm}
             placeholder="Email"
-            required
           />
         </div>
+        {errors.email && <p className={styles.ErrorValid}>{errors.email} </p>}
+
 
         <div className={styles.formGroup}>
           <input
@@ -241,17 +291,23 @@ const SignIn = () => {
             placeholder="Password"
             value={register.password}
             onChange={handleRegisterForm}
-            required
           />
         </div>
+        {errors.password && <p className={styles.ErrorValid}>{errors.password}</p>}
+
 
         <button className={styles.loginWG} onClick={signInGoogle}>
           Sign In With Google
         </button>
         <br />
-        <button className={styles.btn} type="submit">
-          Create my account
-        </button>
+        <button 
+  className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`} 
+  type="submit" 
+  disabled={!isFormValid}
+>
+  Create my account
+</button>
+
         <p className={styles.foot}>
           Already have an account?{" "}
           <Link className={styles.linkfoot} to={"/login"}>

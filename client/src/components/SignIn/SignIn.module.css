@@ -73,6 +73,20 @@ select {
 
     background-color: #f4e9de;
 }
+.ErrorValid{
+  color:red;
+  font-size: 12px;
+  margin: 0.2rem;
+}
+
+/* Estilos para el botón deshabilitado */
+.disabledBtn {
+  background-color: #e0e0e0; /* Cambiar a tu color deseado */
+  cursor: not-allowed;
+  /* Otros estilos opcionales para hacer que el botón se vea diferente cuando esté deshabilitado */
+  opacity: 0.7;
+  /* Otros estilos visuales que desees agregar */
+}
 
 
 .forcedLine{
