@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import  { createProp }  from '../../config/handlers';
 import styles from "./post.module.css"
 import About from "../../components/About/About"
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const Post = () => {
   const [formData, setFormData] = useState({
@@ -22,11 +20,11 @@ const Post = () => {
     },
     services: ["wifi"],
     description: '',
-    price: 0,
+    price: 0,//10 400
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
-
+console.log(formData)
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]
@@ -34,15 +32,12 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const avaibleDatesArray = formData.avaibleDates.split(',').map(date=> date.trim())
-
+      // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
       const formDataWithDefaultValues = {
         ...formData,
         disponible: formData.hasOwnProperty('disponible') ? formData.disponible : false,
-        avaibleDates: avaibleDatesArray
       };
       await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
-      // Limpiar el formulario después de crear la propiedad
       setFormData({
         name: '',
         type: [],
@@ -57,7 +52,6 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
         price: 0,
         imageFile: null,
         disponible: false,
-        avaibleDates: []
       });
     } catch (error) {
       console.log(error);
@@ -71,6 +65,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
       setFormData((prevData) => ({
         ...prevData,
         [name]: files[0], // Almacena el archivo de imagen en el estado
+        
       }));
     } else if (name === 'location.adress' || name === 'location.state' || name === 'location.city') {
       // const locationFieldName = name.split('.')[1];
@@ -124,7 +119,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
       <div className={styles.bigContainer}>
         <form onSubmit={handleSubmit} className={styles.mainContainer}>
           <header>
-            <h2>Create your account</h2>
+            <h2>Post your Lodge</h2>
           </header>
           <div className={styles.inputContainer}>
           <div className={styles.formGroup}>
@@ -215,14 +210,12 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label>
-              Description:
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </label>
+            <label>Description:</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles.formGroup}>
             <label>Price:</label>
