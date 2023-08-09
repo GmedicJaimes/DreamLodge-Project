@@ -24,7 +24,7 @@ const Post = () => {
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     disponible: false, // Agrega el estado para almacenar el valor "disponible"
   });
-
+console.log(formData)
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]
@@ -66,6 +66,15 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
         ...prevData,
         [name]: files[0], // Almacena el archivo de imagen en el estado
         
+      }));
+    } else if (name === 'location.adress' || name === 'location.state' || name === 'location.city') {
+      // const locationFieldName = name.split('.')[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        location: {
+          ...prevData.location,
+          [name]: value,
+        },
       }));
     } else {
       setFormData({
