@@ -121,7 +121,6 @@ const SignIn = () => {
           await uploadBytes(imageRef, register.imageFile);
           imageURL = await getDownloadURL(imageRef);
         }
-  console.log(imageURL)
         const userToSave = {
           uid,
           email,
@@ -144,7 +143,7 @@ const SignIn = () => {
         lastName: "",
         country: "",
         languages: [],
-        imageFile: null, // Reinicia el archivo de imagen después de guardar
+        imageFile: "", // null, // Reinicia el archivo de imagen después de guardar
       });
     } catch (error) {
       console.log(error);
@@ -173,7 +172,10 @@ const SignIn = () => {
       register.lastName,
       register.country,
       register.languages.length > 0,
-      register.imageFile
+      register.imageFile,
+      register.email,
+      register.password
+
     ];
 
     setIsFormValid(requiredFields.every(field => Boolean(field)));
@@ -194,8 +196,8 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Your first name"
           />
+        {errors.name && <span className={styles.ErrorValid}>{errors.name} </span>}
         </div>
-        {errors.name && <p className={styles.ErrorValid}>{errors.name} </p>}
 
 
         <div className={styles.formGroup}>
@@ -206,8 +208,8 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Your last name"
           />
+        {errors.lastName && <span className={styles.ErrorValid}>{errors.lastName} </span>}
         </div>
-        {errors.lastName && <p className={styles.ErrorValid}>{errors.lastName} </p>}
 
         <div className={styles.formGroup}>
           <select
@@ -228,7 +230,7 @@ const SignIn = () => {
             <option value="Spain">Spain</option>
             <option value="Uruguay">Uruguay</option>
           </select>
-          {errors.country && <p className={styles.ErrorValid}>{errors.country} </p>}
+          {errors.country && <span className={styles.ErrorValid}>{errors.country} </span>}
 
         </div>
 
@@ -258,8 +260,8 @@ const SignIn = () => {
             value={register.languages.join(", ")}
             placeholder="Languages"
           />
+        {errors.language && <span className={styles.ErrorValid}>{errors.language} </span>}
         </div>
-        {errors.language && <p className={styles.ErrorValid}>{errors.language} </p>}
 
         <div className={styles.formGroup}>
             <input
@@ -270,7 +272,7 @@ const SignIn = () => {
               accept="image/*"
               placeholder="Profile Image"
             />
-            <p className={styles.imageSelect}>{register.imageFile?.name || ""}</p>
+            <span className={styles.imageSelect}>{register.imageFile?.name || ""}</span>
           </div>
         <div className={styles.formGroup}>
           <input
@@ -280,8 +282,8 @@ const SignIn = () => {
             onChange={handleRegisterForm}
             placeholder="Email"
           />
+        {errors.email && <span className={styles.ErrorValid}>{errors.email} </span>}
         </div>
-        {errors.email && <p className={styles.ErrorValid}>{errors.email} </p>}
 
 
         <div className={styles.formGroup}>
@@ -292,8 +294,8 @@ const SignIn = () => {
             value={register.password}
             onChange={handleRegisterForm}
           />
+        {errors.password && <span className={styles.ErrorValid}>{errors.password}</span>}
         </div>
-        {errors.password && <p className={styles.ErrorValid}>{errors.password}</p>}
 
 
         <button className={styles.loginWG} onClick={signInGoogle}>

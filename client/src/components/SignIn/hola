@@ -1,15 +1,13 @@
 .mainContainer {
     border-radius: 2em;
-    width: 700px;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
     margin-top: 0.5em;
-    text-align: left;
 
 }
 
 .mainContainer header{
-    padding: 12px;
+    padding: 16px;
     margin-top: 1em;
     text-align: center;
     border-radius: 4px;
@@ -66,7 +64,7 @@
 }
 
 select {
-    width: 48%;
+    width: 100%;
     padding: 1em;
     height: 50px;
     font-size: 14px;
@@ -83,7 +81,7 @@ select {
 
 /* Estilos para el botón deshabilitado */
 .disabledBtn {
-  background-color: #85634ed6; /* Cambiar a tu color deseado */
+  background-color: #e0e0e0; /* Cambiar a tu color deseado */
   cursor: not-allowed;
   /* Otros estilos opcionales para hacer que el botón se vea diferente cuando esté deshabilitado */
   opacity: 0.7;
@@ -101,8 +99,7 @@ select {
 .loginWG {
     transition: background-color .3s, box-shadow .3s;
       
-    width: 45%;
-    margin-left: 15px;
+    width: 90%;
     padding: 12px 16px 12px 42px;
     border: none;
     border-radius: 3px;
