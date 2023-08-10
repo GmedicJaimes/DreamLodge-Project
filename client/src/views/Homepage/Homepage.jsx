@@ -1,38 +1,59 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./Homepage.module.css";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getPropertiesList } from "../../config/handlers";
+import { getPropertiesList, getAvailableProperties } from "../../config/handlers";
 
 const Homepage = () => {
   const [host, setHost] = useState([]);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
+  const [originalHost, setOriginalHost] = useState([]);
+
+  // useEffect(() => {
+  //   // Esta función obtiene las propiedades y actualiza el estado 'host'
+  //   async function fetchProperties() {
+  //     const properties = await getPropertiesList();
+  //     setHost(properties);
+  //   }
+  //   fetchProperties();
+  // }, []);
 
   useEffect(() => {
-    // Esta función obtiene las propiedades y actualiza el estado 'host'
     async function fetchProperties() {
       const properties = await getPropertiesList();
+      setOriginalHost(properties);
       setHost(properties);
     }
     fetchProperties();
-  }, [page]);
+  }, []);
+
+  const handleAvailableProperties = async () => {
+    const availableProperties = await getAvailableProperties();
+
+    if (availableProperties.length === 0) {
+      console.log("No hay propiedades disponibles");
+    } else {
+      setHost(availableProperties);
+    }
+  };
 
   return (
-    <InfiniteScroll
-      dataLength={host.length}
-      hasMore={true}
-      next={() => setPage((prevPage) => prevPage + 1)}
-    >
+    // <InfiniteScroll
+    //   dataLength={host.length}
+    //   hasMore={true}
+    //   next={() => setPage((prevPage) => prevPage + 1)}
+    // >
       <div>
         <div className={styles.containerHome}>
-          <Filters />
+          <Filters setHost={setHost} originalHost={originalHost} />
+          <button onClick={handleAvailableProperties}>Available Lodgings</button>
           {/* Pasamos 'host' como prop al componente 'Cards' */}
-          <Cards allProperties={host} />
+          <Cards host={host} />
         </div>
       </div>
-    </InfiniteScroll>
+  //   </InfiniteScroll>
   );
 };
 

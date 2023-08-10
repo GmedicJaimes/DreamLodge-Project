@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState} from "react";
 import { Route, Routes } from 'react-router-dom'
 import Landing from "./views/Landing/Landing"
 import Homepage from './views/Homepage/Homepage'
@@ -17,6 +17,8 @@ import UserEditProperty from './views/UserEditProperty/UserEditProperty';
 function App() {
 
   const location = useLocation();
+
+
 
   return (
     <div className="App">

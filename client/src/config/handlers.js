@@ -7,6 +7,7 @@ import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, sig
 import { storage, db, auth, googleProvider } from './firebase';
 
 
+
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
@@ -94,28 +95,31 @@ export const registerUserInFirestore = async (uid, user) => {
 
 
 // funcion para LOGIN 
-export const logIn = async(auth, email, password)=>{
+
+export const logIn = async (auth, email, password) => {
   try {
-      await signInWithEmailAndPassword(auth, email, password);      
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-      console.log(error)
+    if (error.code === "auth/wrong-password") {
+      throw new Error("Wrong password!");
+    } else if (error.code === "auth/user-not-found") {
+      throw new Error("Email not exist!");
+    } else {
+      throw new Error("Authentication error!"); // Maneja todos los otros errores posibles
+    }
   }
 };
 
-// funcion para SIGNIN CON GOOGLE
 
-//hardcodeofeo
+//FUNCTION SI EL EMAIL YA EXISTE EN FIRESTORES
 
-// export const signInGoogle = async()=>{
-//     try {
-//         await signInWithPopup(auth, googleProvider)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
+export const doesEmailExistInFirestore = async (email) => {
+  const q = query(collection(db, "users"), where("email", "==", email));
+  const snapshot = await getDocs(q);
 
+  return snapshot.size > 0;
+};
 
-/////////////////////////////// PRUEBA CHRIS
 
 
 export const signInGoogle = async () => {
@@ -162,13 +166,6 @@ export const signInGoogle = async () => {
 };
 
 
-//-------------------------------------CHRISTIAN PRUEBA
-
-
-//-------------------------------------CHRISTIAN PRUEBA
-
-
-
 
 // funcion para LOGOUT
 export const logOut = async()=>{
@@ -178,7 +175,6 @@ export const logOut = async()=>{
         console.log(error)
     }
 };
-
 
 
 // funcion para POSTEAR PROPIEDADES
@@ -340,4 +336,82 @@ export const dowloadImg = ()=> {
   })
 };
 
+
+export const getPropertiesByType = async (type) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('type', 'array-contains-any', [type]));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    return filteredProperties;
+  } catch (error) {
+    console.log(error);
+    return []; // Maneja el error de manera adecuada retornando un array vacío u otra respuesta que consideres.
+  }
+};
+
+// export const getPropertiesByType = async (type) => {
+//   try {
+//     if (!type) {
+//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
+//     }
+
+//     console.log(type)
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+//     if(!properties.length){
+//     console.log('properties empty')
+//     }
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
+
+// export const getPropertiesByState = async (state) => {
+//   try {
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
+
+export const getAvailableProperties = async () => {
+  try {
+    const querySnapshot = await getDocs(query(propertiesCollectionRef, where('disponible', '==', true)));
+    const availableProperties = [];
+
+    querySnapshot.forEach((doc) => {
+      const property = doc.data();
+      availableProperties.push(property);
+    });
+
+    return availableProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
