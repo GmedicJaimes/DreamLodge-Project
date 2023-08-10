@@ -182,12 +182,14 @@ export const createProp = async (formData, file) => {
   try {
     let imageUrl = [];
     // Subimos la imagen al storage y obtenemos su URL si hay un archivo seleccionado
-    if (file) {
-      const folderRef = ref(storage, `properties/${file.name + v4()}`);
-      await uploadBytes(folderRef, file);
-      imageUrl = await getDownloadURL(folderRef);
+    if (formData.imageFile && formData.imageFile.length > 0) {
+      for (const file of formData.imageFile) {
+        const folderRef = ref(storage, `properties/${file.name + v4()}`);
+        await uploadBytes(folderRef, file);
+        const singleImageUrl = await getDownloadURL(folderRef);
+        imageUrl.push(singleImageUrl);
+      }
     }
-
     // Obtenemos el userId del usuario actual
     const userId = auth?.currentUser?.uid;
 
@@ -197,13 +199,15 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       stances: formData.stances,
       location: formData.location,
-      imageUrl: [imageUrl],
+      imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
       tokenMp: formData.tokenMp,
       available:formData.available,
       userId: userId
     });
+
+    console.log(formData)
 
 
     getPropertiesList();

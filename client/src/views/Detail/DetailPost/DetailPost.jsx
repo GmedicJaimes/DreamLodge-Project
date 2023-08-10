@@ -13,7 +13,6 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([])
   // console.log(property);
   // console.log(detailId)
-  console.log(property);
 
 
 

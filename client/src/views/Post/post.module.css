@@ -29,6 +29,11 @@ header h2{
 .formGroup {
     margin: 0 1em 10px 1em;
 }
+
+.formGroup label{
+    margin: 0.3rem 0;
+}
+
 .formGroupUno{
     width: 50%;
     margin: 0 auto;
@@ -163,6 +168,28 @@ textarea{
     margin-bottom: 1rem;
 }
 
+.spanImg{
+    display: block;
+}
+
+.range {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+  }
+  
+
+.customButton {
+    display: inline-block;
+    color: #333;
+    text-decoration: underline;
+    padding: 10px 15px;
+    font: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    /* ...otros estilos que desees agregar... */
+  }
 
 /* .mainContainer {
     border-radius: 2em;

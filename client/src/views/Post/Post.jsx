@@ -139,23 +139,18 @@ const Post = () => {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-
+  
     if (name === "imageFile") {
-      if (files.length) {
-        // Crear una lista de archivos a partir de la FileList
-        const fileList = Array.from(files);
-        setFormData(prevState => ({
-          ...prevState,
-          imageFile: fileList
-        }));
-      }
-    } else {
-      setFormData(prevState => ({
+      setFormData((prevState) => ({
         ...prevState,
-        [name]: value,  // Almacena el valor para los otros campos que no son archivos
+        [name]: [...prevState.imageFile, ...Array.from(files)], // Añade los nuevos archivos a la lista existente
       }));
-    }
-};
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }}
 
 
   const handleTypes = (event) => {
@@ -419,7 +414,7 @@ const Post = () => {
               </div>
 
               <div className={`${styles.formGroup} ${styles.secondClass}`}>
-                <label>Image:</label>
+                <label htmlFor="imageFile" className={styles.customButton}>Image:</label>
                 <input
                   className={styles.range}
                   onChange={handleChange}
@@ -427,8 +422,15 @@ const Post = () => {
                   name="imageFile"
                   accept="image/*"
                   multiple
+                  id="imageFile"
                 />
-                <p>{formData.imageFile?.name || "No image selected"}</p>
+                <p>
+  {formData.imageFile.length > 0
+    ? formData.imageFile.map((file, index) => (
+        <span key={index} className={styles.spanImg}>{file.name} </span>
+      ))
+    : "No image selected"}
+</p>
               </div>
             </div>
           </div>
