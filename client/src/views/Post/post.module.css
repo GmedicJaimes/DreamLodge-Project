@@ -29,7 +29,10 @@ header h2{
 .formGroup {
     margin: 0 1em 10px 1em;
 }
-
+.formGroupUno{
+    width: 50%;
+    margin: 0 auto;
+}
 .formGroup label {
     display: block;
     font-size: 14px;
@@ -40,8 +43,8 @@ header h2{
 }
 
 textarea{
-    width: 90%;
-    padding: 8px;
+    width: 95%;
+    padding: 1rem;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -55,6 +58,10 @@ textarea{
 
 .leftContainer{
     margin-right: 3rem;
+}
+
+.rightContainer{
+    margin-top: -1rem;
 }
 
 .formGroup input {
@@ -107,13 +114,13 @@ textarea{
 }
 
 .selectPost{
-    width: 80%;
+    width: 100%;
     margin-right: 20px;
 }
 
 .selectServ{
-    width: 60%;
-    margin-right: 6rem;
+    width: 92%;
+    margin-right: 4rem;
 }
 
 .opciones{
@@ -135,10 +142,13 @@ textarea{
     color:#959595
 }
 
+.secondClass{
+    margin: 1.2rem 0rem;
+}
 
-
-
-
+.formGroup .roomsBox{
+    margin-top: 1rem;
+}
 
 
 

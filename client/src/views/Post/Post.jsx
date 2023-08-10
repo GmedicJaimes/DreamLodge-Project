@@ -215,17 +215,10 @@ const Post = () => {
                   placeholder="Adress"
                 />
               </div>
-              <div className={styles.formGroup}>
-                <label>Description:</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                />
-              </div>
+             
             </div>
             <div className={styles.rightContainer}>
-              <div className={styles.formGroup}>
+              <div className={`${styles.formGroup } ${styles.secondClass}`}>
                 <div className={styles.roomsBox}>
                   <div className={styles.roomSelect}>
                     <label>Guests:</label>
@@ -289,7 +282,7 @@ const Post = () => {
                   </div>
                 </div>
               </div>
-              <div className={styles.formGroup}>
+              <div className={`${styles.formGroup } ${styles.secondClass}`}>
                 <label>Services:</label>
                 <input type="text" value={formData.services} readOnly />
                 <div className={styles.forcedLine}></div>
@@ -309,7 +302,7 @@ const Post = () => {
                 </select>
               </div>
 
-              <div className={styles.formGroup}>
+              <div className={`${styles.formGroup } ${styles.secondClass}`}>
                 <label>Price:</label>
                 <input
                   type="number"
@@ -318,16 +311,8 @@ const Post = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className={styles.formGroup}>
-                <label>Token Mercado Pago</label>
-                <input
-                  className={styles.range}
-                  onChange={handleChange}
-                  type="text"
-                  name="tokenMp"
-                />
-              </div>
-              <div className={styles.formGroup}>
+              
+              <div className={`${styles.formGroup } ${styles.secondClass}`}>
                 <label>Image:</label>
                 <input
                   className={styles.range}
@@ -339,7 +324,16 @@ const Post = () => {
                 <p>{formData.imageFile?.name || "No image selected"}</p>
               </div>
             </div>
+            
           </div>
+          <div className={styles.formGroupUno }>
+                <label>Description:</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </div>
           <button className={styles.btn} type="submit">
             Post Lodge
           </button>
