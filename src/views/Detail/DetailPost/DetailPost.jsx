@@ -20,7 +20,8 @@ const DetailPost = () => {
 
   // CONFIGURACION DEL PAGO=======================================
   const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
+
     const createPreference = async()=>{
         try {
             const response = await axios.post(`http://localhost:3001/createorder`, {
