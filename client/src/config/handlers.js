@@ -196,12 +196,12 @@ export const createProp = async (formData, file) => {
       name: formData.name,
       type: formData.type,
       stances: formData.stances,
-      disponible: formData.disponible,
       location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
       tokenMp: formData.tokenMp,
+      available:formData.available,
       userId: userId
     });
 
@@ -210,7 +210,7 @@ export const createProp = async (formData, file) => {
 
     alert('¡Propiedad creada!');
   } catch (error) {
-    alert(`La pifiamo'`);
+    console.log(error)
   }
 };
 

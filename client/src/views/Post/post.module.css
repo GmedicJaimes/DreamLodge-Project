@@ -126,12 +126,14 @@ textarea{
     margin-left: 0.5rem;
 }
 
+.selectLocation{
+    width: 113%;
+    color: black;
+}
 
-
-
-
-
-
+.grayText{
+    color:#959595
+}
 
 
 
