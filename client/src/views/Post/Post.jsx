@@ -52,7 +52,17 @@ const Post = () => {
       setCities([]);
     }
   }, [formData.location.state]);
+  
+ React.useEffect(() => {
+    const savedFormData = localStorage.getItem('formData');
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData));
+    }
+  }, []);
 
+  React.useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -445,6 +455,9 @@ const Post = () => {
           </div>
           <button className={styles.btn} type="submit">
             Post Lodge
+          </button>
+          <button className={styles.btn} type="submit">
+            Reset form
           </button>
 
           {errores[0] && <span className={styles.postError}>{errores[0]}</span>}

@@ -463,16 +463,19 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-//filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = (properties, searchValue) => {
-  if (!searchValue) {
-    return properties; // No hay valor de búsqueda, devuelve todas las propiedades
-  }
+// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
+export const filterPropertiesByName = async (searchValue) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-  const lowerCaseSearchValue = searchValue.toLowerCase();
-  return properties.filter((property) =>
-    property.name.toLowerCase().includes(lowerCaseSearchValue)
-  );
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
+
+    return filteredProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
 
 //................................................................................................
