@@ -75,11 +75,17 @@ const DetailPost = () => {
           <div className={styles.containerPost}>
               <header className={styles.head}>
                   <div className={styles.headLeft}>
-                      <h1>{property.name}</h1>
-                       <p>{property.location?.city}, {property.location?.state}.</p>
+                      <h1>{property?.name}</h1>
+                      {property && (
+        <React.Fragment>
+            {property.location && (
+                <p>{property.location.city}, {property.location.state}.</p>
+            )}
+        </React.Fragment>
+    )}
                    </div>
                   <div className={styles.headRigth}>
-                      <p>$ {property.price} USD/noche</p>
+                      <p>$ {property?.price} USD/noche</p>
                       <h3>Seleccione la cantidad de días de reserva:</h3>
               <input
                 type="number"
@@ -96,11 +102,11 @@ const DetailPost = () => {
                   </div>
               </header>
               <div className={styles.image}>
-                  <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
+                  <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                   <div className={styles.sectionOne}>
-                    <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
+                    <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                     <div className={styles.sectionTwo}>
-                      <img src={property.imageUrl} alt={property.name} className={styles.imgOne}/>
+                      <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                     </div>
                     
                   </div>
@@ -109,7 +115,7 @@ const DetailPost = () => {
               <div className={styles.overview}>
                   <div className={styles.sectionOverOne}>
                       <h2>Overview</h2>
-                      <p>{property.description}</p>
+                      <p>{property?.description}</p>
                   </div>
                   <div className={styles.sectionOverTwo}>
                       <h2>Rating</h2>
@@ -122,19 +128,19 @@ const DetailPost = () => {
               <section className={styles.Rooms}>
                   <div className={styles.title}>
                       <h2>Rooms</h2>
-                      <Link to={`/user/${property.userId}`} className={styles.titleLink}>
+                      <Link to={`/user/${property?.userId}`} className={styles.titleLink}>
                           <button className={styles.btn}>Anfitrion</button>
                       </Link>
                   </div>
                   <div className={styles.containerRooms}>
                       <ul>
-                          <li>Guest: {property.rooms?.[0]}</li>
-                          <li>Rooms: {property.rooms?.[1]}</li>
-                          <li>Bathrooms: {property.rooms?.[2]}</li>
-                          <li>Bed: {property.rooms?.[3]}</li>
+                          <li>Guest: {property?.rooms?.[0]}</li>
+                          <li>Rooms: {property?.rooms?.[1]}</li>
+                          <li>Bathrooms: {property?.rooms?.[2]}</li>
+                          <li>Bed: {property?.rooms?.[3]}</li>
                           <li>Status: 
                             {
-                              property.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
+                              property?.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
                             }
                           </li>
                       </ul>
@@ -149,7 +155,7 @@ const DetailPost = () => {
                       <div className={styles.containerList}>
                           <ul>
                               {
-                                  property.services?.map((serv) => {
+                                  property?.services?.map((serv) => {
                                       return(
                                           <li>{serv}</li>
                                       )
@@ -162,7 +168,7 @@ const DetailPost = () => {
               <div className={styles.line}></div>
               <section className={styles.Opinions}>
                   <h2>Opinions</h2>
-                  <p>From {property.guests} guests</p>
+                  <p>From {property?.guests} guests</p>
                   <div>
                       <ul>
                           {/* {

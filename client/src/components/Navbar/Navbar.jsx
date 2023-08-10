@@ -8,6 +8,7 @@ import { logOut } from "../../config/handlers";
 const Navbar = () => {
 
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
+  const [host, setHost] = useState([]);
  
   
   React.useEffect(() => {
@@ -27,7 +28,7 @@ const Navbar = () => {
             <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar/>
+            <Searchbar properties={host} onPropertiesFiltered={setHost}/>
         </div>  
         <div className={styles.button}>
           {
