@@ -13,7 +13,6 @@ import Card from "./Card/Card";
 
       async function fetchProperties() {
         const properties = await getPropertiesList(); 
-        console.log(properties)// Esperar a que se resuelva la promesa
         setPropertiesList(properties); // Actualizar el estado con los datos obtenidos
         // console.log(properties)
       }

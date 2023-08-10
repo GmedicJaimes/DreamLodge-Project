@@ -260,7 +260,6 @@ export const getPropertiesList = async () => {
     const filterData = await Promise.all(
       data.docs.map(async (doc) => {
         const propertyData = doc.data();
-        console.log(propertyData);
         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
