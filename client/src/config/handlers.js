@@ -196,7 +196,7 @@ export const createProp = async (formData, file) => {
       name: formData.name,
       type: formData.type,
       stances: formData.stances,
-      disponible: formData.disponible,
+      available: formData.available,
       location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
@@ -236,10 +236,10 @@ export const updateProperty = async( id, property )=>{
 };
 
 export const updateUser = async( user ) => {
-  const { name, lastName, email, country, languages, image } = user
+  const { uid, name, lastName, email, country, languages, image } = user
 
   try {
-    const userDB = doc(db, "users", id)
+    const userDB = doc(db, "users", uid)
     await updateDoc(userDB, {
       name,
       lastName,
@@ -416,6 +416,7 @@ export const getPropertiesByType = async (type) => {
 //   }
 // };
 
+//filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
   try {
     const querySnapshot = await getDocs(query(propertiesCollectionRef, where('disponible', '==', true)));
@@ -431,5 +432,17 @@ export const getAvailableProperties = async () => {
     console.error(error);
     return [];
   }
+};
+
+//filtro para BUSCAR POR NAME!!!!
+export const filterPropertiesByName = (properties, searchValue) => {
+  if (!searchValue) {
+    return properties; // No hay valor de búsqueda, devuelve todas las propiedades
+  }
+
+  const lowerCaseSearchValue = searchValue.toLowerCase();
+  return properties.filter((property) =>
+    property.name.toLowerCase().includes(lowerCaseSearchValue)
+  );
 };
 

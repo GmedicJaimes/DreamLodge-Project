@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import { getUserByUID } from "../../config/handlers"
+import { getUserByUID, updateUser } from "../../config/handlers"
 
 const EditUser = () => {
 
@@ -12,6 +12,7 @@ const EditUser = () => {
             const userData = await getUserByUID(id)
             if (userData) {
                 setUser(userData);
+                console.log(userData);
             } else {
                 console.log("El usuario no existe o no coincide con el UID proporcionado.");
             }
@@ -33,12 +34,22 @@ const EditUser = () => {
         const lang = event.target.value
 
         if(user?.languages?.includes(lang)) {
-            serUser({
+            setUser({
                 ...user,
                 languages: user?.languages?.filter((langIn) => langIn != lang)
             })
         } else {
             setUser({ ...user, languages: [ ...user.languages, lang]})
+        }
+    }
+
+    const handleUpdate = async (event) => {
+        event.preventDefault()
+        try {
+            await updateUser(user)
+            console.log("User uptated");
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -57,7 +68,7 @@ const EditUser = () => {
             <header>
                 <h1>Edit info user</h1>
             </header>
-            <div>
+            <form onSubmit={handleUpdate}>
                 <label>uid</label>
                 <input 
                     type="text" name="uid"
@@ -111,11 +122,11 @@ const EditUser = () => {
                 <label>Image: </label>
                 <input 
                     type="text" name="imageFile"
-                    value={user?.imageFile}
+                    value={user?.image}
                     onChange={handleChange}
                 />
-                <img src="" alt="" />
-            </div>
+                <button type="submit">Submit upgrade</button>
+            </form>
         </div>
     )
 }
