@@ -16,7 +16,7 @@ const Card = ({ property }) => {
 )}
         </div>
         <section className={styles.info}>
-          <h3>{location.state}, {location.city}</h3>
+          <h3>{location?.state}, {location?.city}</h3>
           {/* <h3>{location}</h3> */}
           {/* <p>{id}</p>
           <p>{userId}</p> */}
