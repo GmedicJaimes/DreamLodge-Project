@@ -58,6 +58,9 @@ const DetailUser = () => {
                 <div className={styles.menuSide}>
                     <div className={styles.containerHead}>
                         <h4>My Properties</h4>
+                        <Link to={`/config/${id}`}>
+                            <button>Editar usuario</button>
+                        </Link>
                     </div>
                 </div>
                 <div className={styles.propertiesSide}>
@@ -69,6 +72,9 @@ const DetailUser = () => {
                                     <div className={styles.image}>
                                         <img src={property.imageUrl} alt="pic of the house" />
                                     </div>
+                                    <Link to={`/editpr/${property.id}`}>
+                                        <button>BOTON SUPER SECRETO NO TOCAR NI BORRAR</button>
+                                    </Link>
                                     <section className={styles.info}>
                                         <h3>{property.location.state}, {property.location.city}</h3>
                                         <p className={styles.infoName}>{property.name}</p>

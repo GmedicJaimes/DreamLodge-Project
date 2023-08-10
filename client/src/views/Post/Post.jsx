@@ -23,7 +23,7 @@ const Post = () => {
     price: 0,//10 400
     tokenMp: "",
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
-    disponible: false, // Agrega el estado para almacenar el valor "disponible"
+    available: false, // Agrega el estado para almacenar el valor "disponible"
   })
 
 const opciones = [0, 1, 2, 3, 4, 5, 6];
@@ -37,7 +37,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
       // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
       const formDataWithDefaultValues = {
         ...formData,
-        disponible: formData.hasOwnProperty('disponible') ? formData.disponible : false,
+        available: formData.hasOwnProperty('available') ? formData.available : false,
       };
       await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
       setFormData({
@@ -59,7 +59,7 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
         price: 0,
         tokenMp: "",
         imageFile: null,
-        disponible: false,
+        available: false,
       });
     } catch (error) {
       console.log(error);

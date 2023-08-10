@@ -20,7 +20,7 @@ const Card = ({ property }) => {
     <Link to={`/rooms/${id}`} className={styles.link}>
       <div className={styles.container}>
         <div className={styles.image}>
-          <img src={randomImageUrl} alt="pic of the house" />
+          {/* <img src={randomImageUrl} alt="pic of the house" /> */}
         </div>
         <section className={styles.info}>
           <h3>{location.state}, {location.city}</h3>

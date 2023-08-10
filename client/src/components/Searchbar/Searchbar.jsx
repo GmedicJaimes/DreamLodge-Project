@@ -2,39 +2,34 @@ import React, {useState, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from "./SearchBar.module.css";
-// import { useDispatch } from "react-redux";
-// import { filterLocation } from "../../redux/actions";
+import { filterPropertiesByName } from "../../config/handlers";
 
-const SearchBar = () => {
-
+const SearchBar = ({ properties, onPropertiesFiltered }) => {
   const [searchValue, setSearchValue] = useState("");
-  // const dispatch = useDispatch();
 
-  function handleChange(event) {
-    event.preventDefault()
+  const handleChange = (event) => {
     const value = event.target.value;
-    setSearchValue(value)
-  }
+    setSearchValue(value);
+  };
 
+  const handleSearch = () => {
+    // Llama al handler para filtrar las propiedades por nombre
+    const filteredProperties = filterPropertiesByName(properties, searchValue);
+    onPropertiesFiltered(filteredProperties);
 
-  function handleSubmit(event){
-    event.preventDefault()
-    // dispatch(filterLocation(searchValue))
-  }
+    if (filteredProperties.length === 0) {
+      console.log("No se encontró ninguna propiedad.");
+    }
+    console.log("Propiedades filtradas:", filteredProperties);
+  };
 
-  // useEffect(() => {
-  //   // dispatch(filterLocation());
-  // }, [ dispatch]);
-
+  
   return (
     <div className={styles.searchContainer}>
-      <input type="text" className={styles.inputSearch} placeholder="Buscar..." value={searchValue} onChange={handleChange} />
+      <input type="text" className={styles.inputSearch} placeholder="Buscar..."  value={searchValue} onChange={handleChange}   />
       <span className={styles.searchIcon}>
-        <FontAwesomeIcon icon={faSearch} onClick={handleSubmit} />
+        <FontAwesomeIcon icon={faSearch} onClick={handleSearch} />
       </span>
-      {/* {filteredProperties.map((property) => (
-        <div key={property.id}>{property.name}</div>
-      ))} */}
     </div>
   );
 }
