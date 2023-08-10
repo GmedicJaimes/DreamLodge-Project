@@ -13,6 +13,7 @@ import { SignInView } from './views/signing/SignInView';
 import { FooterLinks } from './views/FooterLinks/FooterLinks';
 import Reserve from './views/Reserve/Reserve';
 import UserEditProperty from './views/UserEditProperty/UserEditProperty';
+import EditUser from "./views/EditUser/EditUser"
 
 function App() {
 
@@ -35,7 +36,8 @@ function App() {
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>
         <Route path='/privacy&termns' element={<FooterLinks/>}/>
-        <Route path='/editpr' element={<UserEditProperty/>}/>  
+        <Route path='/editpr/:id' element={<UserEditProperty/>}/>
+        <Route path='/config/:id' element={<EditUser/>}/>
         <Route path='/post' element={<Post/>}/>  
       </Routes>
     </div>

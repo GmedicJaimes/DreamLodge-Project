@@ -216,14 +216,42 @@ export const createProp = async (formData, file) => {
 
 
 //funcion para ACTUALIZAR PROPIEDADES
-export const updateProperty = async(id)=>{
+export const updateProperty = async( id, property )=>{
+  const { name, description, price, location, type, services, stances, available } = property
     try {
-        const property = doc(db, 'properties', id);
-          await updateDoc(property, {name: updateNameProp})
+        const propertyDB = doc(db, 'properties', id);
+          await updateDoc(propertyDB, {
+            name,
+            description,
+            price,
+            location,
+            type,
+            services,
+            stances,
+            available
+          })
     } catch (error) {
         console.log(error)
     }
 };
+
+export const updateUser = async( user ) => {
+  const { name, lastName, email, country, languages, image } = user
+
+  try {
+    const userDB = doc(db, "users", id)
+    await updateDoc(userDB, {
+      name,
+      lastName,
+      email,
+      country,
+      languages,
+      image
+    })
+  } catch (error) {
+    
+  }
+}
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
 /*  export const getPropertiesList = async () => {
     try {

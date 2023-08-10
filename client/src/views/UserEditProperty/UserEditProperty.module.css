@@ -1,5 +1,92 @@
-.bigContainer{
+.mainContainer {
+    border-radius: 2em;
+    box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
-    width: 75em;
+    width: 500px;
     margin: auto;
+    margin-bottom: 2em;
+}
+
+.mainContainer header{
+    padding: 16px;
+    margin-top: 1em;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #333;
+}
+
+.mainContainer form{
+    padding: 2.1em;
+}
+
+.formGroup {
+    margin: 0 1em 10px 1em;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0.8;
+    text-align: start;
+    /* margin-left: 1em */
+}
+
+textarea{
+    width: 90%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    background-color: #f4e9de;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 1em;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    max-width: 280px;
+    background-color: #f4e9de;
+}
+
+.btn {
+    padding: 11px 95px;
+    margin: 1em 1.2em;
+    font-size: 13px;
+    border: none;
+    border-radius: 0.2em;
+    background-color: #CD5A3E;
+    color: #fff;
+    cursor: pointer
+}
+
+.foot {
+    font-size: 0.8em;
+    color: #959595;
+}
+
+.linkfoot {
+    color: #CD5A3E;
+    font-weight: 900;
+}
+
+.forcedLine{
+    height: 6px;
+}
+
+.roomSelect{
+    width: 20%;
+}
+
+.roomsBox{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.inputContainer {
+    margin: 0 5em;
 }
