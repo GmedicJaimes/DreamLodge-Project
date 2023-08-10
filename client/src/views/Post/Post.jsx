@@ -41,7 +41,6 @@ const Post = () => {
     description: "",
     price: 0, //10 400
     tokenMp: "",
-<<<<<<< HEAD
     imageFile: [], // Agrega el estado para almacenar el archivo de imagen
     available: true, // Agrega el estado para almacenar el valor "disponible"
   });
@@ -53,15 +52,6 @@ const Post = () => {
       setCities([]);
     }
   }, [formData.location.state]);
-=======
-    imageFile: null, // Agrega el estado para almacenar el archivo de imagen
-    available: false, // Agrega el estado para almacenar el valor "disponible"
-  })
-//disponible
-const opciones = [0, 1, 2, 3, 4, 5, 6];
-const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
-const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]
->>>>>>> c9f23176c68af4a6f85f42f12a5675aa0648f0b3
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -455,6 +445,9 @@ const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "S
           </div>
           <button className={styles.btn} type="submit">
             Post Lodge
+          </button>
+          <button className={styles.btn} type="submit">
+            Reset form
           </button>
 
           {errores[0] && <span className={styles.postError}>{errores[0]}</span>}

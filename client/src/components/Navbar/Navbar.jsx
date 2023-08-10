@@ -15,7 +15,6 @@ const Navbar = () => {
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
-      console.log(auth.currentUser);
     });
 
     return () => unsubscribe();
@@ -26,10 +25,11 @@ const Navbar = () => {
     return(
       <div className={styles.container}> 
         <div className={styles.containertwo}>
-            <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
+          <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
+            <Searchbar />
+           {/*  <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/> */}
         </div>  
         <div className={styles.button}>
           {
