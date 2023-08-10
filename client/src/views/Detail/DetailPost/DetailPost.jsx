@@ -85,16 +85,16 @@ const DetailPost = () => {
     )}
                    </div>
                   <div className={styles.headRigth}>
-                      <p>$ {property?.price} USD/noche</p>
-                      <h3>Seleccione la cantidad de días de reserva:</h3>
+                      <p>$ {property?.price} USD/night</p>
+                      <h3>Select the number of reservation days:</h3>
               <input
                 type="number"
                 min="1"
                 value={selectedDays}
                 onChange={(e) => setSelectedDays(Number(e.target.value))}
               />
-              <button onClick={handleCalculatePrice}>Calcular Precio</button>
-              {totalPrice > 0 && <p>Total a pagar: $ {totalPrice}</p>}
+              <button onClick={handleCalculatePrice}>Calculate Price</button>
+              {totalPrice > 0 && <p>Total to pay: $ {totalPrice}</p>}
                       
                       <button onClick={handleBuy}>Reserve</button>
                       {preferenceId && <Wallet initialization={{ preferenceId: preferenceId}} />}
@@ -129,18 +129,18 @@ const DetailPost = () => {
                   <div className={styles.title}>
                       <h2>Rooms</h2>
                       <Link to={`/user/${property?.userId}`} className={styles.titleLink}>
-                          <button className={styles.btn}>Anfitrion</button>
+                          <button className={styles.btn}>Owner</button>
                       </Link>
                   </div>
                   <div className={styles.containerRooms}>
-                      <ul>
-                          <li>Guest: {property?.rooms?.[0]}</li>
-                          <li>Rooms: {property?.rooms?.[1]}</li>
-                          <li>Bathrooms: {property?.rooms?.[2]}</li>
-                          <li>Bed: {property?.rooms?.[3]}</li>
+                      <ul> 
+                            <li>Guest: {property?.stances?.guest} </li>
+                          <li>Rooms: {property?.stances?.rooms}</li>
+                          <li>Bathrooms: {property?.stances?.bathrooms}</li>
+                          <li>Bed: {property?.stances?.beds}</li>
                           <li>Status: 
                             {
-                              property?.disponible === true ? ' Disponible ✔️' : ' Ocupado ❌'
+                              property?.available === true ? ' Disponible ✔️' : ' Ocupado ❌'
                             }
                           </li>
                       </ul>

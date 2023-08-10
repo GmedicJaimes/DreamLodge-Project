@@ -196,7 +196,7 @@ export const createProp = async (formData, file) => {
       name: formData.name,
       type: formData.type,
       stances: formData.stances,
-      disponible: formData.disponible,
+      available: formData.available,
       location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
@@ -236,10 +236,10 @@ export const updateProperty = async( id, property )=>{
 };
 
 export const updateUser = async( user ) => {
-  const { name, lastName, email, country, languages, image } = user
+  const { uid, name, lastName, email, country, languages, image } = user
 
   try {
-    const userDB = doc(db, "users", id)
+    const userDB = doc(db, "users", uid)
     await updateDoc(userDB, {
       name,
       lastName,
