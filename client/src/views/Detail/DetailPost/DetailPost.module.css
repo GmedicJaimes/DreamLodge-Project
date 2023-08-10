@@ -1,0 +1,295 @@
+.containerPost{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 70%;
+  margin: 0 auto;
+
+}
+
+.head{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+
+.headLeft{
+  text-align: left;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.headRigth{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-end;
+  font-weight: 500;
+}
+
+.headRigth button{
+  padding: 8px 30px;
+  border: none;
+  border-radius: 20px;
+  background-color: #CD5A3E;
+  font-size: 1em;
+  font-weight: 500;
+  margin-top: 5px;
+  color: rgb(252, 252, 252);
+  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
+}
+
+.headRigth button:hover{
+  cursor: pointer;
+}
+
+.line{
+  background-color: #CD5A3E;
+}
+
+.image{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  height: 400px;
+}
+
+.imgOne{
+  border-radius: 20px;
+}
+
+.image img{
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  padding-right: 10px;
+}
+
+.division{
+  height: 200px;
+
+}
+section div h2, section h2{
+  margin: 1rem;
+  text-decoration: underline;
+}
+
+.sectionOne{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+}
+
+.sectionOne img{
+  width: 100%;
+  height: 200px;
+  padding-bottom: 10px;
+}
+
+.sectionTwo{
+  width: 100%;
+  
+}
+.sectionTwo img{
+  width: 100%;
+  height: 190px;
+  padding: 0;
+}
+
+.line{
+  border: 1px solid rgba(207, 207, 207, 0.856);
+  width: 100%;
+  margin: 50px auto;
+}
+
+.overview{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  align-items: flex-start;
+  padding: 0 30px;
+  width: 90%;
+  border-radius: 10px;
+  background-color: #EADCCF;
+}
+
+.sectionOverOne{
+  width: 60%;
+}
+
+.sectionOverOne h2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.sectionOverOne p{
+  font-size: .9em;
+  font-weight: 400;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.sectionOverTwo{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.sectionOverTwo h2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.ratingBox{
+  background-color: #CD5A3E;
+  margin: 0 auto;
+  width: 40%;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.ratingBox p{
+  font-size: 2em;
+  margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  color: white;
+}
+
+.Rooms{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98%;
+  padding: 0 30px;
+}
+
+.title{
+  display: flex;
+  justify-content: start;
+  margin: 0;
+}
+
+.title h2{
+  margin: 0;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.titleLink{
+  height: 40px;
+  cursor: auto;
+}
+
+.title button{
+  padding: 8px 30px;
+  border: none;
+  border-radius: 20px;
+  background-color: #CD5A3E;
+  font-size: 1em;
+  font-weight: 500;
+  color: rgb(252, 252, 252);
+  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
+  cursor: pointer;
+}
+
+.containerRooms{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EADCCF;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+
+}
+
+.containerRooms ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: left;
+}
+
+.containerRooms li{
+  list-style: none;
+  text-align: left;
+  font-size: 1.3em;
+  font-weight: 400;
+  font-family: 'Lexend Deca';
+  padding-right: 20px;
+}
+
+
+.Services{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98%;
+  padding: 0 30px;
+}
+
+/* .titleServices{
+  display: flex;
+  justify-content: start;
+  margin: 0;
+} */
+
+
+.titleServices h2{
+  margin: 0;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.containerServices{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EADCCF;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.containerServices ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: left;
+}
+
+.containerServices li{
+  list-style: none;
+  text-align: left;
+  font-size: 1.3em;
+  font-weight: 400;
+  font-family: 'Lexend Deca';
+  padding-right: 20px;
+}
+
+.Opinions{
+  margin-bottom: 20px;
+  width: 97%;
+  height: 200px;
+}
+
+.Opinions h2{
+  text-decoration: none;
+}

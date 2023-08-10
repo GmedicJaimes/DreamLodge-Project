@@ -1,0 +1,221 @@
+.portada {
+    height: 30vh;
+    width: 99vw;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.profilePic{
+    border-radius: 100%;
+    height: 17em;
+    width: 17em;
+    border: 2px double white;
+    position: relative;
+    top: -5em;
+    box-shadow: 0 7px 20px 5px #8a8a8a88;
+}
+
+.containerInfo{
+    /* background-color: rgb(210, 210, 210);
+    border: 1px solid rgb(183, 183, 181); */
+    height: 16vh;
+    min-width: 65em;
+    max-width: 80em;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 0.6em;
+}
+
+.dataUser{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    /* width: 60%; */
+    margin: 200px;
+    height: 13vh;
+    border-radius: 1em;
+    border: 4px solid white;
+    margin: auto;
+    background-color: #CD5A3E;
+}
+/* rgb(210, 210, 210) */
+.nameTittle {
+    font-size: 2em;
+    display: flex;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #1E1E23;
+}
+
+.nameTittle p{
+    font-size: 0.5em;
+    color: rgb(0, 0, 0);
+    margin: 0.7em;
+}
+
+.blockDU {
+    min-height: 15em;
+    margin-top: 2em;
+    /* background-color: chartreuse; */
+}
+
+.blockDU h5{
+    font-size: 1.5em;
+}
+
+.bodyContainer{
+    background-color: #EADCCF;
+    display: flex;
+    padding: 7em 8%;
+    margin: 0 20%;
+    max-width: 40%;
+    border-radius: 0.3em;
+}
+/* 99997A 1E1E23  EADCCF CD5A3E*/
+/* .propertieContainer{
+    background-color: #CD5A3E;
+    border-radius: 5px;
+    width: 50vh;
+    max-width: 25em;
+    min-height: 15em;
+    box-shadow: 0 7px 20px 5px #8a8a8a88;
+    display: flex;
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    transition: .5s all;
+    padding: 2em;
+}
+
+.propertieContainer::before {
+    position: fixed;
+    box-shadow: 0 0 100px 40px #ffffff08;
+    top: -10%;
+    left: -100%;
+    transform: rotate(-45deg);
+    height: 60rem;
+    transition: .7s all;
+  }
+
+  .propertieContainer:hover {
+    border: 1px solid #ffffff44;
+    box-shadow: 0 7px 50px 10px #000000aa;
+    transform: scale(1.015);
+  }
+
+  .propertieContainer:hover::before {
+    filter: brightness(.5);
+    top: -100%;
+    left: 200%;
+  } */
+
+/* 
+.propertieBox {
+    max-width: 12.5em;
+    margin: 1em
+} */
+
+/* .imageA{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+} */
+
+.containerHead{
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* .seeMbtn {
+    padding: 1em;
+    border-radius: 5px;
+    background-color: antiquewhite;
+}
+
+.seeMbtn:hover {
+    background-color: rgb(132, 137, 100);
+    color: white;
+} */
+
+.menuSide{
+    min-width: 40%;
+    display: flex;
+    justify-content: center;
+    padding-top: 6em;
+}
+
+.propertiesSide{
+    min-width: 60%;
+}
+
+.link {
+    text-decoration: none;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background-color: rgba(255, 222, 222, 0.904); */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+    width: 330px;
+    height: 400px;
+    color: black;
+    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
+    transition: 0.3s ease; /* Add a smooth transition effect */
+  
+  }
+  
+  .container:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+  }
+  
+  .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    background-color: #f7f3f0;
+    height:120px;
+    padding: 1rem;
+  }
+  .info h3{
+    font-size: 1.3rem;
+    font-family: 'Montserrat' !important;
+  
+  
+  }
+  
+  .infoName{
+    margin: 1rem 0;
+    font-weight: 500;
+    text-align: left;
+    color: #59595b;
+  }
+  
+  .infoPrice{
+    color: black;
+    font-weight: 600;
+    font-family: 'Montserrat';
+  }
+  
+  .image {
+    width: 330px; /* Ajusta el ancho deseado */
+    height: 250px; /* Ajusta el alto deseado */
+    overflow: hidden; /* Ocultar el contenido que desborda del contenedor */
+  }
+  
+  .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Escala la imagen para que cubra todo el contenedor */
+    object-position: center; /* Centra la imagen en el contenedor */
+  }

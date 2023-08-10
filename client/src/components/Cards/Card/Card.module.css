@@ -1,0 +1,67 @@
+.link {
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: rgba(255, 222, 222, 0.904); */
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem 0;
+  width: 330px;
+  height: 400px;
+  color: black;
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
+  transition: 0.3s ease; /* Add a smooth transition effect */
+
+}
+
+.container:hover{
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  background-color: #f7f3f0;
+  height:120px;
+  padding: 1rem;
+}
+.info h3{
+  font-size: 1.3rem;
+  font-family: 'Montserrat' !important;
+
+
+}
+
+.infoName{
+  margin: 1rem 0;
+  font-weight: 500;
+  text-align: left;
+  color: #59595b;
+}
+
+.infoPrice{
+  color: black;
+  font-weight: 600;
+  font-family: 'Montserrat';
+}
+
+.image {
+  width: 330px; /* Ajusta el ancho deseado */
+  height: 250px; /* Ajusta el alto deseado */
+  overflow: hidden; /* Ocultar el contenido que desborda del contenedor */
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Escala la imagen para que cubra todo el contenedor */
+  object-position: center; /* Centra la imagen en el contenedor */
+}
