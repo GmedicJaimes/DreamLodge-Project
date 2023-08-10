@@ -90,6 +90,9 @@ select {
   /* Otros estilos visuales que desees agregar */
 }
 
+.grayText {
+  color: gray;
+}
 
 .forcedLine{
     height: 6px;

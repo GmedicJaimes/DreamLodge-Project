@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
 
@@ -70,13 +70,46 @@ const getUserProperties = async (targetUID) => {
 // funcion para SIGNIN normal
 
 
-export const signIn = async(auth, email, password) => {
+
+
+
+export const signIn = async (auth, email, password) => {
   try {
-      return await createUserWithEmailAndPassword(auth, email, password);      
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    if (userCredential.user) {
+      await sendEmailVerification(userCredential.user);
+      console.log(sendEmailVerification(userCredential.user))
+      alert("Verification email sent!");
+    }
+    return userCredential;      
   } catch (error) {
-      console.log(error)
-      throw error;
+    console.log("Error in signIn function:", error);
+    throw error;
   }
+};
+
+
+// AGUARDA POR VERIFICAION DE EMAIL
+
+export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
+  return new Promise((resolve, reject) => {
+      let totalTime = 0;
+
+      const checkEmailVerification = async () => {
+          await user.reload();
+
+          if (user.emailVerified) {
+              resolve();
+          } else if (totalTime >= timeout) {
+              reject(new Error('La verificación ha tardado demasiado'));
+          } else {
+              totalTime += interval;
+              setTimeout(checkEmailVerification, interval);
+          }
+      };
+
+      checkEmailVerification();
+  });
 };
 
 

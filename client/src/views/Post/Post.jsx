@@ -122,7 +122,6 @@ const Post = () => {
           services: [],
           description: "",
           price: 0,
-          tokenMp: "",
           imageFile: [],
           available: true,
         });
@@ -195,6 +194,31 @@ const Post = () => {
       stances: { ...formData.stances, [name]: Number(value) },
     });
   };
+
+  const resetForm = () => {
+    return setFormData({
+      name: "",
+      type: [],
+      location: {
+        city: "",
+        state: "",
+        adress: "",
+      },
+      stances: {
+        guest: 0,
+        rooms: 0,
+        bathrooms: 0,
+        beds: 0,
+      },
+      services: [],
+      description: "",
+      price: 0,
+      imageFile: [],
+      available: true,
+    })
+   
+  };
+
 
   return (
     <div>
@@ -413,7 +437,7 @@ const Post = () => {
                 {/* Muestra el valor seleccionado */}
               </div>
 
-              <div className={`${styles.formGroup} ${styles.secondClass}`}>
+              <div className={`${styles.formGroup} ${styles.secondClass} ${styles.fileBox}`}>
                 <label htmlFor="imageFile" className={styles.customButton}>Image:</label>
                 <input
                   className={styles.range}
@@ -446,7 +470,7 @@ const Post = () => {
           <button className={styles.btn} type="submit">
             Post Lodge
           </button>
-          <button className={styles.btn} type="submit">
+          <button className={styles.btn} type="reset" onClick={resetForm}>
             Reset form
           </button>
 
