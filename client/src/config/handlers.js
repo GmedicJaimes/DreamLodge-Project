@@ -236,10 +236,10 @@ export const updateProperty = async( id, property )=>{
 };
 
 export const updateUser = async( user ) => {
-  const { name, lastName, email, country, languages, image } = user
+  const { uid, name, lastName, email, country, languages, image } = user
 
   try {
-    const userDB = doc(db, "users", id)
+    const userDB = doc(db, "users", uid)
     await updateDoc(userDB, {
       name,
       lastName,
