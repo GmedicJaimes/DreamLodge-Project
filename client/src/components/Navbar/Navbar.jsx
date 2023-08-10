@@ -4,9 +4,10 @@ import styles from "./Navbar.module.css"
 import React from 'react';
 import { auth } from "../../config/firebase";
 import { logOut } from "../../config/handlers";
+import { usePropertiesList } from "../Filters/PropertiesContext";
 
 const Navbar = () => {
-
+  const properties = usePropertiesList();// Obtiene la lista de propiedades usando el hook
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
   const [host, setHost] = React.useState([]);
  
@@ -28,7 +29,7 @@ const Navbar = () => {
             <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar properties={host} onPropertiesFiltered={setHost}/>
+            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
         </div>  
         <div className={styles.button}>
           {
@@ -47,7 +48,7 @@ const Navbar = () => {
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {alert("loggeese primero parse")}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>
