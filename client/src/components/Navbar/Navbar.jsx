@@ -8,7 +8,7 @@ import { logOut } from "../../config/handlers";
 const Navbar = () => {
 
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
-  const [host, setHost] = useState([]);
+  const [host, setHost] = React.useState([]);
  
   
   React.useEffect(() => {
