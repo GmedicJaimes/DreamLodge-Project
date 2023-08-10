@@ -234,6 +234,24 @@ export const updateProperty = async( id, property )=>{
         console.log(error)
     }
 };
+
+export const updateUser = async( user ) => {
+  const { name, lastName, email, country, languages, image } = user
+
+  try {
+    const userDB = doc(db, "users", id)
+    await updateDoc(userDB, {
+      name,
+      lastName,
+      email,
+      country,
+      languages,
+      image
+    })
+  } catch (error) {
+    
+  }
+}
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
 /*  export const getPropertiesList = async () => {
     try {

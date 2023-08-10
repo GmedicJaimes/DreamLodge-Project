@@ -58,6 +58,9 @@ const DetailUser = () => {
                 <div className={styles.menuSide}>
                     <div className={styles.containerHead}>
                         <h4>My Properties</h4>
+                        <Link to={`/config/${id}`}>
+                            <button>Editar usuario</button>
+                        </Link>
                     </div>
                 </div>
                 <div className={styles.propertiesSide}>
