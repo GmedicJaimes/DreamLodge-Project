@@ -33,7 +33,7 @@ function App() {
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>
         <Route path='/privacy&termns' element={<FooterLinks/>}/>
-        <Route path='/editpr' element={<UserEditProperty/>}/>  
+        <Route path='/editpr/:id' element={<UserEditProperty/>}/>  
         <Route path='/post' element={<Post/>}/>  
       </Routes>
     </div>

@@ -220,10 +220,20 @@ export const createProp = async (formData, file) => {
 
 
 //funcion para ACTUALIZAR PROPIEDADES
-export const updateProperty = async(id)=>{
+export const updateProperty = async( id, property )=>{
+  const { name, description, price, location, type, services, stances, available } = property
     try {
-        const property = doc(db, 'properties', id);
-          await updateDoc(property, {name: updateNameProp})
+        const propertyDB = doc(db, 'properties', id);
+          await updateDoc(propertyDB, {
+            name,
+            description,
+            price,
+            location,
+            type,
+            services,
+            stances,
+            available
+          })
     } catch (error) {
         console.log(error)
     }
