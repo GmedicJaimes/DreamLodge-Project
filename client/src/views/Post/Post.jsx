@@ -2,16 +2,33 @@ import React, { useEffect, useState } from "react";
 import { createProp } from "../../config/handlers";
 import styles from "./post.module.css";
 import About from "../../components/About/About";
-import {US_STATE_CITIES ,opciones,types,servicesAvailable }from "./infoLocation";
+import {
+  US_STATE_CITIES,
+  opciones,
+  types,
+  servicesAvailable,
+} from "./infoLocation";
+import {
+  validateName,
+  validateType,
+  validateLocation,
+  validateAddress,
+  validateStances,
+  validateServices,
+  validateDescription,
+  validateImageFiles,
+  validatePrice,
+} from "./validations";
 
 const Post = () => {
+  const [errores, setErrores] = useState([]);
   const [cities, setCities] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     type: [],
     location: {
-      city: [],
-      state: [],
+      city: "",
+      state: "",
       adress: "",
     },
     stances: {
@@ -24,11 +41,9 @@ const Post = () => {
     description: "",
     price: 0, //10 400
     tokenMp: "",
-    imageFile: null, // Agrega el estado para almacenar el archivo de imagen
+    imageFile: [], // Agrega el estado para almacenar el archivo de imagen
     available: true, // Agrega el estado para almacenar el valor "disponible"
   });
-
- 
 
   useEffect(() => {
     if (formData.location.state && US_STATE_CITIES[formData.location.state]) {
@@ -40,39 +55,85 @@ const Post = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    try {
-      // Asegurémonos de que el campo "disponible" tenga un valor booleano antes de llamar a createProp
-      const formDataWithDefaultValues = {
-        ...formData,
-        available: formData.hasOwnProperty("available")
-          ? formData.available
-          : false,
-      };
-      await createProp(formDataWithDefaultValues, formData.imageFile); // Llama a la función para crear una propiedad
-      setFormData({
-        name: "",
-        type: [],
-        location: {
-          city: "",
-          state: "",
-          adress: "",
-        },
-        stances: {
-          guest: 0,
-          rooms: 0,
-          bathrooms: 0,
-          beds: 0,
-        },
-        services: [],
-        description: "",
-        price: 0,
-        tokenMp: "",
-        imageFile: null,
-        available: true,
-      });
-    } catch (error) {
-      console.log(error);
+
+    const errorMessages = [];
+
+    if (!validateName(formData.name)) {
+      errorMessages.push(
+        "Enter a valid name, no special characters, maximum 30 characters."
+      );
+    }
+    if (!validateType(formData.type)) {
+      errorMessages.push("Select at least one type of home.");
+    }
+    if (!validateLocation(formData.location)) {
+      errorMessages.push("Select a state, city and address.");
+    }
+    if (!validateAddress(formData.location.adress)) {
+      errorMessages.push(
+        "Select a valid address without special characters, must contain at least one number"
+      );
+    }
+    if (!validateStances(formData.stances)) {
+      errorMessages.push(
+        "Enter valid values for guests, rooms, bathrooms, and beds."
+      );
+    }
+
+    if (!validateServices(formData.services)) {
+      errorMessages.push("Select at least one service.");
+    }
+    if (!validatePrice(formData.price)) {
+      errorMessages.push("The minimum price should be 10 USD.");
+    }
+    if (!validateImageFiles(formData.imageFile)) {
+      errorMessages.push("Upload up to a maximum of 3 photos.");
+    }
+    if (!validateDescription(formData.description)) {
+      errorMessages.push(
+        "Description should be between 30 and 200 characters "
+      );
+    }
+
+    // Si no hay errores, entonces procesamos el formulario.
+    if (errorMessages.length === 0) {
+      try {
+        const formDataWithDefaultValues = {
+          ...formData,
+          available: formData.hasOwnProperty("available")
+            ? formData.available
+            : false,
+        };
+        await createProp(formDataWithDefaultValues, formData.imageFile);
+        setFormData({
+          name: "",
+          type: [],
+          location: {
+            city: "",
+            state: "",
+            adress: "",
+          },
+          stances: {
+            guest: 0,
+            rooms: 0,
+            bathrooms: 0,
+            beds: 0,
+          },
+          services: [],
+          description: "",
+          price: 0,
+          tokenMp: "",
+          imageFile: [],
+          available: true,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setErrores(errorMessages);
+      setTimeout(() => {
+        setErrores([]);
+      }, 1000);
     }
   };
 
@@ -80,17 +141,22 @@ const Post = () => {
     const { name, value, files } = event.target;
 
     if (name === "imageFile") {
-      setFormData({
-        ...formData,
-        [name]: files[0], // Almacena el archivo de imagen en el estado
-      });
+      if (files.length) {
+        // Crear una lista de archivos a partir de la FileList
+        const fileList = Array.from(files);
+        setFormData(prevState => ({
+          ...prevState,
+          imageFile: fileList
+        }));
+      }
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,  // Almacena el valor para los otros campos que no son archivos
+      }));
     }
-  };
+};
+
 
   const handleTypes = (event) => {
     const typ = event.target.value;
@@ -129,10 +195,9 @@ const Post = () => {
 
   const handelRooms = (event) => {
     const { name, value } = event.target;
-
     setFormData({
       ...formData,
-      stances: { ...formData.stances, [name]: value },
+      stances: { ...formData.stances, [name]: Number(value) },
     });
   };
 
@@ -147,6 +212,7 @@ const Post = () => {
             <div className={styles.leftContainer}>
               <div className={styles.formGroup}>
                 <label>Name:</label>
+
                 <input
                   type="text"
                   name="name"
@@ -156,14 +222,23 @@ const Post = () => {
               </div>
               <div className={styles.formGroup}>
                 <label>Type:</label>
-                <input type="text" value={formData.type} readOnly />
+                <input
+                  type="text"
+                  value={formData.type}
+                  placeholder="Type of house"
+                  readOnly
+                />
                 <div className={styles.forcedLine}></div>
                 <select
                   name="type"
                   value={formData.type}
-                  className={styles.selectPost}
+                  className={`${styles.selectPost} ${
+                    formData.type.length === 0 ? styles.grayText : ""
+                  }`}
                   onChange={handleTypes}
                 >
+                  <option value="">Choose type</option>
+
                   {types.map((op) => {
                     return (
                       <option key={op} value={op}>
@@ -175,13 +250,16 @@ const Post = () => {
               </div>
               <div className={styles.formGroup}>
                 <label>Location:</label>
+
                 <select
                   onChange={handleLocation}
                   name="state"
                   value={formData.location.state}
-                  className={`${styles.selectLocation} ${formData.location.state === '' ? styles.grayText : ''}`}
+                  className={`${styles.selectLocation} ${
+                    formData.location.state === "" ? styles.grayText : ""
+                  }`}
                 >
-                    <option value="">Choose State</option>
+                  <option value="">Choose State</option>
                   {Object.keys(US_STATE_CITIES).map((state) => (
                     <option key={state} value={state}>
                       {state}
@@ -194,8 +272,9 @@ const Post = () => {
                   onChange={handleLocation}
                   name="city"
                   value={formData.location.city}
-                  className={`${styles.selectLocation} ${formData.location.city === '' ? styles.grayText : ''}`}
-
+                  className={`${styles.selectLocation} ${
+                    formData.location.city === "" ? styles.grayText : ""
+                  }`}
                 >
                   <option value="">Choose City</option>
 
@@ -215,17 +294,18 @@ const Post = () => {
                   placeholder="Adress"
                 />
               </div>
-             
             </div>
             <div className={styles.rightContainer}>
-              <div className={`${styles.formGroup } ${styles.secondClass}`}>
+              <div className={`${styles.formGroup} ${styles.secondClass}`}>
                 <div className={styles.roomsBox}>
                   <div className={styles.roomSelect}>
                     <label>Guests:</label>
                     <select
                       name="guest"
                       value={formData.stances.guest}
-                      className={styles.opciones}
+                      className={`${styles.opciones} ${
+                        formData.stances.guest === 0 ? styles.grayText : ""
+                      }`}
                       onChange={handelRooms}
                     >
                       {opciones.map((op) => (
@@ -237,10 +317,13 @@ const Post = () => {
                   </div>
                   <div className={styles.roomSelect}>
                     <label>Rooms:</label>
+
                     <select
                       name="rooms"
                       value={formData.stances.rooms}
-                      className={styles.opciones}
+                      className={`${styles.opciones} ${
+                        formData.stances.rooms === 0 ? styles.grayText : ""
+                      }`}
                       onChange={handelRooms}
                     >
                       {opciones.map((op) => (
@@ -255,7 +338,9 @@ const Post = () => {
                     <select
                       name="bathrooms"
                       value={formData.stances.bathrooms}
-                      className={styles.opciones}
+                      className={`${styles.opciones} ${
+                        formData.stances.bathrooms === 0 ? styles.grayText : ""
+                      }`}
                       onChange={handelRooms}
                     >
                       {opciones.map((op) => (
@@ -270,8 +355,10 @@ const Post = () => {
                     <select
                       name="beds"
                       value={formData.stances.beds}
-                      className={styles.opciones}
                       onChange={handelRooms}
+                      className={`${styles.opciones} ${
+                        formData.stances.beds === 0 ? styles.grayText : ""
+                      }`}
                     >
                       {opciones.map((op) => (
                         <option key={op} value={op}>
@@ -282,16 +369,21 @@ const Post = () => {
                   </div>
                 </div>
               </div>
-              <div className={`${styles.formGroup } ${styles.secondClass}`}>
+              <div className={`${styles.formGroup} ${styles.secondClass}`}>
                 <label>Services:</label>
+
                 <input type="text" value={formData.services} readOnly />
                 <div className={styles.forcedLine}></div>
                 <select
                   name="services"
                   value={formData.services}
-                  className={styles.selectServ}
+                  className={`${styles.selectServ} ${
+                    formData.services.length === 0 ? styles.grayText : ""
+                  }`}
                   onChange={handleServices}
                 >
+                  <option value="">Choose services</option>
+
                   {servicesAvailable.map((srv) => {
                     return (
                       <option key={srv} value={srv}>
@@ -302,17 +394,31 @@ const Post = () => {
                 </select>
               </div>
 
-              <div className={`${styles.formGroup } ${styles.secondClass}`}>
+              <div
+                className={`${styles.formGroup} ${styles.secondClass} ${styles.inputPrice}`}
+              >
                 <label>Price:</label>
                 <input
-                  type="number"
+                  type="range"
                   name="price"
                   value={formData.price}
+                  min="0" // Valor mínimo
+                  max="400" // Valor máximo
+                  step="1" // Paso de incremento/decremento
                   onChange={handleChange}
                 />
+                <span
+                  className={`${styles.spanPrice} ${
+                    formData.price === 0 ? styles.grayText : ""
+                  }`}
+                >
+                  {formData.price} USD
+                </span>
+
+                {/* Muestra el valor seleccionado */}
               </div>
-              
-              <div className={`${styles.formGroup } ${styles.secondClass}`}>
+
+              <div className={`${styles.formGroup} ${styles.secondClass}`}>
                 <label>Image:</label>
                 <input
                   className={styles.range}
@@ -320,23 +426,26 @@ const Post = () => {
                   type="file"
                   name="imageFile"
                   accept="image/*"
+                  multiple
                 />
                 <p>{formData.imageFile?.name || "No image selected"}</p>
               </div>
             </div>
-            
           </div>
-          <div className={styles.formGroupUno }>
-                <label>Description:</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                />
-              </div>
+          <div className={styles.formGroupUno}>
+            <label>Description:</label>
+
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
           <button className={styles.btn} type="submit">
             Post Lodge
           </button>
+
+          {errores[0] && <span className={styles.postError}>{errores[0]}</span>}
         </form>
       </div>
       <About />

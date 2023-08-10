@@ -150,10 +150,18 @@ textarea{
     margin-top: 1rem;
 }
 
+.postError{
+    color: red;
+    display: block;
+}
 
+.inputPrice{
+    height: 50px;
+}
 
-
-
+.spanPrice{
+    margin-bottom: 1rem;
+}
 
 
 /* .mainContainer {

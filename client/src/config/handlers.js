@@ -180,7 +180,7 @@ export const logOut = async()=>{
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
   try {
-    let imageUrl = null;
+    let imageUrl = [];
     // Subimos la imagen al storage y obtenemos su URL si hay un archivo seleccionado
     if (file) {
       const folderRef = ref(storage, `properties/${file.name + v4()}`);
@@ -197,7 +197,7 @@ export const createProp = async (formData, file) => {
       type: formData.type,
       stances: formData.stances,
       location: formData.location,
-      imageUrl: imageUrl,
+      imageUrl: [imageUrl],
       description: formData.description,
       price: formData.price,
       tokenMp: formData.tokenMp,
@@ -328,17 +328,41 @@ export const detailId = async (id) =>{
 }
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
-export const uploadFile = async()=>{
-    if(!file) return;
-    const folderRef = ref(storage, `properties/${file.name + v4()}`);
-    try {
-      await uploadBytes(folderRef, file)
-      console.log(folderRef)
-      alert('la imagen fue enviada a la base de datos')
-    } catch (error) {
-      console.log(error)
-    }
-  };
+// export const uploadFile = async()=>{
+//     if(!file) return;
+//     const folderRef = ref(storage, `properties/${file.name + v4()}`);
+//     try {
+//       await uploadBytes(folderRef, file)
+//       console.log(folderRef)
+//       alert('la imagen fue enviada a la base de datos')
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   };
+
+
+/// PRUEBAAAAA CHRISTIAN
+
+
+export const uploadFile = async (file) => {
+  if (!file) return;
+
+  const storage = getStorage(); // Assuming you've initialized your Firebase storage instance
+  const folderRef = ref(storage, `properties/${uuidv4()}_${file.name}`);
+  
+  try {
+    await uploadBytes(folderRef, file);
+    console.log(folderRef.fullPath);
+    alert('The image was successfully uploaded to the database');
+  } catch (error) {
+    console.log(error);
+    alert('Error uploading the image');
+  }
+};
+
+
+/// PRUEBAAAAA CHRISTIAN
+
 
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
 export const dowloadImg = ()=> {
