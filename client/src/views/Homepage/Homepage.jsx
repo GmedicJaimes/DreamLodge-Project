@@ -1,15 +1,16 @@
-
 import React, { useEffect, useState } from "react";
 import styles from "./Homepage.module.css";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getPropertiesList, getAvailableProperties } from "../../config/handlers";
+import { getPropertiesList, getAvailableProperties, sortPropertiesByPrice } from "../../config/handlers";
 
 const Homepage = () => {
   const [host, setHost] = useState([]);
   // const [page, setPage] = useState(1);
   const [originalHost, setOriginalHost] = useState([]);
+  const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
+
 
   // useEffect(() => {
   //   // Esta función obtiene las propiedades y actualiza el estado 'host'
@@ -39,7 +40,11 @@ const Homepage = () => {
     }
   };
 
-  console.log("Propiedades en Homepage:", host);
+  const handleSortByPrice = () => {
+    const sortedProperties = sortPropertiesByPrice(host, ascending);
+    setHost(sortedProperties);
+    setAscending(!ascending);
+  };
 
   return (
     // <InfiniteScroll
@@ -49,7 +54,7 @@ const Homepage = () => {
     // >
       <div>
         <div className={styles.containerHome}>
-          <Filters setHost={setHost} originalHost={originalHost} />
+          <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
           <button onClick={handleAvailableProperties}>Available Lodgings</button>
           {/* Pasamos 'host' como prop al componente 'Cards' */}
           <Cards host={host} />

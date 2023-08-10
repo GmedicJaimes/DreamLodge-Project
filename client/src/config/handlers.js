@@ -434,7 +434,8 @@ export const getAvailableProperties = async () => {
   }
 };
 
-//filtro para BUSCAR POR NAME!!!!
+//.............................TODAVIA NO ANDA....................................................
+//filtro para BUSCAR POR NAME DE PROPERTIES!!!!
 export const filterPropertiesByName = (properties, searchValue) => {
   if (!searchValue) {
     return properties; // No hay valor de búsqueda, devuelve todas las propiedades
@@ -445,4 +446,18 @@ export const filterPropertiesByName = (properties, searchValue) => {
     property.name.toLowerCase().includes(lowerCaseSearchValue)
   );
 };
+
+//................................................................................................
+
+// Función para ordenar propiedades por precio
+export const sortPropertiesByPrice = (properties, ascending) => {
+  return [...properties].sort((a, b) => {
+    if (ascending) {
+      return a.price - b.price; // Ordenar en forma ascendente
+    } else {
+      return b.price - a.price; // Ordenar en forma descendente
+    }
+  });
+};
+
 

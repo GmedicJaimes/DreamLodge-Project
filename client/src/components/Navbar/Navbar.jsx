@@ -4,11 +4,16 @@ import styles from "./Navbar.module.css"
 import React, {useState} from 'react';
 import { auth } from "../../config/firebase";
 import { logOut } from "../../config/handlers";
+import { usePropertiesList } from "../Filters/PropertiesContext";
 
 const Navbar = () => {
-
+  const properties = usePropertiesList();// Obtiene la lista de propiedades usando el hook
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
-  const [host, setHost] = useState([]);
+  const [filteredProperties, setFilteredProperties] = React.useState([]);
+
+  const handlePropertiesFiltered = (filtered) => {
+    setFilteredProperties(filtered);
+  };
  
   
   React.useEffect(() => {
@@ -27,7 +32,7 @@ const Navbar = () => {
             <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar properties={host} onPropertiesFiltered={setHost}/>
+            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
         </div>  
         <div className={styles.button}>
           {

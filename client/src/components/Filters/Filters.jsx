@@ -3,7 +3,7 @@ import styles from "./Filters.module.css"
 import React, { useState } from 'react';
 
 
-const Filters = ({ setHost, originalHost }) => {
+const Filters = ({ setHost, originalHost, handleSortByPrice, ascending}) => {
 
     const [type, setType] = useState('')
 
@@ -46,6 +46,7 @@ const Filters = ({ setHost, originalHost }) => {
                 <button onClick={() => handlerClick("Countryside")} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png"/>Countryside</button>
                 <img/>
                 <button onClick={() => handlerClick("Room")} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png"/>Rooms</button>
+                <button onClick={handleSortByPrice}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
                 <button onClick={cleanFilter}>Clean</button>
             </div>
         </div>
