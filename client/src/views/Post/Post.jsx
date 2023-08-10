@@ -25,7 +25,18 @@ const Post = () => {
     imageFile: null, // Agrega el estado para almacenar el archivo de imagen
     available: false, // Agrega el estado para almacenar el valor "disponible"
   })
-//disponible
+
+  React.useEffect(() => {
+    const savedFormData = localStorage.getItem('formData');
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData));
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
 const opciones = [0, 1, 2, 3, 4, 5, 6];
 const types = ["Cabins", "Beachfront", "Mansion", "Countryside", "Room"];
 const servicesAvailable = ["Wifi", "TV", "Kitchen", "A/C", "Washing Machine", "Safe-deposit box", "Heating", "Pets allowed", "Garage", "Coffee maker"]

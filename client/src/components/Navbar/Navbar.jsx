@@ -20,7 +20,7 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
-
+    
 
     return(
       <div className={styles.container}> 
