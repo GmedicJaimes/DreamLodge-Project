@@ -196,7 +196,7 @@ export const createProp = async (formData, file) => {
       name: formData.name,
       type: formData.type,
       stances: formData.stances,
-      disponible: formData.disponible,
+      available: formData.available,
       location: formData.location,
       imageUrl: imageUrl,
       description: formData.description,
