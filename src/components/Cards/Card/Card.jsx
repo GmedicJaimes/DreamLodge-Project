@@ -3,7 +3,7 @@ import styles from "./Card.module.css";
 import React from 'react';
 
 const Card = ({ property }) => {
-  const { id, name, rooms, location,price, userId } = property;
+  const { id, name, price } = property;
 
   return (
     <Link to={`/rooms/${id}`} className={styles.link}>
