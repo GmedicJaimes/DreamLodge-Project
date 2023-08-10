@@ -39,6 +39,8 @@ const Homepage = () => {
     }
   };
 
+  console.log("Propiedades en Homepage:", host);
+
   return (
     // <InfiniteScroll
     //   dataLength={host.length}

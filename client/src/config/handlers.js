@@ -388,6 +388,7 @@ export const getPropertiesByType = async (type) => {
 //   }
 // };
 
+//filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
   try {
     const querySnapshot = await getDocs(query(propertiesCollectionRef, where('disponible', '==', true)));
@@ -403,5 +404,17 @@ export const getAvailableProperties = async () => {
     console.error(error);
     return [];
   }
+};
+
+//filtro para BUSCAR POR NAME!!!!
+export const filterPropertiesByName = (properties, searchValue) => {
+  if (!searchValue) {
+    return properties; // No hay valor de búsqueda, devuelve todas las propiedades
+  }
+
+  const lowerCaseSearchValue = searchValue.toLowerCase();
+  return properties.filter((property) =>
+    property.name.toLowerCase().includes(lowerCaseSearchValue)
+  );
 };
 
