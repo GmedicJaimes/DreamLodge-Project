@@ -29,7 +29,8 @@ const Navbar = () => {
             <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
+            <Searchbar/>
+            {/* <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/> */}
         </div>  
         <div className={styles.button}>
           {
