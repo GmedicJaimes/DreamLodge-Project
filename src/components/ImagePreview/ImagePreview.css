@@ -1,0 +1,15 @@
+.imagePreview {
+    margin-right: 10px;
+
+
+}
+
+  
+  .imagePreview img {
+    width: 10%;
+    height: 10%;
+    object-fit: cover;
+   
+
+  }
+  
