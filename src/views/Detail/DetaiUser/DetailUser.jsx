@@ -30,33 +30,42 @@ const DetailUser = () => {
         <div>
             
             <div className={styles.containerInfo}>
+                <h1>My Account</h1>
                 <div className={styles.dataUser}>
                     <img  src={user?.image} className={styles.profilePic} />
                     <div className={styles.blockDU}>
                         <div className={styles.nameTittle}>
-                            <h3>{user?.name}</h3>
-                            <p>Owner</p>
+                            <h3>{user?.name} {user?.lastName}</h3>
                         </div>
-                        <p>{user?.country}</p>
+                        <div >
+                        <p className={styles.userP}>Property Host</p>
+                        <p className={styles.userP}>{user?.country}</p>
+                        </div>
                     </div>
-                    <div className={styles.blockDU}>
-                        <h5>Score</h5>
-                        <p>{user?.review}</p>
-                    </div>
+                    <div className={styles.lineUser} ><hr class="line"/></div>
                     <div className={styles.blockDU}>
                         <h5>Member since: </h5>
-                        <p>{user?.createdAt}</p>
+                        <p className={styles.blockP}>{user?.createdAt}</p>
                     </div>
+                    <div className={styles.lineUser}>  <hr class="line"/></div>
+
+                    <div className={styles.blockDU}>
+                        <h5>Score</h5>
+                        <p className={styles.blockP}>{/* {user?.review} */} 4.7</p>
+                    </div>
+
                 </div>
             </div>
-            <div className={styles.bodyContainer}>
-                <div className={styles.menuSide}>
-                    <div className={styles.containerHead}>
-                        <h4>My Properties</h4>
+            <div className={styles.containerHead}>
                         <Link to={`/config/${id}`}>
-                            <button>Editar usuario</button>
+                            <button className={styles.btnUser}>Edit user</button>
                         </Link>
                     </div>
+                <div className={styles.hrHalfWay}> </div>
+                <h4>My Properties</h4>
+            <div className={styles.bodyContainer}>
+                <div className={styles.menuSide}>
+                    
                 </div>
                 <div className={styles.propertiesSide}>
                     {loading ? (
@@ -64,7 +73,8 @@ const DetailUser = () => {
                             <SkeletonCard key={idx} />
                         ))
                     ) : (
-                        user?.properties?.map((property) => (
+                        
+                        user?.properties.map((property) => (
                             <Link key={property.id} to={`/rooms/${property.id}`} className={styles.link}>
                                 <div className={styles.container}>
                                     <div className={styles.image}>
