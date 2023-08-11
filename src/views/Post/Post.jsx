@@ -142,7 +142,7 @@ const Post = () => {
       setErrores(errorMessages);
       setTimeout(() => {
         setErrores([]);
-      }, 1000);
+      }, 3000);
     }
   };
 
