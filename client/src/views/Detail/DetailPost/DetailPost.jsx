@@ -104,15 +104,13 @@ const DetailPost = () => {
               </header>
               <div className={styles.image}>
                   <img src={
-                    property.imageUrl.map((prop) => {
-                      prop[0]
-                    })
+                    property.imageUrl
                     } 
                     alt={property?.name} className={styles.imgOne}/>
                   <div className={styles.sectionOne}>
                     <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                     <div className={styles.sectionTwo}>
-                      <img src={property?.imageUrl[2]} alt={property?.name} className={styles.imgOne}/>
+                      <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                     </div>
                     
                   </div>
