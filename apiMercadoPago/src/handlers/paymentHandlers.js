@@ -17,7 +17,7 @@ const createPayment = async(req, res)=>{
               },
             ],
             back_urls: {
-                success:"http://localhost:5173/home",
+                success:"https://dreamlodgeprueba.web.app/home",
                 failure: "http://localhost:3001/failure",
             },
             auto_return: "approved"
