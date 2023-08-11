@@ -68,31 +68,36 @@ const DetailUser = () => {
                     
                 </div>
                 <div className={styles.propertiesSide}>
-                    {loading ? (
-                        Array.from({ length: 3 }).map((_, idx) => (
-                            <SkeletonCard key={idx} />
-                        ))
-                    ) : (
-                        
-                        user?.properties.map((property) => (
-                            <Link key={property.id} to={`/rooms/${property.id}`} className={styles.link}>
-                                <div className={styles.container}>
-                                    <div className={styles.image}>
-                                        <img src={property.imageUrl} alt="pic of the house" />
-                                    </div>
-                                    <Link to={`/editpr/${property.id}`}>
-                                        <button>BOTON SUPER SECRETO NO TOCAR NI BORRAR</button>
-                                    </Link>
-                                    <section className={styles.info}>
-                                        <h3>{property.location.state}, {property.location.city}</h3>
-                                        <p className={styles.infoName}>{property.name}</p>
-                                        <p className={styles.infoPrice}>$ {property.price} USD noche</p>
-                                    </section>
-                                </div>
-                            </Link>
-                        ))
-                    )}
-                </div>
+    {loading ? (
+        Array.from({ length: 3 }).map((_, idx) => (
+            <SkeletonCard key={idx} />
+        ))
+    ) : (
+        user?.properties && user.properties.length > 0 ? (
+            user.properties.map((property) => (
+                <Link key={property.id} to={`/rooms/${property.id}`} className={styles.link}>
+                    <div className={styles.container}>
+                        <div className={styles.image}>
+                            <img src={property.imageUrl} alt="pic of the house" />
+                        </div>
+                        <Link to={`/editpr/${property.id}`}>
+                            <button>BOTON SUPER SECRETO NO TOCAR NI BORRAR</button>
+                        </Link>
+                        <section className={styles.info}>
+                            <h3>{property.location.state}, {property.location.city}</h3>
+                            <p className={styles.infoName}>{property.name}</p>
+                            <p className={styles.infoPrice}>$ {property.price} USD noche</p>
+                        </section>
+                    </div>
+                </Link>
+            ))
+        ) : (
+            <h4 className={styles.noProperties}>{user?.name} has no properties available.</h4>
+
+        )
+    )}
+</div>
+
             </div>
             <About />
         </div>

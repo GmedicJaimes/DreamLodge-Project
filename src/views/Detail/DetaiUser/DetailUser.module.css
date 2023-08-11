@@ -237,6 +237,13 @@ margin-right: 51rem;
     object-position: center; /* Centra la imagen en el contenedor */
   }
 
+  .noProperties{
+    color: black;
+    text-align: center;
+    margin-left: 30rem;
+    margin: 2rem 0rem 2rem 30rem;
+  }
+
 /* .seeMbtn {
     padding: 1em;
     border-radius: 5px;
