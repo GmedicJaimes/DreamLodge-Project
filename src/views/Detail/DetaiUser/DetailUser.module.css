@@ -1,0 +1,307 @@
+.portada {
+    height: 30vh;
+    width: 99vw;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.profilePic{
+    border-radius: 100%;
+    height: 13em;
+    width: 13em;
+    border: none;
+    object-fit:cover;
+    position: relative;
+    top: -5em;
+    box-shadow: 0 7px 20px 5px #8a8a8a88;
+}
+
+.containerInfo{
+    /* background-color: rgb(210, 210, 210);
+    border: 1px solid rgb(183, 183, 181); */
+    height: 300px;
+    min-width: 65em;
+    max-width: 80em;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 0.6em;
+}
+
+.containerInfo h1{
+  margin: 4rem;
+}
+
+.dataUser{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    /* width: 60%; */
+    margin: 200px;
+    height: 13vh;
+    border-radius: 1em;
+    border: 4px solid white;
+    margin: auto;
+}
+/* rgb(210, 210, 210) */
+.nameTittle {
+    font-size: 1.3em;
+    display: flex;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #1E1E23;
+    text-align: left;
+}
+
+.nameTittle p{
+    font-size: 0.5em;
+    color: rgb(0, 0, 0);
+    margin: 0.7em;
+    
+}
+.userP{
+  color: #59595b;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.blockDU {
+    min-height: 100px;
+    font-size: 0.8rem;
+    color: #CD5A3E;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-bottom: 3em;
+    /* background-color: chartreuse; */
+}
+
+.blockDU h5{
+    font-size: 1.7em;
+}
+
+.blockP {
+    color:black;
+    font-size: 1rem;
+}
+
+.bodyContainer{
+    display: flex;
+
+    margin: 2rem 17%;
+    margin-right: 200rem;
+
+    border-radius: 0.3em;
+}
+
+
+.lineUser {
+  height: 100px;
+  border: 1px solid #CD5A3E;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+}
+
+.hrHalfWay{
+  color :#EADCCF;
+  width: 65%;
+  border: 1px solid #EADCCF;
+  margin: 0 auto;
+  margin-bottom: 3em;
+}
+
+ h4 {
+font-size: 2rem;
+color: #CD5A3E;
+text-align: center;
+margin-right: 51rem;
+}
+
+.btnUser{
+  padding: 1em;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #CD5A3E;
+  color: #CD5A3E;
+  cursor: pointer;
+  letter-spacing: 0.1rem;
+  transition: all 500ms;
+}
+
+.btnUser:hover{
+  background-color: #CD5A3E;
+  color: white;
+}
+
+
+
+.containerHead{
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+
+.menuSide{
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 3em;
+
+}
+
+.propertiesSide{
+    min-width: 60%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; /* Espacio entre tarjetas */
+}
+
+.link {
+    text-decoration: none;
+  }
+  
+  .container {
+    /* Flexbox Properties */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 calc(33.333% - 2rem); /* He combinado los márgenes en la resta para optimizar */
+
+    /* Dimension & Spacing */
+    width: 330px;
+    height: 400px;
+    margin: 0rem 1rem 1rem 0rem; /* Margin consolidated */
+
+    /* Styling Properties */
+    /* background-color: rgba(255, 222, 222, 0.904); */ /* Commented out, can be removed if not needed */
+    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
+
+    /* Animation & Transition */
+    transition: 0.3s ease;
+}
+
+  
+  .container:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+  }
+  
+  .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    background-color: #f7f3f0;
+    height:120px;
+    padding: 1rem;
+  }
+  .info h3{
+    font-size: 1.3rem;
+    font-family: 'Montserrat' !important;
+  
+  
+  }
+  
+  .infoName{
+    margin: 1rem 0;
+    font-weight: 500;
+    text-align: left;
+    color: #59595b;
+  }
+  
+  .infoPrice{
+    color: black;
+    font-weight: 600;
+    font-family: 'Montserrat';
+  }
+  
+  .image {
+    width: 330px; /* Ajusta el ancho deseado */
+    height: 250px; /* Ajusta el alto deseado */
+    overflow: hidden; /* Ocultar el contenido que desborda del contenedor */
+  }
+  
+  .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Escala la imagen para que cubra todo el contenedor */
+    object-position: center; /* Centra la imagen en el contenedor */
+  }
+
+  .noProperties{
+    color: black;
+    text-align: center;
+    margin-left: 30rem;
+    margin: 2rem 0rem 2rem 30rem;
+  }
+
+/* .seeMbtn {
+    padding: 1em;
+    border-radius: 5px;
+    background-color: antiquewhite;
+}
+
+.seeMbtn:hover {
+    background-color: rgb(132, 137, 100);
+    color: white;
+} */
+
+
+/* 99997A 1E1E23  EADCCF CD5A3E*/
+/* .propertieContainer{
+    background-color: #CD5A3E;
+    border-radius: 5px;
+    width: 50vh;
+    max-width: 25em;
+    min-height: 15em;
+    box-shadow: 0 7px 20px 5px #8a8a8a88;
+    display: flex;
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    transition: .5s all;
+    padding: 2em;
+}
+
+.propertieContainer::before {
+    position: fixed;
+    box-shadow: 0 0 100px 40px #ffffff08;
+    top: -10%;
+    left: -100%;
+    transform: rotate(-45deg);
+    height: 60rem;
+    transition: .7s all;
+  }
+
+  .propertieContainer:hover {
+    border: 1px solid #ffffff44;
+    box-shadow: 0 7px 50px 10px #000000aa;
+    transform: scale(1.015);
+  }
+
+  .propertieContainer:hover::before {
+    filter: brightness(.5);
+    top: -100%;
+    left: 200%;
+  } */
+
+/* 
+.propertieBox {
+    max-width: 12.5em;
+    margin: 1em
+} */
+
+/* .imageA{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+} */
