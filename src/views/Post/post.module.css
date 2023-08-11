@@ -1,6 +1,4 @@
 .mainContainer {
-<<<<<<< HEAD
-=======
   border-radius: 2em;
   box-shadow: 0 7px 20px 5px #52525288;
   background-color: #eadccf;
@@ -266,7 +264,6 @@ input[type="number"]{
 }
 
 /* .mainContainer {
->>>>>>> ce6c7f290b22b88f64ceb0bd4a6406b3617a32c4
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
@@ -298,13 +295,8 @@ input[type="number"]{
     font-weight: bold;
     margin-bottom: 0.8;
     text-align: start;
-<<<<<<< HEAD
-    /* margin-left: 1em */
-}
-=======
     /* margin-left: 1em 
 
->>>>>>> ce6c7f290b22b88f64ceb0bd4a6406b3617a32c4
 
 textarea{
     width: 90%;
@@ -352,12 +344,8 @@ textarea{
 }
 
 .roomSelect{
-<<<<<<< HEAD
-    width: 20%;
-=======
     width: 25%;
     margin: 0 1px;
->>>>>>> ce6c7f290b22b88f64ceb0bd4a6406b3617a32c4
 }
 
 .roomsBox{
@@ -367,8 +355,4 @@ textarea{
 
 .inputContainer {
     margin: 0 5em;
-<<<<<<< HEAD
-}
-=======
 } */
->>>>>>> ce6c7f290b22b88f64ceb0bd4a6406b3617a32c4

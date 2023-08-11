@@ -52,8 +52,8 @@ const DetailPost = () => {
                     const intervalPay = setInterval(async()=>{
                     const paymentStatus = await getPaymentStatus(id);
                     if(paymentStatus === 'approved'){
-                        //si el pago fue aprovado se actualiza el avaible de "true" a "fals"
-                        updateAvaible(property.id);
+                        //si el pago fue aprovado se actualiza el avaible de "true" a "false"
+                        updateAvaible(property.id, preferenceId);
                         //cortamos el problema y resolvemos la promesa
                         clearInterval(intervalPay)
                         resolve()
@@ -75,7 +75,8 @@ const DetailPost = () => {
             idTicket: idTicket,
             property: property,
             selectedDays: selectedDays,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            propertyId: id
         }));
       }, [property]);
 
@@ -195,9 +196,9 @@ console.log(property)
                       <div className={styles.containerList}>
                           <ul>
                               {
-                                  property?.services?.map((serv) => {
+                                  property?.services?.map((serv ,i) => {
                                       return(
-                                          <li>{serv}</li>
+                                          <li key={i}>{serv}</li>
                                       )
                                   })
                               }

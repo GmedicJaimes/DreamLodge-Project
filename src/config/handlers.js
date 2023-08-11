@@ -5,6 +5,7 @@ import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
+import axios from 'axios';
 
 
 
@@ -427,8 +428,9 @@ export const sortPropertiesByPrice = (properties, ascending) => {
 };
 
 //funcion para deshabilitar propiedades
-export const updateAvaible = async (id) => {
+export const updateAvaible = async(id, preferenceId) => {
   try {
+    const db = getFirestore()
     const propertyDB = doc(db, 'properties', id);
     await updateDoc(propertyDB, {
       available: false 
