@@ -455,7 +455,7 @@ const Post = () => {
               </div>
 
               <div className={`${styles.formGroup} ${styles.priceCont}`}>
-  <label>Price:</label>
+  <label>Price per night:</label>
   <div className={styles.priceContainer}>
     <input
       type="range"
