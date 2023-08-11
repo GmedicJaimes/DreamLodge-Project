@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 
 
@@ -70,14 +70,51 @@ const getUserProperties = async (targetUID) => {
 // funcion para SIGNIN normal
 
 
-export const signIn = async(auth, email, password) => {
+
+
+
+export const signIn = async (auth, email, password) => {
   try {
-      return await createUserWithEmailAndPassword(auth, email, password);      
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    if (userCredential.user) {
+      alert("Welcome to DreamLodge!");
+      // No es necesario enviar la verificación de correo electrónico aquí
+    }
+    return userCredential;      
   } catch (error) {
-      console.log(error)
-      throw error;
+    console.log("Error in signIn function:", error);
+    throw error;
   }
 };
+
+
+
+
+
+
+
+// AGUARDA POR VERIFICAION DE EMAIL
+
+// export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
+//   return new Promise((resolve, reject) => {
+//       let totalTime = 0;
+
+//       const checkEmailVerification = async () => {
+//           await user.reload();
+
+//           if (user.emailVerified) {
+//               resolve();
+//           } else if (totalTime >= timeout) {
+//               reject(new Error('La verificación ha tardado demasiado'));
+//           } else {
+//               totalTime += interval;
+//               setTimeout(checkEmailVerification, interval);
+//           }
+//       };
+
+//       checkEmailVerification();
+//   });
+// };
 
 
 
@@ -180,14 +217,16 @@ export const logOut = async()=>{
 // funcion para POSTEAR PROPIEDADES
 export const createProp = async (formData, file) => {
   try {
-    let imageUrl = null;
+    let imageUrl = [];
     // Subimos la imagen al storage y obtenemos su URL si hay un archivo seleccionado
-    if (file) {
-      const folderRef = ref(storage, `properties/${file.name + v4()}`);
-      await uploadBytes(folderRef, file);
-      imageUrl = await getDownloadURL(folderRef);
+    if (formData.imageFile && formData.imageFile.length > 0) {
+      for (const file of formData.imageFile) {
+        const folderRef = ref(storage, `properties/${file.name + v4()}`);
+        await uploadBytes(folderRef, file);
+        const singleImageUrl = await getDownloadURL(folderRef);
+        imageUrl.push(singleImageUrl);
+      }
     }
-
     // Obtenemos el userId del usuario actual
     const userId = auth?.currentUser?.uid;
 
@@ -201,16 +240,19 @@ export const createProp = async (formData, file) => {
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
-      tokenMp: formData.tokenMp,
+      available:formData.available,
+      services:formData.service,
       userId: userId
     });
+
+    console.log(formData)
 
 
     getPropertiesList();
 
     alert('¡Propiedad creada!');
   } catch (error) {
-    alert(`La pifiamo'`);
+    console.log(error)
   }
 };
 
@@ -287,7 +329,6 @@ export const getPropertiesList = async () => {
     const filterData = await Promise.all(
       data.docs.map(async (doc) => {
         const propertyData = doc.data();
-        console.log(propertyData);
         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
@@ -329,17 +370,41 @@ export const detailId = async (id) =>{
 }
 
 //funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
-export const uploadFile = async()=>{
-    if(!file) return;
-    const folderRef = ref(storage, `properties/${file.name + v4()}`);
-    try {
-      await uploadBytes(folderRef, file)
-      console.log(folderRef)
-      alert('la imagen fue enviada a la base de datos')
-    } catch (error) {
-      console.log(error)
-    }
-  };
+// export const uploadFile = async()=>{
+//     if(!file) return;
+//     const folderRef = ref(storage, `properties/${file.name + v4()}`);
+//     try {
+//       await uploadBytes(folderRef, file)
+//       console.log(folderRef)
+//       alert('la imagen fue enviada a la base de datos')
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   };
+
+
+/// PRUEBAAAAA CHRISTIAN
+
+
+export const uploadFile = async (file) => {
+  if (!file) return;
+
+  const storage = getStorage(); // Assuming you've initialized your Firebase storage instance
+  const folderRef = ref(storage, `properties/${uuidv4()}_${file.name}`);
+  
+  try {
+    await uploadBytes(folderRef, file);
+    console.log(folderRef.fullPath);
+    alert('The image was successfully uploaded to the database');
+  } catch (error) {
+    console.log(error);
+    alert('Error uploading the image');
+  }
+};
+
+
+/// PRUEBAAAAA CHRISTIAN
+
 
 //funcion para DESCARGAR ARCHIVOS(DE PROPERTIES)
 export const dowloadImg = ()=> {
@@ -434,15 +499,33 @@ export const getAvailableProperties = async () => {
   }
 };
 
-//filtro para BUSCAR POR NAME!!!!
-export const filterPropertiesByName = (properties, searchValue) => {
-  if (!searchValue) {
-    return properties; // No hay valor de búsqueda, devuelve todas las propiedades
-  }
+//.............................TODAVIA NO ANDA....................................................
+// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
+export const filterPropertiesByName = async (searchValue) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-  const lowerCaseSearchValue = searchValue.toLowerCase();
-  return properties.filter((property) =>
-    property.name.toLowerCase().includes(lowerCaseSearchValue)
-  );
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
+
+    return filteredProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
+
+//................................................................................................
+
+// Función para ordenar propiedades por precio
+export const sortPropertiesByPrice = (properties, ascending) => {
+  return [...properties].sort((a, b) => {
+    if (ascending) {
+      return a.price - b.price; // Ordenar en forma ascendente
+    } else {
+      return b.price - a.price; // Ordenar en forma descendente
+    }
+  });
+};
+
 

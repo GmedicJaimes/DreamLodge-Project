@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
-import {
-  signIn,
-  signInGoogle,
-  registerUserInFirestore,
-  doesEmailExistInFirestore,
-} from "../../config/handlers";
 import { auth } from "../../config/firebase";
+// import {useAuthState} from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { sendPasswordResetEmail } from "firebase/auth";
 import {
   isValidName,
   isCountrySelected,
@@ -19,6 +15,13 @@ import {
   isValidEmail,
   isValidPassword,
 } from "./validations";
+import {
+  signIn,
+  signInGoogle,
+  registerUserInFirestore,
+  doesEmailExistInFirestore,
+} from "../../config/handlers";
+
 
 const SignIn = () => {
   const [register, setRegister] = useState({
@@ -28,10 +31,13 @@ const SignIn = () => {
     lastName: "",
     country: "",
     languages: [],
-    imageFile: null,
+    imageFile: [],
   });
 
   const [errors, setErrors] = useState({});
+
+
+
 
 
 
@@ -91,81 +97,83 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const newErrors = {};
 
     try {
-      // Validaciones existentes
-      if (!isValidName(register.name))
+      if (!isValidName(register.name)) 
         newErrors.name = "Only letters allowed and up to 20 characters.";
-      if (!isValidName(register.lastName))
+      if (!isValidName(register.lastName)) 
         newErrors.lastName = "Only letters allowed and up to 20 characters.";
-      if (!isCountrySelected(register.country))
+      if (!isCountrySelected(register.country)) 
         newErrors.country = "Country selection is mandatory.";
-      if (!hasAtLeastOneLanguage(register.languages))
+      if (!hasAtLeastOneLanguage(register.languages)) 
         newErrors.languages = "Selecting at least one language.";
-      if (!hasImageSelected(register.imageFile))
+      if (!hasImageSelected(register.imageFile)) 
         newErrors.imageFile = "Selecting an image is mandatory.";
-      if (!isValidEmail(register.email))
+      if (!isValidEmail(register.email)) 
         newErrors.email = "Invalid email. No special characters allowed.";
-      if (!isValidPassword(register.password))
-        newErrors.password =
-          " Minimum 8 characters and only letters and numbers.";
+      if (!isValidPassword(register.password)) 
+        newErrors.password = "Minimum 8 characters and only letters and numbers.";
 
-      // Validación para verificar si el correo ya existe en Firestore
       const emailExists = await doesEmailExistInFirestore(register.email);
       if (emailExists) {
         newErrors.email = "This email is already in use.";
         console.log(errors.email);
       }
 
-      // Si hay errores, muestralos
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
-
-        // Usar setTimeout para limpiar los errores después de 3 segundos
         setTimeout(() => {
           setErrors({});
         }, 3000);
-
         return;
-      } // Intentar registrar al usuario con Firebase Auth
-      const userCredential = await signIn(
-        auth,
-        register.email,
-        register.password
-      );
+      }
+
+      const userCredential = await signIn(auth, register.email, register.password);
 
       if (userCredential?.user?.uid) {
         const { uid, email } = userCredential.user;
 
-        // Manejar la subida de la imagen a Firebase Storage
-        let imageURL = ""; // Variable para almacenar la URL de la imagen
+        let imageURL = "";
         if (register.imageFile) {
-          const imageRef = ref(storage, `users/${uid}`); // Ruta en Storage
+          const imageRef = ref(storage, `users/${uid}`);
           await uploadBytes(imageRef, register.imageFile);
           imageURL = await getDownloadURL(imageRef);
         }
 
-        // Datos del usuario para guardar en Firestore
         const userToSave = {
           uid,
           email,
           name: register.name,
           lastName: register.lastName,
           country: register.country,
-          image: imageURL, // Asigna la URL de la imagen
+          image: imageURL,
           languages: register.languages,
           createdAt: new Date().toLocaleDateString(),
         };
         console.log(userToSave);
 
-        // Guardar el usuario en Firestore
         await registerUserInFirestore(uid, userToSave);
+
+        await sendPasswordResetEmail(auth, email, {
+          url: "http://localhost:5173/",
+          handleCodeInApp: true
+      });
+      
+      try {
+        await sendPasswordResetEmail(userCredential.user);
+        localStorage.setItem("email", email);
+        alert(`¡Correo verificado exitosamente!`);
+        navigate(`/home`);
+    } catch (error) {
+        setLoginLoading(false);
+        setLoginError(error.message);
+    }
 
         navigate(`/home`);
       }
 
-      // Resetear el estado del formulario
       setRegister({
         email: "",
         password: "",
@@ -173,12 +181,15 @@ const SignIn = () => {
         lastName: "",
         country: "",
         languages: [],
-        imageFile: "", // null, // Reinicia el archivo de imagen después de guardar
+        imageFile: "", 
       });
     } catch (error) {
       console.log(error);
     }
   };
+
+
+
 
   useEffect(() => {
     const handleAuthSuccess = (event) => {
@@ -198,6 +209,10 @@ const SignIn = () => {
   const isFormValid = Object.keys(errors).length === 0 && register.email && register.password; // Add other fields as needed
 
 
+
+
+
+  
 
 
   return (
@@ -239,6 +254,9 @@ const SignIn = () => {
             value={register.country}
             onChange={handleRegisterForm}
             placeholder="Country"
+            className={` ${
+              register.country === "" ? styles.grayText : ""
+            }`}
           >
             <option value="" disabled>
               Select Country
@@ -262,6 +280,7 @@ const SignIn = () => {
             name="languages"
             value={register.languages}
             onChange={handleLanguages}
+            className={` ${register.languages.length === 0 ? styles.grayText : ""}`}
           >
             <option value="" disabled>
               Select Language
@@ -289,12 +308,15 @@ const SignIn = () => {
 
         <div className={styles.formGroup}>
           <input
-            className={styles.range}
+
             onChange={handleChange}
             type="file"
             name="imageFile"
             accept="image/*"
             placeholder="Profile Image"
+            className={` ${styles.range}, ${register.imageFile.length === 0 ? styles.grayText : ""}`}
+
+
           />
           <span className={styles.imageSelect}>
             {register.imageFile?.name || ""}

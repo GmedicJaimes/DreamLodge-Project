@@ -9,10 +9,14 @@ const Card = ({ property }) => {
     <Link to={`/rooms/${id}`} className={styles.link}>
       <div className={styles.container}>
         <div className={styles.image}>
-          <img src={property?.imageUrl} alt={name} />
+        {property.imageUrl && (
+  <div className={styles.image}>
+    <img src={property.imageUrl} alt={name} />
+  </div>
+)}
         </div>
         <section className={styles.info}>
-          {/* <h3>{location?.state}, {location?.city}</h3> */}
+          <h3>{location?.state}, {location?.city}</h3>
           {/* <h3>{location}</h3> */}
           {/* <p>{id}</p>
           <p>{userId}</p> */}

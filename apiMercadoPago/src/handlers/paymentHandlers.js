@@ -17,7 +17,7 @@ const createPayment = async(req, res)=>{
               },
             ],
             back_urls: {
-                success:"http://localhost:5173/home",
+                success:"https://dreamlodgeprueba.web.app/nice",
                 failure: "http://localhost:3001/failure",
             },
             auto_return: "approved"
@@ -72,6 +72,8 @@ const listenWebHook = async(req, res)=>{
     }
     
 };
+
+//el; que borro esta mierda que se le caiga el pito
 
 
 module.exports={ createPayment, listenWebHook}

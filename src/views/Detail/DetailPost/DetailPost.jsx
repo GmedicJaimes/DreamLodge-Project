@@ -13,7 +13,6 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([])
   // console.log(property);
   // console.log(detailId)
-  console.log(property);
 
 
 
@@ -37,12 +36,25 @@ const DetailPost = () => {
             console.log(error)
         }
     }
+
+    const [idTicket, setIdTicket] = React.useState(0)
+
     const handleBuy = async()=>{
         const id = await createPreference();
         if (id){
             setPreferenceId(id)
+            setIdTicket(id)
         }
     }
+
+      React.useEffect(() => {
+        localStorage.setItem('propertyData', JSON.stringify({
+            idTicket: idTicket,
+            property: property,
+            selectedDays: selectedDays,
+            totalPrice: totalPrice
+        }));
+      }, [property]);
 
 
 
@@ -64,10 +76,12 @@ const DetailPost = () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
       setPropertyDetail(detailPost)
-
+console.log(property)
     }
     propertiesDetail();
   }, [])
+
+
 
   return(
     
@@ -102,7 +116,10 @@ const DetailPost = () => {
                   </div>
               </header>
               <div className={styles.image}>
-                  <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
+                  <img src={
+                    property.imageUrl
+                    } 
+                    alt={property?.name} className={styles.imgOne}/>
                   <div className={styles.sectionOne}>
                     <img src={property?.imageUrl} alt={property?.name} className={styles.imgOne}/>
                     <div className={styles.sectionTwo}>
