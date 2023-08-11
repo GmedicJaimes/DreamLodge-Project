@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./SignIn.module.css";
 import { auth } from "../../config/firebase";
-import {useAuthState} from "react-firebase-hooks/auth"
+// import {useAuthState} from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
