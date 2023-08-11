@@ -3,7 +3,7 @@
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
-    width: 1000px;
+    width: 800px;
     height: 699px;
     margin: auto;
     margin-bottom: 2em;
@@ -190,6 +190,11 @@ textarea{
     cursor: pointer;
     /* ...otros estilos que desees agregar... */
   }
+
+
+
+
+
 
 /* .mainContainer {
     border-radius: 2em;
