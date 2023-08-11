@@ -3,13 +3,14 @@ import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
 import React from 'react';
 import { auth } from "../../config/firebase";
-import { logOut } from "../../config/handlers";
-import { usePropertiesList } from "../Filters/PropertiesContext";
+import { logOut, filterPropertiesByName } from "../../config/handlers";
+import { useState } from "react";
+
 
 const Navbar = () => {
-  const properties = usePropertiesList();// Obtiene la lista de propiedades usando el hook
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
   const [host, setHost] = React.useState([]);
+  const [searchValue, setSearchValue] = useState(""); // Nuevo estado para el valor de búsqueda
  
   
   React.useEffect(() => {
@@ -20,7 +21,16 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value.toLowerCase();
+    setSearchValue(value);
+  }
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    filterPropertiesByName(searchValue)
+  };
 
     return(
       <div className={styles.container}> 
@@ -28,8 +38,7 @@ const Navbar = () => {
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar/>
-            {/* <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/> */}
+            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
         </div>  
         <div className={styles.button}>
           {

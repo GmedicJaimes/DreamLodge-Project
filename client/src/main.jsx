@@ -4,7 +4,6 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 // import { Provider } from 'react-redux'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { PropertiesProvider } from './components/Filters/PropertiesContext.jsx';
 
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -17,11 +16,9 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')).render(
     
       <QueryClientProvider client={queryClient}>
-        <PropertiesProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-        </PropertiesProvider>
       </QueryClientProvider>
     ,
 )

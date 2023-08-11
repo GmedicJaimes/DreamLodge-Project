@@ -52,7 +52,17 @@ const Post = () => {
       setCities([]);
     }
   }, [formData.location.state]);
+  
+ React.useEffect(() => {
+    const savedFormData = localStorage.getItem('formData');
+    if (savedFormData) {
+      setFormData(JSON.parse(savedFormData));
+    }
+  }, []);
 
+  React.useEffect(() => {
+    localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
