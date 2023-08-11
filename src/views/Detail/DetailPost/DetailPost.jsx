@@ -76,7 +76,7 @@ const DetailPost = () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
       setPropertyDetail(detailPost)
-
+console.log(property)
     }
     propertiesDetail();
   }, [])

@@ -77,9 +77,8 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      await sendEmailVerification(userCredential.user);
-      console.log(sendEmailVerification(userCredential.user))
-      alert("Verification email sent!");
+      alert("Welcome to DreamLodge!");
+      // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
   } catch (error) {
@@ -89,28 +88,33 @@ export const signIn = async (auth, email, password) => {
 };
 
 
+
+
+
+
+
 // AGUARDA POR VERIFICAION DE EMAIL
 
-export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
-  return new Promise((resolve, reject) => {
-      let totalTime = 0;
+// export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
+//   return new Promise((resolve, reject) => {
+//       let totalTime = 0;
 
-      const checkEmailVerification = async () => {
-          await user.reload();
+//       const checkEmailVerification = async () => {
+//           await user.reload();
 
-          if (user.emailVerified) {
-              resolve();
-          } else if (totalTime >= timeout) {
-              reject(new Error('La verificación ha tardado demasiado'));
-          } else {
-              totalTime += interval;
-              setTimeout(checkEmailVerification, interval);
-          }
-      };
+//           if (user.emailVerified) {
+//               resolve();
+//           } else if (totalTime >= timeout) {
+//               reject(new Error('La verificación ha tardado demasiado'));
+//           } else {
+//               totalTime += interval;
+//               setTimeout(checkEmailVerification, interval);
+//           }
+//       };
 
-      checkEmailVerification();
-  });
-};
+//       checkEmailVerification();
+//   });
+// };
 
 
 
@@ -237,6 +241,7 @@ export const createProp = async (formData, file) => {
       description: formData.description,
       price: formData.price,
       available:formData.available,
+      services:formData.service,
       userId: userId
     });
 

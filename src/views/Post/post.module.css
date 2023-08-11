@@ -1,200 +1,247 @@
-
 .mainContainer {
-    border-radius: 2em;
-    box-shadow: 0 7px 20px 5px #52525288;
-    background-color: #EADCCF;
-    width: 800px;
-    height: 699px;
-    margin: auto;
-    margin-bottom: 2em;
+  border-radius: 2em;
+  box-shadow: 0 7px 20px 5px #52525288;
+  background-color: #eadccf;
+  width: 800px;
+  height: 699px;
+  margin: auto;
+  margin-bottom: 2em;
 }
 
-.mainContainer header{
-    padding: 16px;
-    margin-top: 1em;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 18px;
-    color: #333;
+.mainContainer header {
+  padding: 16px;
+  margin-top: 1em;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #333;
 }
 
-header h2{
-    margin: 1rem 0;
+header h2 {
+  margin: 1rem 0;
 }
 
-.mainContainer form{
-    padding: 2.1em;
+.mainContainer form {
+  padding: 2.1em;
 }
 
 .formGroup {
-    margin: 0 1em 10px 1em;
+  margin: 0 1em 10px 1em;
 }
 
-.formGroup label{
-    margin: 0.3rem 0;
+.formGroup label {
+  margin: 0.3rem 0;
 }
 
-.formGroupUno{
-    width: 50%;
-    margin: 0 auto;
+.formGroupUno {
+  width: 50%;
+  margin: 0 auto;
 }
 .formGroup label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 0.8;
-    text-align: start;
-    /* margin-left: 1em */
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.8;
+  text-align: start;
+  /* margin-left: 1em */
 }
 
-textarea{
-    width: 95%;
-    padding: 1rem;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    background-color: #f4e9de;
+textarea {
+  width: 95%;
+  padding: 1rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  background-color: #f4e9de;
 }
-.inputContainer{
-    display: flex;
-    justify-content: center;
-}
-
-.leftContainer{
-    margin-right: 3rem;
+.inputContainer {
+  display: flex;
+  justify-content: center;
 }
 
-.rightContainer{
-    margin-top: -1rem;
+.leftContainer {
+  margin-right: 3rem;
+  height: 425px;
+}
+
+.rightContainer {
+  margin-top: -1rem;
 }
 
 .formGroup input {
-    width: 100%;
-    padding: 1em;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    max-width: 280px;
-    background-color: #f4e9de;
+  width: 100%;
+  padding: 1em;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  max-width: 280px;
+  background-color: #f4e9de;
 }
 
 .btn {
-    padding: 11px 95px;
-    margin: 1em 1.2em;
-    font-size: 13px;
-    border: none;
-    border-radius: 0.2em;
-    background-color: #CD5A3E;
-    color: #fff;
-    cursor: pointer
+  padding: 11px 95px;
+  margin: 1em 1.2em;
+  font-size: 13px;
+  border: none;
+  border-radius: 0.2em;
+  background-color: #cd5a3e;
+  color: #fff;
+  cursor: pointer;
 }
 
 .foot {
-    font-size: 0.8em;
-    color: #959595;
+  font-size: 0.8em;
+  color: #959595;
 }
 
 .linkfoot {
-    color: #CD5A3E;
-    font-weight: 900;
+  color: #cd5a3e;
+  font-weight: 900;
 }
 
-.forcedLine{
-    height: 6px;
+.forcedLine {
+  height: 6px;
 }
 
-.roomSelect{
-    width: 25%;
+.roomSelect {
+  width: 25%;
 }
 
-.roomsBox{
-    display: flex;
-    justify-content: space-evenly;
-
+.roomsBox {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .inputContainer {
-    margin: 0 5em;
+  margin: 0 5em;
 }
 
-.selectPost{
-    width: 100%;
-    margin-right: 20px;
+.selectPost {
+  width: 100%;
+  margin-right: 20px;
 }
 
-.selectServ{
-    width: 92%;
-    margin-right: 4rem;
+.selectServ {
+  width: 92%;
+  margin-right: 4rem;
+  height: 60px;
 }
 
-.opciones{
-    width: 80%;
-    text-align: left;
-    margin: 0 0.5rem;
+.opciones {
+  width: 80%;
+  text-align: left;
+  margin: 0 0.5rem;
 }
 
-.roomSelect label{
-    margin-left: 0.5rem;
+.roomSelect label {
+  margin-left: 0.5rem;
 }
 
-.selectLocation{
-    width: 113%;
-    color: black;
+.selectLocation {
+  width: 113%;
+  color: black;
 }
 
-.grayText{
-    color:#959595
+.grayText {
+  color: #959595;
 }
 
-.secondClass{
-    margin: 1.2rem 0rem;
+.secondClass {
+  margin: 1.2rem 0rem;
 }
 
-.formGroup .roomsBox{
-    margin-top: 1rem;
+.formGroup .roomsBox {
+  margin-top: 1rem;
 }
 
-.postError{
-    color: red;
-    display: block;
+.postError {
+  color: red;
+  display: block;
 }
 
-.inputPrice{
-    height: 50px;
+.inputPrice {
+  height: 50px;
 }
 
-.spanPrice{
-    margin-bottom: 1rem;
+.spanPrice {
+  margin-bottom: 1rem;
 }
 
-.spanImg{
-    display: block;
+.spanImg {
+  display: block;
 }
 
 .range {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-  }
-  
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.rangePrice {
+  height: 25px;
+}
+
+.inputRow {
+  height: 10px;
+}
+
+.inputRow input {
+  width: 40px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 1rem;
+}
+
+.priceCont {
+  height: 100px;
+}
+
+/* Agrega un pseudo-elemento ::after a las opciones seleccionadas */
+.selectedOption::after {
+  content: "✔"; /* Aquí puedes usar el símbolo que prefieras */
+  margin-left: 8px; /* Ajusta el espacio entre el texto y el ícono */
+}
+
+/* Cambia el color de fondo y el color del texto de las opciones seleccionadas */
+select option:hover {
+  cursor: pointer; /* Cambia el color del texto (puedes ajustarlo según tus preferencias) */
+}
 
 .customButton {
-    display: inline-block;
-    color: #333;
-    text-decoration: underline;
-    padding: 10px 15px;
-    font: 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    /* ...otros estilos que desees agregar... */
-  }
+  display: inline-block;
+  color: #333;
+  text-decoration: underline;
+  padding: 10px 15px;
+  font: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* ...otros estilos que desees agregar... */
+}
 
+/* Estilo para ocultar las flechas en el campo de entrada number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Elimina el espacio extra que ocupaban las flechas */
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
 
+.imagePreviews {
+  width: 53%;
+  display: flex; /* Aplica la propiedad flex a la imagenPreviews */
+  justify-content: space-around;
+  align-items: center; /* Centra verticalmente las imágenes en el contenedor */
+  margin: 0 0.2rem;
+}
 
-
-
+.imagePreviews .imagePreview {
+  margin: 0.2rem;
+  display: block;
+}
 
 /* .mainContainer {
     border-radius: 2em;
