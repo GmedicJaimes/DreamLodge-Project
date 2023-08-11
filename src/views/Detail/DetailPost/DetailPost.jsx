@@ -36,12 +36,25 @@ const DetailPost = () => {
             console.log(error)
         }
     }
+
+    const [idTicket, setIdTicket] = React.useState(0)
+
     const handleBuy = async()=>{
         const id = await createPreference();
         if (id){
             setPreferenceId(id)
+            setIdTicket(id)
         }
     }
+
+      React.useEffect(() => {
+        localStorage.setItem('propertyData', JSON.stringify({
+            idTicket: idTicket,
+            property: property,
+            selectedDays: selectedDays,
+            totalPrice: totalPrice
+        }));
+      }, [property]);
 
 
 

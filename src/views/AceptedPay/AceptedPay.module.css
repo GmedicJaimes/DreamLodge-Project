@@ -1,0 +1,32 @@
+.container{
+    width: 40em;
+    height: 40em;
+    margin: auto;
+    margin-top: 15vh;
+    border-radius: .7rem;
+    box-shadow: 0 7px 20px 5px #52525288;
+    background-color: #EADCCF;
+}
+
+header {
+    padding: 2.5em;
+    font-size: 2em;
+}
+
+.cardHost{
+    border: 1px solid rgb(153, 143, 143);
+    width: 15em;
+    height: 20em;
+    margin: auto;
+    border-radius: .7rem;
+    padding-top: 3em;
+    background-color: aliceblue;
+}
+
+.cardHost p{
+    margin-top: 1.5em;
+}
+
+.recipeNuser{
+    display: flex;
+}
