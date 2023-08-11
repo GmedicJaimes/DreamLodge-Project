@@ -38,8 +38,8 @@ const Navbar = () => {
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
-        </div>  
+{/*             <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
+ */}        </div>  
         <div className={styles.button}>
           {
             currentUser !== null 
