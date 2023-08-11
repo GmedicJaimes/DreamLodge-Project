@@ -21,16 +21,7 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value.toLowerCase();
-    setSearchValue(value);
-  }
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    filterPropertiesByName(searchValue)
-  };
+    
 
     return(
       <div className={styles.container}> 
@@ -38,7 +29,8 @@ const Navbar = () => {
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>
         <div className={styles.containerSearch}>
-            <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
+            <Searchbar/>
+            {/* <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/> */}
         </div>  
         <div className={styles.button}>
           {
