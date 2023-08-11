@@ -136,6 +136,7 @@ const Post = () => {
           imageFile: [],
           available: true,
         });
+        console.log(formData)
       } catch (error) {
         console.log(error);
       }
@@ -149,19 +150,48 @@ const Post = () => {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-
+  
     if (name === "imageFile") {
       setFormData((prevState) => ({
         ...prevState,
-        [name]: [...prevState.imageFile, ...Array.from(files)], // Añade los nuevos archivos a la lista existente
+        [name]: [...prevState.imageFile, ...Array.from(files)],
       }));
-    } else {
+    }else {
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
       }));
     }
   };
+  
+  const handlePriceChange = (event) => {
+    const value = event.target.value;
+    const newPrice = parseInt(value);
+  
+    if (!isNaN(newPrice) && newPrice <= 400 && value.length <= 3) {
+      setFormData((prevState) => ({
+        ...prevState,
+        price: newPrice,
+      }));
+    } else if (value === "") { // Permitir que el input esté vacío para que el usuario pueda borrar
+      setFormData((prevState) => ({
+        ...prevState,
+        price: "",
+      }));
+    } else if (newPrice > 400) {
+      setFormData((prevState) => ({
+        ...prevState,
+        price: 400,
+      }));
+    } else if (value.length > 3) {
+      setFormData((prevState) => ({
+        ...prevState,
+        price: parseInt(value.slice(0, 3)),
+      }));
+    }
+  };
+  
+  
 
   const handleTypes = (event) => {
     const typ = event.target.value;
@@ -397,7 +427,7 @@ const Post = () => {
                   </div>
                 </div>
               </div>
-              <div className={`${styles.formGroup} ${styles.secondClass}`}>
+              <div className={`${styles.formGroup} ${styles.secondClass} ${styles.servicesCont}`}>
                 <label>Services:</label>
                 <select
                   name="services"
@@ -425,41 +455,39 @@ const Post = () => {
               </div>
 
               <div className={`${styles.formGroup} ${styles.priceCont}`}>
-                <label>Price:</label>
-                <div className={styles.priceContainer}>
-                  <input
-                    type="range"
-                    name="price"
-                    value={formData.price}
-                    min="0"
-                    max="400"
-                    step="1"
-                    onChange={handleChange}
-                  />
-                  <div className={styles.inputRow}>
-                    <input
-                      type="number"
-                      name="price"
-                      value={formData.price}
-                      min="0"
-                      max="400"
-                      step="1"
-                      onChange={(event) => {
-                        const newValue = parseInt(event.target.value);
-                        if (!isNaN(newValue)) {
-                          handleChange({
-                            target: { name: "price", value: newValue },
-                          });
-                        }
-                      }}
-                      className={styles.customInput}
-                    />
-                    <span className={styles.spanPrice}>
-                      {formData.price} USD
-                    </span>
-                  </div>
-                </div>
-              </div>
+  <label>Price:</label>
+  <div className={styles.priceContainer}>
+    <input
+      type="range"
+      name="price"
+      value={formData.price}
+      min="0"
+      max="400"
+      step="1"
+      onChange={handleChange}
+    />
+    <div className={styles.inputRow}>
+    <input
+  type="number"
+  name="price"
+  value={formData.price}
+  min="0"
+  max="400"
+  step="1"
+  maxLength="3"
+  onChange={handlePriceChange}
+  className={`${styles.customInput} ${formData.price === 0 ? styles.grayText : ""}`}
+/>
+
+
+
+<span className={styles.spanPrice}>
+  {(formData.price * 1.05).toFixed(2)} USD added 5% commission
+</span>
+    </div>
+  </div>
+</div>
+
 
               <div className={`${styles.formGroup} ${styles.fileBox}`}>
                 <label htmlFor="imageFile" className={styles.customButton}>
