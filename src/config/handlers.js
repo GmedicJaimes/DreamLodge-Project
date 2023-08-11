@@ -55,24 +55,7 @@ const getUserProperties = async (targetUID) => {
   return userProperties;
 };
 
-// ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
-// const [email, setEmail] = useState("")
-// const [password, setPassword] = useState("");
-// const [propertiesList, setPropertiesList] = useState([]);
-// const [newPropName, setNewPropName] = useState("");
-// const [newPropRooms, setNewPropRooms] = useState(0);
-// const [newPropDisponible, setNewPropDisponible] = useState(false); 
-// const [newPropType, setNewPropType] = useState([]);
-// const [updateNameProp, setUpdateNameProp] = useState("");
-// const [file, setFile] = useState(null);
-// const [image, setImage] = useState([]);
-
 // funcion para SIGNIN normal
-
-
-
-
-
 export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -86,12 +69,6 @@ export const signIn = async (auth, email, password) => {
     throw error;
   }
 };
-
-
-
-
-
-
 
 // AGUARDA POR VERIFICAION DE EMAIL
 
@@ -115,8 +92,6 @@ export const signIn = async (auth, email, password) => {
 //       checkEmailVerification();
 //   });
 // };
-
-
 
 export const registerUserInFirestore = async (uid, user) => {
   const usersCollectionRef = collection(db, "users");
@@ -294,32 +269,7 @@ export const updateUser = async( user ) => {
     
   }
 }
-//funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-/*  export const getPropertiesList = async () => {
-    try {
-      const data = await getDocs(propertiesCollectionRef);
-      const filterData = await Promise.all(
-        data.docs.map(async (doc) => {
-          const propertyData = doc.data();
-          // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
-          if (propertyData.imageUrl) {
-            const imageUrlRef = ref(storage, propertyData.imageUrl);
-            propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-          }
-          return {
-            ...propertyData,
-            id: doc.id
-          };
-        })
-      );
-      console.log(filterData);
-      setPropertiesList(filterData);
-    } catch (error) {
-      console.log(error);
-    }
-  }; 
 
-   */
 
 // handlers.js
 export const getPropertiesList = async () => {
@@ -369,18 +319,6 @@ export const detailId = async (id) =>{
   }
 }
 
-//funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
-// export const uploadFile = async()=>{
-//     if(!file) return;
-//     const folderRef = ref(storage, `properties/${file.name + v4()}`);
-//     try {
-//       await uploadBytes(folderRef, file)
-//       console.log(folderRef)
-//       alert('la imagen fue enviada a la base de datos')
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   };
 
 
 /// PRUEBAAAAA CHRISTIAN
@@ -440,46 +378,7 @@ export const getPropertiesByType = async (type) => {
   }
 };
 
-// export const getPropertiesByType = async (type) => {
-//   try {
-//     if (!type) {
-//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
-//     }
 
-//     console.log(type)
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
-//     const properties = [];
-
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
-//     if(!properties.length){
-//     console.log('properties empty')
-//     }
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
-
-// export const getPropertiesByState = async (state) => {
-//   try {
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
-//     const properties = [];
-
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
-
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -528,4 +427,40 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//funcion para deshabilitar propiedades
+export const updateAvaible = async (id) => {
+  try {
+    const propertyDB = doc(db, 'properties', id);
+    await updateDoc(propertyDB, {
+      available: false 
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+//confirmar si el pago fue exitoso (yes, I refuse to use traditional backend)
+export const getPaymentStatus = async (preferenceId) => {
+  try {
+    // con esta solicitud pedimos informacion sobre el pago a don mercado
+    const response = await axios.get(`https://api.mercadopago.com/v1/payments/search`, {
+      params: {
+        external_reference: preferenceId //pasamos el id de la peticion de pago que obtuvimos en el componente
+      },
+      headers: {
+        Authorization: `Bearer TEST-1217239966605378-080822-11c74257002c2927c70422faaaaf3e94-1446217996` //esto hay que mandarlo a un .env
+      }
+    });
 
+    //si la respuesta de eso es mayor a cero, el pago se realizo
+    if (response.data.results.length > 0) {
+    
+      return response.data.results[0].status; //puede retornar 'approved', 'pending' o 'rejected'
+    } else {
+      //si no hay datos, el pago aun no se realizo y vamos a devolver pending
+      return 'pending'; 
+    }
+  } catch (error) {
+    console.error('Error payment status:', error);
+    return 'error'; 
+  }
+};

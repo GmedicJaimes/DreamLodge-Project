@@ -8,6 +8,7 @@ import axios from 'axios'
 import {useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
+import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
 const DetailPost = () => {  
   const { id } = useParams()
   const [property, setPropertyDetail] = useState([])
@@ -41,9 +42,31 @@ const DetailPost = () => {
 
     const handleBuy = async()=>{
         const id = await createPreference();
+        //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
         if (id){
-            setPreferenceId(id)
-            setIdTicket(id)
+            setPreferenceId(id);
+            setIdTicket(id);
+            //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
+            try {
+                await new Promise((resolve)=>{
+                    const intervalPay = setInterval(async()=>{
+                    const paymentStatus = await getPaymentStatus(id);
+                    if(paymentStatus === 'approved'){
+                        //si el pago fue aprovado se actualiza el avaible de "true" a "fals"
+                        updateAvaible(property.id);
+                        //cortamos el problema y resolvemos la promesa
+                        clearInterval(intervalPay)
+                        resolve()
+                    }else if(paymentStatus === 'rejected'){
+                        //si el pago es rechazado, se corda el intervalo sin actualizar
+                        clearInterval(intervalPay);
+                        resolve()
+                    }
+                    })
+                }, 10000)
+            } catch (error) {
+                console.error("Error en la obtencion del status de pago", error);
+            }
         }
     }
 

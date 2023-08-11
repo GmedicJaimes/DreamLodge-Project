@@ -26,9 +26,6 @@ export const isValidName = (name) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordRegex.test(password);
   };
-<<<<<<< HEAD
-  
-=======
   
 
 
@@ -135,4 +132,3 @@ export const isValidName = (name) => {
       console.log(error);
     }
   }; */
->>>>>>> ce6c7f290b22b88f64ceb0bd4a6406b3617a32c4
