@@ -236,7 +236,6 @@ export const createProp = async (formData, file) => {
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
-      tokenMp: formData.tokenMp,
       available:formData.available,
       userId: userId
     });
