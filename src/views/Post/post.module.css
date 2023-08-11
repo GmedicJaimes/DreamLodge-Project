@@ -38,6 +38,7 @@ header h2 {
 .formGroupUno {
   width: 50%;
   margin: 0 auto;
+  margin-top: -2rem;
 }
 .formGroup label {
   display: block;
@@ -68,8 +69,17 @@ textarea {
 }
 
 .rightContainer {
-  margin-top: -1rem;
+  margin-top: -1.2rem;
 }
+.servicesCont{
+    margin-right: 2rem;
+    width: 50%;
+}
+
+.servicesCont label {
+    margin-left: 0.5rem;
+}
+
 
 .formGroup input {
   width: 100%;
@@ -125,9 +135,10 @@ textarea {
 }
 
 .selectServ {
-  width: 92%;
-  margin-right: 4rem;
+  width: 100%;
+  margin-left: 0.5rem;
   height: 60px;
+
 }
 
 .opciones {
@@ -141,7 +152,7 @@ textarea {
 }
 
 .selectLocation {
-  width: 113%;
+  width: 117%;
   color: black;
 }
 
@@ -199,6 +210,10 @@ textarea {
   height: 100px;
 }
 
+.priceCont label{
+    margin-left: -0.5rem;
+}
+
 /* Agrega un pseudo-elemento ::after a las opciones seleccionadas */
 .selectedOption::after {
   content: "✔"; /* Aquí puedes usar el símbolo que prefieras */
@@ -231,6 +246,11 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
 }
+
+input[type="number"]{
+    margin-left: -0.3rem;
+}
+
 
 .imagePreviews {
   width: 53%;
