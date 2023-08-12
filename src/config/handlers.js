@@ -77,9 +77,8 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      await sendEmailVerification(userCredential.user);
-      console.log(sendEmailVerification(userCredential.user))
-      alert("Verification email sent!");
+      alert("Welcome to DreamLodge!");
+      // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
   } catch (error) {
@@ -89,28 +88,33 @@ export const signIn = async (auth, email, password) => {
 };
 
 
+
+
+
+
+
 // AGUARDA POR VERIFICAION DE EMAIL
 
-export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
-  return new Promise((resolve, reject) => {
-      let totalTime = 0;
+// export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
+//   return new Promise((resolve, reject) => {
+//       let totalTime = 0;
 
-      const checkEmailVerification = async () => {
-          await user.reload();
+//       const checkEmailVerification = async () => {
+//           await user.reload();
 
-          if (user.emailVerified) {
-              resolve();
-          } else if (totalTime >= timeout) {
-              reject(new Error('La verificación ha tardado demasiado'));
-          } else {
-              totalTime += interval;
-              setTimeout(checkEmailVerification, interval);
-          }
-      };
+//           if (user.emailVerified) {
+//               resolve();
+//           } else if (totalTime >= timeout) {
+//               reject(new Error('La verificación ha tardado demasiado'));
+//           } else {
+//               totalTime += interval;
+//               setTimeout(checkEmailVerification, interval);
+//           }
+//       };
 
-      checkEmailVerification();
-  });
-};
+//       checkEmailVerification();
+//   });
+// };
 
 
 
@@ -236,7 +240,7 @@ export const createProp = async (formData, file) => {
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
-      available:formData.available,
+      services:formData.services,
       userId: userId
     });
 
@@ -290,41 +294,42 @@ export const updateUser = async( user ) => {
   }
 }
 //funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-/*  export const getPropertiesList = async () => {
-    try {
-      const data = await getDocs(propertiesCollectionRef);
-      const filterData = await Promise.all(
-        data.docs.map(async (doc) => {
-          const propertyData = doc.data();
-          // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
-          if (propertyData.imageUrl) {
-            const imageUrlRef = ref(storage, propertyData.imageUrl);
-            propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-          }
-          return {
-            ...propertyData,
-            id: doc.id
-          };
-        })
-      );
-      console.log(filterData);
-      setPropertiesList(filterData);
-    } catch (error) {
-      console.log(error);
-    }
-  }; 
+  // handlers.js
+// export const getPropertiesList = async () => {
+//   try {
+//     const data = await getDocs(propertiesCollectionRef);
+//     // console.log("Fetching properties...", data)
+//     const filterData = await Promise.all(
+//       data.docs.map(async (doc) => {
+//         const propertyData = doc.data();
+//         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
+//         if (propertyData.imageUrl) {
+//           const imageUrlRef = ref(storage, propertyData.imageUrl);
+//           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+//         }
+//         return {
+//           ...propertyData,
+//           id: doc.id
+//         };
+//       })
+//     );
+//     // console.log(filterData);
+//     return filterData; // Asegúrate de retornar el array de propiedades
+//   } catch (error) {
+//     console.log(error);
+//     return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+//   }
+// };
 
-   */
-
-// handlers.js
-export const getPropertiesList = async () => {
+export const getPropertiesList = async (page, perPage) => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    // console.log("Fetching properties...", data)
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+
     const filterData = await Promise.all(
-      data.docs.map(async (doc) => {
+      data.docs.slice(startIndex, endIndex).map(async (doc) => {
         const propertyData = doc.data();
-        // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
@@ -335,13 +340,14 @@ export const getPropertiesList = async () => {
         };
       })
     );
-    // console.log(filterData);
-    return filterData; // Asegúrate de retornar el array de propiedades
+
+    return filterData;
   } catch (error) {
     console.log(error);
-    return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+    return [];
   }
 };
+
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
 export const detailId = async (id) =>{
@@ -461,7 +467,7 @@ export const getPropertiesByType = async (type) => {
 
 // export const getPropertiesByState = async (state) => {
 //   try {
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
+//     const querySnapshot = query(propertiesCollectionRef, where("location.state", "==", state));
 //     const properties = [];
 
 //     querySnapshot.forEach((doc) => {
@@ -495,20 +501,28 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = async (searchValue) => {
-  try {
-    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+// filtro para BUSCAR POR ESTADOS!!!!
+// export const filterPropertiesBySearch = async (searchValue) => {
+//   try {
+//     // console.log(searchValue);
+//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
+//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+//     // console.log(propertiesQuerySnapshot);
 
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
+//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+//       const propertyData = doc.data()
+//       return {
+//         ...propertyData,
+//         id: doc.id
+//       };
+//     })
 
-    return filteredProperties;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+//     return filteredProperties;
+//   } catch (error) {
+//     // console.error(error);
+//     return [];
+//   }
+// };
 
 //................................................................................................
 

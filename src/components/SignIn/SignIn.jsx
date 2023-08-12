@@ -6,7 +6,7 @@ import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { sendSignInLinkToEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import {
   isValidName,
   isCountrySelected,
@@ -156,13 +156,13 @@ const SignIn = () => {
 
         await registerUserInFirestore(uid, userToSave);
 
-        await sendSignInLinkToEmail(auth, email, {
+        await sendPasswordResetEmail(auth, email, {
           url: "http://localhost:5173/",
           handleCodeInApp: true
       });
       
       try {
-        await waitForEmailVerification(userCredential.user);
+        await sendPasswordResetEmail(userCredential.user);
         localStorage.setItem("email", email);
         alert(`¡Correo verificado exitosamente!`);
         navigate(`/home`);
