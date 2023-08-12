@@ -1,4 +1,4 @@
-import { getPropertiesByType, getPropertiesList } from "../../config/handlers";
+import { getPropertiesByType } from "../../config/handlers";
 import styles from "./Filters.module.css"
 import React, { useState } from 'react';
 
