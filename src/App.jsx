@@ -15,6 +15,7 @@ import Reserve from './views/Reserve/Reserve';
 import UserEditProperty from './views/UserEditProperty/UserEditProperty';
 import EditUser from "./views/EditUser/EditUser"
 import AceptedPay from './views/AceptedPay/AceptedPay';
+import TutorialPost from './views/TutorialPost/TutorialPost';
 
 function App() {
 
@@ -40,7 +41,8 @@ function App() {
         <Route path='/editpr/:id' element={<UserEditProperty/>}/>
         <Route path='/config/:id' element={<EditUser/>}/>
         <Route path='/post' element={<Post/>}/>  
-        <Route path='/nice' element={<AceptedPay/>}/>  
+        <Route path='/nice' element={<AceptedPay/>}/>
+        <Route path='/tutorial' element={<TutorialPost/>}/>
       </Routes>
     </div>
   )

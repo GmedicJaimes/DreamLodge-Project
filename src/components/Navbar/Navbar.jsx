@@ -75,7 +75,7 @@ const Navbar = () => {
             currentUser !== null 
             ? <div className={styles.button}>
                 <div className={styles.postBtn}>
-                  <Link to={"/post"} className={styles.post}>Post Lodge</Link>
+                  <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
                   
@@ -84,7 +84,7 @@ const Navbar = () => {
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {alert("loggeese primero parse")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {alert("You must be logged in")}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>
