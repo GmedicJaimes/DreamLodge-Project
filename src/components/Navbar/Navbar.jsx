@@ -13,7 +13,7 @@ const Navbar = () => {
   
 
   //? estado local para la busqueda por query
-  const [searchValue, setSearchValue] = useState(''); // Nuevo estado para el valor de búsqueda
+  // const [searchValue, setSearchValue] = useState(''); // Nuevo estado para el valor de búsqueda
  
   
   useEffect(() => {
@@ -78,7 +78,7 @@ const Navbar = () => {
                   <Link to={"/post"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
-                  <Dropdown/>
+                  
                 </div>
               </div>
             : 

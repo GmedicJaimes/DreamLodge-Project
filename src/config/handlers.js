@@ -270,34 +270,59 @@ export const updateUser = async( user ) => {
   }
 }
 
-
-// handlers.js
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    const startIndex = (page - 1) * perPage;
-    const endIndex = startIndex + perPage;
+    
+    // Mapea los documentos a sus datos y procesa la URL de la imagen si existe
+    const properties = await Promise.all(data.docs.map(async (doc) => {
+      const propertyData = doc.data();
+      
+      if (propertyData.imageUrl) {
+        const imageUrlRef = ref(storage, propertyData.imageUrl); // Corregir referencia a storage
+        propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+      }
+      
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    }));
 
-    const filterData = await Promise.all(
-      data.docs.slice(startIndex, endIndex).map(async (doc) => {
-        const propertyData = doc.data();
-        if (propertyData.imageUrl) {
-          const imageUrlRef = ref(storage, propertyData.imageUrl);
-          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-        }
-        return {
-          ...propertyData,
-          id: doc.id
-        };
-      })
-    );
-
-    return filterData;
+    return properties; // Devuelve la lista de propiedades procesadas
   } catch (error) {
     console.log(error);
-    return [];
+    throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
   }
 };
+
+// handlers.js
+// export const getPropertiesListPerPage = async (page, perPage) => {
+//   try {
+//     const data = await getDocs(propertiesCollectionRef);
+//     const startIndex = (page - 1) * perPage;
+//     const endIndex = startIndex + perPage;
+
+//     const filterData = await Promise.all(
+//       data.docs.slice(startIndex, endIndex).map(async (doc) => {
+//         const propertyData = doc.data();
+//         if (propertyData.imageUrl) {
+//           const imageUrlRef = ref(storage, propertyData.imageUrl);
+//           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+//         }
+//         return {
+//           ...propertyData,
+//           id: doc.id
+//         };
+//       })
+//     );
+
+//     return filterData;
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// };
 
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
