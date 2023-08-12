@@ -71,46 +71,46 @@ const EditUser = () => {
                 
             
             <form onSubmit={handleUpdate}>
-                <div className={styles.configBox}>
-                <h1>Account Info</h1>
-                <div>
-                    <label>First name: </label>
-                    <input
-                        className={styles.midInput} 
-                        type="text" name="name"
-                        value={user?.name}
-                        onChange={handleChange}
-                    />
+                <section className={styles.configBox}>
+                    <h1>Account Info</h1>
+                    <section>
+                        <label>First name: </label>
+                        <input
+                            className={styles.midInput} 
+                            type="text" name="name"
+                            value={user?.name}
+                            onChange={handleChange}
+                        />
 
-                    <label>Last name: </label>
-                    <input 
-                        className={styles.midInput}
-                        type="text" name="lastName"
-                        value={user?.lastName}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="">Display Name: </label>
-                    <input
-                    className={styles.bigInput} 
-                    type="text" 
-                    name="" id="" 
-                    placeholder="Display Name"/>
-                </div>
-                <div>
-                    <label>Email: </label>
-                    <input 
+                        <label>Last name: </label>
+                        <input 
+                            className={styles.midInput}
+                            type="text" name="lastName"
+                            value={user?.lastName}
+                            onChange={handleChange}
+                        />
+                    </section>
+                    <div>
+                        <label htmlFor="">Display Name: </label>
+                        <input
                         className={styles.bigInput} 
-                        type="text" name="email"
-                        value={user?.email}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button className={styles.btnBlue} onSubmit={handleUpdate}>Save Changes</button>
-                </div>
+                        type="text" 
+                        name="" id="" 
+                        placeholder="Display Name"/>
+                    </div>
+                    <div>
+                        <label>Email: </label>
+                        <input 
+                            className={styles.bigInput} 
+                            type="text" name="email"
+                            value={user?.email}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <button className={styles.btnBlue} onSubmit={handleUpdate}>Save Changes</button>
+                </section>
 
-                <div className={styles.configBox}>
+                <section className={styles.configBox}>
                     <h1>Avatar config: </h1>
                     <div className={styles.bigInput}>
                         <label htmlFor="">Image Link: </label>
@@ -123,11 +123,11 @@ const EditUser = () => {
                         />
                         <img src={user?.image} alt="Avatar" className={styles.avatar}/>
                     </div>
-                </div>
+                </section>
 
-                <div className={styles.configBox}>
+                <section className={styles.configBox}>
                     <h1>Profile Details</h1>
-                    <div>
+                    <section className={styles.fixInput}>
                         <label>Country: </label>
                         <input 
                         className={styles.midInput} 
@@ -142,7 +142,7 @@ const EditUser = () => {
                             name="" id="" 
                             placeholder="State"/>
                         
-                    </div>
+                    </section>
                     <div>
                         <label htmlFor="">Website: </label>
                         <input
@@ -159,7 +159,7 @@ const EditUser = () => {
                         name="" id="" 
                         placeholder="Bio"/>
                     </div>
-                    <div>
+                    <section>
                         <label htmlFor="">Lenguages: </label>
                         <input 
                             type="text" 
@@ -173,11 +173,11 @@ const EditUser = () => {
                                 )}) 
                             }
                         </select>
-                    </div>
+                    </section>
                     <button className={styles.btnBlue} onSubmit={handleUpdate}>Save Changes</button>
-                </div>
+                </section>
 
-                <div className={styles.configBox}>
+                <section className={styles.configBox}>
                     <h1>Security Settings</h1>
                     <div>
                         <label>uid</label>
@@ -195,7 +195,7 @@ const EditUser = () => {
                         <input type="password" name="" id="" placeholder="Repeat New Password"/>
                     </div>
                     <button className={styles.btnBlue} onSubmit={handleUpdate}>Save Changes</button>
-                </div>
+                </section>
 
                 
             </form>

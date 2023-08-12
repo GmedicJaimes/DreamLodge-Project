@@ -4,6 +4,7 @@ import styles from "./Navbar.module.css"
 import { auth } from "../../config/firebase";
 import { logOut } from "../../config/handlers";
 import { useState, useEffect } from "react";
+import Dropdown from "../Dropdown/Dropdown"
 
 
 const Navbar = () => {
