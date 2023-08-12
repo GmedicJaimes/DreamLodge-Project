@@ -465,7 +465,7 @@ export const getPropertiesByType = async (type) => {
 
 // export const getPropertiesByState = async (state) => {
 //   try {
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
+//     const querySnapshot = query(propertiesCollectionRef, where("location.state", "==", state));
 //     const properties = [];
 
 //     querySnapshot.forEach((doc) => {
@@ -499,20 +499,28 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = async (searchValue) => {
-  try {
-    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+// filtro para BUSCAR POR ESTADOS!!!!
+// export const filterPropertiesBySearch = async (searchValue) => {
+//   try {
+//     // console.log(searchValue);
+//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
+//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+//     // console.log(propertiesQuerySnapshot);
 
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
+//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+//       const propertyData = doc.data()
+//       return {
+//         ...propertyData,
+//         id: doc.id
+//       };
+//     })
 
-    return filteredProperties;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+//     return filteredProperties;
+//   } catch (error) {
+//     // console.error(error);
+//     return [];
+//   }
+// };
 
 //................................................................................................
 

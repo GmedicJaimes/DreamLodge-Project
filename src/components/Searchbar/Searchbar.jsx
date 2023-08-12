@@ -3,21 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons"; 
 import styles from "./SearchBar.module.css";
 
-const SearchBar = ({ value, handleChange, handleSearch }) => {
-  const [searchValue, setSearchValue] = useState("");
-
-  // const handleKeyPress = (event) => {
-  //   if (event.key === "Enter") {
-
-  //   }
-  // }
-
+const SearchBar = ({ value, handleChange, handleSubmit }) => {
+ 
   return (
     <div className={styles.searchContainer}>
       <input type="text" className={styles.inputSearch} placeholder="Buscar..." value={value}
-        onChange={handleChange}   />
+          onChange={handleChange} />
       <span className={styles.searchIcon}>
-        <FontAwesomeIcon icon={faSearch} onClick={handleSearch} />
+        <FontAwesomeIcon icon={faSearch}  onClick={handleSubmit}/>
       </span>
     </div>
   );
