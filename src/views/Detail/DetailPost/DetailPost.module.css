@@ -25,12 +25,17 @@
   font-weight: 500;
 }
 
+.headLeft h1 {
+  font-size: 3rem;
+}
+
 .headRigth{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items:flex-end;
   font-weight: 500;
+  width: 100px;
 }
 
 .headRigth button{
