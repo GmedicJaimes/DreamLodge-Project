@@ -3,7 +3,7 @@ import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getAvailableProperties, getPropertiesListPerPage, sortPropertiesByPrice } from "../../config/handlers";
+import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
 
 const Homepage = () => {
@@ -15,14 +15,6 @@ const Homepage = () => {
   const [hasMore, setHasMore] = useState(true); // Agrega esta línea para definir el estado hasMore
 
 
-  // useEffect(() => {
-  //   // Esta función obtiene las propiedades y actualiza el estado 'host'
-  //   async function fetchProperties() {
-  //     const properties = await getPropertiesList();
-  //     setHost(properties);
-  //   }
-  //   fetchProperties();
-  // }, []);
 
   useEffect(() => {
     async function fetchProperties() {
@@ -40,23 +32,23 @@ const Homepage = () => {
   }, []);
 
   
-  const loadMoreProperties = async () => {
-    // Simulamos una carga demorada para dar tiempo a ver el efecto
-    setTimeout(async () => {
-      const propertiesPerPage = 4; // Número de propiedades por página
-      const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
+  // const loadMoreProperties = async () => {
+  //   // Simulamos una carga demorada para dar tiempo a ver el efecto
+  //   setTimeout(async () => {
+  //     const propertiesPerPage = 4; // Número de propiedades por página
+  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
   
-      // Obtener propiedades adicionales según la página actual
-      const additionalProperties = await getPropertiesListPerPage(currentPage, propertiesPerPage);
+  //     // Obtener propiedades adicionales según la página actual
+  //     const additionalProperties = await getPropertiesListPerPage(currentPage, propertiesPerPage);
   
-      // Si no hay más propiedades para cargar, desactivamos el scroll infinito
-      if (additionalProperties.length === 0) {
-        setHasMore(false);
-      } else {
-        setHost((prevHost) => [...prevHost, ...additionalProperties]);
-      }
-    }, 750); //  ajustar el tiempo
-  };
+  //     // Si no hay más propiedades para cargar, desactivamos el scroll infinito
+  //     if (additionalProperties.length === 0) {
+  //       setHasMore(false);
+  //     } else {
+  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
+  //     }
+  //   }, 750); //  ajustar el tiempo
+  // };
   
 
 
@@ -82,12 +74,12 @@ const Homepage = () => {
       <div className={styles.containerHome}>
         <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
         <button onClick={handleAvailableProperties}>Available Lodgings</button>
-        <InfiniteScroll
+        {/* <InfiniteScroll
           dataLength={host.length}
           next={loadMoreProperties}
           hasMore={hasMore} // Controla si hay más elementos para cargar
           loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos 
-          >
+          > */}
         {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
         <div className={styles.skeletonContainer}>
   {loading ? (
@@ -96,7 +88,7 @@ const Homepage = () => {
     <Cards host={host} />
   )}
 </div>
-</InfiniteScroll>
+{/* </InfiniteScroll> */}
       </div>
     </div>
   )};
