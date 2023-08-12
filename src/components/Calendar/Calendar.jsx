@@ -12,9 +12,10 @@ import BedIcon from '@mui/icons-material/Bed';
 import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
 import { DateContext } from "../../Contex/DateContex";
 
-// Importa el contexto de fechas (si lo estás utilizando)
-// Importa cualquier otro módulo que necesites
+
+
 const Calendar = () => {
+
   // Obtener las fechas seleccionadas del contexto
     const { startDate, endDate, setDateRange } = useContext(DateContext);
     const today = dayjs();
@@ -22,6 +23,8 @@ const Calendar = () => {
     const [child, setChild] = useState(0);
     const [numberooms, setNumberRooms] = useState(1);
   
+
+
       // Calcula la fecha mínima para el segundo selector de fecha
     const secondDateMin = startDate ? startDate.add(1, 'day') : null;
     const isSecondPickerDisabled = !startDate;
@@ -49,15 +52,14 @@ const Calendar = () => {
         }
       };
     
+      const handleRoomsChange = (event) => {
+         const { value } = event.target
+         if (value === '' || (Number(value) > 0 && !value.includes('-'))) {
+             dispatch(countRooms(value))
+           }
+         };
   
-    // const handleRoomsChange = (event) => {
-    //   const { value } = event.target
-    //   if (value === '' || (Number(value) > 0 && !value.includes('-'))) {
-    //     dispatch(countRooms(value))
-    //   }
-    // };
-  
-    // useEffect(() => {
+      // useEffect(() => {
     //     if (startDate && endDate) {
     //       const total = countSelectedDays();
           
@@ -103,7 +105,8 @@ const Calendar = () => {
             alignContent: 'center',
             padding: '15px',
             margin: '20px',
-            marginBottom: '-22px'
+            marginBottom: '-22px',
+            width:'300px'
           }
         }>
           <Typography variant="h1" sx={
@@ -123,7 +126,9 @@ const Calendar = () => {
             backgroundColor: "#F3F3F7",
             height: 'auto',
             padding: '15px',
-            margin: '20px'
+            margin: '20px',
+            width:'300px'
+
           }
         }>
           <Grid container  justifyContent="start" marginTop={0} marginBottom={2}>

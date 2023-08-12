@@ -8,6 +8,9 @@ import axios from 'axios'
 import {useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
+
+
+
 const DetailPost = () => {  
   const { id } = useParams()
   const [property, setPropertyDetail] = useState([])
@@ -86,6 +89,7 @@ const DetailPost = () => {
   return(
     
       <div>
+
           <div className={styles.containerPost}>
               <header className={styles.head}>
                   <div className={styles.headLeft}>

@@ -558,17 +558,32 @@ export  const isPropertyAvailable = async (propertyId, startDate, endDate) => {
 };
 
 // Función para crear una reserva
-export const createBooking = async (propertyId, userId, startDate, endDate) => {
-  if (await isPropertyAvailable(propertyId, startDate, endDate)) {
-      const bookingRef = collection(db, "bookings");
-      await addDoc(bookingRef, {
-          propertyId,
-          userId,
-          startDate,
-          endDate
+export const createBooking = async (propertyId, bookingData) => {
+  try {
+    // Verificamos la disponibilidad primero
+    if (await isPropertyAvailable(propertyId, bookingData.startDate, bookingData.endDate)) {
+      
+      await addDoc(bookingsCollectionRef, {
+        propertyId: propertyId,
+        startDate: bookingData.startDate,
+        endDate: bookingData.endDate,
+        adults: bookingData.adults,
+        children: bookingData.children,
+        rooms: bookingData.rooms,
+        userId: auth?.currentUser?.uid,
       });
-      console.log('Booking created successfully');
-  } else {
+
+      alert('¡Reserva realizada!');
+
+    } else {
       console.log('Property is not available for the selected dates');
+      alert('La propiedad no está disponible en las fechas seleccionadas.');
+    }
+
+  } catch (error) {
+    console.log(error)
+    alert('Error al realizar la reserva.');
   }
 };
+
+
