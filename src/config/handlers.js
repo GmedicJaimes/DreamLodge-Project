@@ -240,8 +240,7 @@ export const createProp = async (formData, file) => {
       imageUrl: imageUrl,
       description: formData.description,
       price: formData.price,
-      available:formData.available,
-      services:formData.service,
+      services:formData.services,
       userId: userId
     });
 
