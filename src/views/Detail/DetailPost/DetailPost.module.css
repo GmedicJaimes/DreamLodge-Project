@@ -21,7 +21,7 @@
 
 .headLeft{
   text-align: left;
-  font-size: 1em;
+  font-size: .6em;
   font-weight: 500;
 }
 
@@ -43,7 +43,7 @@
   border: none;
   border-radius: 20px;
   background-color: #CD5A3E;
-  font-size: 1em;
+  font-size: .5em;
   font-weight: 500;
   margin-top: 5px;
   color: rgb(252, 252, 252);
