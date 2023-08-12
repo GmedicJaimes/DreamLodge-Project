@@ -270,9 +270,31 @@ export const updateUser = async( user ) => {
   }
 }
 
-
+const getPropertiesList = async () => {
+  try {
+    const data = await getDocs(propertiesCollectionRef);
+    const filterData = await Promise.all(
+      data.docs.map(async (doc) => {
+        const propertyData = doc.data();
+        // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
+        if (propertyData.imageUrl) {
+          const imageUrlRef = ref(storage, propertyData.imageUrl);
+          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+        }
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      })
+    );
+    console.log(filterData);
+    setPropertiesList(filterData);
+  } catch (error) {
+    console.log(error);
+  }
+};
 // handlers.js
-export const getPropertiesList = async () => {
+export const getPropertiesListPerPage = async (page, perPage) => {
   try {
     const data = await getDocs(propertiesCollectionRef);
     const startIndex = (page - 1) * perPage;

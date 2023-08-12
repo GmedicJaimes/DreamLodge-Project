@@ -3,7 +3,7 @@ import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getPropertiesList, getAvailableProperties, sortPropertiesByPrice } from "../../config/handlers";
+import { getAvailableProperties, getPropertiesListPerPage, sortPropertiesByPrice } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
 
 const Homepage = () => {
@@ -43,11 +43,11 @@ const Homepage = () => {
   const loadMoreProperties = async () => {
     // Simulamos una carga demorada para dar tiempo a ver el efecto
     setTimeout(async () => {
-      const propertiesPerPage = 8; // Número de propiedades por página
+      const propertiesPerPage = 4; // Número de propiedades por página
       const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
   
       // Obtener propiedades adicionales según la página actual
-      const additionalProperties = await getPropertiesList(currentPage, propertiesPerPage);
+      const additionalProperties = await getPropertiesListPerPage(currentPage, propertiesPerPage);
   
       // Si no hay más propiedades para cargar, desactivamos el scroll infinito
       if (additionalProperties.length === 0) {
@@ -55,7 +55,7 @@ const Homepage = () => {
       } else {
         setHost((prevHost) => [...prevHost, ...additionalProperties]);
       }
-    }, 500); //  ajustar el tiempo
+    }, 750); //  ajustar el tiempo
   };
   
 
