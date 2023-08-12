@@ -8,6 +8,8 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
+import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
+
 const DetailPost = () => {
   const { id } = useParams();
   const [property, setPropertyDetail] = useState([]);
@@ -50,25 +52,46 @@ const DetailPost = () => {
 
   const [idTicket, setIdTicket] = React.useState(0);
 
-  const handleBuy = async () => {
-    const id = await createPreference();
-    if (id) {
-      setPreferenceId(id);
-      setIdTicket(id);
-    }
-  };
+    const handleBuy = async()=>{
+        const id = await createPreference();
+        //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
+        if (id){
+            setPreferenceId(id);
+            setIdTicket(id);
+            //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
+            try {
+                await new Promise((resolve)=>{
+                    const intervalPay = setInterval(async()=>{
+                    const paymentStatus = await getPaymentStatus(id);
+                    if(paymentStatus === 'approved'){
+                        //si el pago fue aprovado se actualiza el avaible de "true" a "false"
+                        updateAvaible(property.id, preferenceId);
+                        //cortamos el problema y resolvemos la promesa
+                        clearInterval(intervalPay)
+                        resolve()
+                    }else if(paymentStatus === 'rejected'){
+                        //si el pago es rechazado, se corda el intervalo sin actualizar
+                        clearInterval(intervalPay);
+                        resolve()
+                    }
+                    })
+                }, 10000)
+            } catch (error) {
+                console.error("Error en la obtencion del status de pago", error);
+            }
+        };
+    };
 
-  React.useEffect(() => {
-    localStorage.setItem(
-      "propertyData",
-      JSON.stringify({
-        idTicket: idTicket,
-        property: property,
-        selectedDays: selectedDays,
-        totalPrice: totalPrice,
-      })
-    );
-  }, [property]);
+      React.useEffect(() => {
+        localStorage.setItem('propertyData', JSON.stringify({
+            idTicket: idTicket,
+            property: property,
+            selectedDays: selectedDays,
+            totalPrice: totalPrice,
+            propertyId: id
+        }));
+      }, [property]);
+  
 
   //CALCULAR EL PRECIO p/dias========================================
   const [selectedDays, setSelectedDays] = useState(1);
@@ -186,8 +209,8 @@ const DetailPost = () => {
           <div className={styles.containerServices}>
             <div className={styles.containerList}>
               <ul>
-                {property?.services?.map((serv) => {
-                  return <li>{serv}</li>;
+                {property?.services?.map((serv, i) => {
+                  return <li key={i}>{serv}</li>;
                 })}
               </ul>
             </div>
@@ -214,6 +237,7 @@ const DetailPost = () => {
     </div>
   );
 };
+
 export default DetailPost;
 
 // import styles from "./DetailPost.module.css"
