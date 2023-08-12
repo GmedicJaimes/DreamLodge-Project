@@ -25,7 +25,7 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
-
+console.log(user);
     return (
         <div>
             
@@ -56,11 +56,7 @@ const DetailUser = () => {
 
                 </div>
             </div>
-            <div className={styles.containerHead}>
-                        <Link to={`/config/${id}`}>
-                            <button className={styles.btnUser}>Edit user</button>
-                        </Link>
-                    </div>
+            
                 <div className={styles.hrHalfWay}> </div>
                 <h4>My Properties</h4>
             <div className={styles.bodyContainer}>

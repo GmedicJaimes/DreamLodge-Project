@@ -3,8 +3,9 @@ import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
 import React from 'react';
 import { auth } from "../../config/firebase";
-import { logOut, filterPropertiesByName } from "../../config/handlers";
+import { filterPropertiesByName } from "../../config/handlers";
 import { useState } from "react";
+import Dropdown from "../Dropdown/Dropdown";
 
 
 const Navbar = () => {
@@ -41,6 +42,7 @@ const Navbar = () => {
 {/*             <Searchbar onPropertiesFiltered={handlePropertiesFiltered}/>
  */}        </div>  
         <div className={styles.button}>
+        
           {
             currentUser !== null 
             ? <div className={styles.button}>
@@ -48,10 +50,7 @@ const Navbar = () => {
                   <Link to={"/post"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
-                  <Link to={`user/${auth.currentUser.uid}`} className={styles.post}>Mi perfil</Link>
-                </div>
-                <div className={styles.loginBtn}>
-                  <div className={styles.login} onClick={logOut}>LOG OUT</div>
+                  <Dropdown/>
                 </div>
               </div>
             : 
