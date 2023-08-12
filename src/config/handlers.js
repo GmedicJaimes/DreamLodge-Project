@@ -275,11 +275,12 @@ export const updateUser = async( user ) => {
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    // console.log("Fetching properties...", data)
+    const startIndex = (page - 1) * perPage;
+    const endIndex = startIndex + perPage;
+
     const filterData = await Promise.all(
-      data.docs.map(async (doc) => {
+      data.docs.slice(startIndex, endIndex).map(async (doc) => {
         const propertyData = doc.data();
-        // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
         if (propertyData.imageUrl) {
           const imageUrlRef = ref(storage, propertyData.imageUrl);
           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
@@ -290,13 +291,14 @@ export const getPropertiesList = async () => {
         };
       })
     );
-    // console.log(filterData);
-    return filterData; // Asegúrate de retornar el array de propiedades
+
+    return filterData;
   } catch (error) {
     console.log(error);
-    return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+    return [];
   }
 };
+
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
 export const detailId = async (id) =>{
@@ -399,20 +401,28 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = async (searchValue) => {
-  try {
-    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+// filtro para BUSCAR POR ESTADOS!!!!
+// export const filterPropertiesBySearch = async (searchValue) => {
+//   try {
+//     // console.log(searchValue);
+//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
+//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+//     // console.log(propertiesQuerySnapshot);
 
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
+//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+//       const propertyData = doc.data()
+//       return {
+//         ...propertyData,
+//         id: doc.id
+//       };
+//     })
 
-    return filteredProperties;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+//     return filteredProperties;
+//   } catch (error) {
+//     // console.error(error);
+//     return [];
+//   }
+// };
 
 //................................................................................................
 
