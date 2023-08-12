@@ -5,6 +5,8 @@ import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
 import { getPropertiesList, getAvailableProperties, sortPropertiesByPrice } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
+import Calendar from "../../components/Calendar/Calendar"
+
 
 const Homepage = () => {
   const [host, setHost] = useState([]);
@@ -80,7 +82,9 @@ const Homepage = () => {
   return (
     <div>
       <div className={styles.containerHome}>
+        <Calendar/>
         <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
+
         <button onClick={handleAvailableProperties}>Available Lodgings</button>
         <InfiniteScroll
           dataLength={host.length}
@@ -92,9 +96,9 @@ const Homepage = () => {
         <div className={styles.skeletonContainer}>
   {loading ? (
     Array.from({ length: host.length || 12 }).map((_, idx) => <SkeletonCard key={idx} />)
-  ) : (
-    <Cards host={host} />
-  )}
+    ) : (
+      <Cards host={host} />
+      )}
 </div>
 </InfiniteScroll>
       </div>

@@ -6,6 +6,7 @@ import About from "../../../components/About/About"
 import { getUserByUID } from '../../../config/handlers.js';
 import SkeletonCard from '../../../components/SkeletonCard/SkeletonCard';
 
+
 const DetailUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const DetailUser = () => {
 
     return (
         <div>
-            
+
             <div className={styles.containerInfo}>
                 <h1>My Account</h1>
                 <div className={styles.dataUser}>

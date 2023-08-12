@@ -537,4 +537,38 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
 
+
+// Función para verificar si una propiedad está disponible en las fechas seleccionadas
+export  const isPropertyAvailable = async (propertyId, startDate, endDate) => {
+  const bookingsRef = collection(db, "bookings");
+  const q = query(
+      bookingsRef, 
+      where("propertyId", "==", propertyId),
+      where("startDate", "<=", endDate),
+      where("endDate", ">=", startDate)
+  );
+  
+  const snapshot = await getDocs(q);
+  return snapshot.size === 0;  // si el tamaño es 0, la propiedad está disponible
+};
+
+// Función para crear una reserva
+export const createBooking = async (propertyId, userId, startDate, endDate) => {
+  if (await isPropertyAvailable(propertyId, startDate, endDate)) {
+      const bookingRef = collection(db, "bookings");
+      await addDoc(bookingRef, {
+          propertyId,
+          userId,
+          startDate,
+          endDate
+      });
+      console.log('Booking created successfully');
+  } else {
+      console.log('Property is not available for the selected dates');
+  }
+};
