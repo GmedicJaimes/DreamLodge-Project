@@ -587,3 +587,80 @@ export const createBooking = async (propertyId, bookingData) => {
 };
 
 
+// Función para obtener las propiedades libres en un rango de fechas
+export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
+  try {
+    const bookingsRef = collection(db, "bookings");
+    const propertiesRef = collection(db, "properties");
+
+    // Obtener todas las reservas que coincidan con el rango de fechas
+    const rangeQuery = query(
+        bookingsRef,
+        where("startDate", "<=", endDate),
+        where("endDate", ">=", startDate)
+    );
+
+    const querySnapshot = await getDocs(rangeQuery);
+    const bookedPropertyIds = querySnapshot.docs.map(doc => doc.data().propertyId);
+
+    // Obtener todas las propiedades
+    const allPropertiesSnapshot = await getDocs(propertiesRef);
+    const allProperties = allPropertiesSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // Filtrar las propiedades que no están reservadas
+    const availableProperties = allProperties.filter(property => !bookedPropertyIds.includes(property.id));
+
+    console.log(availableProperties);
+    return availableProperties;
+
+  } catch (error) {
+    console.error('Error fetching available properties in range:', error);
+    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+  }
+};
+
+
+
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+
+// Función para obtener las propiedades filtradas por habitaciones
+export const fetchFilteredProperties = async (numberOfRooms) => {
+  try {
+    const propertiesCollectionRef = collection(db, 'properties');
+    
+    const filteredPropertiesQuery = query(propertiesCollectionRef, where('stances.rooms', '==', Number(numberOfRooms)));
+    const querySnapshot = await getDocs(filteredPropertiesQuery);
+    
+    const filteredProperties = querySnapshot.docs.map(doc => doc.data());
+    console.log(filteredProperties);
+
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching filtered properties:', error);
+    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+  }
+};
+
+
+export const fetchFilteredGuests = async (numberOfGuests) => {
+  try {
+    const propertiesCollectionRef = collection(db, 'properties');
+    
+    const filteredGuests = query(propertiesCollectionRef, where('stances.guest', '==', Number(numberOfGuests)));
+    const querySnapshot = await getDocs(filteredGuests);
+    
+    const filteredPropertiesGuests = querySnapshot.docs.map(doc => doc.data());
+    console.log(filteredPropertiesGuests);
+
+    return filteredPropertiesGuests;
+  } catch (error) {
+    console.error('Error fetching filtered guests:', error);
+    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+  }
+};
