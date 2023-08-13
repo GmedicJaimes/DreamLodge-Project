@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css"
 import { auth } from "../../config/firebase";
 import { logOut } from "../../config/handlers";
 import { useState, useEffect } from "react";
-import Dropdown from '../Dropdown/Dropdown'
+import Dropdown from "../Dropdown/Dropdown"
 
 
 const Navbar = () => {
@@ -78,7 +78,7 @@ const Navbar = () => {
                   <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
-                  
+                  <Dropdown></Dropdown>
                 </div>
               </div>
             : 
