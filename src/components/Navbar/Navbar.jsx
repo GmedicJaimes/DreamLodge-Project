@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom"
 import styles from "./Navbar.module.css"
 import { auth } from "../../config/firebase";
+import React from "react";
+import Dropdown from "../Dropdown/Dropdown"
 import { logOut, getPropertiesList } from "../../config/handlers";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
   
-  useEffect(() => {
+  React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
     });

@@ -305,3 +305,17 @@ margin-right: 51rem;
     overflow: hidden;
     width: 100%;
 } */
+
+.configu{
+  width: 20px;
+  position: relative;
+  top: 2px;
+  left: 9.2em;
+}
+
+.configu:hover{
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  background-color: rgb(0, 238, 255);
+  border-radius: 50%;
+}
