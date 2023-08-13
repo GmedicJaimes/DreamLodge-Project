@@ -25,49 +25,11 @@ const Navbar = () => {
   }, [auth]);
 
 
-  // //* funcion para guardar el valor de la busqueda
-  // function handleChange(event) {
-  //   event.preventDefault()
-
-  //   console.log('escribo cosas');
-  //   const value = event.target.value;
-  //   console.log(value);
-  //   setSearchValue(value)
-
-  //   // const searchLocation = async () => {
-  //   //   const search = await filterPropertiesBySearch(searchValue)
-  //   //   setSearchValue(search)
-  //   // }
-  //   // searchLocation();
-  // }
-
-  // function handleSubmit(searchValue){
-  //   console.log('madafucka')
-  //   const searchLocation = async () => {
-  //     const search = await getPropertiesByState(searchValue)
-  //     setSearchValue(search)
-  //   }
-  //   searchLocation();
-  // }
-
-  // //* useEffect para la busqueda por query
-  // useEffect(() => {
-  //   const searchLocation = async () => {
-  //     const search = await getPropertiesByState(searchValue)
-  //     setSearchValue(search)
-  //   }
-  //   searchLocation();
-  // })
 
     return(
       <div className={styles.container}> 
         <div className={styles.containertwo}>
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
-        </div>
-        <div className={styles.containerSearch}>
-            <Searchbar/>
-            {/* <Searchbar handleChange={handleChange} handleSubmit={handleSubmit}/> */}
-      
         </div>  
         <div className={styles.button}>
         
@@ -77,7 +39,7 @@ const Navbar = () => {
                 <div className={styles.postBtn}>
                   <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
-                <div className={styles.postBtn}>
+                <div className={styles.user}>
                   <Dropdown></Dropdown>
                 </div>
               </div>
