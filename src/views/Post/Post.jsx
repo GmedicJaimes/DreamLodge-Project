@@ -309,7 +309,7 @@ const Post = () => {
                     formData.location.state === "" ? styles.grayText : ""
                   }`}
                 >
-                  <option value="">Choose State</option>
+                  <option value="" disabled selected hidden>Choose State</option>
                   {Object.keys(US_STATE_CITIES).map((state) => (
                     <option key={state} value={state}>
                       {state}
@@ -324,7 +324,7 @@ const Post = () => {
                     formData.location.city === "" ? styles.grayText : ""
                   }`}
                 >
-                  <option value="">Choose City</option>
+                  <option value="" disabled selected hidden>Choose City</option>
 
                   {cities.map((city) => (
                     <option key={city} value={city}>
