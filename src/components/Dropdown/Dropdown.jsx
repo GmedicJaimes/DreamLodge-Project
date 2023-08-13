@@ -29,9 +29,9 @@ const Dropdown = () => {
                     <Link to={`/config/${auth.currentUser.uid}`}>
                         <DropDownItem img={edit} text={"Edit Profile"}/>
                     </Link>
-                    <DropDownItem img={msg} text={"Inbox"}/>
+                    {/* <DropDownItem img={msg} text={"Inbox"}/>
                     <DropDownItem img={settings} text={"Settings"}/>
-                    <DropDownItem img={help} text={"Help"}/>
+                    <DropDownItem img={help} text={"Help"}/> */}
                     <DropDownItem img={logout} onClick={logOut} text={"Log out"}/>
                 </ul>
             </div>
