@@ -1,20 +1,12 @@
 import { Link } from "react-router-dom"
-import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
 import { auth } from "../../config/firebase";
-import { logOut } from "../../config/handlers";
-import { useState, useEffect } from "react";
-import Dropdown from "../Dropdown/Dropdown"
-
+import { useState, useEffect } from 'react'
+import { logOut, getPropertiesList } from "../../config/handlers";
+import Dropdown from "../Dropdown/Dropdown";
 
 const Navbar = () => {
-  //? estado local par el login del usuario
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
-  
-
-  //? estado local para la busqueda por query
-  // const [searchValue, setSearchValue] = useState(''); // Nuevo estado para el valor de búsqueda
- 
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -58,4 +50,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

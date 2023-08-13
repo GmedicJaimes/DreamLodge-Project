@@ -405,7 +405,46 @@ export const getPropertiesByType = async (type) => {
   }
 };
 
+// export const getPropertiesByType = async (type) => {
+//   try {
+//     if (!type) {
+//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
+//     }
 
+//     console.log(type)
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+//     if(!properties.length){
+//     console.log('properties empty')
+//     }
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
+
+// export const getPropertiesByState = async (state) => {
+//   try {
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -426,28 +465,20 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR ESTADOS!!!!
-// export const filterPropertiesBySearch = async (searchValue) => {
-//   try {
-//     // console.log(searchValue);
-//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
-//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-//     // console.log(propertiesQuerySnapshot);
+// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
+export const filterPropertiesByName = async (searchValue) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-//       const propertyData = doc.data()
-//       return {
-//         ...propertyData,
-//         id: doc.id
-//       };
-//     })
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
 
-//     return filteredProperties;
-//   } catch (error) {
-//     // console.error(error);
-//     return [];
-//   }
-// };
+    return filteredProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
 //................................................................................................
 
@@ -461,6 +492,58 @@ export const sortPropertiesByPrice = (properties, ascending) => {
     }
   });
 };
+
+//FUNCIONES PARA FILTROS STATE Y CITY........................................................
+export const filterPropertiesByState = async (state) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
+    console.log(propertiesQuery); // Convierte a cadena antes de imprimir
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    console.log(filteredProperties)
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state:', error);
+    return [];
+  }
+};
+
+export const filterByStateAndCity = async (state, city) => {
+  try {
+    let propertiesQuery = query(propertiesCollectionRef);
+
+    if (state && city) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
+    } else if (state) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state));
+    }
+
+    console.log(city); 
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state and city:', error);
+    return [];
+  }
+};
+
 
 //funcion para deshabilitar propiedades
 export const updateAvaible = async(id, preferenceId) => {
