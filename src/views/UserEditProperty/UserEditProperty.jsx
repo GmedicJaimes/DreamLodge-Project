@@ -83,22 +83,16 @@ const UserEditProperty = () => {
     }
 
     return (
-        <div>
-            <div className={styles.bigContainer}>
-                <h1>Editar propiedad</h1>
-                <form onSubmit={handleUpdate}>
-                    <button onClick={editarButton}>Editar</button>
-
-                    <h1>Name:</h1>
-                    <input
-                        type="text"
-                        name="name"
-                        value={property?.name}
-                        disabled={edit}
-                        onChange={handleChange}
-                    />
-
-                    <p>Location:</p>
+      <div className={styles.containerEdit}>
+          <div className={styles.bigContainer}>
+            <div className={styles.title}>
+              <h1>Edit Property</h1>
+              <button onClick={editarButton}>Edit</button>
+            </div>
+              <form onSubmit={handleUpdate} className={styles.form}>
+                <div className={styles.sectionOne}>
+                    <p>Name:</p>
+                    <input type="text" name="name" value={property?.name} disabled={edit} onChange={handleChange}/>
                     <p>City: </p>
 
                     <input
@@ -124,52 +118,61 @@ const UserEditProperty = () => {
                         disabled={edit}
                     />
 
-                    <div className={styles.formGroup}>
-                        <div className={styles.roomsBox}>
-                            <div className={styles.roomSelect}>
-                                <label>Guests:</label>
-                                <select name="guest" value={property?.stances?.guest} onChange={handelRooms} disabled={edit} >
-                                    {opciones.map((op) => (
-                                        <option key={op} value={op}>
-                                            {op}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className={styles.roomSelect}>
-                                <label>Rooms:</label>
-                                <select name="rooms" value={property?.stances?.rooms} onChange={handelRooms} disabled={edit} >
-                                    {opciones.map((op) => (
-                                        <option key={op} value={op}>
-                                            {op}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className={styles.roomSelect}>
-                                <label>Bathrooms:</label>
-                                <select name="bathrooms" value={property?.stances?.bathrooms} onChange={handelRooms} disabled={edit} >
-                                    {opciones.map((op) => (
-                                        <option key={op} value={op}>
-                                            {op}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className={styles.roomSelect}>
-                                <label>Beds:</label>
-                                <select name="beds" value={property?.stances?.beds} onChange={handelRooms} disabled={edit} >
-                                    {opciones.map((op) => (
-                                        <option key={op} value={op}>
-                                            {op}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div></div>
+                  
+                    <div className={styles.containerRooms}>
+                      <div className={styles.selectOne}>
+                        <div className={styles.roomSelect}>
+                            <label>Guests:</label>
+                            <select name="guest" value={property?.stances?.guest} onChange={handelRooms} disabled={edit} >
+                                {opciones.map((op) => (
+                                    <option key={op} value={op}>
+                                        {op}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={styles.roomSelect}>
+                            <label>Rooms:</label>
+                            <select name="rooms" value={property?.stances?.rooms} onChange={handelRooms} disabled={edit} >
+                                {opciones.map((op) => (
+                                    <option key={op} value={op}>
+                                        {op}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                      </div>
 
-                    <p>Description: </p>
-                    <input
+
+                      <div className={styles.selectTwo}>
+                         <div className={styles.roomSelect}>
+                            <label>Bathrooms:</label>
+                            <select name="bathrooms" value={property?.stances?.bathrooms} onChange={handelRooms} disabled={edit} >
+                                {opciones.map((op) => (
+                                    <option key={op} value={op}>
+                                        {op}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={styles.roomSelect}>
+                            <label>Beds:</label>
+                            <select name="beds" value={property?.stances?.beds} onChange={handelRooms} disabled={edit} >
+                                {opciones.map((op) => (
+                                    <option key={op} value={op}>
+                                        {op}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>         
+                      </div>
+                        
+                    </div>
+                      
+                </div>
+                <div className={styles.sectionTwo}>
+                <p>Description: </p>
+                    <textarea
                         type="text"
                         name="description"
                         value={property?.description}
@@ -179,17 +182,16 @@ const UserEditProperty = () => {
 
                     <p>Price: </p>
                     <input
-                        type="text"
+                        type="number"
                         name="price"
                         value={property?.price}
                         disabled={edit}
                         onChange={handleChange}
                     />
 
-                    <div className={styles.formGroup}>
-                        <label>Services:</label>
-                        <input type="text" value={property?.services} readOnly />
-                        <div className={styles.forcedLine}></div>
+                    <div className={styles.selectServices}>
+                        <p>Services:</p>
+                        {/* <input type="text" value={property.services} readOnly /> */}
                         <select name="services" value={property?.services} onChange={handleServices}>
                             {
                                 servicesAvailable.map((srv) => {
@@ -199,6 +201,7 @@ const UserEditProperty = () => {
                                 })
                             }
                         </select>
+                          <p>{property.services}</p>
                     </div>
 
                     {/* <p>Imagen:</p>
@@ -210,23 +213,24 @@ const UserEditProperty = () => {
                         onChange={handleChange}
                     />
                     <img src={property?.imageUrl} alt="" /> */}
-
                     <p>Disponibilidad: </p>
-                    <input
-                        type="text"
-                        name="available"
-                        value={property?.available}
-                        readOnly
-                    />
-                    <button onClick={handleAvailable}>
-                        {/* {property && (
-                            {property.disponible ? "false" : "true"}
-                        )} */}
-                        {property?.available ? "false": "true "}
-                    </button>
-                    <br />
-                    <button type="submit">Upgrade</button>
+                    <div className={styles.available}>
+                      <input
+                          type="text"
+                          name="available"
+                          value={property?.available}
+                          readOnly
+                      />
+                      <button onClick={handleAvailable} className={styles.button}>
+                          {property?.available ? "False": "True "}
+                      </button>
+                    </div>
+                    
+                                     
+                </div>
+                    
                 </form>
+                <button type="submit" className={styles.buttonSubmit}>Upgrade</button> 
             </div>
         </div>
     )

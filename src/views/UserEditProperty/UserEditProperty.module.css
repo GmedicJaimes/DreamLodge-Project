@@ -1,92 +1,190 @@
-.mainContainer {
-    border-radius: 2em;
-    box-shadow: 0 7px 20px 5px #52525288;
+.containerEdit{
+  display: flex;
+  padding-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigContainer {
+    border-radius: 10px;
+    box-shadow: 0 7px 20px 5px #29292988;
     background-color: #EADCCF;
-    width: 500px;
-    margin: auto;
-    margin-bottom: 2em;
+    width: 1000px;
+    height: 600px;
+    margin-top: 10px;
+    padding-top: 20px;
 }
 
-.mainContainer header{
-    padding: 16px;
-    margin-top: 1em;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 18px;
-    color: #333;
+.title{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.mainContainer form{
-    padding: 2.1em;
-}
-
-.formGroup {
-    margin: 0 1em 10px 1em;
-}
-
-.formGroup label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 0.8;
-    text-align: start;
-    /* margin-left: 1em */
-}
-
-textarea{
-    width: 90%;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    background-color: #f4e9de;
-}
-
-.formGroup input {
-    width: 100%;
-    padding: 1em;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    max-width: 280px;
-    background-color: #f4e9de;
-}
-
-.btn {
+.title button {
     padding: 11px 95px;
-    margin: 1em 1.2em;
-    font-size: 13px;
+    margin-left: 2em;
+    font-size: 1em;
+    font-family: 'Lexend Deca';
+    font-weight: 500;
     border: none;
     border-radius: 0.2em;
     background-color: #CD5A3E;
     color: #fff;
-    cursor: pointer
 }
 
-.foot {
-    font-size: 0.8em;
-    color: #959595;
+.title button:hover {
+  background-color: #b94225;
+  cursor: pointer;
 }
 
-.linkfoot {
-    color: #CD5A3E;
-    font-weight: 900;
+.form{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.sectionOne{
+  width: 50%;
+  height: 480px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.forcedLine{
-    height: 6px;
+.sectionOne p {
+  font-size: 1.4em;
+  font-family: 'Lexend Deca';
+  text-align: left;
+  margin-top: 5px;
+}
+.sectionOne input{
+  display: flex;
+  width: 95%;
+  height: 30px;
+  padding-left: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+.containerRooms{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectOne{
+  width: 50%;
+  flex-direction: row;
+}
+
+.selectTwo{
+  width: 50%;
 }
 
 .roomSelect{
-    width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+  font-family: 'Lexend Deca';
+}
+.roomSelect label {
+  margin-top: 10px;
+}
+.roomSelect select{
+  color: #131313;
+  font-size: .7em;
+  cursor: pointer;
+  outline: none;
 }
 
-.roomsBox{
-    display: flex;
-    justify-content: space-evenly;
+.sectionTwo{
+  width: 50%;
+  height: 480px;
+  margin-right: 5%;
 }
 
-.inputContainer {
-    margin: 0 5em;
+.sectionTwo p {
+  font-size: 1.4em;
+  font-family: 'Lexend Deca';
+  text-align: left;
+  margin-top: 5px;
+}
+.sectionTwo textarea{
+  border: none;
+  outline: none;
+  width: 405px;
+  height: 150px;
+  font-size: 1em;
+  font-family: 'Lexend Deca';
+  font-weight: 300;
+
+}
+
+.sectionTwo input{
+  display: flex;
+  width: 95%;
+  height: 30px;
+  padding-left: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+.selectServices select{
+  color: #131313;
+  font-size: 1em;
+  cursor: pointer;
+  outline: none;
+}
+
+.available{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #b94225; */
+}
+
+.button {
+  width: 100px;
+  height: 33px;
+  margin-left: 2em;
+  font-size: 1em;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
+  border: none;
+  border-radius: 0.2em;
+  background-color: #CD5A3E;
+  color: #fff;
+}
+
+.button:hover {
+background-color: #b94225;
+cursor: pointer;
+}
+
+.buttonSubmit {
+  padding: 11px 95px;
+  margin-left: 2em;
+  font-size: 1em;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
+  border: none;
+  border-radius: 0.2em;
+  background-color: #CD5A3E;
+  color: #fff;
+}
+
+.buttonSubmit:hover {
+background-color: #b94225;
+cursor: pointer;
 }
