@@ -117,7 +117,20 @@ const regex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         </form>
       ) : (
-        <h1>ya esta loggeado parse</h1>
+        <div>
+        <h1>You are logged in yet, go to post or rent</h1>
+        <Link to="/tutorial">
+          <button className={styles.btnCreatePost}>Create a post now</button>
+        </Link>
+        <Link to="/home">
+          <button className={styles.btnRentHouse}>Go to rent a house</button>
+        </Link>
+        <Link to="/">
+        <button className={styles.btnLogout} onClick={handleLogout}>
+        Logout
+        </button>
+        </Link>
+      </div>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getPropertiesList, getAvailableProperties, sortPropertiesByPrice } from "../../config/handlers";
+import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
 
 const Homepage = () => {
@@ -13,14 +13,6 @@ const Homepage = () => {
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   // Esta función obtiene las propiedades y actualiza el estado 'host'
-  //   async function fetchProperties() {
-  //     const properties = await getPropertiesList();
-  //     setHost(properties);
-  //   }
-  //   fetchProperties();
-  // }, []);
 
   useEffect(() => {
     async function fetchProperties() {

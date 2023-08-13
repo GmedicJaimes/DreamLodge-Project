@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom"
 import styles from "./Navbar.module.css"
-import React from 'react';
 import { auth } from "../../config/firebase";
 import { logOut, getPropertiesList } from "../../config/handlers";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
   
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
     });
@@ -23,23 +22,21 @@ const Navbar = () => {
         <div className={styles.containerSearch}>
       </div>
         <div className={styles.button}>
+        
           {
             currentUser !== null 
             ? <div className={styles.button}>
                 <div className={styles.postBtn}>
-                  <Link to={"/post"} className={styles.post}>Post Lodge</Link>
+                  <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
-                  <Link to={`user/${auth.currentUser.uid}`} className={styles.post}>Mi perfil</Link>
-                </div>
-                <div className={styles.loginBtn}>
-                  <div className={styles.login} onClick={logOut}>LOG OUT</div>
+                  <Dropdown></Dropdown>
                 </div>
               </div>
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {alert("loggeese primero parse")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {alert("You must be logged in")}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>

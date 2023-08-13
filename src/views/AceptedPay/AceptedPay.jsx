@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import About from "../../components/About/About"
 import { getUserByUID } from "../../config/handlers";
 
+import {getPaymentStatus, updateAvaible} from '../../config/handlers';
+
 const AceptedPay = () => {
 
     const [ dataRecipe, setDataRecipe ] = React.useState({})
@@ -15,8 +17,11 @@ const AceptedPay = () => {
             const parsedRecipe = JSON.parse(savedRecipe)
             setDataRecipe(parsedRecipe)
             const user = await getUserByUID(parsedRecipe.property.userId)
-            setUserData(user)
-        }
+            setUserData(user);
+            console.log(parsedRecipe.property.uui)
+
+            await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
+        };
     }, [])
 
     return(
