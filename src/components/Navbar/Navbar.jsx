@@ -4,7 +4,6 @@ import { auth } from "../../config/firebase";
 import React from "react";
 import Dropdown from "../Dropdown/Dropdown"
 import { logOut, getPropertiesList } from "../../config/handlers";
-import Dropdown from "../Dropdown/Dropdown";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);

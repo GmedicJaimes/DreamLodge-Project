@@ -123,7 +123,7 @@ const DetailPost = () => {
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>
-            <h5 className={styles.locationD}>{property?.location?.city}, {property?.location?.state}</h5>
+            <h5 className={styles.location}>{property?.location?.city}, {property?.location?.state}, {property?.location?.adress}</h5>
           </section>
           <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
@@ -134,13 +134,13 @@ const DetailPost = () => {
           </section>
         </header>
         <section className={styles.imageRelative}>
-        <button onClick={prevImage} className={styles.prevButton}>←</button>
+        <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button>
         <img
               src={property?.imageUrl && property.imageUrl[activeImage]}
               alt={property?.imageUrl}
               className={styles.imageCarrousel}
             />
-            <button onClick={nextImage} className={styles.nextButton}>→</button>
+            <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
         </section>
         <div className={styles.falseLine}></div>
         <section className={styles.overviewRating}>
