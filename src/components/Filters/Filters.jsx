@@ -59,18 +59,18 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
             <div className={styles.filter}>
                 {/* Selector de estado */}
                 {/* <select onChange={(e) => handleStateSelect(e.target.value)}>
-                    <option value="All">Seleccionar estado</option>
+                    <option value="All" disabled selected hidden>Seleccionar estado</option>
                     {availableStates.map((state) => (
                         <option value={state} key={state}>
                             {state}
                         </option>
                     ))}
-                </select> */}
+                </select>  */}
 
                 {/* Selector de ciudad */}
                 {/* {selectedState && (
                     <select onChange={(e) => handleCitySelect(e.target.value)}>
-                        <option value="All">Seleccionar ciudad</option>
+                        <option value="All" disabled selected hidden>Seleccionar ciudad</option>
                         {US_STATE_CITIES[selectedState].map((city) => (
                             <option value={city} key={city}>
                                 {city}

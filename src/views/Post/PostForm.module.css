@@ -183,6 +183,7 @@
 .description textarea{
     background-color: #f4e9de;
     margin-top: 5px;
+    resize: none;
 }
 
 .priceBox label{

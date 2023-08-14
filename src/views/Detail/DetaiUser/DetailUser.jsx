@@ -5,6 +5,7 @@ import styles from "./DetailUser.module.css"
 import About from "../../../components/About/About"
 import { getUserByUID } from '../../../config/handlers.js';
 import SkeletonCard from '../../../components/SkeletonCard/SkeletonCard';
+import config from "../../../assets/ajustes.png"
 
 const DetailUser = () => {
     const [user, setUser] = useState(null);
@@ -76,8 +77,8 @@ console.log(user);
                         <div className={styles.image}>
                             <img src={property.imageUrl} alt="pic of the house" />
                         </div>
-                        <Link to={`/editpr/${property.id}`} >
-                            <button>Edit Property</button>
+                        <Link to={`/editpr/${property.id}`}>
+                           <img className={styles.configu} src={config} alt="" />
                         </Link>
                         <section className={styles.info}>
                             <h3>{property.location.state}, {property.location.city}</h3>

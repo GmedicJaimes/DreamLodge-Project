@@ -1,642 +1,224 @@
-.containerPost{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 70%;
-  margin: 0 auto;
-
+.bigContainerDetail {
+  background-color: rgb(252, 244, 235);
+  margin: auto;
+  margin-top: 3em;
+  width: 60em;
 }
 
-.head{
+.bigContainerDetail header{
   display: flex;
-  flex-direction: row;
+  padding: 2.5em;
   justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  margin-top: 5%;
-  margin-bottom: 2%;
 }
 
-.headLeft{
-  text-align: left;
-  font-size: .6em;
-  font-weight: 500;
-}
-
-.headLeft h1 {
-  font-size: 3rem;
-}
-
-.headRigth{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items:flex-end;
-  font-weight: 500;
-  width: 100px;
-}
-
-.headRigth button{
-  padding: 8px 30px;
-  border: none;
-  border-radius: 20px;
-  background-color: #CD5A3E;
-  font-size: .5em;
-  font-weight: 500;
-  margin-top: 5px;
-  color: rgb(252, 252, 252);
-  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
-}
-
-.headRigth button:hover{
+.priceDiv{
+  background-color: rgba(226, 148, 3, 0.918);
+  border-radius: 0.5em;
+  color: white;
+  font-weight: 700;
+  font-size: .7em;
   cursor: pointer;
+  padding: 9px;
 }
 
-.line{
-  background-color: #CD5A3E;
+.tittleD{
+  font-size: 1.2em;
 }
 
-.imgOne {
-  margin: auto; 
-  display: block; 
+.locationD {
+  color: gray;
+  font-size: 0.7em;
+  text-align: start;
 }
 
-
-.imageContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  height: 504px;
-  width: 960px;
-  margin: 0 auto;
+.imageCarrousel{
+  width: 80%;
 }
 
-
-
-
-.image img{
-  background-color: transparent;
-  width: 100%;
-  height: 100%;
-  padding-right: 10px;
+.falseLine{
+  height: 3px;
+  background-color: rgb(224, 207, 151);
+  width: 85%;
+  margin: auto;
+  margin-top: 1.3em;
+  margin-bottom: 1.3em;
+  border-radius: 1em;
 }
 
-.division{
-  height: 200px;
-
-}
-section div h2, section h2{
-  margin: 1rem;
-  text-decoration: underline;
-}
-
-.sectionOne{
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-}
-
-.sectionOne img{
-  width: 100%;
-  height: 200px;
-  padding-bottom: 10px;
-}
-
-.sectionTwo{
-  width: 100%;
-  
-}
-.sectionTwo img{
-  width: 100%;
-  height: 190px;
-  padding: 0;
-}
-
-.line{
-  border: 1px solid rgba(207, 207, 207, 0.856);
-  width: 100%;
-  margin: 50px auto;
-}
-
-.overview{
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-evenly; */
-  align-items: flex-start;
-  padding: 0 30px;
-  width: 90%;
-  border-radius: 10px;
+.overviewRating{
+  height: 11em;
+  width: 80%;
+  margin: auto;
   background-color: #EADCCF;
-}
-
-.sectionOverOne{
-  width: 60%;
-}
-
-.sectionOverOne h2{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 1.5em;
-}
-
-.sectionOverOne p{
-  font-size: .9em;
-  font-weight: 400;
-  padding-bottom: 30px;
-  text-align: center;
-}
-
-.sectionOverTwo{
+  border-radius: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
   display: flex;
-  flex-direction: column;
-  width: 40%;
+  height: 15em;
 }
 
-.sectionOverTwo h2{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 1.5em;
+.overviewRating section{
+  margin: auto;
+  width: 50%;
+  padding-left: 4em;
 }
 
 .ratingBox{
-  background-color: #CD5A3E;
-  margin: 0 auto;
-  width: 40%;
-  height: 100px;
-  border-radius: 10px;
+  margin: auto;
+  height: 9em;
+  width: 9em;
+  background-color: orange;
+  border-radius: 1em;
 }
 
 .ratingBox p{
-  font-size: 2em;
-  margin-top: 1rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 10px;
   color: white;
+  font-size: 4em;
+  padding-top: 0.5em;
+  font-weight: 900;
 }
 
-.Rooms{
+.roomsService{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 98%;
-  padding: 0 30px;
+  margin: auto;
+  justify-content: space-evenly;
 }
 
-.title{
-  display: flex;
-  justify-content: start;
-  margin: 0;
-}
-
-.title h2{
-  margin: 0;
-  text-decoration: none;
-  padding-right: 10px;
-}
-
-.titleLink{
-  height: 40px;
-  cursor: auto;
-}
-
-.title button{
-  padding: 8px 30px;
-  border: none;
-  border-radius: 20px;
-  background-color: #CD5A3E;
-  font-size: 1em;
-  font-weight: 500;
-  color: rgb(252, 252, 252);
-  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
-  cursor: pointer;
-}
-
-.containerRooms{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.roomsService section{
+  width: 35%;
   background-color: #EADCCF;
-  margin-top: 20px;
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-
+  margin: 2em;
+  border-radius: 1em;
+  height: 25em;
 }
 
-.containerRooms ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: left;
+.roomsService h3{
+  font-size: 2.1em;
+  margin-top: 1em;
 }
 
-.containerRooms li{
-  list-style: none;
-  text-align: left;
-  font-size: 1.3em;
-  font-weight: 400;
-  font-family: 'Lexend Deca';
-  padding-right: 20px;
+.roomsD li{
+  margin-top: 1.1em;
+  font-size: 1.6em;
+  text-align: start;
 }
 
-
-.Services{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 98%;
-  padding: 0 30px;
+.roomsD img{
+  width: 30px;
 }
 
-/* .titleServices{
-  display: flex;
-  justify-content: start;
-  margin: 0;
-} */
-
-
-.titleServices h2{
-  margin: 0;
-  text-decoration: none;
-  padding-right: 10px;
+.servicesD li{
+  font-size: 1.2em;
+  text-align: start;
+  padding-left: 2em;
+  margin-bottom: 2px;
 }
 
-.containerServices{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #EADCCF;
-  margin-top: 20px;
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-}
-
-.containerServices ul{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: left;
-}
-
-.containerServices li{
-  list-style: none;
-  text-align: left;
-  font-size: 1.3em;
-  font-weight: 400;
-  font-family: 'Lexend Deca';
-  padding-right: 20px;
-}
-
-.Opinions{
-  margin-bottom: 20px;
-  width: 97%;
-  height: 200px;
-}
-
-.Opinions h2{
-  text-decoration: none;
-}
-
-.image {
+.imageRelative{
   position: relative;
-  width: 100%;
-  height: 400px;
-  margin-bottom: 6rem;
 }
-
-.prevButton, .nextButton {
+.prevButton{
+  height: 32.6em;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 10px 20px;
-  background-color: transparent;
-  font-size: 2rem;
-  color: #EADCCF;
+  left: 1.5em;
   border: none;
-  cursor: pointer;
-  box-shadow: 2px 2px 4px rgba(234, 220, 207, 0.3);
-}
-
-
-.prevButton {
-  left: 300px;
-  top: 250px;
-}
-
-.nextButton {
-  right: 300px;
-  top: 250px;
-}
-
-
-
-.imgOne{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-position: center center;
-
-}
-
-
-
-
-
-
-
-/* .containerPost{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 70%;
-  margin: 0 auto;
-
-}
-
-.head{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-  margin-top: 5%;
-  margin-bottom: 2%;
-}
-
-.headLeft{
-  text-align: left;
-  font-size: 1em;
-  font-weight: 500;
-}
-
-.headRigth{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items:flex-end;
-  font-weight: 500;
-}
-
-.headRigth button{
-  padding: 8px 30px;
-  border: none;
-  border-radius: 20px;
-  background-color: #CD5A3E;
-  font-size: 1em;
-  font-weight: 500;
-  margin-top: 5px;
-  color: rgb(252, 252, 252);
-  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
-}
-
-.headRigth button:hover{
-  cursor: pointer;
-}
-
-.line{
-  background-color: #CD5A3E;
-}
-
-.image{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 400px;
-}
-
-.imgOne{
-  border-radius: 20px;
-}
-
-.image img{
-  background-color: transparent;
-  width: 100%;
-  height: 100%;
-  padding-right: 10px;
-}
-
-.division{
-  height: 200px;
-
-}
-section div h2, section h2{
-  margin: 1rem;
-  text-decoration: underline;
-}
-
-.sectionOne{
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-}
-
-.sectionOne img{
-  width: 100%;
-  height: 200px;
-  padding-bottom: 10px;
-}
-
-.sectionTwo{
-  width: 100%;
-  
-}
-.sectionTwo img{
-  width: 100%;
-  height: 190px;
-  padding: 0;
-}
-
-.line{
-  border: 1px solid rgba(207, 207, 207, 0.856);
-  width: 100%;
-  margin: 50px auto;
-}
-
-.overview{
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0 30px;
-  width: 90%;
-  border-radius: 10px;
-  background-color: #EADCCF;
-}
-
-.sectionOverOne{
-  width: 60%;
-}
-
-.sectionOverOne h2{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 1.5em;
-}
-
-.sectionOverOne p{
-  font-size: .9em;
-  font-weight: 400;
-  padding-bottom: 30px;
-  text-align: center;
-}
-
-.sectionOverTwo{
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-}
-
-.sectionOverTwo h2{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 1.5em;
-}
-
-.ratingBox{
-  background-color: #CD5A3E;
-  margin: 0 auto;
-  width: 40%;
-  height: 100px;
-  border-radius: 10px;
-}
-
-.ratingBox p{
-  font-size: 2em;
-  margin-top: 1rem;
-  font-weight: 600;
-  text-align: center;
-  padding: 10px;
+  background-color: black;
   color: white;
-}
-
-.Rooms{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 98%;
-  padding: 0 30px;
-}
-
-.title{
-  display: flex;
-  justify-content: start;
-  margin: 0;
-}
-
-.title h2{
-  margin: 0;
-  text-decoration: none;
-  padding-right: 10px;
-}
-
-.titleLink{
-  height: 40px;
-  cursor: auto;
-}
-
-.title button{
-  padding: 8px 30px;
-  border: none;
-  border-radius: 20px;
-  background-color: #CD5A3E;
-  font-size: 1em;
-  font-weight: 500;
-  color: rgb(252, 252, 252);
-  box-shadow: 0px 5px 5px 0px rgba(3, 3, 3, 0.233);
   cursor: pointer;
 }
 
-.containerRooms{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.nextButton{
+  height: 32.6em;
+  position: absolute;
+  right: .5em;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.bigContainerDetail header p{
+  font-size: 16px;
+}
+
+.bigContainerDetail header p:hover{
+  color: orange;
+  cursor: pointer;
+}
+
+.paymentBox{
+  height: 11em;
+  width: 80%;
+  margin: auto;
   background-color: #EADCCF;
-  margin-top: 20px;
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-
-}
-
-.containerRooms ul {
+  border-radius: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: left;
+  height: 15em;
+  justify-content: space-evenly;
 }
 
-.containerRooms li{
-  list-style: none;
-  text-align: left;
-  font-size: 1.3em;
-  font-weight: 400;
-  font-family: 'Lexend Deca';
-  padding-right: 20px;
+.paymentBox .priceDiv{
+  background-color: rgba(226, 148, 3, 0.918);
+  border-radius: 0.5em;
+  color: white;
+  font-weight: 700;
+  font-size: 1.7em;
+  cursor: pointer;
+  padding: 9px;
+  margin: 0.6em 1em;
+  height: 1.4em;
+  width: 10em;
 }
 
-
-.Services{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 98%;
-  padding: 0 30px;
+.reservationDays{
+  border: none;
+  height: 2em;
+  width: 6em;
+  text-align: center;
+  border-radius: 1em;
 }
 
+.otroBoton{
+  border: none;
+  border-radius: 1em;
+  background-color: orange;
+  height: 2.3em;
+  margin: 1em;
+  font-weight: 900;
+  color: white;
+  cursor: pointer;
+}
 
+.otroBoton:hover{
+  color: orange;
+  background-color: white;
+}
 
-
-.titleServices h2{
-  margin: 0;
+a{
   text-decoration: none;
-  padding-right: 10px;
 }
 
-.containerServices{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #EADCCF;
-  margin-top: 20px;
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
+.reservebtn{
+  background-color: rgba(226, 148, 3, 0.918);
+  border-radius: 0.5em;
+  color: white;
+  font-weight: 700;
+  font-size: 1.7em;
+  cursor: pointer;
+  padding: 9px;
+  margin: 0.6em 1em;
+  height: 1.4em;
+  width: 10em;
 }
 
-.containerServices ul{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: left;
+.reservebtn:hover{
+  color: orange;
+  background-color: white;
 }
 
-.containerServices li{
-  list-style: none;
-  text-align: left;
-  font-size: 1.3em;
-  font-weight: 400;
-  font-family: 'Lexend Deca';
-  padding-right: 20px;
+.imageCarrousel{
+  max-height: 27em;
+  object-fit: cover;
 }
-
-.Opinions{
-  margin-bottom: 20px;
-  width: 97%;
-  height: 200px;
-}
-
-.Opinions h2{
-  text-decoration: none;
-} */
