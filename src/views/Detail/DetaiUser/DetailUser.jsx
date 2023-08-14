@@ -5,6 +5,7 @@ import styles from "./DetailUser.module.css"
 import About from "../../../components/About/About"
 import { getUserByUID } from '../../../config/handlers.js';
 import SkeletonCard from '../../../components/SkeletonCard/SkeletonCard';
+import config from "../../../assets/ajustes.png"
 
 const DetailUser = () => {
     const [user, setUser] = useState(null);
@@ -25,7 +26,7 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
-
+console.log(user);
     return (
         <div>
             
@@ -56,14 +57,10 @@ const DetailUser = () => {
 
                 </div>
             </div>
-            <div className={styles.containerHead}>
-                        <Link to={`/config/${id}`}>
-                            <button className={styles.btnUser}>Edit user</button>
-                        </Link>
-                    </div>
+            
                 <div className={styles.hrHalfWay}> </div>
-                <h4>My Properties</h4>
-            <div className={styles.bodyContainer}>
+                <h4 className={styles.h4}>My Properties</h4>
+                <div className={styles.bodyContainer}>
                 <div className={styles.menuSide}>
                     
                 </div>
@@ -76,14 +73,14 @@ const DetailUser = () => {
         user?.properties && user.properties.length > 0 ? (
             user.properties.map((property) => (
                 <Link key={property.id} to={`/rooms/${property.id}`} className={styles.link}>
-                    <div className={styles.container}>
+                    <div className={styles.containerUser}>
                         <div className={styles.image}>
                             <img src={property.imageUrl} alt="pic of the house" />
                         </div>
-                        <Link to={`/editpr/${property.id}`}>
-                            <button>BOTON SUPER SECRETO NO TOCAR NI BORRAR</button>
-                        </Link>
                         <section className={styles.info}>
+                            <Link to={`/editpr/${property.id}`}>
+                              <button className={styles.configu}>Edit Property</button>
+                            </Link>
                             <h3>{property.location.state}, {property.location.city}</h3>
                             <p className={styles.infoName}>{property.name}</p>
                             <p className={styles.infoPrice}>$ {property.price} USD noche</p>
@@ -98,7 +95,7 @@ const DetailUser = () => {
     )}
 </div>
 
-            </div>
+        </div>
             <About />
         </div>
     )

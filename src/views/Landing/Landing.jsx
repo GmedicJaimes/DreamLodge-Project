@@ -7,10 +7,9 @@ import style from './Landing.module.css'
 const Landing = () => {
   return(
     <div className={style.container}>
-      <header className={style.headerLanding}>
+      <div className={style.headerLanding}>
         <h1>DreamLodge</h1>
-        <Link to={"/login"} className={style.link}><button>Login</button></Link>
-      </header>
+      </div>
 
       <section className={style.section}>
         <h1>Welcome home</h1>

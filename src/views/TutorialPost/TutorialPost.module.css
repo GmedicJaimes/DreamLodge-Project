@@ -1,0 +1,60 @@
+.tutorialContainer {
+    border-radius: 2em;
+    box-shadow: 0 7px 20px 5px #52525288;
+    background-color: #eadccf;
+    width: 800px;
+    margin: auto;
+    margin-top: 2%;
+    padding: 2.1em;
+  }
+  
+  .tutorialContainer h2 {
+    margin: 1rem 0;
+  }
+  
+  .stepContent {
+    margin: 1em 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+  }
+  
+  .buttonContainer button {
+    padding: 11px 20px;
+    font-size: 13px;
+    border: none;
+    border-radius: 0.2em;
+    background-color: #cd5a3e;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .buttonContainer button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .buttonContainer button:first-child {
+    margin-right: 1em;
+  }
+  
+  .grayText {
+    color: #959595;
+  }
+  .publishButton {
+    padding: 11px 20px;
+    font-size: 30px;
+    border: none;
+    border-radius: 0.2em;
+    background-color: #cd5a3e;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+
+  

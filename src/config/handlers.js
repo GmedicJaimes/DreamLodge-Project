@@ -5,6 +5,7 @@ import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
+import axios from 'axios';
 
 
 
@@ -55,24 +56,7 @@ const getUserProperties = async (targetUID) => {
   return userProperties;
 };
 
-// ESTADOS LOCALES PARA MANEJAR LA INFO DE LAS FUNCIONES
-// const [email, setEmail] = useState("")
-// const [password, setPassword] = useState("");
-// const [propertiesList, setPropertiesList] = useState([]);
-// const [newPropName, setNewPropName] = useState("");
-// const [newPropRooms, setNewPropRooms] = useState(0);
-// const [newPropDisponible, setNewPropDisponible] = useState(false); 
-// const [newPropType, setNewPropType] = useState([]);
-// const [updateNameProp, setUpdateNameProp] = useState("");
-// const [file, setFile] = useState(null);
-// const [image, setImage] = useState([]);
-
 // funcion para SIGNIN normal
-
-
-
-
-
 export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -86,12 +70,6 @@ export const signIn = async (auth, email, password) => {
     throw error;
   }
 };
-
-
-
-
-
-
 
 // AGUARDA POR VERIFICAION DE EMAIL
 
@@ -115,8 +93,6 @@ export const signIn = async (auth, email, password) => {
 //       checkEmailVerification();
 //   });
 // };
-
-
 
 export const registerUserInFirestore = async (uid, user) => {
   const usersCollectionRef = collection(db, "users");
@@ -293,16 +269,43 @@ export const updateUser = async( user ) => {
     
   }
 }
-//funcion para TRAER LAS PROPIEDADES, INCLUSIVE LAS IMAGENES (SI TIENEN)
-  // handlers.js
-// export const getPropertiesList = async () => {
+
+export const getPropertiesList = async () => {
+  try {
+    const data = await getDocs(propertiesCollectionRef);
+    
+    // Mapea los documentos a sus datos y procesa la URL de la imagen si existe
+    const properties = await Promise.all(data.docs.map(async (doc) => {
+      const propertyData = doc.data();
+      
+      if (propertyData.imageUrl) {
+        const imageUrlRef = ref(storage, propertyData.imageUrl); // Corregir referencia a storage
+        propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+      }
+      
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    }));
+
+    return properties; // Devuelve la lista de propiedades procesadas
+  } catch (error) {
+    console.log(error);
+    throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
+  }
+};
+
+// handlers.js
+// export const getPropertiesListPerPage = async (page, perPage) => {
 //   try {
 //     const data = await getDocs(propertiesCollectionRef);
-//     // console.log("Fetching properties...", data)
+//     const startIndex = (page - 1) * perPage;
+//     const endIndex = startIndex + perPage;
+
 //     const filterData = await Promise.all(
-//       data.docs.map(async (doc) => {
+//       data.docs.slice(startIndex, endIndex).map(async (doc) => {
 //         const propertyData = doc.data();
-//         // si encontramos url de la imagen, la buscamos en el storage y la agregamos al propertyData
 //         if (propertyData.imageUrl) {
 //           const imageUrlRef = ref(storage, propertyData.imageUrl);
 //           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
@@ -313,40 +316,13 @@ export const updateUser = async( user ) => {
 //         };
 //       })
 //     );
-//     // console.log(filterData);
-//     return filterData; // Asegúrate de retornar el array de propiedades
+
+//     return filterData;
 //   } catch (error) {
 //     console.log(error);
-//     return []; // En caso de error, retorna un array vacío o maneja el error de manera adecuada.
+//     return [];
 //   }
 // };
-
-export const getPropertiesList = async (page, perPage) => {
-  try {
-    const data = await getDocs(propertiesCollectionRef);
-    const startIndex = (page - 1) * perPage;
-    const endIndex = startIndex + perPage;
-
-    const filterData = await Promise.all(
-      data.docs.slice(startIndex, endIndex).map(async (doc) => {
-        const propertyData = doc.data();
-        if (propertyData.imageUrl) {
-          const imageUrlRef = ref(storage, propertyData.imageUrl);
-          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-        }
-        return {
-          ...propertyData,
-          id: doc.id
-        };
-      })
-    );
-
-    return filterData;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-};
 
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
@@ -370,18 +346,6 @@ export const detailId = async (id) =>{
   }
 }
 
-//funcion para CARGAR ARCHIVOS (SIN IDENTIFICAR)
-// export const uploadFile = async()=>{
-//     if(!file) return;
-//     const folderRef = ref(storage, `properties/${file.name + v4()}`);
-//     try {
-//       await uploadBytes(folderRef, file)
-//       console.log(folderRef)
-//       alert('la imagen fue enviada a la base de datos')
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   };
 
 
 /// PRUEBAAAAA CHRISTIAN
@@ -467,7 +431,7 @@ export const getPropertiesByType = async (type) => {
 
 // export const getPropertiesByState = async (state) => {
 //   try {
-//     const querySnapshot = query(propertiesCollectionRef, where("location.state", "==", state));
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
 //     const properties = [];
 
 //     querySnapshot.forEach((doc) => {
@@ -501,28 +465,20 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR ESTADOS!!!!
-// export const filterPropertiesBySearch = async (searchValue) => {
-//   try {
-//     // console.log(searchValue);
-//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
-//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-//     // console.log(propertiesQuerySnapshot);
+// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
+export const filterPropertiesByName = async (searchValue) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-//       const propertyData = doc.data()
-//       return {
-//         ...propertyData,
-//         id: doc.id
-//       };
-//     })
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
 
-//     return filteredProperties;
-//   } catch (error) {
-//     // console.error(error);
-//     return [];
-//   }
-// };
+    return filteredProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
 //................................................................................................
 
@@ -537,4 +493,93 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//FUNCIONES PARA FILTROS STATE Y CITY........................................................
+export const filterPropertiesByState = async (state) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
+    console.log(propertiesQuery); // Convierte a cadena antes de imprimir
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    console.log(filteredProperties)
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state:', error);
+    return [];
+  }
+};
+
+export const filterByStateAndCity = async (state, city) => {
+  try {
+    let propertiesQuery = query(propertiesCollectionRef);
+
+    if (state && city) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
+    } else if (state) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state));
+    }
+
+    console.log(city); 
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state and city:', error);
+    return [];
+  }
+};
+
+
+//funcion para deshabilitar propiedades
+export const updateAvaible = async(id, preferenceId) => {
+  try {
+    const db = getFirestore()
+    const propertyDB = doc(db, 'properties', id);
+    await updateDoc(propertyDB, {
+      available: false 
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+//confirmar si el pago fue exitoso (yes, I refuse to use traditional backend)
+export const getPaymentStatus = async (preferenceId) => {
+  try {
+    // con esta solicitud pedimos informacion sobre el pago a don mercado
+    const response = await axios.get(`https://api.mercadopago.com/v1/payments/search`, {
+      params: {
+        external_reference: preferenceId //pasamos el id de la peticion de pago que obtuvimos en el componente
+      },
+      headers: {
+        Authorization: `Bearer TEST-1217239966605378-080822-11c74257002c2927c70422faaaaf3e94-1446217996` //esto hay que mandarlo a un .env
+      }
+    });
+
+    //si la respuesta de eso es mayor a cero, el pago se realizo
+    if (response.data.results.length > 0) {
+    
+      return response.data.results[0].status; //puede retornar 'approved', 'pending' o 'rejected'
+    } else {
+      //si no hay datos, el pago aun no se realizo y vamos a devolver pending
+      return 'pending'; 
+    }
+  } catch (error) {
+    console.error('Error payment status:', error);
+    return 'error'; 
+  }
+};

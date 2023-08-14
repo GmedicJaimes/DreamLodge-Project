@@ -1,0 +1,241 @@
+.bigContainer{
+    box-shadow: 0 7px 20px 5px #52525288;
+    background-color: #eadccf;
+    margin: auto;
+    margin-top: 3em;
+    max-width: 75em;
+    padding-bottom: 3em;
+    margin-bottom: 3em;
+    border-radius: 1em;
+}
+
+.bigContainer label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+}
+
+.bigContainer header{
+    padding: 2.5em;
+    font-size: 1.3em;
+}
+
+.bigContainer input[type="text"]{
+    padding: 1em;
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 4px;
+    margin: 0.1em;
+}
+
+.bigContainer input[type="text"]:hover{
+    border: 1px solid rgb(119, 119, 119);
+}
+
+.postLodge {
+    display: flex;
+    margin: 0 9% 0 9%;
+    flex-wrap: wrap;
+}
+
+.firstColumn{
+    width: 25em;
+}
+
+.secondColumn{
+    width: 19em;
+}
+
+.thirdColumn{
+    width: 15em;
+    margin: 0 1em;
+}
+
+.name{
+    text-align: left;
+}
+
+.name label{
+    margin-left: 1em;
+}
+.name input{
+    width: 27em;
+}
+
+.fClow {
+    display: flex;
+}
+
+.fCleft {
+    width: 70%;
+}
+
+.fCleft label{
+    margin: 2em;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.fCleft .buttonType {
+    color: gray;
+    border: none;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.fCleft .buttonType:hover {
+    background-color: rgb(243, 97, 44);
+    color: white;
+}
+
+.fCleft .buttonTypeA{
+    background-color: rgb(243, 97, 44);
+    color: white;
+    border: none;
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.fCleft select{
+    width: 100%;
+    height: 45px;
+    margin: 2px
+}
+
+.serviceBtns{
+    background-color: rgb(250, 246, 246);
+    height: 90%;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0.3em 1em;
+}
+
+.serviceBtns .active{
+    width: 95%;
+    margin: 3px;
+    background-color: rgb(243, 97, 44);
+    border: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.serviceBtns .inactive{
+    width: 95%;
+    margin: 3px;
+    background-color: rgb(223, 221, 221);
+    border: none;
+    color: rgb(122, 122, 122);
+    font-weight: 500;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.serviceBtns .inactive:hover{
+    background-color: rgb(243, 97, 44);
+    color: white;
+}
+
+.locationBox{
+    margin: 3px;
+}
+
+.locationBox input[type="text"]{
+    margin: 5px 1px 10px 7px;
+    width: 13em;
+}
+
+.typesBox {
+    margin: 2px;
+}
+
+.roomsLodge {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.8em 0.3em;
+    background-color: #f4e9de;
+    padding: 3px 1px 8px;
+    border-radius: 5px;
+}
+
+.roomsLodge label{
+    font-size: 13px;
+}
+
+.roomsLodge div {
+    width: 50%;
+}
+
+.roomsLodge div input{
+    width: 5.5em;
+    height: 1.2em;
+    margin: 1px;
+    border: none;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.description textarea{
+    background-color: #f4e9de;
+    margin-top: 5px;
+    resize: none;
+}
+
+.priceBox label{
+    margin: 3em;
+}
+
+.priceBox input[type="number"]{
+    border: none;
+    margin: 1em;
+    height: 2em;
+    width: 8em;
+    border: none;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.displayPics{
+    background-color: #f4e9de;
+    max-height: 14em;
+}
+
+.imgChikita {
+    width: 100px;
+    height: 100px;
+}
+
+.btnFoot{
+    margin: 1em auto 0;
+}
+
+.btnFoot button{
+    background-color: rgb(243, 97, 44);
+    color: white;
+    border: none;
+    padding: 1em 5em;
+    margin: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+.btnFoot button:hover{
+    background-color: rgb(255, 68, 0);
+}
+
+.imagePreviews {
+    width: 53%;
+    display: flex; /* Aplica la propiedad flex a la imagenPreviews */
+    justify-content: space-around;
+    align-items: center; /* Centra verticalmente las imágenes en el contenedor */
+    margin: 0 0.2rem;
+  }
+
+.imageBlock{
+    margin-top: 20px;
+}
+

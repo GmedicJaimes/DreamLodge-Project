@@ -6,10 +6,9 @@
 
   
   .imagePreview img {
-    width: 10%;
-    height: 10%;
+    width: 1300px;
+    height: 100px;
     object-fit: cover;
-   
 
   }
   

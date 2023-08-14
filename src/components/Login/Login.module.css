@@ -1,18 +1,8 @@
 .mainContainer {
     background-color: #EADCCF;
-    max-width: 440px;
+    max-width: 500px;
     border-radius: .7rem;
     box-shadow: 0 7px 20px 5px #52525288;
-    
-}
-
-.mainContainer header{
-    color: #333;
-    padding: 1rem;
-    margin-top: 2em;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 18px;
 }
 
 .mainContainer form{
@@ -22,6 +12,15 @@
 
 .formGroup {
     margin: 0 1em 10px auto;
+}
+
+.formGroup header{
+    color: #333;
+    padding: 1rem;
+    margin-top: 2em;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 18px;
 }
 
 
@@ -129,4 +128,37 @@
   }
   
   
-  
+  .containerMessage{
+    width: 500px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+  }
+
+  .containerMessage h2{
+    font-size: 1.7em;
+    font-family: 'Lexend Deca';
+    font-weight: 500;
+    padding-bottom: 20px;
+  }
+
+.containerMessage button {
+    padding: 11px 35px;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 1em;
+    font-family: 'Lexend Deca';
+    font-weight: 500;
+    border: none;
+    border-radius: 0.2em;
+    background-color: #CD5A3E;
+    color: #fff;
+}
+
+.containerMessage button:hover {
+  background-color: #b94225;
+  cursor: pointer;
+}
