@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom"
-import Searchbar from "../Searchbar/Searchbar"
 import styles from "./Navbar.module.css"
 import { auth } from "../../config/firebase";
-import { logOut } from "../../config/handlers";
-import { useState, useEffect } from "react";
-
+import React from "react";
+import Dropdown from "../Dropdown/Dropdown"
+import { logOut, getPropertiesList } from "../../config/handlers";
 
 const Navbar = () => {
-  //? estado local par el login del usuario
-  const [currentUser, setCurrentUser] = useState(auth.currentUser);
+  const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
   
-  
-  useEffect(() => {
+  React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
     });
@@ -25,11 +22,6 @@ const Navbar = () => {
       <div className={styles.container}> 
         <div className={styles.containertwo}>
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
-        </div>
-        <div className={styles.containerSearch}>
-            <Searchbar/>
-            {/* <Searchbar handleChange={handleChange} handleSubmit={handleSubmit}/> */}
-      
         </div>  
         <div className={styles.button}>
         
@@ -37,16 +29,16 @@ const Navbar = () => {
             currentUser !== null 
             ? <div className={styles.button}>
                 <div className={styles.postBtn}>
-                  <Link to={"/post"} className={styles.post}>Post Lodge</Link>
+                  <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
-                <div className={styles.postBtn}>
-                  {/* <Dropdown/> */}
+                <div className={styles.user}>
+                  <Dropdown></Dropdown>
                 </div>
               </div>
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {alert("loggeese primero parse")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {alert("You must be logged in")}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>
@@ -58,4 +50,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

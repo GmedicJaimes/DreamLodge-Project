@@ -110,7 +110,7 @@
   margin-bottom: 3em;
 }
 
- h4 {
+.h4 {
 font-size: 2rem;
 color: #CD5A3E;
 text-align: center;
@@ -165,7 +165,7 @@ margin-right: 51rem;
     text-decoration: none;
   }
   
-  .container {
+  .containerUser {
     /* Flexbox Properties */
     display: flex;
     flex-direction: column;
@@ -189,7 +189,7 @@ margin-right: 51rem;
 }
 
   
-  .container:hover{
+  .containerUser:hover{
     transform: translateY(-10px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
     cursor: pointer;
@@ -240,9 +240,26 @@ margin-right: 51rem;
   .noProperties{
     color: black;
     text-align: center;
-    margin-left: 30rem;
-    margin: 2rem 0rem 2rem 30rem;
+    margin-left: 20rem;
+    font-size: 1.5em;
+    width: 400px;
+    /* margin: 2em; */
+    margin-bottom: 99px;
   }
+
+  .configu{
+  width: 120px;
+  position: relative;
+  left: 180px;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.configu:hover{
+  color: #CD5A3E;
+  cursor: pointer;
+}
 
 /* .seeMbtn {
     padding: 1em;
@@ -305,3 +322,4 @@ margin-right: 51rem;
     overflow: hidden;
     width: 100%;
 } */
+

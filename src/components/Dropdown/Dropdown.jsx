@@ -21,7 +21,8 @@ const Dropdown = () => {
                 <img src={user} alt="" />
             </div>
             <div className={`${styles.dropdownMenu} ${open ? styles.active : styles.inactive}`}>
-                <h3>{auth.currentUser.displayName}<span>{auth.currentUser.email}</span></h3>
+                <h3>{auth.currentUser.displayName}<br/>
+                <span>{auth.currentUser.email}</span></h3>
                 <ul>
                     <Link to={`user/${auth.currentUser.uid}`}>
                         <DropDownItem img={user} text={"My Profile"}/>
@@ -29,9 +30,9 @@ const Dropdown = () => {
                     <Link to={`/config/${auth.currentUser.uid}`}>
                         <DropDownItem img={edit} text={"Edit Profile"}/>
                     </Link>
-                    <DropDownItem img={msg} text={"Inbox"}/>
+                    {/* <DropDownItem img={msg} text={"Inbox"}/>
                     <DropDownItem img={settings} text={"Settings"}/>
-                    <DropDownItem img={help} text={"Help"}/>
+                    <DropDownItem img={help} text={"Help"}/> */}
                     <DropDownItem img={logout} onClick={logOut} text={"Log out"}/>
                 </ul>
             </div>

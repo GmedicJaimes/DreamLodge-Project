@@ -9,7 +9,7 @@
   background-position-y: 53%;
   background-position-x: 50%;
   overflow: hidden;
-  position: relative;
+  /* position: relative; */
   display: flex;
   justify-content: center;
 
@@ -17,7 +17,7 @@
 
 .filter {
   position: absolute;
-  bottom: 80px;
+  top: 10em;
   background-color: rgba(234, 220, 207, 0.9); /* Fondo con opacidad del 90% */
   border-radius: 5px;
   padding: 1rem;
@@ -44,5 +44,12 @@
   padding-bottom: 4px;
   width: 3em;
   /* filter: invert(100%) sepia(0%) saturate(7499%) hue-rotate(184deg) brightness(108%) contrast(96%); */
+}
+
+.filter button:hover{
+  background-color: rgb(39, 139, 197);
+  border-radius: 0.5em;
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
 }
 

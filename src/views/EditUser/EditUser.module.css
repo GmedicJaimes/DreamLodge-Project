@@ -6,21 +6,21 @@
     padding: 1em;
 }
 
-input[type="text"]{
+.configBox input[type="text"]{
     padding: 1em;
     border: 1px solid rgb(211, 211, 211);
     border-radius: 4px;
     margin: 0.5em;
 }
 
-input[type="password"]{
+.configBox input[type="password"]{
     padding: 1em;
     border: 1px solid rgb(211, 211, 211);
     border-radius: 4px;
     margin: 0.5em;
 }
 
-input[type="text"]:hover{
+.configBox input[type="text"]:hover{
     border: 1px solid rgb(119, 119, 119);
 }
 
@@ -40,7 +40,6 @@ input[type="text"]:hover{
     margin: auto;
     border: 1px solid rgb(211, 211, 211);
     border-radius: 5px;
-    margin: auto;
 }
 
 .btnBlue{
