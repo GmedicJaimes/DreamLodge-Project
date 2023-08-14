@@ -77,10 +77,10 @@ console.log(user);
                         <div className={styles.image}>
                             <img src={property.imageUrl} alt="pic of the house" />
                         </div>
-                        <Link to={`/editpr/${property.id}`}>
-                           <img className={styles.configu} src={config} alt="" />
-                        </Link>
                         <section className={styles.info}>
+                            <Link to={`/editpr/${property.id}`}>
+                              <button className={styles.configu}>Edit Property</button>
+                            </Link>
                             <h3>{property.location.state}, {property.location.city}</h3>
                             <p className={styles.infoName}>{property.name}</p>
                             <p className={styles.infoPrice}>$ {property.price} USD noche</p>

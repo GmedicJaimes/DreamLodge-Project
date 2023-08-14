@@ -247,6 +247,20 @@ margin-right: 51rem;
     margin-bottom: 99px;
   }
 
+  .configu{
+  width: 120px;
+  position: relative;
+  left: 180px;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.configu:hover{
+  color: #CD5A3E;
+  cursor: pointer;
+}
+
 /* .seeMbtn {
     padding: 1em;
     border-radius: 5px;
@@ -309,16 +323,3 @@ margin-right: 51rem;
     width: 100%;
 } */
 
-.configu{
-  width: 20px;
-  position: relative;
-  top: 2px;
-  left: 9.2em;
-}
-
-.configu:hover{
-  -webkit-filter: invert(100%);
-  filter: invert(100%);
-  background-color: rgb(0, 238, 255);
-  border-radius: 50%;
-}

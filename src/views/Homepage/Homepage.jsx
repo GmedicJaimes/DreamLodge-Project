@@ -50,7 +50,7 @@ const Homepage = () => {
     <div>
       <div className={styles.containerHome}>
         <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
-        <button onClick={handleAvailableProperties}>Available Lodgings</button>
+        {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
        
         {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
         <div className={styles.skeletonContainer}>

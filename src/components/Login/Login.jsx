@@ -65,12 +65,12 @@ const regex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
   return (
     <div className={styles.mainContainer}>
-      <header>
-        <h2>Login</h2>
-      </header>
       {currentUser === null ? (
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
+            <header>
+              <h2>Login</h2>
+            </header>
             <input
               type="text"
               id="email"
@@ -118,13 +118,15 @@ const regex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         </form>
       ) : (
         <div className={styles.containerMessage}>
-          <h1>You are logged in yet, go to post or rent</h1>
-          <Link to="/tutorial">
-            <button className={styles.btnCreatePost}>Create a post now</button>
-          </Link>
-          <Link to="/home">
-            <button className={styles.btnRentHouse}>Go to rent a house</button>
-          </Link>
+          <h2>You are logged in yet, <br />go to post or rent</h2>
+          <div>
+            <Link to="/home">
+              <button className={styles.btnRentHouse}>Go to rent a house</button>
+            </Link>
+            <Link to="/tutorial">
+              <button className={styles.btnCreatePost}>Create a post now</button>
+            </Link>
+          </div>
       </div>
       )}
     </div>
