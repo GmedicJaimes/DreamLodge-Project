@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
@@ -270,34 +269,59 @@ export const updateUser = async( user ) => {
   }
 }
 
-
-// handlers.js
 export const getPropertiesList = async () => {
   try {
     const data = await getDocs(propertiesCollectionRef);
-    const startIndex = (page - 1) * perPage;
-    const endIndex = startIndex + perPage;
+    
+    // Mapea los documentos a sus datos y procesa la URL de la imagen si existe
+    const properties = await Promise.all(data.docs.map(async (doc) => {
+      const propertyData = doc.data();
+      
+      if (propertyData.imageUrl) {
+        const imageUrlRef = ref(storage, propertyData.imageUrl); // Corregir referencia a storage
+        propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+      }
+      
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    }));
 
-    const filterData = await Promise.all(
-      data.docs.slice(startIndex, endIndex).map(async (doc) => {
-        const propertyData = doc.data();
-        if (propertyData.imageUrl) {
-          const imageUrlRef = ref(storage, propertyData.imageUrl);
-          propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-        }
-        return {
-          ...propertyData,
-          id: doc.id
-        };
-      })
-    );
-
-    return filterData;
+    return properties; // Devuelve la lista de propiedades procesadas
   } catch (error) {
     console.log(error);
-    return [];
+    throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
   }
 };
+
+// handlers.js
+// export const getPropertiesListPerPage = async (page, perPage) => {
+//   try {
+//     const data = await getDocs(propertiesCollectionRef);
+//     const startIndex = (page - 1) * perPage;
+//     const endIndex = startIndex + perPage;
+
+//     const filterData = await Promise.all(
+//       data.docs.slice(startIndex, endIndex).map(async (doc) => {
+//         const propertyData = doc.data();
+//         if (propertyData.imageUrl) {
+//           const imageUrlRef = ref(storage, propertyData.imageUrl);
+//           propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+//         }
+//         return {
+//           ...propertyData,
+//           id: doc.id
+//         };
+//       })
+//     );
+
+//     return filterData;
+//   } catch (error) {
+//     console.log(error);
+//     return [];
+//   }
+// };
 
 
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
@@ -380,7 +404,46 @@ export const getPropertiesByType = async (type) => {
   }
 };
 
+// export const getPropertiesByType = async (type) => {
+//   try {
+//     if (!type) {
+//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
+//     }
 
+//     console.log(type)
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+//     if(!properties.length){
+//     console.log('properties empty')
+//     }
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
+
+// export const getPropertiesByState = async (state) => {
+//   try {
+//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
+//     const properties = [];
+
+//     querySnapshot.forEach((doc) => {
+//       const property = doc.data();
+//       properties.push(property);
+//     });
+
+//     return properties;
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -401,28 +464,20 @@ export const getAvailableProperties = async () => {
 };
 
 //.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR ESTADOS!!!!
-// export const filterPropertiesBySearch = async (searchValue) => {
-//   try {
-//     // console.log(searchValue);
-//     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', searchValue), where('location.city', '==', searchValue));
-//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-//     // console.log(propertiesQuerySnapshot);
+// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
+export const filterPropertiesByName = async (searchValue) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-//       const propertyData = doc.data()
-//       return {
-//         ...propertyData,
-//         id: doc.id
-//       };
-//     })
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
 
-//     return filteredProperties;
-//   } catch (error) {
-//     // console.error(error);
-//     return [];
-//   }
-// };
+    return filteredProperties;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
 //................................................................................................
 
@@ -436,6 +491,58 @@ export const sortPropertiesByPrice = (properties, ascending) => {
     }
   });
 };
+
+//FUNCIONES PARA FILTROS STATE Y CITY........................................................
+export const filterPropertiesByState = async (state) => {
+  try {
+    const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
+    console.log(propertiesQuery); // Convierte a cadena antes de imprimir
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    console.log(filteredProperties)
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state:', error);
+    return [];
+  }
+};
+
+export const filterByStateAndCity = async (state, city) => {
+  try {
+    let propertiesQuery = query(propertiesCollectionRef);
+
+    if (state && city) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
+    } else if (state) {
+      propertiesQuery = query(propertiesQuery, where('location.state', '==', state));
+    }
+
+    console.log(city); 
+    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+
+    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+      const propertyData = doc.data();
+      return {
+        ...propertyData,
+        id: doc.id
+      };
+    });
+
+    return filteredProperties;
+  } catch (error) {
+    console.error('Error fetching properties by state and city:', error);
+    return [];
+  }
+};
+
 
 //funcion para deshabilitar propiedades
 export const updateAvaible = async(id, preferenceId) => {
@@ -473,22 +580,5 @@ export const getPaymentStatus = async (preferenceId) => {
   } catch (error) {
     console.error('Error payment status:', error);
     return 'error'; 
-  }
-};
- export const registerPurchases = async (userId, propertyId) => {
-  try {
-    // Referencia a la colección "purchases"
-    const purchasesCollectionRef = collection(db, 'purchases');
-
-    // Agregar un nuevo documento con la información de la compra
-    await addDoc(purchasesCollectionRef, {
-      userId: userId,
-      propertyId: propertyId,
-      purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
-    });
-
-    console.log('Compra registrada exitosamente');
-  } catch (error) {
-    console.error('Error al registrar la compra:', error);
   }
 };
