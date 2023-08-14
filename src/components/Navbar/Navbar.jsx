@@ -10,10 +10,6 @@ const Navbar = () => {
   //? estado local par el login del usuario
   const [currentUser, setCurrentUser] = useState(auth.currentUser);
   
-
-  //? estado local para la busqueda por query
-  const [searchValue, setSearchValue] = useState(''); // Nuevo estado para el valor de búsqueda
- 
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -24,39 +20,6 @@ const Navbar = () => {
   }, [auth]);
 
 
-  // //* funcion para guardar el valor de la busqueda
-  // function handleChange(event) {
-  //   event.preventDefault()
-
-  //   console.log('escribo cosas');
-  //   const value = event.target.value;
-  //   console.log(value);
-  //   setSearchValue(value)
-
-  //   // const searchLocation = async () => {
-  //   //   const search = await filterPropertiesBySearch(searchValue)
-  //   //   setSearchValue(search)
-  //   // }
-  //   // searchLocation();
-  // }
-
-  // function handleSubmit(searchValue){
-  //   console.log('madafucka')
-  //   const searchLocation = async () => {
-  //     const search = await getPropertiesByState(searchValue)
-  //     setSearchValue(search)
-  //   }
-  //   searchLocation();
-  // }
-
-  // //* useEffect para la busqueda por query
-  // useEffect(() => {
-  //   const searchLocation = async () => {
-  //     const search = await getPropertiesByState(searchValue)
-  //     setSearchValue(search)
-  //   }
-  //   searchLocation();
-  // })
 
     return(
       <div className={styles.container}> 
@@ -77,7 +40,7 @@ const Navbar = () => {
                   <Link to={"/post"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.postBtn}>
-                  <Dropdown/>
+                  {/* <Dropdown/> */}
                 </div>
               </div>
             : 

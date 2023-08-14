@@ -475,3 +475,20 @@ export const getPaymentStatus = async (preferenceId) => {
     return 'error'; 
   }
 };
+ export const registerPurchases = async (userId, propertyId) => {
+  try {
+    // Referencia a la colección "purchases"
+    const purchasesCollectionRef = collection(db, 'purchases');
+
+    // Agregar un nuevo documento con la información de la compra
+    await addDoc(purchasesCollectionRef, {
+      userId: userId,
+      propertyId: propertyId,
+      purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
+    });
+
+    console.log('Compra registrada exitosamente');
+  } catch (error) {
+    console.error('Error al registrar la compra:', error);
+  }
+};
