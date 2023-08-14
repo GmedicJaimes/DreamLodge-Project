@@ -241,9 +241,7 @@
     -webkit-appearance: none;
     margin: 0; /* Elimina el espacio extra que ocupaban las flechas */
   }
-  input[type="number"] {
-    -moz-appearance: textfield; /* Firefox */
-  }
+  
   
   input[type="number"]{
       margin-left: -0.3rem;

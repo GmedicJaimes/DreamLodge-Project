@@ -58,17 +58,17 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         <div className={styles.containerFilter}>
             <div className={styles.filter}>
                 {/* Selector de estado */}
-                <select onChange={(e) => handleStateSelect(e.target.value)}>
+                {/* <select onChange={(e) => handleStateSelect(e.target.value)}>
                     <option value="All">Seleccionar estado</option>
                     {availableStates.map((state) => (
                         <option value={state} key={state}>
                             {state}
                         </option>
                     ))}
-                </select>
+                </select> */}
 
                 {/* Selector de ciudad */}
-                {selectedState && (
+                {/* {selectedState && (
                     <select onChange={(e) => handleCitySelect(e.target.value)}>
                         <option value="All">Seleccionar ciudad</option>
                         {US_STATE_CITIES[selectedState].map((city) => (
@@ -77,7 +77,7 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
                             </option>
                         ))}
                     </select>
-                )}
+                )} */}
                 <button onClick={() => handlerClick("Cabins")}  > <img src="https://cdn-icons-png.flaticon.com/128/4614/4614488.png" />Cabins</button>
                 <img />
                 <button onClick={() => handlerClick("Beachfront")}  > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/8404/8404761.png" />Beachfront</button>

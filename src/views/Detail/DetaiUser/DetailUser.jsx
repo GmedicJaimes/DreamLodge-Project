@@ -58,8 +58,8 @@ console.log(user);
             </div>
             
                 <div className={styles.hrHalfWay}> </div>
-                <h4>My Properties</h4>
-            <div className={styles.bodyContainer}>
+                <h4 className={styles.h4}>My Properties</h4>
+                <div className={styles.bodyContainer}>
                 <div className={styles.menuSide}>
                     
                 </div>
@@ -72,11 +72,11 @@ console.log(user);
         user?.properties && user.properties.length > 0 ? (
             user.properties.map((property) => (
                 <Link key={property.id} to={`/rooms/${property.id}`} className={styles.link}>
-                    <div className={styles.container}>
+                    <div className={styles.containerUser}>
                         <div className={styles.image}>
                             <img src={property.imageUrl} alt="pic of the house" />
                         </div>
-                        <Link to={`/editpr/${property.id}`}>
+                        <Link to={`/editpr/${property.id}`} >
                             <button>Edit Property</button>
                         </Link>
                         <section className={styles.info}>
@@ -94,7 +94,7 @@ console.log(user);
     )}
 </div>
 
-            </div>
+        </div>
             <About />
         </div>
     )
