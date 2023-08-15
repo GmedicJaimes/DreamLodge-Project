@@ -1,15 +1,15 @@
-import styles from "./DetailPost.module.css";
-import React, { useState, useEffect } from "react";
+import styles from "./DetailPost.module.css"
+import React, { useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
 import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
 
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import axios from "axios";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import axios from 'axios'
 
-import { useParams, Link } from "react-router-dom";
+import {useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
@@ -46,40 +46,37 @@ const DetailPost = () => {
   };
   // NEXT IMAGE =======================================
 
-  const nextImage = () => {
-    setActiveImage((prevState) => (prevState + 1) % property?.imageUrl?.length);
-  };
-  // PREV IMAGE =======================================
 
-  const prevImage = () => {
-    setActiveImage(
-      (prevState) =>
-        (prevState - 1 + property?.imageUrl?.length) %
-        property?.imageUrl?.length
-    );
-  };
+const DetailPost = () => {  
+  const { id } = useParams()
+  const [property, setPropertyDetail] = useState([])
+  // console.log(property);
+  // console.log(detailId)
+
+
+
 
   // CONFIGURACION DEL PAGO=======================================
-  const [preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
-  const createPreference = async () => {
-    try {
-      const response = await axios.post(`http://localhost:3001/createorder`, {
-        description: `${property.name}`,
-        price: `${totalPrice}`,
-        quantity: `${selectedDays}`,
-        currency_id: "ARS",
-      });
+  const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${totalPrice}`,
+                quantity: `${selectedDays}`,
+                currency_id: "ARS",
+            });
 
-      const { id } = response.data;
+            const { id } = response.data;
 
-      return id;
-    } catch (error) {
-      console.log(error);
+            return id
+        } catch (error) {
+            console.log(error)
+        }
     }
-  };
 
-  const [idTicket, setIdTicket] = React.useState(0);
+    const [idTicket, setIdTicket] = React.useState(0)
 
     const handleBuy = async()=>{
         const id = await createPreference();
@@ -137,9 +134,9 @@ const DetailPost = () => {
   useEffect(async () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
-      setPropertyDetail(detailPost);
-      console.log(property);
-    };
+      setPropertyDetail(detailPost)
+
+    }
     propertiesDetail();
   
     // obtener reseñas de la propiedad
@@ -226,7 +223,7 @@ const DetailPost = () => {
           </section>
         </section>
         <div className={styles.falseLine}></div>
-        <section id="pie" className={styles.paymentBox}>
+        <section id="pie" className={styles.paymentBox}></section>
           <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
             {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
@@ -246,7 +243,7 @@ const DetailPost = () => {
               <Wallet initialization={{ preferenceId: preferenceId }} />
             )}
           </div>
-        </section>
+          <About/>
       </div>
       {hasPurchased &&<div>
         <h3>Deja una reseña:</h3>
@@ -279,5 +276,7 @@ const DetailPost = () => {
   
   );
 };
+}
+
 
 export default DetailPost;

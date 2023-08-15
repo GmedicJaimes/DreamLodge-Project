@@ -1,10 +1,13 @@
 import React from "react";
 import style from "./FooterLinks.module.css";
 
+
 export const FooterLinks = () => {
   return (
     <div className={style.containerFooter}>
       <div className={style.ctnFooter}>
+
+
         <div>
           <h3>Privacy</h3>
           <p>
