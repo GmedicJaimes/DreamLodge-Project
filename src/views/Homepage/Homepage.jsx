@@ -10,6 +10,7 @@ import { Firestore, collection, getDoc, getDocs } from "firebase/firestore";
 import {db, storage} from '../../config/firebase'
 import { ref } from "firebase/storage";
 import DashboardAdmin from "../Dashboard/DashboardAdmin";
+import Calendar from "../../components/Calendar/Calendar";
 
 const imageUrlRef = ref(storage, 'properties/');
 
@@ -46,12 +47,13 @@ const Homepage = ({host, setHost, originalHost}) => {
        
         {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
         <div className={styles.skeletonContainer}>
-  {/* {loading ? (
-    Array.from({ length: host.length || 12 }).map((_, idx) => <SkeletonCard key={idx} />)
-  ) : ( */}
-    <Cards host={host} />
-  {/* )} */}
-</div>
+          <Calendar/>
+          {/* {loading ? (
+            Array.from({ length: host.length || 12 }).map((_, idx) => <SkeletonCard key={idx} />)
+          ) : ( */}
+            <Cards host={host} />
+          {/* )} */}
+        </div>
   
       </div>
     </div>
