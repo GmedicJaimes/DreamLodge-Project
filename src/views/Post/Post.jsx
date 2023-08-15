@@ -137,7 +137,6 @@ const Post = () => {
           imageFile: [],
           available: true,
         });
-        console.log(formData)
       } catch (error) {
         console.log(error);
       }

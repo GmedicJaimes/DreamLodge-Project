@@ -13,27 +13,31 @@ import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { DateContext } from "../../Contex/DateContex";
 import {
 
-  isPropertyAvailable
+  isPropertyAvailable,
+  fetchAvailablePropertiesInRange 
 } from "../../config/handlers";
 
 const Calendar = ({
-  adult,
+  guest,
   child,
-  numberooms,
-  onAdultChange,
+  rooms,
+  onGuestChange,
   onChildChange,
   onRoomsChange,
+  onStartChange, 
+  onEndChange
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
 
+
   const today = dayjs();
 
 
-  const handleAdultChange = (event) => {
+  const handleGuestChange = (event) => {
     const { value } = event.target;
     if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
-      onAdultChange(value);
+      onGuestChange(value);
     }
   };
 
@@ -54,43 +58,7 @@ const Calendar = ({
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
 
-  // Manejadores de cambio de fechas y cantidades
-  const handleStartDateChange = (date) => {
-    setDateRange(date, endDate);
-  };
 
-  const handleEndDateChange = (date) => {
-    setDateRange(startDate, date);
-  };
-
-  useEffect(() => {
-    async function checkAndAddBooking() {
-      if (startDate && endDate) {
-        const total = countSelectedDays();
-  
-        const available = await isPropertyAvailable(propertyId, startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
-  
-        if (available) {
-          const bookingData = {
-            startDate: startDate.format('YYYY-MM-DD'),
-            endDate: endDate.format('YYYY-MM-DD'),
-            totalNights: total,
-          };
-          
-          // Aquí agregamos la reserva porque las fechas están disponibles
-          firebase.firestore().collection('bookings').add(bookingData);
-          alert('¡Reserva realizada!');
-        } else {
-          alert('La propiedad no está disponible en las fechas seleccionadas.');
-        }
-      }
-    }
-  
-    checkAndAddBooking();
-  }, [startDate, endDate]);
-  
-
-  
   // Función para contar la cantidad de días seleccionados
   const countSelectedDays = () => {
     if (startDate && endDate) {
@@ -101,6 +69,7 @@ const Calendar = ({
     }
     return 0;
   };
+
   return (
     <div>
       <Card
@@ -181,7 +150,7 @@ const Calendar = ({
                   marginRight: "2px",
                 }}
               />
-              {adult}
+              {guest}
             </Typography>
           </Grid>
           <Grid item xs={3} sm={3}>
@@ -219,7 +188,7 @@ const Calendar = ({
                   marginRight: "2px",
                 }}
               />
-              {numberooms}
+              {rooms}
             </Typography>
           </Grid>
           <Grid item xs={3} sm={3}>
@@ -253,7 +222,7 @@ const Calendar = ({
                 label="Check In"
                 value={startDate}
                 minDate={today}
-                onChange={handleStartDateChange}
+                onChange={onStartChange}
               />
             </DemoContainer>
             <DemoContainer components={["DatePicker"]} sx={{ width: "90%" }}>
@@ -261,7 +230,7 @@ const Calendar = ({
                 label="Check Out"
                 value={endDate}
                 minDate={secondDateMin}
-                onChange={handleEndDateChange}
+                onChange={onEndChange}
                 disabled={isSecondPickerDisabled}
               />
             </DemoContainer>
@@ -275,14 +244,14 @@ const Calendar = ({
               <Grid item xs={6} sm={3}>
                 <TextField
                   id="valueAdult"
-                  label="Adult"
+                  label="Guest"
                   type="number"
-                  value={adult}
+                  value={guest}
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
-                  onChange={(e) => handleAdultChange(e)}
+                  onChange={(e) => handleGuestChange(e)}
                   inputProps={{
                     style: { textAlign: "center" }, // Centra el texto dentro del TextField
                   }}
@@ -309,7 +278,7 @@ const Calendar = ({
                   id="value-Rooms"
                   label="Rooms "
                   type="number"
-                  value={numberooms}
+                  value={rooms}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -329,7 +298,28 @@ const Calendar = ({
 };
 
 export default Calendar;
+// useEffect(() => {
+//   async function checkAndAddBooking() {
+//     if (startDate && endDate) {
+//       const total = countSelectedDays();
 
+//       const available = await isPropertyAvailable( startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+
+//       if (available) {
+//         const bookingData = {
+//           startDate: startDate.format('YYYY-MM-DD'),
+//           endDate: endDate.format('YYYY-MM-DD'),
+//           totalNights: total,
+//         };
+        
+//         // Aquí agregamos la reserva porque las fechas están disponibles
+//         firebase.firestore().collection('bookings').add(bookingData);
+//         alert('¡Reserva realizada!');
+//       } else {
+//         alert('La propiedad no está disponible en las fechas seleccionadas.');
+//       }
+//     }
+//   }
 // useEffect(() => {
 //     if (startDate && endDate) {
 //       const total = countSelectedDays();

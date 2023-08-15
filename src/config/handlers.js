@@ -544,11 +544,10 @@ export const sortPropertiesByPrice = (properties, ascending) => {
 
 
 // Función para verificar si una propiedad está disponible en las fechas seleccionadas
-export  const isPropertyAvailable = async (propertyId, startDate, endDate) => {
+export  const isPropertyAvailable = async ( startDate, endDate) => {
   const bookingsRef = collection(db, "bookings");
   const q = query(
       bookingsRef, 
-      where("propertyId", "==", propertyId),
       where("startDate", "<=", endDate),
       where("endDate", ">=", startDate)
   );
@@ -594,14 +593,21 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
     const propertiesRef = collection(db, "properties");
 
     // Obtener todas las reservas que coincidan con el rango de fechas
-    const rangeQuery = query(
-        bookingsRef,
-        where("startDate", "<=", endDate),
-        where("endDate", ">=", startDate)
-    );
+    const querySnapshot = await getDocs(bookingsRef);
 
-    const querySnapshot = await getDocs(rangeQuery);
-    const bookedPropertyIds = querySnapshot.docs.map(doc => doc.data().propertyId);
+    const bookedPropertyIds = [];
+    querySnapshot.forEach(doc => {
+      const booking = doc.data();
+      const bookingEndDate = new Date(booking.endDate); // O dayjs(booking.endDate).toDate()
+      const bookingStartDate = new Date(booking.startDate); // O dayjs(booking.startDate).toDate()
+
+
+      if (
+        (bookingStartDate <= endDate.toDate() && bookingEndDate >= startDate.toDate())
+      ) {
+        bookedPropertyIds.push(booking.propertyId);
+      }
+    });
 
     // Obtener todas las propiedades
     const allPropertiesSnapshot = await getDocs(propertiesRef);
@@ -615,10 +621,9 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 
     console.log(availableProperties);
     return availableProperties;
-
   } catch (error) {
     console.error('Error fetching available properties in range:', error);
-    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+    return [];
   }
 };
 
@@ -630,22 +635,74 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 //======================================== CALENDARIO FILTRADO========================================
 
 // Función para obtener las propiedades filtradas por habitaciones
-export const fetchFilteredProperties = async (numberOfRooms) => {
+// export const fetchFilteredProperties = async (numberOfRooms) => {
+//   try {
+//     const propertiesCollectionRef = collection(db, 'properties');
+    
+//     const filteredPropertiesQuery = query(propertiesCollectionRef, where('stances.rooms', '==', Number(numberOfRooms)));
+//     const querySnapshot = await getDocs(filteredPropertiesQuery);
+    
+//     const filteredProperties = querySnapshot.docs.map(doc => doc.data());
+//     console.log(filteredProperties);
+
+//     return filteredProperties;
+//   } catch (error) {
+//     console.error('Error fetching filtered properties:', error);
+//     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+//   }
+// };
+
+
+
+
+
+
+export const fetchFilteredProperties = async (originalFilters) => {
   try {
     const propertiesCollectionRef = collection(db, 'properties');
-    
-    const filteredPropertiesQuery = query(propertiesCollectionRef, where('stances.rooms', '==', Number(numberOfRooms)));
-    const querySnapshot = await getDocs(filteredPropertiesQuery);
-    
-    const filteredProperties = querySnapshot.docs.map(doc => doc.data());
-    console.log(filteredProperties);
 
-    return filteredProperties;
+    const filters = { ...originalFilters };
+
+    if (filters.startDate && typeof filters.startDate === 'string') {
+      filters.startDate = new Date(filters.startDate);
+    }
+    if (filters.endDate && typeof filters.endDate === 'string') {
+      filters.endDate = new Date(filters.endDate);
+    }
+
+    let baseQuery = propertiesCollectionRef;
+
+    // Ajustando las rutas de campo según la estructura del documento
+    if (filters.numRooms) {
+      baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.numRooms)));
+    }
+    if (filters.guest) {
+      baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
+    }
+
+    const baseSnapshot = await getDocs(baseQuery);
+    const baseProperties = baseSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    if (filters.startDate && filters.endDate) {
+      return baseProperties.filter(property => {
+        if (!property.availableDates) {
+            return false;
+        }
+        const propertyStartDate = new Date(property.availableDates.start);
+        const propertyEndDate = new Date(property.availableDates.end);
+        return propertyStartDate <= filters.endDate && propertyEndDate >= filters.startDate;
+      });
+    } else {
+      return baseProperties;
+    }
   } catch (error) {
     console.error('Error fetching filtered properties:', error);
-    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+    return [];
   }
 };
+
+
+
 
 
 export const fetchFilteredGuests = async (numberOfGuests) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
@@ -10,7 +10,9 @@ import {
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import Calendar from "../../components/Calendar/Calendar";
-import { fetchFilteredProperties,fetchFilteredGuests } from "../../config/handlers";
+import { fetchFilteredProperties,fetchFilteredGuests,fetchAvailablePropertiesInRange } from "../../config/handlers";
+import { DateContext } from "../../Contex/DateContex";
+
 
 
 const Homepage = () => {
@@ -20,11 +22,17 @@ const Homepage = () => {
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true); // Agrega esta línea para definir el estado hasMore
+  const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
 
 
-  const [adult, setAdult] = useState(1);
+
+
+  const [guest, setGuest] = useState(1);
   const [child, setChild] = useState(0);
-  const [numberooms, setNumberRooms] = useState(1);
+  const [rooms, setRooms] = useState(1);
+  const [availableProperties, setAvailableProperties] = useState([]);
+
+
   
 
 
@@ -35,37 +43,124 @@ const Homepage = () => {
   // };
   
   
-  const handleAdultChange = (value) => {
-    setAdult(value);
-    const filteredHost = fetchFilteredGuests(adult)
-    console.log(filteredHost)
-    setHost(filteredHost);
-  };
-
-  const handleChildChange = (value) => {
-    setChild(value);
-  };
-
-   const handleRoomsChange = (value) => {
-    setNumberRooms(value);
-    
-    const filteredHost = fetchFilteredProperties(value)
-    setHost(filteredHost);
-    console.log(host)
-  };
 
   
+  const handleStartDateChange = async (date) => {
+    setDateRange(date, endDate);
+  
+    if (endDate) {
+      const properties = await fetchAvailablePropertiesInRange(date, endDate);
+      
+      setHost(properties);
+      // Si necesitas enviar estas propiedades al componente padre o hacer algo más con ellas, hazlo aquí
+    }      
+};
+  
+  const handleEndDateChange = async (date) => {
+    setDateRange(startDate, date);
+  
+    if (startDate) {
+      const properties = await fetchAvailablePropertiesInRange(startDate, date);
+      setHost(properties);
+      // Si necesitas enviar estas propiedades al componente padre o hacer algo más con ellas, hazlo aquí
+    }
+};
+
+// const handleAvailableProperties = async () => {
+//   if (startDate && endDate) {
+//     const availableProperties = await fetchAvailablePropertiesInRange(
+//       startDate,
+//       endDate
+//       );
+
+//     if (availableProperties.length === 0) {
+//       console.log("No hay propiedades disponibles");
+//     } else {
+//       setHost(availableProperties);
+//       setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
+//     }
+//   }
+// };
+
+
+const handleAvailableProperties = async () => {
+  if (startDate && endDate) {
+    const filters = {
+      rooms: rooms,
+      guest: guest,
+      startDate: startDate,
+      endDate: endDate
+    };
+   const availableProperties = await fetchFilteredProperties(filters);
+   
+      console.log(`soy guest`,)
+    if (availableProperties.length === 0) {
+      console.log("No hay propiedades disponibles");
+    } else {
+      setHost(availableProperties);
+      setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
+    }
+  }
+};
+
+
+const handleGuestChange = async (value) => {
+  setGuest(value);
+  const filters = {
+    guest: value,
+    rooms: rooms,
+    startDate: startDate,
+    endDate: endDate
+  };
+  const filteredHost = await fetchFilteredProperties(filters);
+  console.log("FILTERED HOST GUEST" ,filteredHost)
+  setHost(filteredHost);
+  console.log(" HOST GUEST" ,filteredHost)
+
+};
 
 
 
-  // useEffect(() => {
-  //   // Esta función obtiene las propiedades y actualiza el estado 'host'
-  //   async function fetchProperties() {
-  //     const properties = await getPropertiesList();
-  //     setHost(properties);
-  //   }
-  //   fetchProperties();
-  // }, []);
+
+const handleChildChange = (value) => {
+  setChild(value);
+};
+
+const handleRoomsChange = async (value) => {
+  setRooms(value);
+  const filters = {
+    guest: guest,
+    rooms: value,
+    startDate: startDate,
+    endDate: endDate
+  };
+  const filteredHost = await fetchFilteredProperties(filters);
+  console.log("FILTERED HOST ROOM" ,filteredHost)
+  setHost(filteredHost);
+  console.log("FILTERED ROOM" ,filteredHost)
+
+};
+
+
+
+
+useEffect(() => {
+  // Llamada a fetchFilteredProperties cuando guest cambia
+  const filters = {
+    guest: guest,
+    rooms: rooms,
+    startDate: startDate,
+    endDate: endDate
+  };
+
+  async function fetchFilteredHost() {
+    const filteredHost = await fetchFilteredProperties(filters);
+    setHost(filteredHost);
+  }
+
+  fetchFilteredHost();
+}, [guest, rooms, startDate, endDate]);
+
 
   useEffect(() => {
     async function fetchProperties() {
@@ -82,6 +177,7 @@ const Homepage = () => {
     }
     fetchProperties();
   }, []);
+  
 
   const loadMoreProperties = async () => {
     // Simulamos una carga demorada para dar tiempo a ver el efecto
@@ -104,16 +200,7 @@ const Homepage = () => {
     }, 500); //  ajustar el tiempo
   };
 
-  const handleAvailableProperties = async () => {
-    const availableProperties = await getAvailableProperties();
 
-    if (availableProperties.length === 0) {
-      console.log("No hay propiedades disponibles");
-    } else {
-      setHost(availableProperties);
-      setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
-    }
-  };
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice(host, ascending);
@@ -125,12 +212,15 @@ const Homepage = () => {
     <div>
       <div className={styles.containerHome}>
       <Calendar
-  adult={adult}
+  guest={guest
+  }
   child={child}
-  numberooms={numberooms}
-  onAdultChange={handleAdultChange} 
+  rooms={rooms}
+  onGuestChange={handleGuestChange} 
   onChildChange={handleChildChange}
   onRoomsChange={handleRoomsChange}
+  onStartChange={handleStartDateChange}
+  onEndChange={handleEndDateChange}
 />
 
 
