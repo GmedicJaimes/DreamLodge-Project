@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
+import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query, collectionGroup} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
@@ -384,67 +384,54 @@ export const dowloadImg = ()=> {
   })
 };
 
+//funcion para FILTRAR POR TYPE.......................................................
+// export const getPropertiesByType = async (type) => {
+//   try {
+//     const propertiesQuery = query(propertiesCollectionRef, where('type', 'array-contains-any', [type]));
+//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
-export const getPropertiesByType = async (type) => {
+//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
+//       const propertyData = doc.data();
+//       return {
+//         ...propertyData,
+//         id: doc.id
+//       };
+//     });
+
+//     return filteredProperties;
+//   } catch (error) {
+//     console.log(error);
+//     return []; // Maneja el error de manera adecuada retornando un array vacío u otra respuesta que consideres.
+//   }
+// };
+
+export const getPropertiesByMultipleTypes = async (types) => {
   try {
-    const propertiesQuery = query(propertiesCollectionRef, where('type', 'array-contains-any', [type]));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
+      const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
+      
+      const filteredProperties = propertiesQuerySnapshot.docs
+          .filter((doc) => types.every(type => doc.data().type.includes(type)))
+          .map((doc) => {
+              const propertyData = doc.data();
+              return {
+                  ...propertyData,
+                  id: doc.id
+              };
+          });
 
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-      const propertyData = doc.data();
-      return {
-        ...propertyData,
-        id: doc.id
-      };
-    });
-
-    return filteredProperties;
+      return filteredProperties;
   } catch (error) {
-    console.log(error);
-    return []; // Maneja el error de manera adecuada retornando un array vacío u otra respuesta que consideres.
+      console.log(error);
+      return [];
   }
 };
 
-// export const getPropertiesByType = async (type) => {
-//   try {
-//     if (!type) {
-//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
-//     }
 
-//     console.log(type)
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
-//     const properties = [];
 
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
-//     if(!properties.length){
-//     console.log('properties empty')
-//     }
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
 
-// export const getPropertiesByState = async (state) => {
-//   try {
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
-//     const properties = [];
 
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
 
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
+
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -458,22 +445,6 @@ export const getAvailableProperties = async () => {
     });
 
     return availableProperties;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
-//.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = async (searchValue) => {
-  try {
-    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
-
-    return filteredProperties;
   } catch (error) {
     console.error(error);
     return [];

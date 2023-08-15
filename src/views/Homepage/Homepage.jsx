@@ -40,8 +40,14 @@ const Homepage = () => {
     }
   };
 
+  // const handleSortByPrice = () => {
+  //   const sortedProperties = sortPropertiesByPrice(host, ascending);
+  //   setHost(sortedProperties);
+  //   setAscending(!ascending);
+  // };
+
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice(host, ascending);
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
     setHost(sortedProperties);
     setAscending(!ascending);
   };
