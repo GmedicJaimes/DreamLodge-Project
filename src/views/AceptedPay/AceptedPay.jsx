@@ -19,11 +19,11 @@ const AceptedPay = () => {
             const user = await getUserByUID(parsedRecipe.property.userId)
             setUserData(user);
             
-            console.log(parsedRecipe.property.uui)
+            console.log(parsedRecipe.property.id)
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket);
 
-            await registerPurchases(parsedRecipe.buyerId, parsedRecipe.property);
+            await registerPurchases(parsedRecipe.buyerId, parsedRecipe.propertyId);
 
             localStorage.removeItem('propertyData');
 

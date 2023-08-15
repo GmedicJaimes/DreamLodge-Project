@@ -10,6 +10,7 @@ import { DateContext } from "../../../Contex/DateContex";
 import {fetchAvailablePropertiesInRange} from "../../../config/handlers"
 
 
+import { getDocs } from "firebase/firestore";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
 
@@ -162,7 +163,7 @@ const DetailPost = () => {
 
     }
     propertiesDetail();
-  
+    console.log(propertiesDetail)
     // obtener reseñas de la propiedad
     const reviewsSnapshot = await getDocs(
       query(collection(db, "reviews"), where("propertyId", "==", id))
@@ -203,15 +204,15 @@ const DetailPost = () => {
             </div>
           </section>
         </header>
-        <section className={styles.imageRelative}>
-        <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button>
-        <img
+        {/* <section className={styles.imageRelative}>
+        {/* <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button> */}
+        {/* <img
               src={property?.imageUrl && property.imageUrl[activeImage]}
               alt={property?.imageUrl}
               className={styles.imageCarrousel}
             />
             <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
-        </section>
+        </section> */} 
         <div className={styles.falseLine}></div>
         <SubTotal />
         <section className={styles.overviewRating}>
@@ -294,7 +295,7 @@ const DetailPost = () => {
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>}
+            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
             
 
             <About></About>
