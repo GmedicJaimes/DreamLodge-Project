@@ -25,16 +25,17 @@ const DetailPost = () => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
   const [hasPurchased, setHasPurchased] = useState(null);
-  const submitReview = async (propertyId) => {
+
+  const submitReview = async (id) => {
     try {
       await addDoc(collection(db, "reviews"), {
-        propertyId: propertyId,
+        propertyId: id,
         author: reviewAuthor,
         content: reviewContent,
         rating: reviewRating,
       });
   
-      // Limpia los campos del formulario después de enviar la reseña
+      // 
       setReviewAuthor("");
       setReviewContent("");
       setReviewRating(0);
@@ -271,7 +272,7 @@ const DetailPost = () => {
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>}
+            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
             
 
             <About></About>

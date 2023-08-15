@@ -5,29 +5,47 @@ import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
 import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
+import { listAll } from "firebase/storage";
+import { Firestore, collection, getDoc, getDocs } from "firebase/firestore";
+import {db, storage} from '../../config/firebase'
+import { ref } from "firebase/storage";
+import DashboardAdmin from "../Dashboard/DashboardAdmin";
 
-const Homepage = () => {
-  const [host, setHost] = useState([]);
+const imageUrlRef = ref(storage, 'properties/');
+
+const Homepage = ({host, setHost, originalHost}) => {
+  // const [host, setHost] = useState([]);
   // const [page, setPage] = useState(1);
-  const [originalHost, setOriginalHost] = useState([]);
+  // const [originalHost, setOriginalHost] = useState([]);
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
+  // const [totalProperties, setTotalProperties] = useState(0);
+  // const [totalUsers, setTotalUsers] = useState(0);
+  // const [totalImages, setTotalImages] = useState(0);
 
+  // useEffect(() => {
+  //   async function fetchProperties() {
+  //     try {
+  //       const properties = await getPropertiesList();
+  //       setOriginalHost(properties);
+  //       setHost(properties);
+  //       setTotalProperties(properties.length);
 
-  useEffect(() => {
-    async function fetchProperties() {
-      try {
-        const properties = await getPropertiesList();
-        setOriginalHost(properties);
-        setHost(properties);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      } finally {
-        setLoading(false); // Finalizado el proceso, establece loading en false
-      }
-    }
-    fetchProperties();
-  }, []);
+  //       const usersSnapshot = await getDocs(collection(db, 'users'));
+  //       setTotalUsers(usersSnapshot.size);
+  //       console.log(usersSnapshot);
+
+  //       const imagesSnapshot = await listAll(imageUrlRef);
+  //       setTotalImages(imagesSnapshot.items.length);
+  //       console.log(imagesSnapshot);
+  //     } catch (error) {
+  //       console.error("Error fetching properties:", error);
+  //     } finally {
+  //       setLoading(false); // Finalizado el proceso, establece loading en false
+  //     }
+  //   }
+  //   fetchProperties();
+  // }, []);
 
   const handleAvailableProperties = async () => {
     const availableProperties = await getAvailableProperties();
@@ -45,10 +63,11 @@ const Homepage = () => {
     setHost(sortedProperties);
     setAscending(!ascending);
   };
-
+  console.log(host)
   return (
     <div>
       <div className={styles.containerHome}>
+        
         <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
         {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
        
