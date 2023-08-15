@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
 import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
-import { listAll } from "firebase/storage";
-import { Firestore, collection, getDoc, getDocs } from "firebase/firestore";
-import {db, storage} from '../../config/firebase'
-import { ref } from "firebase/storage";
-import DashboardAdmin from "../Dashboard/DashboardAdmin";
-
-const imageUrlRef = ref(storage, 'properties/');
 
 const Homepage = ({host, setHost, originalHost}) => {
   // const [host, setHost] = useState([]);
@@ -50,13 +43,29 @@ const Homepage = ({host, setHost, originalHost}) => {
   const handleAvailableProperties = async () => {
     const availableProperties = await getAvailableProperties();
   
-    if (availableProperties.length === 0) {
-      console.log("No hay propiedades disponibles");
-    } else {
-      setHost(availableProperties);
-      setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
-    }
+
+  const loadMoreProperties = async () => {
+    // Simulamos una carga demorada para dar tiempo a ver el efecto
+    setTimeout(async () => {
+      const propertiesPerPage = 8; // Número de propiedades por página
+      const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
+
+      // Obtener propiedades adicionales según la página actual
+      const additionalProperties = await getPropertiesList(
+        currentPage,
+        propertiesPerPage
+      );
+
+      // Si no hay más propiedades para cargar, desactivamos el scroll infinito
+      if (additionalProperties.length === 0) {
+        setHasMore(false);
+      } else {
+        setHost((prevHost) => [...prevHost, ...additionalProperties]);
+      }
+    }, 500); //  ajustar el tiempo
   };
+
+
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice(host, ascending);
@@ -81,6 +90,8 @@ const Homepage = ({host, setHost, originalHost}) => {
 </div>
       </div>
     </div>
-  )};
-
+  );
+};
+};
 export default Homepage;
+
