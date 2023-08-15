@@ -2,7 +2,7 @@ import styles from "./AceptedPay.module.css"
 import React from 'react';
 import { Link } from "react-router-dom"
 import About from "../../components/About/About"
-import { getUserByUID } from "../../config/handlers";
+import { getUserByUID, registerPurchases } from "../../config/handlers";
 
 import {getPaymentStatus, updateAvaible} from '../../config/handlers';
 
@@ -18,9 +18,15 @@ const AceptedPay = () => {
             setDataRecipe(parsedRecipe)
             const user = await getUserByUID(parsedRecipe.property.userId)
             setUserData(user);
+            
             console.log(parsedRecipe.property.uui)
 
-            await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
+            await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket);
+
+            await registerPurchases(parsedRecipe.buyerId, parsedRecipe.property);
+
+            localStorage.removeItem('propertyData');
+
         };
     }, [])
 

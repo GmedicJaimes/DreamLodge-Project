@@ -28,13 +28,15 @@ import Card from "./Card/Card";
     //   fetchProperties();
     // }, []);
   
+
     return (
       <div className={styles.containerCards}>
-        {host?.map((property) => (
+        {Array.isArray(host) && host.map((property) => (
           <Card property={property} key={property.id} />
         ))}
       </div>
     );
+    
   };
   
   export default Cards;
