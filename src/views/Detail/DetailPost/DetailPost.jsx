@@ -54,14 +54,33 @@ const DetailPost = () => {
     }
   };
 
-  const [idTicket, setIdTicket] = React.useState(0);
+  const [infoTicket, setInfoTicket] = React.useState({
+    idTicket: "",
+    daysTicket: "",
+    priceTicket: "",
+    propertyTicket: {}
+  });
+
+  // const handleTicket = ( ) => {
+  //   setInfoTicket({
+  //     idTicket: id,
+  //     daysTicket: selectedDays,
+  //     priceTicket: totalPrice,
+  //     propertyTicket: property
+  //   });
+  // }
 
     const handleBuy = async()=>{
         const id = await createPreference();
         //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
         if (id){
             setPreferenceId(id);
-            setIdTicket(id);
+            setInfoTicket({
+              idTicket: id,
+              daysTicket: selectedDays,
+              priceTicket: totalPrice,
+              propertyTicket: property
+            });
             //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
             try {
                 await new Promise((resolve)=>{
@@ -87,13 +106,7 @@ const DetailPost = () => {
     };
 
       React.useEffect(() => {
-        localStorage.setItem('propertyData', JSON.stringify({
-            idTicket: idTicket,
-            property: property,
-            selectedDays: selectedDays,
-            totalPrice: totalPrice,
-            propertyId: id
-        }));
+        localStorage.setItem('propertyData', JSON.stringify(infoTicket));
       }, [property]);
   
 
@@ -112,6 +125,7 @@ const DetailPost = () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
       setPropertyDetail(detailPost);
+      // setInfoTicket({...infoTicket, propertyTicket: detailPost})
       console.log(property);
     };
     propertiesDetail();
@@ -182,7 +196,7 @@ const DetailPost = () => {
           <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
             {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
-            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
+            {totalPrice && <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>}
           </section>
           <div>
             <h3>Select the number of reservation days:</h3>
