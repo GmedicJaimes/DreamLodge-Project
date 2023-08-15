@@ -11,30 +11,16 @@ import { Link } from "react-router-dom"
 
 
 
- const SubTotal = () => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange }) => {
   const { startDate, endDate, setDateRange } = useContext(DateContext);
-  const [guest, setGuest] = useState(1);
-  const [child, setChild] = useState(0);
+  const [unavailableCheckIn, setUnavailableCheckIn] = React.useState([]);
+  const [unavailableCheckOut, setUnavailableCheckOut] = React.useState([]);
+
+ 
   const [rooms, setRooms] = useState(1);
   const today = dayjs();
 
-  const handleGuestChange = (value) => {
-    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
-      setGuest(value);
-    }
-  };
-
-  const handleChildChange = (value) => {
-    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
-      setChild(value);
-    }
-  };
-
-  const handleRoomsChange = (value) => {
-    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
-      setRooms(value);
-    }
-  };
+ 
 
   const countSelectedDays = () => {
     if (startDate && endDate) {
@@ -46,8 +32,24 @@ import { Link } from "react-router-dom"
     return 0;
   };
 
+//   React.useEffect(() => {
+//     if (startDate && endDate) {
+//       const count = countSelectedDays();
+//       console.log(`counted days` , count);
+//     }
+//   }, [startDate, endDate]);
+
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
+
+
+
+  
+
+
+
+
+
 
   return (
     <div style={{ width: "500px" }}>
@@ -97,9 +99,11 @@ import { Link } from "react-router-dom"
                 label="Check In"
                 value={startDate}
                 minDate={today}
-                shouldDisableDate={(date) => shouldDisableDateIn(date)}
-                // onChange={handleStartDateChange}
-              />
+                onChange={handleStartDateChange}
+
+                />
+
+              
             </DemoContainer>
             <DemoContainer components={["DatePicker"]} sx={{}}>
               <DatePicker
@@ -107,57 +111,11 @@ import { Link } from "react-router-dom"
                 value={endDate}
                 minDate={secondDateMin}
                 shouldDisableDate={(date) => shouldDisableDateout(date)}
-                // onChange={handleEndDateChange}
-                disabled={isSecondPickerDisabled}
+                onChange={handleEndDateChange}
               />
             </DemoContainer>
 
-            <Grid container
-              justifyContent="center"
-              spacing={2}
-              marginTop={2}
-              marginBottom={3}
-            >
-              <Grid item xs={3} sm={4}>
-                <TextField
-                  id="subAdult"
-                  label="Adult"
-                  type="number"
-                //   value={adult}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                //   onChange={handleAdultChange}
-                />
-              </Grid>
-              <Grid item xs={3} sm={4}>
-                <TextField
-                  id="subChild"
-                  label="Child"
-                  type="number"
-                  value={child}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                  onChange={handleChildChange}
-                />
-              </Grid>
-              {/* <Grid item xs={3} sm={3}>
-                <TextField
-                  id="subRooms"
-                  label="Rooms"
-                  type="number"
-                  value={numberooms}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                  onChange={handleRoomsChange}
-                />
-              </Grid> */}
-            </Grid>
+           
           </LocalizationProvider>
         </Grid>
         <StyledDivider />

@@ -7,8 +7,7 @@ import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
 import SubTotal from "../../../components/subTotal/SubTotal"
 import { DateContext } from "../../../Contex/DateContex";
-import {fetchAvailablePropertiesInRange} from "../../../config/handlers"
-import { getDocs} from "firebase/firestore";
+import {fetchAvailablePropertiesInRange, isPropertyAvailable} from "../../../config/handlers"
 
 
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
@@ -34,8 +33,59 @@ const DetailPost = () => {
   const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
 
 
+  const handleStartDateChange = async (date) => {
+    setDateRange(startDate, date);
+    
+    if (startDate) {
+      const isAvailable = await isPropertyAvailable(id, startDate, date);
+      if(!isAvailable) {
+        alert("La propiedad no está disponible para estas fechas.");
+        // Igual que antes, maneja la lógica que necesites aquí.
+      }
 
- 
+      console.log(isAvailable)
+    }
+    console.log(`ID`,id,"START",startDate,"DATE",date)
+  };
+
+  const handleEndDateChange = async (date) => {
+    setDateRange(date, endDate);
+    
+    if (endDate) {
+      const isAvailable = await isPropertyAvailable(id, date, endDate);
+      if(!isAvailable) {
+        alert("La propiedad no está disponible para estas fechas.");
+        // Aquí puedes manejar cualquier otra lógica que necesites, 
+        // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
+      }
+      console.log(isAvailable)  
+    }    
+    console.log(`ID`,id,"END",endDate,"DATE",date)
+  };
+  
+
+
+
+
+//   const handleReserveClick = async () => {
+//   // Aquí obtén startDate y endDate de alguna manera, por ejemplo, desde tus campos de entrada
+  
+//   const propertyAvailable = await isPropertyAvailable(propertyId, startDate, endDate);
+
+//   if (!propertyAvailable) {
+//     alert("Lo sentimos, pero la propiedad está ocupada entre las fechas seleccionadas.");
+//   } else {
+//     // Aquí puedes realizar la reserva ya que la propiedad está disponible
+//     // Realiza las acciones necesarias para la reserva
+//   }
+// };
+
+
+
+
+
+    //CALENDAR DATES ============================================
+
 
 
 
@@ -104,33 +154,33 @@ const DetailPost = () => {
     const [idTicket, setIdTicket] = React.useState(0)
 
     const handleBuy = async()=>{
-        const id = await createPreference();
-        //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
-        if (id){
-            setPreferenceId(id);
-            setIdTicket(id);
-            //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
-            try {
-                await new Promise((resolve)=>{
-                    const intervalPay = setInterval(async()=>{
-                    const paymentStatus = await getPaymentStatus(id);
-                    if(paymentStatus === 'approved'){
-                        //si el pago fue aprovado se actualiza el avaible de "true" a "false"
-                        updateAvaible(property.id, preferenceId);
-                        //cortamos el problema y resolvemos la promesa
-                        clearInterval(intervalPay)
-                        resolve()
-                    }else if(paymentStatus === 'rejected'){
-                        //si el pago es rechazado, se corda el intervalo sin actualizar
-                        clearInterval(intervalPay);
-                        resolve()
-                    }
-                    })
-                }, 10000)
-            } catch (error) {
-                console.error("Error en la obtencion del status de pago", error);
-            }
-        };
+        // const id = await createPreference();
+        // //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
+        // if (id){
+        //     setPreferenceId(id);
+        //     setIdTicket(id);
+        //     //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
+        //     try {
+        //         await new Promise((resolve)=>{
+        //             const intervalPay = setInterval(async()=>{
+        //             const paymentStatus = await getPaymentStatus(id);
+        //             if(paymentStatus === 'approved'){
+        //                 //si el pago fue aprovado se actualiza el avaible de "true" a "false"
+        //                 updateAvaible(property.id, preferenceId);
+        //                 //cortamos el problema y resolvemos la promesa
+        //                 clearInterval(intervalPay)
+        //                 resolve()
+        //             }else if(paymentStatus === 'rejected'){
+        //                 //si el pago es rechazado, se corda el intervalo sin actualizar
+        //                 clearInterval(intervalPay);
+        //                 resolve()
+        //             }
+        //             })
+        //         }, 10000)
+        //     } catch (error) {
+        //         console.error("Error en la obtencion del status de pago", error);
+        //     }
+        // };
     };
 
       React.useEffect(() => {
@@ -214,7 +264,10 @@ const DetailPost = () => {
             <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
         </section>
         <div className={styles.falseLine}></div>
-        <SubTotal />
+        <SubTotal 
+        handleStartDateChange={handleStartDateChange}
+        handleEndDateChange={handleEndDateChange}
+        />
         <section className={styles.overviewRating}>
             <section className={styles.overviewBox}>
                 <h3>Overview</h3>

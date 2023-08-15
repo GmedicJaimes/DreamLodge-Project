@@ -518,17 +518,19 @@ export const filterByStateAndCity = async (state, city) => {
 
 
 // Función para verificar si una propiedad está disponible en las fechas seleccionadas
-export  const isPropertyAvailable = async ( startDate, endDate) => {
+export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
   const bookingsRef = collection(db, "bookings");
   const q = query(
-      bookingsRef, 
-      where("startDate", "<=", endDate),
-      where("endDate", ">=", startDate)
+    bookingsRef,
+    where("propertyId", "==", propertyId), 
+    where("startDate", "<=", endDate),
+    where("endDate", ">=", startDate)
   );
-  
+
   const snapshot = await getDocs(q);
-  return snapshot.size === 0;  // si el tamaño es 0, la propiedad está disponible
+  return snapshot.size === 0; // si el tamaño es 0, la propiedad está disponible
 };
+
 
 // Función para crear una reserva
 export const createBooking = async (propertyId, bookingData) => {
@@ -559,6 +561,11 @@ export const createBooking = async (propertyId, bookingData) => {
   }
 };
 
+
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
 
 //funcion para deshabilitar propiedades
 export const updateAvaible = async(id, preferenceId) => {
