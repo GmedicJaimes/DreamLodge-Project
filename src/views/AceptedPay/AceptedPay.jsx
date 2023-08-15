@@ -24,7 +24,8 @@ const AceptedPay = () => {
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
         };
-    }, [])
+    }, []);
+    
 
     return(
         <div>

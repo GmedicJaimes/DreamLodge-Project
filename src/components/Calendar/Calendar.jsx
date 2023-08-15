@@ -105,6 +105,7 @@ const Calendar = ({
           padding: "15px",
           margin: "20px",
           width: "300px",
+          boxShadow: "0px 3px 3px 0px #B8B8B8"
         }}
       >
         <Grid container justifyContent="start" marginTop={0} marginBottom={2}>
