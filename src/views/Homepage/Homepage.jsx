@@ -14,7 +14,7 @@ import Calendar from "../../components/Calendar/Calendar";
 
 
 
-const Homepage = ({host, setHost, originalHost}) => {
+const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
  
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
