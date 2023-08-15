@@ -6,7 +6,6 @@ import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
 
 
-
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
