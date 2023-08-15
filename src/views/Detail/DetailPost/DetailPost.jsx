@@ -13,12 +13,37 @@ import { useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
+import { auth } from "../../../config/firebase";
 
 const DetailPost = () => {
   const { id } = useParams();
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
+  //REVIEWS============================================
 
+  const [reviewAuthor, setReviewAuthor] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewRating, setReviewRating] = useState(0);
+  const [hasPurchased, setHasPurchased] = useState(null);
+  const submitReview = async (propertyId) => {
+    try {
+      await addDoc(collection(db, "reviews"), {
+        propertyId: propertyId,
+        author: reviewAuthor,
+        content: reviewContent,
+        rating: reviewRating,
+      });
+  
+      // Limpia los campos del formulario después de enviar la reseña
+      setReviewAuthor("");
+      setReviewContent("");
+      setReviewRating(0);
+  
+      alert("Reseña enviada con éxito");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // NEXT IMAGE =======================================
 
   const nextImage = () => {
@@ -92,7 +117,8 @@ const DetailPost = () => {
             property: property,
             selectedDays: selectedDays,
             totalPrice: totalPrice,
-            propertyId: id
+            propertyId: id,
+            buyerId: auth?.currentUser?.uid
         }));
       }, [property]);
   
@@ -108,14 +134,36 @@ const DetailPost = () => {
   //=============================================================
   //
 
-  useEffect(() => {
+  useEffect(async () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
       setPropertyDetail(detailPost);
       console.log(property);
     };
     propertiesDetail();
+  
+    // obtener reseñas de la propiedad
+    const reviewsSnapshot = await getDocs(
+      query(collection(db, "reviews"), where("propertyId", "==", id))
+    );
+    const reviewsData = reviewsSnapshot.docs.map((reviewDoc) => reviewDoc.data());
+  
+    // si el usuario loggeado, compro la propiedad
+    if (auth.currentUser) {
+      const userId = auth.currentUser.uid;
+      const purchasesQuery = query(collection(db, "purchases"), 
+        where("userId", "==", userId),
+        where("propertyId", "==", id)
+      );
+      const purchasesSnapshot = await getDocs(purchasesQuery);
+      const hasPurchased = !purchasesSnapshot.empty;
+  
+      // modificamos el estado haspurchased
+
+      setHasPurchased(hasPurchased);
+    };
   }, []);
+  
 
   return (
     <div>
@@ -200,8 +248,35 @@ const DetailPost = () => {
           </div>
         </section>
       </div>
-      <About></About>
-    </div>
+      {hasPurchased &&<div>
+        <h3>Deja una reseña:</h3>
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={reviewAuthor}
+              onChange={(e) => setReviewAuthor(e.target.value)}
+            />
+            <textarea
+              placeholder="Contenido de la reseña"
+              value={reviewContent}
+              onChange={(e) => setReviewContent(e.target.value)}
+            />
+            <select
+              value={reviewRating}
+              onChange={(e) => setReviewRating(Number(e.target.value))}
+            >
+              <option value={1}>1 estrella</option>
+              <option value={2}>2 estrellas</option>
+              <option value={3}>3 estrellas</option>
+              <option value={4}>4 estrellas</option>
+              <option value={5}>5 estrellas</option>
+            </select>
+            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>}
+            
+
+            <About></About>
+            </div>
+  
   );
 };
 

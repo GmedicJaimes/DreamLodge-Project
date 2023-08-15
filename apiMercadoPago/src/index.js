@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 const corsOptions = {
-    origin: 'https://dreamlodgeprueba.web.app', 
+    origin: 'http://localhost:5173', 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
     optionsSuccessStatus: 204, 
   };
