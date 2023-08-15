@@ -1,59 +1,83 @@
-import styles from "./DetailPost.module.css";
-import React, { useState, useEffect } from "react";
+import styles from "./DetailPost.module.css"
+import React, { useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
 import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
 
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import axios from "axios";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import axios from 'axios'
 
-import { useParams, Link } from "react-router-dom";
+import {useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
+import { auth } from "../../../config/firebase";
 
 const DetailPost = () => {
   const { id } = useParams();
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
+  //REVIEWS============================================
 
-  // NEXT IMAGE =======================================
+  const [reviewAuthor, setReviewAuthor] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewRating, setReviewRating] = useState(0);
+  const [hasPurchased, setHasPurchased] = useState(null);
 
-  const nextImage = () => {
-    setActiveImage((prevState) => (prevState + 1) % property?.imageUrl?.length);
-  };
-  // PREV IMAGE =======================================
-
-  const prevImage = () => {
-    setActiveImage(
-      (prevState) =>
-        (prevState - 1 + property?.imageUrl?.length) %
-        property?.imageUrl?.length
-    );
-  };
-
-  // CONFIGURACION DEL PAGO=======================================
-  const [preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
-  const createPreference = async () => {
+  const submitReview = async (id) => {
     try {
-      const response = await axios.post(`http://localhost:3001/createorder`, {
-        description: `${property.name}`,
-        price: `${totalPrice}`,
-        quantity: `${selectedDays}`,
-        currency_id: "ARS",
+      await addDoc(collection(db, "reviews"), {
+        propertyId: id,
+        author: reviewAuthor,
+        content: reviewContent,
+        rating: reviewRating,
       });
-
-      const { id } = response.data;
-
-      return id;
+  
+      // 
+      setReviewAuthor("");
+      setReviewContent("");
+      setReviewRating(0);
+  
+      alert("Reseña enviada con éxito");
     } catch (error) {
       console.log(error);
     }
   };
+  // NEXT IMAGE =======================================
 
+
+const DetailPost = () => {  
+  const { id } = useParams()
+  const [property, setPropertyDetail] = useState([])
+  // console.log(property);
+  // console.log(detailId)
+
+
+
+
+  // CONFIGURACION DEL PAGO=======================================
+  const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${totalPrice}`,
+                quantity: `${selectedDays}`,
+                currency_id: "ARS",
+            });
+
+            const { id } = response.data;
+
+            return id
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const [idTicket, setIdTicket] = React.useState(0)
   const [infoTicket, setInfoTicket] = React.useState({
     idTicket: "",
     daysTicket: "",
@@ -121,15 +145,40 @@ const DetailPost = () => {
   //=============================================================
   //
 
-  useEffect(() => {
+  useEffect(async () => {
     const propertiesDetail = async () => {
       const detailPost = await detailId(id);
       setPropertyDetail(detailPost);
       // setInfoTicket({...infoTicket, propertyTicket: detailPost})
       console.log(property);
     };
+      setPropertyDetail(detailPost)
+
+    }
     propertiesDetail();
+  
+    // obtener reseñas de la propiedad
+    const reviewsSnapshot = await getDocs(
+      query(collection(db, "reviews"), where("propertyId", "==", id))
+    );
+    const reviewsData = reviewsSnapshot.docs.map((reviewDoc) => reviewDoc.data());
+  
+    // si el usuario loggeado, compro la propiedad
+    if (auth.currentUser) {
+      const userId = auth.currentUser.uid;
+      const purchasesQuery = query(collection(db, "purchases"), 
+        where("userId", "==", userId),
+        where("propertyId", "==", id)
+      );
+      const purchasesSnapshot = await getDocs(purchasesQuery);
+      const hasPurchased = !purchasesSnapshot.empty;
+  
+      // modificamos el estado haspurchased
+
+      setHasPurchased(hasPurchased);
+    };
   }, []);
+  
 
   return (
     <div>
@@ -192,7 +241,7 @@ const DetailPost = () => {
           </section>
         </section>
         <div className={styles.falseLine}></div>
-        <section id="pie" className={styles.paymentBox}>
+        <section id="pie" className={styles.paymentBox}></section>
           <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
             {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
@@ -212,11 +261,40 @@ const DetailPost = () => {
               <Wallet initialization={{ preferenceId: preferenceId }} />
             )}
           </div>
-        </section>
+          <About/>
       </div>
-      <About></About>
-    </div>
+      {hasPurchased &&<div>
+        <h3>Deja una reseña:</h3>
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={reviewAuthor}
+              onChange={(e) => setReviewAuthor(e.target.value)}
+            />
+            <textarea
+              placeholder="Contenido de la reseña"
+              value={reviewContent}
+              onChange={(e) => setReviewContent(e.target.value)}
+            />
+            <select
+              value={reviewRating}
+              onChange={(e) => setReviewRating(Number(e.target.value))}
+            >
+              <option value={1}>1 estrella</option>
+              <option value={2}>2 estrellas</option>
+              <option value={3}>3 estrellas</option>
+              <option value={4}>4 estrellas</option>
+              <option value={5}>5 estrellas</option>
+            </select>
+            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
+            
+
+            <About></About>
+            </div>
+  
   );
 };
+}
+
 
 export default DetailPost;

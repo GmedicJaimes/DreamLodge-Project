@@ -1,0 +1,74 @@
+.calendarContainer {
+  width: 250px;
+  border: 1px solid #CD5A3E;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #eadccf;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #CD5A3E;
+}
+
+.monthYear {
+  font-size: 16px;
+  color: #CD5A3E;
+}
+
+.daysContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-between;
+}
+
+.dayButton {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.3s;
+}
+
+.selected {
+  background-color: #CD5A3E;
+  color: white;
+}
+
+.peopleSelector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.peopleSelector label {
+  margin-right: 10px;
+  color: #CD5A3E;
+}
+
+.peopleInput {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #CD5A3E;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.peopleInput:focus {
+  border-color: #CD5A3E;
+  outline: none;
+  text-align: center;
+}

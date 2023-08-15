@@ -3,7 +3,7 @@ import styles from "./AceptedPay.module.css"
 import React from 'react';
 import { Link } from "react-router-dom"
 import About from "../../components/About/About"
-import { getUserByUID } from "../../config/handlers";
+import { getUserByUID, registerPurchases } from "../../config/handlers";
 
 import { updateAvaible} from '../../config/handlers';
 
@@ -20,6 +20,7 @@ const AceptedPay = () => {
             const user = await getUserByUID(parsedRecipe.propertyTicket.userId)
             console.log(user);
             setUserData(user);
+            console.log(parsedRecipe.property.uui)
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
         };

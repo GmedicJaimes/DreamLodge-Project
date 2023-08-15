@@ -1,12 +1,9 @@
-
-import { useState } from 'react';
 import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
-
 
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -542,6 +539,53 @@ export const filterByStateAndCity = async (state, city) => {
     console.error('Error fetching properties by state and city:', error);
     return [];
   }
+  }
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+
+
+// Función para verificar si una propiedad está disponible en las fechas seleccionadas
+export  const isPropertyAvailable = async ( startDate, endDate) => {
+  const bookingsRef = collection(db, "bookings");
+  const q = query(
+      bookingsRef, 
+      where("startDate", "<=", endDate),
+      where("endDate", ">=", startDate)
+  );
+  
+  const snapshot = await getDocs(q);
+  return snapshot.size === 0;  // si el tamaño es 0, la propiedad está disponible
+};
+
+// Función para crear una reserva
+export const createBooking = async (propertyId, bookingData) => {
+  try {
+    // Verificamos la disponibilidad primero
+    if (await isPropertyAvailable(propertyId, bookingData.startDate, bookingData.endDate)) {
+      
+      await addDoc(bookingsCollectionRef, {
+        propertyId: propertyId,
+        startDate: bookingData.startDate,
+        endDate: bookingData.endDate,
+        adults: bookingData.adults,
+        children: bookingData.children,
+        rooms: bookingData.rooms,
+        userId: auth?.currentUser?.uid,
+      });
+
+      alert('¡Reserva realizada!');
+
+    } else {
+      console.log('Property is not available for the selected dates');
+      alert('La propiedad no está disponible en las fechas seleccionadas.');
+    }
+
+  } catch (error) {
+    console.log(error)
+    alert('Error al realizar la reserva.');
+  }
 };
 
 
@@ -583,3 +627,157 @@ export const getPaymentStatus = async (preferenceId) => {
     return 'error'; 
   }
 };
+
+export const registerPurchases = async (userId, propertyId) => {
+  try {
+    // Referencia a la colección "purchases"
+    const purchasesCollectionRef = collection(db, 'purchases');
+
+    // Agregar un nuevo documento con la información de la compra
+    await addDoc(purchasesCollectionRef, {
+      userId: userId,
+      propertyId: propertyId,
+      purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
+    });
+
+    console.log('Compra registrada exitosamente');
+  } catch (error) {
+    console.error('Error al registrar la compra:', error);
+  }}
+
+  
+// Función para obtener las propiedades libres en un rango de fechas
+export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
+  try {
+    const bookingsRef = collection(db, "bookings");
+    const propertiesRef = collection(db, "properties");
+
+    // Obtener todas las reservas que coincidan con el rango de fechas
+    const querySnapshot = await getDocs(bookingsRef);
+
+    const bookedPropertyIds = [];
+    querySnapshot.forEach(doc => {
+      const booking = doc.data();
+      const bookingEndDate = new Date(booking.endDate); // O dayjs(booking.endDate).toDate()
+      const bookingStartDate = new Date(booking.startDate); // O dayjs(booking.startDate).toDate()
+
+
+      if (
+        (bookingStartDate <= endDate.toDate() && bookingEndDate >= startDate.toDate())
+      ) {
+        bookedPropertyIds.push(booking.propertyId);
+      }
+    });
+
+    // Obtener todas las propiedades
+    const allPropertiesSnapshot = await getDocs(propertiesRef);
+    const allProperties = allPropertiesSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // Filtrar las propiedades que no están reservadas
+    const availableProperties = allProperties.filter(property => !bookedPropertyIds.includes(property.id));
+
+    console.log(availableProperties);
+    return availableProperties;
+  } catch (error) {
+    console.error('Error fetching available properties in range:', error);
+    return [];
+  }
+};
+  
+
+
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+
+// Función para obtener las propiedades filtradas por habitaciones
+// export const fetchFilteredProperties = async (numberOfRooms) => {
+//   try {
+//     const propertiesCollectionRef = collection(db, 'properties');
+    
+//     const filteredPropertiesQuery = query(propertiesCollectionRef, where('stances.rooms', '==', Number(numberOfRooms)));
+//     const querySnapshot = await getDocs(filteredPropertiesQuery);
+    
+//     const filteredProperties = querySnapshot.docs.map(doc => doc.data());
+//     console.log(filteredProperties);
+
+//     return filteredProperties;
+//   } catch (error) {
+//     console.error('Error fetching filtered properties:', error);
+//     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+//   }
+// };
+
+
+
+
+
+
+export const fetchFilteredProperties = async (originalFilters) => {
+  try {
+    const propertiesCollectionRef = collection(db, 'properties');
+
+    const filters = { ...originalFilters };
+
+    if (filters.startDate && typeof filters.startDate === 'string') {
+      filters.startDate = new Date(filters.startDate);
+    }
+    if (filters.endDate && typeof filters.endDate === 'string') {
+      filters.endDate = new Date(filters.endDate);
+    }
+
+    let baseQuery = propertiesCollectionRef;
+
+    // Ajustando las rutas de campo según la estructura del documento
+    if (filters.numRooms) {
+      baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.numRooms)));
+    }
+    if (filters.guest) {
+      baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
+    }
+
+    const baseSnapshot = await getDocs(baseQuery);
+    const baseProperties = baseSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    if (filters.startDate && filters.endDate) {
+      return baseProperties.filter(property => {
+        if (!property.availableDates) {
+            return false;
+        }
+        const propertyStartDate = new Date(property.availableDates.start);
+        const propertyEndDate = new Date(property.availableDates.end);
+        return propertyStartDate <= filters.endDate && propertyEndDate >= filters.startDate;
+      });
+    } else {
+      return baseProperties;
+    }
+  } catch (error) {
+    console.error('Error fetching filtered properties:', error);
+    return [];
+  }
+};
+
+
+
+
+
+export const fetchFilteredGuests = async (numberOfGuests) => {
+  try {
+    const propertiesCollectionRef = collection(db, 'properties');
+    
+    const filteredGuests = query(propertiesCollectionRef, where('stances.guest', '==', Number(numberOfGuests)));
+    const querySnapshot = await getDocs(filteredGuests);
+    
+    const filteredPropertiesGuests = querySnapshot.docs.map(doc => doc.data());
+    console.log(filteredPropertiesGuests);
+
+    return filteredPropertiesGuests;
+  } catch (error) {
+    console.error('Error fetching filtered guests:', error);
+    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+  }
+}
