@@ -133,17 +133,7 @@ const handleRoomsChange = async (value) => {
   return (
     <div>
       <div className={styles.containerHome}>
-      <Calendar
-  // guest={guest
-  // }
-  // child={child}
-  // rooms={rooms}
-  // onGuestChange={handleGuestChange} 
-  // onChildChange={handleChildChange}
-  // onRoomsChange={handleRoomsChange}
-  // onStartChange={handleStartDateChange}
-  // onEndChange={handleEndDateChange}
-/>
+      {/* <Calendar/> */}
 
 
 

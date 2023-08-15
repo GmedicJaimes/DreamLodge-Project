@@ -1,10 +1,15 @@
 import styles from "./DetailPost.module.css"
-import React, { useState, useEffect } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
 import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
+import SubTotal from "../../../components/subTotal/SubTotal"
+import { DateContext } from "../../../Contex/DateContex";
+import {fetchAvailablePropertiesInRange} from "../../../config/handlers"
+import { getDocs} from "firebase/firestore";
+
 
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
@@ -15,46 +20,64 @@ import { detailId } from "../../../config/handlers";
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
 import { auth } from "../../../config/firebase";
 
-// const DetailPost = () => {
-//   const { id } = useParams();
-//   const [property, setPropertyDetail] = useState([]);
-//   const [activeImage, setActiveImage] = useState(0);
-//   //REVIEWS============================================
-
-//   const [reviewAuthor, setReviewAuthor] = useState("");
-//   const [reviewContent, setReviewContent] = useState("");
-//   const [reviewRating, setReviewRating] = useState(0);
-//   const [hasPurchased, setHasPurchased] = useState(null);
-
-//   const submitReview = async (id) => {
-//     try {
-//       await addDoc(collection(db, "reviews"), {
-//         propertyId: id,
-//         author: reviewAuthor,
-//         content: reviewContent,
-//         rating: reviewRating,
-//       });
-  
-//       // 
-//       setReviewAuthor("");
-//       setReviewContent("");
-//       setReviewRating(0);
-  
-//       alert("Reseña enviada con éxito");
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-  // NEXT IMAGE =======================================
-
-
-const DetailPost = () => {  
-  const { id } = useParams()
-  const [property, setPropertyDetail] = useState([])
+const DetailPost = () => {
+  const { id } = useParams();
+  const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
-  // console.log(property);
-  // console.log(detailId)
 
+
+
+  //CALENDAR DATES ============================================
+
+  
+  const [propertyDates, setPropertyDates] = useState({});
+  const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
+
+
+
+ 
+
+
+
+  //REVIEWS============================================
+
+  const [reviewAuthor, setReviewAuthor] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
+  const [reviewRating, setReviewRating] = useState(0);
+  const [hasPurchased, setHasPurchased] = useState(null);
+  const submitReview = async (propertyId) => {
+    try {
+      await addDoc(collection(db, "reviews"), {
+        propertyId: propertyId,
+        author: reviewAuthor,
+        content: reviewContent,
+        rating: reviewRating,
+      });
+  
+      // Limpia los campos del formulario después de enviar la reseña
+      setReviewAuthor("");
+      setReviewContent("");
+      setReviewRating(0);
+  
+      alert("Reseña enviada con éxito");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // PREV IMAGE =======================================
+  const prevImage = () => {
+    if (activeImage > 0) {
+      setActiveImage(activeImage - 1);
+    }
+  };
+
+    // NEXT IMAGE =======================================
+
+  const nextImage = () => {
+    if (activeImage < property?.imageUrl?.length - 1) {
+      setActiveImage(activeImage + 1);
+    }
+  };
 
 
 
@@ -167,6 +190,7 @@ const DetailPost = () => {
   return (
     <div>
       <div className={styles.bigContainerDetail}>
+        
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>
@@ -181,15 +205,16 @@ const DetailPost = () => {
           </section>
         </header>
         <section className={styles.imageRelative}>
-        {/* <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button> */}
+        <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button>
         <img
               src={property?.imageUrl && property.imageUrl[activeImage]}
               alt={property?.imageUrl}
               className={styles.imageCarrousel}
             />
-            {/* <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button> */}
+            <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
         </section>
         <div className={styles.falseLine}></div>
+        <SubTotal />
         <section className={styles.overviewRating}>
             <section className={styles.overviewBox}>
                 <h3>Overview</h3>
@@ -245,9 +270,8 @@ const DetailPost = () => {
               <Wallet initialization={{ preferenceId: preferenceId }} />
             )}
           </div>
-          <About/>
       </div>
-      {/* {hasPurchased &&
+      {/* {/* {hasPurchased &&
       <div>
         <h3>Deja una reseña:</h3>
             <input
@@ -271,7 +295,7 @@ const DetailPost = () => {
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>} */}
+            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>} */}
             
 
             <About></About>
@@ -279,5 +303,8 @@ const DetailPost = () => {
   
   );
 };
+
+
+
 
 export default DetailPost;
