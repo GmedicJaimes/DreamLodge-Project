@@ -1,10 +1,14 @@
 import styles from "./DetailPost.module.css"
-import React, { useState, useEffect } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
 import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
+import SubTotal from "../../../components/subTotal/SubTotal"
+import { DateContext } from "../../../Contex/DateContex";
+import {fetchAvailablePropertiesInRange} from "../../../config/handlers"
+
 
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
@@ -19,6 +23,21 @@ const DetailPost = () => {
   const { id } = useParams();
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
+
+
+
+  //CALENDAR DATES ============================================
+
+  
+  const [propertyDates, setPropertyDates] = useState({});
+  const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
+
+
+
+ 
+
+
+
   //REVIEWS============================================
 
   const [reviewAuthor, setReviewAuthor] = useState("");
@@ -44,15 +63,20 @@ const DetailPost = () => {
       console.log(error);
     }
   };
-  // NEXT IMAGE =======================================
+  // PREV IMAGE =======================================
+  const prevImage = () => {
+    if (activeImage > 0) {
+      setActiveImage(activeImage - 1);
+    }
+  };
 
+    // NEXT IMAGE =======================================
 
-const DetailPost = () => {  
-  const { id } = useParams()
-  const [property, setPropertyDetail] = useState([])
-  // console.log(property);
-  // console.log(detailId)
-
+  const nextImage = () => {
+    if (activeImage < property?.imageUrl?.length - 1) {
+      setActiveImage(activeImage + 1);
+    }
+  };
 
 
 
@@ -165,6 +189,7 @@ const DetailPost = () => {
   return (
     <div>
       <div className={styles.bigContainerDetail}>
+        
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>
@@ -188,6 +213,7 @@ const DetailPost = () => {
             <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
         </section>
         <div className={styles.falseLine}></div>
+        <SubTotal />
         <section className={styles.overviewRating}>
             <section className={styles.overviewBox}>
                 <h3>Overview</h3>
@@ -276,7 +302,7 @@ const DetailPost = () => {
   
   );
 };
-}
+
 
 
 export default DetailPost;
