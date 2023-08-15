@@ -60,8 +60,26 @@ const handleRoomsChange = async (value) => {
 };
 
 
+// const handleStartDateChange = async (date) => {
+//   setDateRange(date, endDate);
 
+//   if (endDate) {
+//     const properties = await fetchAvailablePropertiesInRange(date, endDate);
+    
+//     setHost(properties);
+//     // Si necesitas enviar estas propiedades al componente padre o hacer algo más con ellas, hazlo aquí
+//   }      
+// };
 
+// const handleEndDateChange = async (date) => {
+//   setDateRange(startDate, date);
+
+//   if (startDate) {
+//     const properties = await fetchAvailablePropertiesInRange(startDate, date);
+//     setHost(properties);
+//     // Si necesitas enviar estas propiedades al componente padre o hacer algo más con ellas, hazlo aquí
+//   }
+// };
 // useEffect(() => {
 //   // Llamada a fetchFilteredProperties cuando guest cambia
 //   const filters = {
@@ -133,17 +151,7 @@ const handleRoomsChange = async (value) => {
   return (
     <div>
       <div className={styles.containerHome}>
-      <Calendar
-  // guest={guest
-  // }
-  // child={child}
-  // rooms={rooms}
-  // onGuestChange={handleGuestChange} 
-  // onChildChange={handleChildChange}
-  // onRoomsChange={handleRoomsChange}
-  // onStartChange={handleStartDateChange}
-  // onEndChange={handleEndDateChange}
-/>
+      {/* <Calendar/> */}
 
 
 
@@ -156,6 +164,7 @@ const handleRoomsChange = async (value) => {
         />
 
         {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
+  
         {/* <InfiniteScroll
           dataLength={host.length}
           next={loadMoreProperties}
@@ -173,6 +182,8 @@ const handleRoomsChange = async (value) => {
             {/* )} */}
           </div>
         {/* </InfiniteScroll> */}
+
+        {/* <Cards /> */}
       </div>
     </div>
   )}
