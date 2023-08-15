@@ -6,6 +6,7 @@ import door from "../../../assets/puerta.png"
 import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
 
+import { getDocs } from "firebase/firestore";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios'
 
@@ -15,37 +16,7 @@ import { detailId } from "../../../config/handlers";
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
 import { auth } from "../../../config/firebase";
 
-const DetailPost = () => {
-  const { id } = useParams();
-  const [property, setPropertyDetail] = useState([]);
-  const [activeImage, setActiveImage] = useState(0);
-  //REVIEWS============================================
 
-  const [reviewAuthor, setReviewAuthor] = useState("");
-  const [reviewContent, setReviewContent] = useState("");
-  const [reviewRating, setReviewRating] = useState(0);
-  const [hasPurchased, setHasPurchased] = useState(null);
-
-  const submitReview = async (id) => {
-    try {
-      await addDoc(collection(db, "reviews"), {
-        propertyId: id,
-        author: reviewAuthor,
-        content: reviewContent,
-        rating: reviewRating,
-      });
-  
-      // 
-      setReviewAuthor("");
-      setReviewContent("");
-      setReviewRating(0);
-  
-      alert("Reseña enviada con éxito");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // NEXT IMAGE =======================================
 
 
 const DetailPost = () => {  
@@ -53,9 +24,35 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([])
   // console.log(property);
   // console.log(detailId)
-
-
-
+  const [activeImage, setActiveImage] = useState(0);
+  
+    
+      const [reviewAuthor, setReviewAuthor] = useState("");
+      const [reviewContent, setReviewContent] = useState("");
+      const [reviewRating, setReviewRating] = useState(0);
+      const [hasPurchased, setHasPurchased] = useState(null);
+    
+      const submitReview = async (id) => {
+        try {
+          await addDoc(collection(db, "reviews"), {
+            propertyId: id,
+            author: reviewAuthor,
+            content: reviewContent,
+            rating: reviewRating,
+          });
+      
+          // 
+          setReviewAuthor("");
+          setReviewContent("");
+          setReviewRating(0);
+      
+          alert("Reseña enviada con éxito");
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+    
 
   // CONFIGURACION DEL PAGO=======================================
   const[preferenceId, setPreferenceId] = useState(null);
@@ -139,7 +136,7 @@ const DetailPost = () => {
 
     }
     propertiesDetail();
-  
+    console.log(propertiesDetail)
     // obtener reseñas de la propiedad
     const reviewsSnapshot = await getDocs(
       query(collection(db, "reviews"), where("propertyId", "==", id))
@@ -179,15 +176,15 @@ const DetailPost = () => {
             </div>
           </section>
         </header>
-        <section className={styles.imageRelative}>
-        <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button>
-        <img
+        {/* <section className={styles.imageRelative}>
+        {/* <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button> */}
+        {/* <img
               src={property?.imageUrl && property.imageUrl[activeImage]}
               alt={property?.imageUrl}
               className={styles.imageCarrousel}
             />
             <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
-        </section>
+        </section> */} 
         <div className={styles.falseLine}></div>
         <section className={styles.overviewRating}>
             <section className={styles.overviewBox}>
@@ -277,7 +274,7 @@ const DetailPost = () => {
   
   );
 };
-}
+
 
 
 export default DetailPost;

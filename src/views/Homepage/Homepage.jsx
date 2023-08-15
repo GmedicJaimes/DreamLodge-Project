@@ -164,13 +164,13 @@ const handleRoomsChange = async (value) => {
         > */}
           {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
           <div className={styles.skeletonContainer}>
-            {loading ? (
+            {/* {loading ? (
               Array.from({ length: host.length || 12 }).map((_, idx) => (
                 <SkeletonCard key={idx} />
               ))
-            ) : (
+            ) : ( */}
               <Cards host={host} />
-            )}
+            {/* )} */}
           </div>
         {/* </InfiniteScroll> */}
       </div>
