@@ -15,42 +15,43 @@ import { detailId } from "../../../config/handlers";
 import {getPaymentStatus, updateAvaible} from '../../../config/handlers'
 import { auth } from "../../../config/firebase";
 
-const DetailPost = () => {
-  const { id } = useParams();
-  const [property, setPropertyDetail] = useState([]);
-  const [activeImage, setActiveImage] = useState(0);
-  //REVIEWS============================================
+// const DetailPost = () => {
+//   const { id } = useParams();
+//   const [property, setPropertyDetail] = useState([]);
+//   const [activeImage, setActiveImage] = useState(0);
+//   //REVIEWS============================================
 
-  const [reviewAuthor, setReviewAuthor] = useState("");
-  const [reviewContent, setReviewContent] = useState("");
-  const [reviewRating, setReviewRating] = useState(0);
-  const [hasPurchased, setHasPurchased] = useState(null);
+//   const [reviewAuthor, setReviewAuthor] = useState("");
+//   const [reviewContent, setReviewContent] = useState("");
+//   const [reviewRating, setReviewRating] = useState(0);
+//   const [hasPurchased, setHasPurchased] = useState(null);
 
-  const submitReview = async (id) => {
-    try {
-      await addDoc(collection(db, "reviews"), {
-        propertyId: id,
-        author: reviewAuthor,
-        content: reviewContent,
-        rating: reviewRating,
-      });
+//   const submitReview = async (id) => {
+//     try {
+//       await addDoc(collection(db, "reviews"), {
+//         propertyId: id,
+//         author: reviewAuthor,
+//         content: reviewContent,
+//         rating: reviewRating,
+//       });
   
-      // 
-      setReviewAuthor("");
-      setReviewContent("");
-      setReviewRating(0);
+//       // 
+//       setReviewAuthor("");
+//       setReviewContent("");
+//       setReviewRating(0);
   
-      alert("Reseña enviada con éxito");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//       alert("Reseña enviada con éxito");
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
   // NEXT IMAGE =======================================
 
 
 const DetailPost = () => {  
   const { id } = useParams()
   const [property, setPropertyDetail] = useState([])
+  const [activeImage, setActiveImage] = useState(0);
   // console.log(property);
   // console.log(detailId)
 
@@ -180,13 +181,13 @@ const DetailPost = () => {
           </section>
         </header>
         <section className={styles.imageRelative}>
-        <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button>
+        {/* <button onClick={prevImage} className={styles.prevButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="" /></button> */}
         <img
               src={property?.imageUrl && property.imageUrl[activeImage]}
               alt={property?.imageUrl}
               className={styles.imageCarrousel}
             />
-            <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button>
+            {/* <button onClick={nextImage} className={styles.nextButton}><img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="" /></button> */}
         </section>
         <div className={styles.falseLine}></div>
         <section className={styles.overviewRating}>
@@ -246,7 +247,8 @@ const DetailPost = () => {
           </div>
           <About/>
       </div>
-      {hasPurchased &&<div>
+      {/* {hasPurchased &&
+      <div>
         <h3>Deja una reseña:</h3>
             <input
               type="text"
@@ -269,7 +271,7 @@ const DetailPost = () => {
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
+            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>} */}
             
 
             <About></About>
@@ -277,7 +279,5 @@ const DetailPost = () => {
   
   );
 };
-}
-
 
 export default DetailPost;
