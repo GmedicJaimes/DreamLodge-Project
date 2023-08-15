@@ -81,6 +81,7 @@ const Calendar = ({
           margin: "20px",
           marginBottom: "-22px",
           width: "300px",
+          borderRadius: '4px 4px 0px 0px'
         }}
       >
         <Typography
@@ -105,7 +106,8 @@ const Calendar = ({
           padding: "15px",
           margin: "20px",
           width: "300px",
-          boxShadow: "0px 3px 3px 0px #B8B8B8"
+          boxShadow: "1px 4px 5px 1px #B8B8B8",
+          borderRadius: '0px 0px 4px 4px'
         }}
       >
         <Grid container justifyContent="start" marginTop={0} marginBottom={2}>
@@ -232,7 +234,7 @@ const Calendar = ({
                 value={endDate}
                 minDate={secondDateMin}
                 onChange={onEndChange}
-                disabled={isSecondPickerDisabled}
+                // disabled={isSecondPickerDisabled}
               />
             </DemoContainer>
             <Grid
