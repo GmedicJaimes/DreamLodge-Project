@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext,useState } from "react";
+
 import styles from "./Homepage.module.css";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
+import { fetchFilteredProperties, sortPropertiesByPrice, getPropertiesList,fetchAvailablePropertiesInRange } from "../../config/handlers";
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
 import { listAll } from "firebase/storage";
 import { Firestore, collection, getDoc, getDocs } from "firebase/firestore";
@@ -11,52 +12,94 @@ import {db, storage} from '../../config/firebase'
 import { ref } from "firebase/storage";
 import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
+import { DateContext } from "../../Contex/DateContex";
 
 
 
+
+<<<<<<< HEAD
+const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
+ 
+
+  const [allProperties, setAllProperties] = useState([]);
+
+
+
+=======
 const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
+>>>>>>> 63f8a11726e73d5727eb13a4fce6debb73094a21
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
+
+
+  const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
+  const [guest, setGuest] = useState(1);
+  const [rooms, setRooms] = useState(1);
+
+
+  // const handleAvailableProperties = async () => {
+  //   if (startDate && endDate) {
+  //     const filters = {
+  //       rooms: rooms,
+  //       guest: guest,
+  //       startDate: startDate,
+  //       endDate: endDate
+  //     };
+  //    const availableProperties = await fetchFilteredProperties(filters);
+     
+  //       console.log(`soy guest`,)
+  //     if (availableProperties.length === 0) {
+  //       console.log("No hay propiedades disponibles");
+  //     } else {
+  //       setHost(availableProperties);
+  //       setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
+  //     }
+  //   }
+  // };
+  const handleRoomsChange = (value) => {
+    setRooms(value);
+  };
+  
+  const handleGuestChange = (value) => {
+    setGuest(value);
+  };
+  
+  const handleStartDateChange = (date) => {
+    setDateRange(date, endDate);
+  };
+  
+  const handleEndDateChange = (date) => {
+    setDateRange(startDate, date);
+  };
   
 
-//   const handleAvailableProperties = async () => {
-//     const availableProperties = await getAvailableProperties();
-  
-//     if (availableProperties.length === 0) {
-//       console.log("No hay propiedades disponibles");
-//     } else {
-//       setHost(availableProperties);
-//       setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
-//     }
+
+// const handleRoomsChange = async (value) => {
+//   setRooms(value);
+//   const filters = {
+//     rooms: value,
+//     guest
+
 //   };
 //   const filteredHost = await fetchFilteredProperties(filters);
-//   console.log("FILTERED HOST GUEST" ,filteredHost)
+//   setHost(filteredHost);
+//   console.log("FILTERED ROOM" ,filteredHost)
+
+// };
+
+// const handleGuestChange = async (value) => {
+//   setGuest(value);
+//   const filters = {
+//     guest: value,
+//     rooms
+
+//   };
+//   const filteredHost = await fetchFilteredProperties(filters);
 //   setHost(filteredHost);
 //   console.log(" HOST GUEST" ,filteredHost)
 
 // };
 
-
-
-
-const handleChildChange = (value) => {
-  setChild(value);
-};
-
-const handleRoomsChange = async (value) => {
-  setRooms(value);
-  const filters = {
-    guest: guest,
-    rooms: value,
-    startDate: startDate,
-    endDate: endDate
-  };
-  const filteredHost = await fetchFilteredProperties(filters);
-  console.log("FILTERED HOST ROOM" ,filteredHost)
-  setHost(filteredHost);
-  console.log("FILTERED ROOM" ,filteredHost)
-
-};
 
 
 // const handleStartDateChange = async (date) => {
@@ -79,6 +122,24 @@ const handleRoomsChange = async (value) => {
 //     // Si necesitas enviar estas propiedades al componente padre o hacer algo más con ellas, hazlo aquí
 //   }
 // };
+useEffect(() => {
+  // Llamada a fetchFilteredProperties cuando guest cambia
+  const filters = {
+    guest: guest,
+    rooms: rooms,
+
+  };
+
+  async function fetchFilteredHost() {
+    const filteredHost = await fetchFilteredProperties(filters);
+    setHost(filteredHost);
+  }
+
+  fetchFilteredHost();
+}, [guest, rooms]);
+
+
+
 // useEffect(() => {
 //   // Llamada a fetchFilteredProperties cuando guest cambia
 //   const filters = {
@@ -95,6 +156,51 @@ const handleRoomsChange = async (value) => {
 
 //   fetchFilteredHost();
 // }, [guest, rooms, startDate, endDate]);
+
+
+
+useEffect(() => {
+  async function fetchAllProperties() {
+    const propertiesCollectionRef = collection(db, 'properties');
+    const querySnapshot = await getDocs(propertiesCollectionRef);
+    const properties = querySnapshot.docs.map(doc => doc.data());
+    setAllProperties(properties);
+  }
+
+  fetchAllProperties();
+}, []);
+
+useEffect(() => {
+
+  let filteredHost = [...allProperties]; // Creamos una copia de todas las propiedades
+
+  // Filtrado por rooms
+  if (rooms) {
+    filteredHost = filteredHost.filter(host => host.stances && host.stances.rooms === Number(rooms));
+    console.log(`filtrado de rooms pa `, filteredHost)
+  }
+
+  // Filtrado por guest
+  if (guest) {
+    console.log("Filtrando por guest:", guest);
+    filteredHost = filteredHost.filter(property => {
+      return property.stances && property.stances.guest === Number(guest);
+    });
+    console.log("property.stances.guest:", filteredHost);
+  }
+
+  // Filtrado por fechas
+  if (startDate && endDate) {
+    filteredHost = filteredHost.filter(host => {
+      // Suponiendo que cada host tiene un rango de fechas disponibles
+      return host.availableStartDate <= startDate && host.availableEndDate >= endDate;
+    });
+  }
+
+  setHost(filteredHost);
+}, [guest, rooms, startDate, endDate, allProperties]);
+
+
 
 //   useEffect(() => {
 //     async function fetchProperties() {
@@ -165,7 +271,14 @@ const handleRoomsChange = async (value) => {
 
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
-            <Calendar className={styles.calendar}/>
+            <Calendar
+             guest={guest}
+             rooms={rooms}
+             onGuestChange={handleGuestChange} 
+             onRoomsChange={handleRoomsChange}
+             onStartChange={handleStartDateChange}
+             onEndChange={handleEndDateChange}
+            className={styles.calendar} />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>

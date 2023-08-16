@@ -19,16 +19,16 @@ import {
 
 const Calendar = ({
   guest,
-  child,
   rooms,
   onGuestChange,
-  onChildChange,
   onRoomsChange,
   onStartChange, 
   onEndChange
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
+
+  
 
 
   const today = dayjs();
@@ -39,14 +39,10 @@ const Calendar = ({
     if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
       onGuestChange(value);
     }
+
   };
 
-  const handleChildChange = (event) => {
-    const { value } = event.target;
-    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
-      onChildChange(value);
-    }
-  };
+
 
   const handleRoomsChange = (inputValue) => {
     if (inputValue === "" || (Number(inputValue) > 0 && !inputValue.includes("-"))) {
@@ -57,6 +53,10 @@ const Calendar = ({
   // Calcula la fecha mínima para el segundo selector de fecha
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
+
+
+  
+
 
 
   // Función para contar la cantidad de días seleccionados
@@ -156,25 +156,7 @@ const Calendar = ({
               {guest}
             </Typography>
           </Grid>
-          <Grid item xs={3} sm={3}>
-            <Typography
-              sx={{
-                fontSize: "15px",
-                color: "#C2C2C2",
-                marginLeft: "8px",
-                display: "flex",
-              }}
-            >
-              <ChildCareIcon
-                sx={{
-                  fontSize: "20px",
-                  color: "#CD5A3E",
-                  marginRight: "3px",
-                }}
-              />
-              {child}
-            </Typography>
-          </Grid>
+       
           <Grid item xs={3} sm={3}>
             <Typography
               sx={{
@@ -234,7 +216,8 @@ const Calendar = ({
                 value={endDate}
                 minDate={secondDateMin}
                 onChange={onEndChange}
-                // disabled={isSecondPickerDisabled}
+               disabled={isSecondPickerDisabled}
+
               />
             </DemoContainer>
             <Grid
@@ -260,22 +243,7 @@ const Calendar = ({
                   }}
                 />
               </Grid>
-              <Grid item xs={6} sm={3}>
-                <TextField
-                  id="ValueChild"
-                  label="Child"
-                  type="number"
-                  value={child}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                  onChange={handleChildChange}
-                  inputProps={{
-                    style: { textAlign: "center" }, // Centra el texto dentro del TextField
-                  }}
-                />
-              </Grid>
+              
               <Grid item xs={3} sm={3}>
                 <TextField
                   id="value-Rooms"
