@@ -17,16 +17,21 @@ const AceptedPay = () => {
         if (savedRecipe) {
             const parsedRecipe = JSON.parse(savedRecipe)
             setDataRecipe(parsedRecipe)
-            const user = await getUserByUID(parsedRecipe.propertyTicket.userId)
+            const user = await getUserByUID(parsedRecipe.property.userId)
             console.log(user);
             setUserData(user);
             console.log(parsedRecipe.property.uui)
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
+            console.log(parsedRecipe.buyerId, parsedRecipe.propertyId);
+            await registerPurchases(parsedRecipe.buyerId, parsedRecipe.propertyId)
         };
     }, []);
     
-
+    const handleMagia = (event) => {
+        event.preventDefault()
+        registerPurchases()
+    } 
     return(
         <div>
             <div>
@@ -52,6 +57,7 @@ const AceptedPay = () => {
                             <h2>Total price: {dataRecipe?.priceTicket}</h2>
                         </div>
                     </div>
+                    <button>Boton magico</button>
                 </div>
             </div>
             <About/>
