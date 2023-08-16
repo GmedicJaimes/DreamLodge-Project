@@ -1,9 +1,10 @@
-import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
+import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
+import { serverTimestamp } from 'firebase/firestore';
 
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -333,7 +334,6 @@ export const detailId = async (id) =>{
    
     if(propertySnapshot.exists()){
       
-      console.log( 'Document data:  ', propertySnapshot.data())
       return propertySnapshot.data();
     } else {
       console.log( 'no existe nada de info') 
@@ -407,7 +407,7 @@ export const getPropertiesByMultipleTypes = async (types) => {
     const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
 
     const filteredProperties = propertiesQuerySnapshot.docs
-      .filter((doc) => types.every(type => doc.data().type.includes(type)))
+      .filter((doc) => types.some(type => doc.data().type.includes(type)))
       .map((doc) => {
         const propertyData = doc.data();
         return {
@@ -422,6 +422,7 @@ export const getPropertiesByMultipleTypes = async (types) => {
     return [];
   }
 };
+
 
 
 
@@ -514,31 +515,100 @@ export const filterByStateAndCity = async (state, city) => {
 
 
 // Función para verificar si una propiedad está disponible en las fechas seleccionadas
-export  const isPropertyAvailable = async ( startDate, endDate) => {
-  const bookingsRef = collection(db, "bookings");
-  const q = query(
-      bookingsRef, 
-      where("startDate", "<=", endDate),
-      where("endDate", ">=", startDate)
-  );
-  
-  const snapshot = await getDocs(q);
-  return snapshot.size === 0;  // si el tamaño es 0, la propiedad está disponible
+export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
+  try {
+    const bookingsRef = collection(db, "bookings");
+
+    // Convertir las fechas a objetos Date nativos
+    const formattedStartDate = Timestamp.fromDate(new Date(startDate));
+    const formattedEndDate = Timestamp.fromDate(new Date(endDate));
+    // Consulta para buscar reservas que empiezan dentro del rango de fechas proporcionado
+    const startWithinQuery = query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("startDate", ">=", formattedStartDate),
+      where("startDate", "<=", formattedEndDate)
+    );
+
+    // Consulta para buscar reservas que terminan dentro del rango de fechas proporcionado
+    const endWithinQuery = query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("endDate", ">=", formattedStartDate),
+      where("endDate", "<=", formattedEndDate)
+    );
+
+    // Ejecutar ambas consultas
+    const startWithinSnapshot = await getDocs(startWithinQuery);
+    const endWithinSnapshot = await getDocs(endWithinQuery);
+
+    // Si hay alguna reserva que comienza o termina dentro del rango de fechas, la propiedad no está disponible
+    console.log(startWithinSnapshot.docs)
+console.log(endWithinSnapshot.docs)
+
+    return startWithinSnapshot.size === 0 && endWithinSnapshot.size === 0;
+
+  } catch (error) {
+    console.error('Error checking property availability:', error);
+    return false;
+  }
 };
 
-// Función para crear una reserva
-export const createBooking = async (propertyId, bookingData) => {
+
+export const getBookedDatesForProperty = async (propertyId) => {
+  try {
+    const reservationsCollection = collection(db, "bookings");
+    const reservationsQuery = query(
+      reservationsCollection,
+      where("propertyId", "==", propertyId)
+    );
+    const reservationsSnapshot = await getDocs(reservationsQuery);
+
+    const bookedDates = reservationsSnapshot.docs.map((doc) => {
+      const data = doc.data();
+      
+      // Verificamos que startDate y endDate existen y tienen el método toDate
+      if (data.startDate?.toDate && data.endDate?.toDate) {
+        return {
+          startDate: data.startDate.toDate(),
+          endDate: data.endDate.toDate(),
+        };
+      } else {
+        // Si no, logueamos el documento que tiene problemas
+        console.warn("Documento con datos faltantes o incorrectos:", doc.id, data);
+        return null; // Este valor se filtrará en el siguiente paso
+      }
+    }).filter(date => date);  // Filtramos valores nulos
+
+   
+
+    return bookedDates;
+
+  } catch (error) {
+    console.error("Error obteniendo las fechas reservadas:", error);
+    return [];
+  }
+};
+
+
+
+
+export const createBooking = async (propertyId, startDate, endDate) => {
   try {
     // Verificamos la disponibilidad primero
-    if (await isPropertyAvailable(propertyId, bookingData.startDate, bookingData.endDate)) {
-      
+
+const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as needed
+
+    if (await isPropertyAvailable(propertyId, startDate, endDate)) {
+
+      // Convertir las fechas a Timestamp antes de guardarlas
+      const startDateTimestamp = Timestamp.fromDate(new Date(startDate));
+      const endDateTimestamp = Timestamp.fromDate(new Date(endDate));
+
       await addDoc(bookingsCollectionRef, {
         propertyId: propertyId,
-        startDate: bookingData.startDate,
-        endDate: bookingData.endDate,
-        adults: bookingData.adults,
-        children: bookingData.children,
-        rooms: bookingData.rooms,
+        startDate: startDateTimestamp,
+        endDate: endDateTimestamp,
         userId: auth?.currentUser?.uid,
       });
 
@@ -555,9 +625,13 @@ export const createBooking = async (propertyId, bookingData) => {
   }
 };
 
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
 
 //funcion para deshabilitar propiedades
-export const updateAvaible = async(id, preferenceId) => {
+export const updateAvaible = async(id) => {
   try {
     const db = getFirestore()
     const propertyDB = doc(db, 'properties', id);
@@ -630,8 +704,9 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 
 
       if (
-        (bookingStartDate <= endDate.toDate() && bookingEndDate >= startDate.toDate())
-      ) {
+        (bookingStartDate <= endDate && bookingEndDate >= startDate)
+    )
+     {
         bookedPropertyIds.push(booking.propertyId);
       }
     });

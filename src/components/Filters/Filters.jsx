@@ -1,4 +1,4 @@
-import { getPropertiesByMultipleTypes, filterByStateAndCity } from "../../config/handlers";
+import { getPropertiesByMultipleTypes, filterByStateAndCity, sortPropertiesByPrice } from "../../config/handlers";
 import styles from "./Filters.module.css"
 import React, { useState, useEffect } from 'react';
 import { US_STATE_CITIES } from "../../views/Post/infoLocation";
@@ -74,9 +74,9 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         } else {
           setHost(originalHost);
         }
-    
-        handleSortByPrice(); // Ordenar después de aplicar filtros
       };
+      
+
     // const handlerClick = async (type) => {
     //     try {
     //         const response = await getPropertiesByType(type);
@@ -134,7 +134,7 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
                 <img />
                 <button onClick={() => { toggleType("Room"); applyFilters(); }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
                 <button onClick={applyFilters}>Aplicar Filtros</button>
-                <button onClick={applyFilters}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
+                <button onClick={handleSortByPrice}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
                 <button onClick={cleanFilter}>Clean</button>
             </div>
         </div>
