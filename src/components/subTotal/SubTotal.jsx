@@ -8,58 +8,54 @@ import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Im
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
 import { Link } from "react-router-dom"
+import { isPropertyAvailable,getBookedDatesForProperty } from "../../config/handlers";
 
 
 
  const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates}) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext);
-  const deserializedDates = formattedOccupiedDates.map(dateString => new Date(dateString));
-
-
- 
+  const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
+  const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
+  const id  = property.id
 
 
-  console.log("Fechas recibidas en SubTotal:", deserializedDates);
+
 
 
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
-  const generateOccupiedDatesSet = (e) => {
-    const deserializedDatesSet = new Set();
-  
-    e && e?.forEach(booking => {
-      if (!booking.startDate || !booking.endDate) {
-        console.warn('A booking has an undefined start or end date:', booking);
-        return; // skip this iteration
-      }
-  
-      const startDate = dayjs(booking.startDate, "YYYY-MM-DD");
-      const endDate = dayjs(booking.endDate, "YYYY-MM-DD");
-  
+const generateOccupiedDatesSet = (e) => {
+  const deserializedDatesSet = new Set();
 
-      console.log("Parsed startDate:", startDate);
-      console.log("Parsed endDate:", endDate);
+  e && e?.forEach(booking => {
+    if (!booking.startDate || !booking.endDate) {
+      console.warn('A booking has an undefined start or end date:', booking);
+      return; // skip this iteration
+    }
 
-      let currentDate = startDate;
-  
-      while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
-        occupiedDatesSet.add(currentDate.format("YYYY-MM-DD"));
-        currentDate = currentDate.add(1, 'day');
-      }
-    });
-  
-    return deserializedDatesSet ;
-  }
+    const startDate = dayjs(booking.startDate, "YYYY-MM-DD");
+    const endDate = dayjs(booking.endDate, "YYYY-MM-DD");
+
+    console.log("Parsed startDate:", startDate);
+    console.log("Parsed endDate:", endDate);
+
+    let currentDate = startDate;
+
+    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
+      deserializedDatesSet.add(currentDate.format("YYYY-MM-DD")); // Cambio realizado aquí
+      currentDate = currentDate.add(1, 'day');
+    }
+  });
+
+  return deserializedDatesSet;
+}
+
   
 
 
   const generatedOccupiedDates = generateOccupiedDatesSet(validBookings);
-
-
-
-
 
 
 
@@ -282,6 +278,7 @@ const validBookings = deserializedDates?.filter(booking => booking.startDate && 
                   },
                 }}
                 // onClick={handleTotaLClik}
+             
               >
                 Reserve
               </Button>

@@ -254,15 +254,16 @@ console.log("date:", date);
   }, []); 
   
   
-  const formattedOccupiedDates = occupiedDates.map(date => {
-    if(date instanceof Date) {
-       return date.toISOString();
-    } else {
-       console.warn("Found a non-Date object:", date);
-       return null;
-    }
- }).filter(date => date);  // Filter out any null values
+
  
+ const formattedOccupiedDates = occupiedDates.map(date => {
+  if (date instanceof Date && !isNaN(date)) {
+    return date.toISOString();
+  } else {
+    console.warn("Found a non-Date object:", date);
+    return null;
+  }
+}).filter(date => date);  // Filter out any null values
 
   return (
     <div>
