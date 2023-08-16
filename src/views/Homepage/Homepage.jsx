@@ -134,21 +134,20 @@ const handleRoomsChange = async (value) => {
   //   }, 500); //  ajustar el tiempo
   // };
 
+
   // const handleSortByPrice = () => {
-  //   const sortedProperties = sortPropertiesByPrice(host, ascending);
+  //   const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
   //   setHost(sortedProperties);
   //   setAscending(!ascending);
   // };
 
-  // useEffect(() => {
-  //   setLoading(false);
-  // }, []);
-
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
+    const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
     setHost(sortedProperties);
     setAscending(!ascending);
   };
+
+  
   
   console.log(host)
 
@@ -159,6 +158,7 @@ const handleRoomsChange = async (value) => {
         <Filters
           setHost={setHost}
           originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
         />
