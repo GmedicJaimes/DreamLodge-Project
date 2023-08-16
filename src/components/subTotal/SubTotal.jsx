@@ -11,16 +11,59 @@ import { Link } from "react-router-dom"
 
 
 
- const SubTotal = ({ handleStartDateChange, handleEndDateChange }) => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates}) => {
+
   const { startDate, endDate, setDateRange } = useContext(DateContext);
-  const [unavailableCheckIn, setUnavailableCheckIn] = React.useState([]);
-  const [unavailableCheckOut, setUnavailableCheckOut] = React.useState([]);
+  const deserializedDates = formattedOccupiedDates.map(dateString => new Date(dateString));
+
 
  
-  const [rooms, setRooms] = useState(1);
   const today = dayjs();
 
- 
+
+  console.log("Fechas recibidas en SubTotal:", deserializedDates);
+
+
+const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
+
+  const generateOccupiedDatesSet = (e) => {
+    const deserializedDatesSet = new Set();
+  
+    e && e?.forEach(booking => {
+      if (!booking.startDate || !booking.endDate) {
+        console.warn('A booking has an undefined start or end date:', booking);
+        return; // skip this iteration
+      }
+  
+      const startDate = dayjs(booking.startDate, "YYYY-MM-DD");
+      const endDate = dayjs(booking.endDate, "YYYY-MM-DD");
+  
+
+      console.log("Parsed startDate:", startDate);
+      console.log("Parsed endDate:", endDate);
+
+      let currentDate = startDate;
+  
+      while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
+        occupiedDatesSet.add(currentDate.format("YYYY-MM-DD"));
+        currentDate = currentDate.add(1, 'day');
+      }
+    });
+  
+    return deserializedDatesSet ;
+  }
+  
+
+
+  const generatedOccupiedDates = generateOccupiedDatesSet(validBookings);
+
+
+
+
+
+
+
+
 
   const countSelectedDays = () => {
     if (startDate && endDate) {
@@ -31,6 +74,10 @@ import { Link } from "react-router-dom"
     }
     return 0;
   };
+
+
+  const subTotal = countSelectedDays() * property.price
+ 
 
 //   React.useEffect(() => {
 //     if (startDate && endDate) {
@@ -96,23 +143,56 @@ import { Link } from "react-router-dom"
               sx={{ marginTop: "20px"}}
             >
               <DatePicker
-                label="Check In"
-                value={startDate}
-                minDate={today}
-                onChange={handleStartDateChange}
-
-                />
+         label="Check In"
+         value={startDate}
+         minDate={today}
+         onChange={handleStartDateChange}
+         shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
+         renderDay={(date, _dateState) => {
+           const isOccupied = generatedOccupiedDates.has(date.format("YYYY-MM-DD"));
+           const isSelected = date.isSame(startDate, "day");
+           const isDisabled = isOccupied || (!_dateState.isBeforeMaxDate && !_dateState.isAfterMinDate);
+           return (
+             <div
+               style={{
+                backgroundColor: isOccupied ? "grey" : isSelected ? "blue" : "white",
+                color: isDisabled ? "gray" : "black",
+                 pointerEvents: isDisabled ? "none" : "auto",
+               }}
+             >
+               {date.format("D")}
+             </div>
+           );
+         }}
+      />
 
               
             </DemoContainer>
             <DemoContainer components={["DatePicker"]} sx={{}}>
-              <DatePicker
-                label="Check Out"
-                value={endDate}
-                minDate={secondDateMin}
-                shouldDisableDate={(date) => shouldDisableDateout(date)}
-                onChange={handleEndDateChange}
-              />
+            <DatePicker
+     label="Check Out"
+     value={endDate}
+     minDate={secondDateMin}
+     onChange={handleEndDateChange}
+     disabled={isSecondPickerDisabled}
+     shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
+     renderDay={(date, _dateState) => {
+       const isOccupied = generatedOccupiedDates.has(date.format("YYYY-MM-DD"));
+       const isSelected = date.isSame(endDate, "day");
+       const isDisabled = isOccupied || (!_dateState.isBeforeMaxDate && !_dateState.isAfterMinDate);
+       return (
+         <div
+           style={{
+            backgroundColor: isOccupied ? "grey" : isSelected ? "blue" : "white",
+            color: isDisabled ? "gray" : "black",
+             pointerEvents: isDisabled ? "none" : "auto",
+           }}
+         >
+           {date.format("D")}
+         </div>
+       );
+     }}
+      />
             </DemoContainer>
 
            
@@ -132,7 +212,7 @@ import { Link } from "react-router-dom"
                 marginLeft: '45PX'
               }}
             >
-              {/* SubTotal */}
+              SubTotal 
             </Typography>
 
             <Typography
@@ -148,7 +228,7 @@ import { Link } from "react-router-dom"
             >
               {/* {numberooms} Rooms */}
               <br />
-              {/* {nights} Nights */}
+              {countSelectedDays()} Nights
               <br />
               {/* {adult} Adult */}
               <br />
@@ -167,7 +247,7 @@ import { Link } from "react-router-dom"
                 marginLeft: '30px'
               }}
             >
-              {/* ${subTotal} */}
+              ${subTotal} 
             </Typography>
 
             <Typography
@@ -179,7 +259,7 @@ import { Link } from "react-router-dom"
                 marginLeft: "80px",
               }}
             >
-              USD
+            {subTotal}  USD
             </Typography>
           </Grid>
           <Grid container justifyContent="center" style={{ marginTop: "20px" }}>

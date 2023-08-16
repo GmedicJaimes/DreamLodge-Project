@@ -151,10 +151,6 @@ const handleRoomsChange = async (value) => {
   return (
     <div>
       <div className={styles.containerHome}>
-      {/* <Calendar/> */}
-
-
-
 
         <Filters
           setHost={setHost}
@@ -163,27 +159,32 @@ const handleRoomsChange = async (value) => {
           ascending={ascending}
         />
 
-        {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
-  
-        {/* <InfiniteScroll
-          dataLength={host.length}
-          next={loadMoreProperties}
-          hasMore={hasMore} // Controla si hay más elementos para cargar
-          loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
-        > */}
-          {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
-          <div className={styles.skeletonContainer}>
-            {/* {loading ? (
-              Array.from({ length: host.length || 12 }).map((_, idx) => (
-                <SkeletonCard key={idx} />
-              ))
-            ) : ( */}
-              <Cards host={host} />
-            {/* )} */}
+        <div className={styles.containerSections}>
+          <aside className={styles.aside}>
+            <Calendar className={styles.calendar}/>
+          </aside>
+          {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
+          <section className={styles.calendarHome}>
+            {/* <InfiniteScroll
+            dataLength={host.length}
+            next={loadMoreProperties}
+            hasMore={hasMore} // Controla si hay más elementos para cargar
+            loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
+          > */}
+            {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
+            <div className={styles.skeletonContainer}>
+              {/* {loading ? (
+                Array.from({ length: host.length || 12 }).map((_, idx) => (
+                  <SkeletonCard key={idx} />
+                ))
+              ) : ( */}
+                <Cards host={host} />
+              {/* )} */}
           </div>
+          </section>
+        </div>
+        
         {/* </InfiniteScroll> */}
-
-        {/* <Cards /> */}
       </div>
     </div>
   )}
