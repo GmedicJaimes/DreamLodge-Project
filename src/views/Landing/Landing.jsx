@@ -11,7 +11,7 @@ const Landing = () => {
         <h1>DreamLodge</h1>
       </div>
 
-      <section className={style.section}>
+      <section className={style.sectionLanding}>
         <h1>Welcome home</h1>
         <p>Explore the beauty of the world and <br />rest at DreamLodge: the destination  <br />of adventures and dreamers</p>
 
