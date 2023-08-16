@@ -25,11 +25,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-        <DateProvider>
-        <CssBaseline>
-          <App />
-          </CssBaseline>
-        </DateProvider>
+          <DateProvider>
+            <CssBaseline>
+              <App />
+            </CssBaseline>
+          </DateProvider>
         </BrowserRouter>
       </QueryClientProvider>
     

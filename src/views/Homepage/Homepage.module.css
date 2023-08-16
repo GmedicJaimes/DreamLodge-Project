@@ -1,3 +1,17 @@
-.container{
-    width: 80vw;
+
+.containerSections{
+  display: flex;
+  flex-direction: row;
+}
+
+.aside{
+  width: 28vw;
+  display: flex;
+  justify-content: center;
+  background-color: hsl(29, 39%, 86%);
+  padding-top: 10px;
+}
+.calendarHome{
+  width: 72vw;
+  padding-top: 4px;
 }

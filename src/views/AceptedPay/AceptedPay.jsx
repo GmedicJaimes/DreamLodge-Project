@@ -28,7 +28,8 @@ const AceptedPay = () => {
             localStorage.removeItem('propertyData');
 
         };
-    }, [])
+    }, []);
+    
 
     return(
         <div>

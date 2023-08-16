@@ -1,8 +1,6 @@
 .containerFilter{
   /* margin-top: 2px; */
   height: 30vh;
-  margin-bottom: 20px;
-
   background-image: url(../../assets/landingImg.jpeg);
   background-size: cover;
   background-repeat: no-repeat;

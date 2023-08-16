@@ -353,9 +353,9 @@ console.log("date:", date);
               <Wallet initialization={{ preferenceId: preferenceId }} />
             )}
           </div>
-          <About/>
       </div>
-      {hasPurchased &&<div>
+      {/* {/* {hasPurchased &&
+      <div>
         <h3>Deja una reseña:</h3>
             <input
               type="text"
@@ -378,7 +378,7 @@ console.log("date:", date);
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>}
+            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>} */}
             
 
             <About></About>
@@ -386,6 +386,7 @@ console.log("date:", date);
   
   );
 };
+
 
 
 
