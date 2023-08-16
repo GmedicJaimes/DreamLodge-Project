@@ -9,6 +9,8 @@ import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
 import { Link } from "react-router-dom"
 import { createBooking } from "../../config/handlers";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import axios from 'axios';
 
 
 
@@ -19,6 +21,116 @@ import { createBooking } from "../../config/handlers";
   const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
  
+//integracion mercado pago: 
+const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${subTotal}`,
+                quantity: `${countSelectedDays()}`,
+                currency_id: "ARS",
+            });
+
+            const { id } = response.data;
+
+            return id
+        } catch (error) {
+            console.log(error)
+        }
+    }
+   
+    const handleBuy = async()=>{
+      const id = await createPreference();
+      //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
+      if (id){
+          setPreferenceId(id);
+          //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
+          try {
+              await new Promise((resolve)=>{
+                  const intervalPay = setInterval(async()=>{
+                  const paymentStatus = await getPaymentStatus(id);
+                  if(paymentStatus === 'approved'){
+                      //si el pago fue aprovado se actualiza el avaible de "true" a "false"
+                      updateAvaible(property.id, preferenceId);
+                      //cortamos el problema y resolvemos la promesa
+                      clearInterval(intervalPay)
+                      resolve()
+                    }else if(paymentStatus === 'rejected'){
+                      //si el pago es rechazado, se corda el intervalo sin actualizar
+                      clearInterval(intervalPay);
+                      resolve()
+                    }
+                  })
+                }, 10000)
+              } catch (error) {
+                console.error("Error en la obtencion del status de pago", error);
+              }
+            };
+          };
+          const submitBooking = async () => {
+            if (!startDate || !endDate) {
+              alert('Please select both start and end dates.');
+              return;
+            }
+          
+            if (startDate.isAfter(endDate)) {
+              alert('Start date cannot be after end date.');
+              return;
+            }
+          
+            try {
+            
+              await createBooking(id, startDate, endDate);
+            } catch (error) {
+              console.log(error);
+              alert('An error occurred while making the booking.');
+            }
+          };
+          const bookingAndBuy = async () => {
+            try {
+              const id = await createPreference();
+              if (id) {
+                setPreferenceId(id);
+          
+                try {
+                  const intervalPay = setInterval(async () => {
+                    const paymentStatus = await getPaymentStatus(id);
+                    if (paymentStatus === 'approved') {
+                      updateAvaible(property.id, preferenceId);
+                      clearInterval(intervalPay);
+                    } else if (paymentStatus === 'rejected') {
+                      clearInterval(intervalPay);
+                    }
+                  }, 10000);
+                } catch (error) {
+                  console.error("Error in obtaining payment status", error);
+                }
+          
+                if (!startDate || !endDate) {
+                  alert('Please select both start and end dates.');
+                  return;
+                }
+          
+                if (startDate.isAfter(endDate)) {
+                  alert('Start date cannot be after end date.');
+                  return;
+                }
+          
+                try {
+                  await createBooking(id, startDate, endDate);
+                } catch (error) {
+                  console.log(error);
+                  alert('An error occurred while making the booking.');
+                }
+              }
+            } catch (error) {
+              console.error("ERROR SUBMIT AND BUY FUNCTION");
+            }
+          };
+          
+  // ==========================================================
 
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
@@ -82,25 +194,6 @@ const generateOccupiedDatesSet = (e) => {
   const isSecondPickerDisabled = !startDate;
 
 
-  const submitBooking = async () => {
-    if (!startDate || !endDate) {
-      alert('Please select both start and end dates.');
-      return;
-    }
-  
-    if (startDate.isAfter(endDate)) {
-      alert('Start date cannot be after end date.');
-      return;
-    }
-  
-    try {
-    
-      await createBooking(id, startDate, endDate);
-    } catch (error) {
-      console.log(error);
-      alert('An error occurred while making the booking.');
-    }
-  };
   
 
 
@@ -290,12 +383,14 @@ const generateOccupiedDatesSet = (e) => {
                     backgroundColor: "#c2c1fe",
                   },
                 }}
-                onClick={submitBooking}
+                onClick={bookingAndBuy}
              
               >
                 Reserve
               </Button>
-       
+              {preferenceId && (
+              <Wallet initialization={{ preferenceId: preferenceId }} />
+            )}
             <Typography
               variant="h1"
               sx={{
