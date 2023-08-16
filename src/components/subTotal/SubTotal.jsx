@@ -8,21 +8,17 @@ import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Im
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
 import { Link } from "react-router-dom"
-import { isPropertyAvailable,getBookedDatesForProperty } from "../../config/handlers";
+import { createBooking } from "../../config/handlers";
 
 
 
- const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates}) => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,id }) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
   const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
-  const id  = property.id
-
-
-
-
+ 
 
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
@@ -65,7 +61,7 @@ const generateOccupiedDatesSet = (e) => {
     if (startDate && endDate) {
       const start = dayjs(startDate);
       const end = dayjs(endDate);
-      const diff = end.diff(start, "day");
+      const diff = end.diff(start, "day")
       return diff;
     }
     return 0;
@@ -86,9 +82,26 @@ const generateOccupiedDatesSet = (e) => {
   const isSecondPickerDisabled = !startDate;
 
 
-
+  const submitBooking = async () => {
+    if (!startDate || !endDate) {
+      alert('Please select both start and end dates.');
+      return;
+    }
   
-
+    if (startDate.isAfter(endDate)) {
+      alert('Start date cannot be after end date.');
+      return;
+    }
+  
+    try {
+    
+      await createBooking(id, startDate, endDate);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while making the booking.');
+    }
+  };
+  
 
 
 
@@ -259,7 +272,7 @@ const generateOccupiedDatesSet = (e) => {
             </Typography>
           </Grid>
           <Grid container justifyContent="center" style={{ marginTop: "20px" }}>
-            <Link to="/">
+            
               <Button
                 type="submit"
                 variant="contained"
@@ -277,12 +290,12 @@ const generateOccupiedDatesSet = (e) => {
                     backgroundColor: "#c2c1fe",
                   },
                 }}
-                // onClick={handleTotaLClik}
+                onClick={submitBooking}
              
               >
                 Reserve
               </Button>
-            </Link>
+       
             <Typography
               variant="h1"
               sx={{

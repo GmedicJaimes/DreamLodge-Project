@@ -583,8 +583,7 @@ export const getBookedDatesForProperty = async (propertyId) => {
       }
     }).filter(date => date);  // Filtramos valores nulos
 
-    console.log('Fechas recuperadas:', bookedDates);
-    console.log("¿Son fechas válidas?", bookedDates.every(fecha => fecha.startDate instanceof Date && fecha.endDate instanceof Date));
+   
 
     return bookedDates;
 
@@ -597,14 +596,17 @@ export const getBookedDatesForProperty = async (propertyId) => {
 
 
 
-export const createBooking = async (propertyId, bookingData) => {
+export const createBooking = async (propertyId, startDate, endDate) => {
   try {
     // Verificamos la disponibilidad primero
-    if (await isPropertyAvailable(propertyId, bookingData.startDate, bookingData.endDate)) {
+
+const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as needed
+
+    if (await isPropertyAvailable(propertyId, startDate, endDate)) {
 
       // Convertir las fechas a Timestamp antes de guardarlas
-      const startDateTimestamp = Timestamp.fromDate(new Date(bookingData.startDate));
-      const endDateTimestamp = Timestamp.fromDate(new Date(bookingData.endDate));
+      const startDateTimestamp = Timestamp.fromDate(new Date(startDate));
+      const endDateTimestamp = Timestamp.fromDate(new Date(endDate));
 
       await addDoc(bookingsCollectionRef, {
         propertyId: propertyId,

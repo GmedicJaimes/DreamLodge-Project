@@ -41,8 +41,7 @@ const DetailPost = () => {
 
   const handleStartDateChange = async (date) => {
     setDateRange(date, endDate);
-    console.log("endDate:", endDate);
-    console.log("date:", date);
+
     
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
@@ -55,8 +54,7 @@ const DetailPost = () => {
 
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
-   console.log("startDate:", startDate);
-console.log("date:", date);
+
 
 
     if (endDate) {
@@ -312,6 +310,7 @@ console.log("date:", date);
         handleEndDateChange={handleEndDateChange}
         property={property}
         formattedOccupiedDates={formattedOccupiedDates}
+        id ={id}
         />
         
         <section className={styles.overviewRating}>
