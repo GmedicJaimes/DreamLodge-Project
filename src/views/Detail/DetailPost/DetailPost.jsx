@@ -176,15 +176,6 @@ const DetailPost = () => {
         //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
         if (id){
             setPreferenceId(id);
-
-            // setInfoTicket({ 
-            //   idTicket: id,
-            //   propertyTicket: property,
-            //   daysTicket: selectedDays,
-            //   priceTicket: totalPrice,
-            //   propertyId: property.id,
-            //   buyerIdTicket: auth?.currentUser?.uid
-            // });
             //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
             try {
                 await new Promise((resolve)=>{
@@ -349,7 +340,7 @@ const DetailPost = () => {
         </section>
         <div className={styles.falseLine}></div>
         <section id="pie" className={styles.paymentBox}></section>
-          <section>
+          {/* <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
             {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
             <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
@@ -367,7 +358,7 @@ const DetailPost = () => {
             {preferenceId && (
               <Wallet initialization={{ preferenceId: preferenceId }} />
             )}
-          </div>
+          </div> */}
       </div>
       {hasPurchased &&
       <div>
