@@ -1,0 +1,45 @@
+.panelContainer {
+    background-color: #EADCCF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+    width: 90%;
+  }
+  
+  .userListContainer {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .userList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .userListItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .deleteButton {
+    background-color: #CD5A3E;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1rem;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

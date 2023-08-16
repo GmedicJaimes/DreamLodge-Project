@@ -95,6 +95,7 @@ const DetailPost = () => {
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
   const [hasPurchased, setHasPurchased] = useState(null);
+  
   const submitReview = async (propertyId) => {
     try {
       await addDoc(collection(db, "reviews"), {
@@ -324,7 +325,7 @@ const DetailPost = () => {
             )}
           </div>
       </div>
-      {/* {/* {hasPurchased &&
+      {hasPurchased &&
       <div>
         <h3>Deja una reseña:</h3>
             <input
@@ -348,7 +349,7 @@ const DetailPost = () => {
               <option value={4}>4 estrellas</option>
               <option value={5}>5 estrellas</option>
             </select>
-            <button onClick={() => submitReview(p.id)}>Enviar Reseña</button></div>} */}
+            <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
             
 
             <About></About>
