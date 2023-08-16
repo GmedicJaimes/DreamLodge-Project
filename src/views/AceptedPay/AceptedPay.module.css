@@ -20,7 +20,8 @@ header {
     margin: auto;
     border-radius: .7rem;
     padding-top: 3em;
-    background-color: aliceblue;
+    background-color: rgb(252, 250, 180);
+    display: grid;
 }
 
 .cardHost p{
@@ -29,4 +30,25 @@ header {
 
 .recipeNuser{
     display: flex;
+}
+
+.cardTicket{
+    border: 1px solid rgb(224, 217, 217);
+    width: 15em;
+    height: 20em;
+    margin: auto;
+    border-radius: .7rem;
+    padding-top: 3em;
+    background-color: aliceblue;
+    display: grid;
+}
+
+.btnContact{
+    border: none;
+    color: white;
+    background-color: orange;
+    padding: 0.4em;
+    border-radius: 0.5em;
+    font-size: 1.4em;
+    font-weight: 700;
 }

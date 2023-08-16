@@ -4,6 +4,7 @@ import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
+import { serverTimestamp } from 'firebase/firestore';
 
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -631,7 +632,7 @@ export const createBooking = async (propertyId, bookingData) => {
 //======================================== BOOKING SECTION ========================================
 
 //funcion para deshabilitar propiedades
-export const updateAvaible = async(id, preferenceId) => {
+export const updateAvaible = async(id) => {
   try {
     const db = getFirestore()
     const propertyDB = doc(db, 'properties', id);
