@@ -18,8 +18,8 @@ import { createBooking } from "../../config/handlers";
   const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
   const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
- 
 
+console.log(property)
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
 const generateOccupiedDatesSet = (e) => {
@@ -68,7 +68,7 @@ const generateOccupiedDatesSet = (e) => {
   };
 
 
-  const subTotal = countSelectedDays() * property.price
+  const subTotal = countSelectedDays() 
  
 
 //   React.useEffect(() => {

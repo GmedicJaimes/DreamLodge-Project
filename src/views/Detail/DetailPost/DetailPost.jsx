@@ -28,6 +28,7 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+ 
 
 
   //CALENDAR DATES ============================================
@@ -266,7 +267,7 @@ const DetailPost = () => {
     fetchData();
   }, []); 
   
-  
+console.log(`soyyyyyy property detaillllll` , property)
 
  
  const formattedOccupiedDates = occupiedDates.map(date => {
@@ -310,7 +311,7 @@ const DetailPost = () => {
         handleEndDateChange={handleEndDateChange}
         property={property}
         formattedOccupiedDates={formattedOccupiedDates}
-        id ={id}
+        id ={id }
         />
         
         <section className={styles.overviewRating}>

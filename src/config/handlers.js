@@ -762,67 +762,76 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 
 
 
-export const fetchFilteredProperties = async (originalFilters) => {
+// export const fetchFilteredProperties = async (originalFilters) => {
+//   try {
+//     const propertiesCollectionRef = collection(db, 'properties');
+
+//     const filters = { ...originalFilters };
+
+//     if (filters.startDate && typeof filters.startDate === 'string') {
+//       filters.startDate = new Date(filters.startDate);
+//     }
+//     if (filters.endDate && typeof filters.endDate === 'string') {
+//       filters.endDate = new Date(filters.endDate);
+//     }
+
+//     let baseQuery = propertiesCollectionRef;
+
+//     // Ajustando las rutas de campo según la estructura del documento
+//     if (filters.numRooms) {
+//       baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.numRooms)));
+//     }
+//     if (filters.guest) {
+//       baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
+//     }
+
+//     const baseSnapshot = await getDocs(baseQuery);
+//     const baseProperties = baseSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+//     if (filters.startDate && filters.endDate) {
+//       return baseProperties.filter(property => {
+//         if (!property.availableDates) {
+//             return false;
+//         }
+//         const propertyStartDate = new Date(property.availableDates.start);
+//         const propertyEndDate = new Date(property.availableDates.end);
+//         return propertyStartDate <= filters.endDate && propertyEndDate >= filters.startDate;
+//       });
+//     } else {
+//       return baseProperties;
+//     }
+//   } catch (error) {
+//     console.error('Error fetching filtered properties:', error);
+//     return [];
+//   }
+// };
+
+
+
+
+
+
+
+export const fetchFilteredProperties = async (filters) => {
   try {
     const propertiesCollectionRef = collection(db, 'properties');
-
-    const filters = { ...originalFilters };
-
-    if (filters.startDate && typeof filters.startDate === 'string') {
-      filters.startDate = new Date(filters.startDate);
-    }
-    if (filters.endDate && typeof filters.endDate === 'string') {
-      filters.endDate = new Date(filters.endDate);
-    }
-
+    
     let baseQuery = propertiesCollectionRef;
 
-    // Ajustando las rutas de campo según la estructura del documento
-    if (filters.numRooms) {
-      baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.numRooms)));
+    if (filters.rooms) {
+      baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.rooms)));
     }
+
     if (filters.guest) {
       baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
     }
 
-    const baseSnapshot = await getDocs(baseQuery);
-    const baseProperties = baseSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const querySnapshot = await getDocs(baseQuery);
+    const filteredProperties = querySnapshot.docs.map(doc => doc.data());
 
-    if (filters.startDate && filters.endDate) {
-      return baseProperties.filter(property => {
-        if (!property.availableDates) {
-            return false;
-        }
-        const propertyStartDate = new Date(property.availableDates.start);
-        const propertyEndDate = new Date(property.availableDates.end);
-        return propertyStartDate <= filters.endDate && propertyEndDate >= filters.startDate;
-      });
-    } else {
-      return baseProperties;
-    }
+    return filteredProperties;
   } catch (error) {
     console.error('Error fetching filtered properties:', error);
-    return [];
-  }
-};
-
-
-
-
-
-export const fetchFilteredGuests = async (numberOfGuests) => {
-  try {
-    const propertiesCollectionRef = collection(db, 'properties');
-    
-    const filteredGuests = query(propertiesCollectionRef, where('stances.guest', '==', Number(numberOfGuests)));
-    const querySnapshot = await getDocs(filteredGuests);
-    
-    const filteredPropertiesGuests = querySnapshot.docs.map(doc => doc.data());
-    console.log(filteredPropertiesGuests);
-
-    return filteredPropertiesGuests;
-  } catch (error) {
-    console.error('Error fetching filtered guests:', error);
     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
   }
 }
