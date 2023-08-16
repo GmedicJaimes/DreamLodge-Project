@@ -17,6 +17,7 @@ import { DateContext } from "../../Contex/DateContex";
 
 
 
+<<<<<<< HEAD
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
  
 
@@ -24,6 +25,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
 
 
+=======
+const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
+>>>>>>> 63f8a11726e73d5727eb13a4fce6debb73094a21
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
 
@@ -236,17 +240,21 @@ useEffect(() => {
   //   }, 500); //  ajustar el tiempo
   // };
 
+
   // const handleSortByPrice = () => {
-  //   const sortedProperties = sortPropertiesByPrice(host, ascending);
+  //   const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
   //   setHost(sortedProperties);
   //   setAscending(!ascending);
   // };
 
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice([...host], ascending);
+    const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
     setHost(sortedProperties);
     setAscending(!ascending);
   };
+
+  
+  
   console.log(host)
 
   return (
@@ -256,6 +264,7 @@ useEffect(() => {
         <Filters
           setHost={setHost}
           originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
         />
