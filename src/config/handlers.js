@@ -404,28 +404,24 @@ export const dowloadImg = ()=> {
 
 export const getPropertiesByMultipleTypes = async (types) => {
   try {
-      const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
-      
-      const filteredProperties = propertiesQuerySnapshot.docs
-          .filter((doc) => types.every(type => doc.data().type.includes(type)))
-          .map((doc) => {
-              const propertyData = doc.data();
-              return {
-                  ...propertyData,
-                  id: doc.id
-              };
-          });
+    const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
 
-      return filteredProperties;
+    const filteredProperties = propertiesQuerySnapshot.docs
+      .filter((doc) => types.every(type => doc.data().type.includes(type)))
+      .map((doc) => {
+        const propertyData = doc.data();
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      });
+
+    return filteredProperties;
   } catch (error) {
-      console.log(error);
-      return [];
+    console.log(error);
+    return [];
   }
 };
-
-
-
-
 
 
 

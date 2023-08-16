@@ -15,7 +15,6 @@ import Calendar from "../../components/Calendar/Calendar";
 
 
 const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
- 
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
   
@@ -123,11 +122,16 @@ const handleRoomsChange = async (value) => {
   //   setAscending(!ascending);
   // };
 
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
+
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice([...host], ascending);
+    const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
     setHost(sortedProperties);
     setAscending(!ascending);
   };
+  
   console.log(host)
 
   return (
@@ -164,13 +168,13 @@ const handleRoomsChange = async (value) => {
         > */}
           {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
           <div className={styles.skeletonContainer}>
-            {loading ? (
+            {/* {loading ? (
               Array.from({ length: host.length || 12 }).map((_, idx) => (
                 <SkeletonCard key={idx} />
               ))
-            ) : (
+            ) : ( */}
               <Cards host={host} />
-            )}
+            {/* )} */}
           </div>
         {/* </InfiniteScroll> */}
       </div>

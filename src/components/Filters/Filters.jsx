@@ -1,6 +1,6 @@
 import { getPropertiesByMultipleTypes, filterByStateAndCity } from "../../config/handlers";
 import styles from "./Filters.module.css"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { US_STATE_CITIES } from "../../views/Post/infoLocation";
 
 
@@ -9,6 +9,10 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
     const [selectedCity, setSelectedCity] = useState(null);
     const availableStates = Object.keys(US_STATE_CITIES);
     const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
+
+    // useEffect(() => {
+    //     applyFilters(); // Aplicar filtros al montar el componente inicialmente
+    //   }, [selectedTypes]);
 
 
     const handleStateSelect = async (state) => {
@@ -38,31 +42,41 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         }
     };
 
-    const handleFilter = async () => {
-        try {
-          if (selectedTypes.length > 0) {
-            const properties = await getPropertiesByMultipleTypes(selectedTypes);
-            setHost(properties);
-          } else {
-            setHost(originalHost);
-          }
+    // const handleFilter = async () => {
+    //     try {
+    //       if (selectedTypes.length > 0) {
+    //         const properties = await getPropertiesByMultipleTypes(selectedTypes);
+    //         setHost(properties);
+    //       } else {
+    //         setHost(originalHost);
+    //       }
           
-          handleSortByPrice(); // Agrega esto para ordenar las propiedades después de aplicar los filtros
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    //       handleSortByPrice(); // Agrega esto para ordenar las propiedades después de aplicar los filtros
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   };
       
-
     const toggleType = (type) => {
         if (selectedTypes.includes(type)) {
-            setSelectedTypes(selectedTypes.filter(selectedType => selectedType !== type));
+          setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
         } else {
-            setSelectedTypes([...selectedTypes, type]);
+          setSelectedTypes([...selectedTypes, type]);
         }
-    };
-
-
+      };
+    
+      const applyFilters = () => {
+        if (selectedTypes.length > 0) {
+          const filteredProperties = originalHost.filter((property) =>
+            selectedTypes.every((type) => property.type.includes(type))
+          );
+          setHost(filteredProperties);
+        } else {
+          setHost(originalHost);
+        }
+    
+        handleSortByPrice(); // Ordenar después de aplicar filtros
+      };
     // const handlerClick = async (type) => {
     //     try {
     //         const response = await getPropertiesByType(type);
@@ -79,6 +93,12 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         setSelectedTypes([]); // Limpia los tipos seleccionados
         setHost(originalHost); // Restablece las propiedades originales
     };
+
+    // const cleanFilter = () => {
+    //     setSelectedTypes([]); // Limpia los tipos seleccionados
+    //     setHost(originalHost); // Restablece las propiedades originales
+    //     handleSortByPrice();
+    //   };
 
     return (
         <div className={styles.containerFilter}>
@@ -104,17 +124,17 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
                         ))}
                     </select>
                 )} */}
-                <button onClick={() => toggleType("Cabins")}  > <img src="https://cdn-icons-png.flaticon.com/128/4614/4614488.png" />Cabins</button>
+                <button onClick={() => { toggleType("Cabins"); applyFilters(); }}  > <img src="https://cdn-icons-png.flaticon.com/128/4614/4614488.png" />Cabins</button>
                 <img />
-                <button onClick={() => toggleType("Beachfront")}  > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/8404/8404761.png" />Beachfront</button>
+                <button onClick={() => { toggleType("Beachfront"); applyFilters(); }}  > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/8404/8404761.png" />Beachfront</button>
                 <img />
-                <button onClick={() => toggleType("Mansion")} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/5904/5904415.png" />Mansions</button>
+                <button onClick={() => { toggleType("Mansion"); applyFilters(); }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/5904/5904415.png" />Mansions</button>
                 <img />
-                <button onClick={() => toggleType("Countryside")} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png" />Countryside</button>
+                <button onClick={() => { toggleType("Countryside"); applyFilters(); }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png" />Countryside</button>
                 <img />
-                <button onClick={() => toggleType("Room")} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
-                <button onClick={handleSortByPrice}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
-                <button onClick={handleFilter}>Aplicar Filtros</button>
+                <button onClick={() => { toggleType("Room"); applyFilters(); }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
+                <button onClick={applyFilters}>Aplicar Filtros</button>
+                <button onClick={applyFilters}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
                 <button onClick={cleanFilter}>Clean</button>
             </div>
         </div>
