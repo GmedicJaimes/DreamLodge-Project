@@ -43,11 +43,9 @@ function App() {
 
         const usersSnapshot = await getDocs(collection(db, 'users'));
         setTotalUsers(usersSnapshot.size);
-        console.log(usersSnapshot);
 
         const imagesSnapshot = await listAll(imageUrlRef);
         setTotalImages(imagesSnapshot.items.length);
-        console.log(imagesSnapshot);
       } catch (error) {
         console.error("Error fetching properties:", error);
       }

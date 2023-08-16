@@ -1,5 +1,6 @@
 import styles from "./DetailPost.module.css"
 import React, { useContext,useState, useEffect } from 'react';
+import { query, collection, where, getDocs } from "firebase/firestore";
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
@@ -7,7 +8,10 @@ import bed from "../../../assets/cama.png"
 import bathroomicon from "../../../assets/bano-publico.png"
 import SubTotal from "../../../components/subTotal/SubTotal"
 import { DateContext } from "../../../Contex/DateContex";
-import {fetchAvailablePropertiesInRange, isPropertyAvailable} from "../../../config/handlers"
+import {fetchAvailablePropertiesInRange, getBookedDatesForProperty,isPropertyAvailable} from "../../../config/handlers"
+import { db } from '../../../config/firebase'
+
+import dayjs from "dayjs";
 
 
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
@@ -29,28 +33,32 @@ const DetailPost = () => {
   //CALENDAR DATES ============================================
 
   
-  const [propertyDates, setPropertyDates] = useState({});
   const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
+  const [occupiedDates, setOccupiedDates] = useState([]);
+
+
 
 
   const handleStartDateChange = async (date) => {
-    setDateRange(startDate, date);
+    setDateRange(date, endDate);
+    console.log("endDate:", endDate);
+    console.log("date:", date);
     
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
       if(!isAvailable) {
         alert("La propiedad no está disponible para estas fechas.");
-        // Igual que antes, maneja la lógica que necesites aquí.
       }
 
-      console.log(isAvailable)
     }
-    console.log(`ID`,id,"START",startDate,"DATE",date)
   };
 
   const handleEndDateChange = async (date) => {
-    setDateRange(date, endDate);
-    
+    setDateRange(startDate, date);
+   console.log("startDate:", startDate);
+console.log("date:", date);
+
+
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if(!isAvailable) {
@@ -58,28 +66,32 @@ const DetailPost = () => {
         // Aquí puedes manejar cualquier otra lógica que necesites, 
         // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
       }
-      console.log(isAvailable)  
     }    
-    console.log(`ID`,id,"END",endDate,"DATE",date)
+    
   };
   
 
 
 
+  useEffect(() => {
+    async function fetchBookedDates() {
+        try {
+            const bookedDates = await getBookedDatesForProperty(id);
+            if (Array.isArray(bookedDates)) {
+                const formattedDates = bookedDates.map(date => dayjs(date, "D MMMM YYYY").format("YYYY-MM-DD"));
+                setOccupiedDates(formattedDates); 
+            } else {
+                console.error('Las fechas recuperadas no son un arreglo:', bookedDates);
+            }
+        } catch (error) {
+            console.error('Error obteniendo las fechas:', error);
+        }
+    }
+    
+    fetchBookedDates();
+}, [id]); 
 
-//   const handleReserveClick = async () => {
-//   // Aquí obtén startDate y endDate de alguna manera, por ejemplo, desde tus campos de entrada
-  
-//   const propertyAvailable = await isPropertyAvailable(propertyId, startDate, endDate);
-
-//   if (!propertyAvailable) {
-//     alert("Lo sentimos, pero la propiedad está ocupada entre las fechas seleccionadas.");
-//   } else {
-//     // Aquí puedes realizar la reserva ya que la propiedad está disponible
-//     // Realiza las acciones necesarias para la reserva
-//   }
-// };
-
+ 
 
 
 
@@ -206,36 +218,51 @@ const DetailPost = () => {
   //=============================================================
   //
 
-  useEffect(async () => {
-    const propertiesDetail = async () => {
-      const detailPost = await detailId(id);
-      setPropertyDetail(detailPost)
-
+  useEffect(() => {
+    async function fetchData() {
+      // Obtener detalles de la propiedad
+      try {
+        const detailPost = await detailId(id);
+        setPropertyDetail(detailPost);
+  
+        // Obtener reseñas de la propiedad
+        const reviewsSnapshot = await getDocs(
+          query(collection(db, "reviews"), where("propertyId", "==", id))
+        );
+        const reviewsData = reviewsSnapshot.docs.map((reviewDoc) => reviewDoc.data());
+        // Aquí puedes hacer algo con reviewsData si es necesario, como actualizar el estado.
+  
+        // Si el usuario loggeado compró la propiedad
+        if (auth.currentUser) {
+          const userId = auth.currentUser.uid;
+          const purchasesQuery = query(collection(db, "purchases"), 
+            where("userId", "==", userId),
+            where("propertyId", "==", id)
+          );
+          const purchasesSnapshot = await getDocs(purchasesQuery);
+          const hasPurchased = !purchasesSnapshot.empty;
+  
+          // Modificar el estado hasPurchased
+          setHasPurchased(hasPurchased);
+        }
+      } catch (error) {
+        console.error("Hubo un error al obtener los datos:", error);
+      }
     }
-    propertiesDetail();
   
-    // obtener reseñas de la propiedad
-    const reviewsSnapshot = await getDocs(
-      query(collection(db, "reviews"), where("propertyId", "==", id))
-    );
-    const reviewsData = reviewsSnapshot.docs.map((reviewDoc) => reviewDoc.data());
+    fetchData();
+  }, []); 
   
-    // si el usuario loggeado, compro la propiedad
-    if (auth.currentUser) {
-      const userId = auth.currentUser.uid;
-      const purchasesQuery = query(collection(db, "purchases"), 
-        where("userId", "==", userId),
-        where("propertyId", "==", id)
-      );
-      const purchasesSnapshot = await getDocs(purchasesQuery);
-      const hasPurchased = !purchasesSnapshot.empty;
   
-      // modificamos el estado haspurchased
-
-      setHasPurchased(hasPurchased);
-    };
-  }, []);
-  
+  const formattedOccupiedDates = occupiedDates.map(date => {
+    if(date instanceof Date) {
+       return date.toISOString();
+    } else {
+       console.warn("Found a non-Date object:", date);
+       return null;
+    }
+ }).filter(date => date);  // Filter out any null values
+ 
 
   return (
     <div>
@@ -267,7 +294,10 @@ const DetailPost = () => {
         <SubTotal 
         handleStartDateChange={handleStartDateChange}
         handleEndDateChange={handleEndDateChange}
+        property={property}
+        formattedOccupiedDates={formattedOccupiedDates}
         />
+        
         <section className={styles.overviewRating}>
             <section className={styles.overviewBox}>
                 <h3>Overview</h3>
