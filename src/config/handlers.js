@@ -1,7 +1,7 @@
 import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendPasswordResetEmail,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
 import { serverTimestamp } from 'firebase/firestore';
@@ -133,6 +133,7 @@ export const doesEmailExistInFirestore = async (email) => {
 
 
 
+
 export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -164,6 +165,13 @@ export const signInGoogle = async () => {
 
       await setDoc(doc(db, 'users', user.uid), userData);
 
+      await sendPasswordResetEmail(auth, user.email, {
+        url: "http://localhost:5173/",
+        handleCodeInApp: true
+    });
+    await sendPasswordResetEmail(user);
+
+
       // Envía un mensaje al padre indicando autenticación exitosa
       if (window.opener) {
         window.opener.postMessage('auth-success', window.location.origin);
@@ -175,6 +183,7 @@ export const signInGoogle = async () => {
     console.log('Error durante la autenticación con Google:', error);
   }
 };
+
 
 
 
@@ -326,8 +335,8 @@ export const getPropertiesList = async () => {
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
 export const detailId = async (id) =>{
   try {
-    const refProperty = doc(db, 'properties' , id)
-    const propertySnapshot = await getDoc(refProperty);
+    const refProperty = doc(db, 'properties' , id) 
+   const propertySnapshot = await getDoc(refProperty);
 
    
     if(propertySnapshot.exists()){
@@ -741,72 +750,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 //======================================== CALENDARIO FILTRADO========================================
 //======================================== CALENDARIO FILTRADO========================================
 
-// Función para obtener las propiedades filtradas por habitaciones
-// export const fetchFilteredProperties = async (numberOfRooms) => {
-//   try {
-//     const propertiesCollectionRef = collection(db, 'properties');
-    
-//     const filteredPropertiesQuery = query(propertiesCollectionRef, where('stances.rooms', '==', Number(numberOfRooms)));
-//     const querySnapshot = await getDocs(filteredPropertiesQuery);
-    
-//     const filteredProperties = querySnapshot.docs.map(doc => doc.data());
-//     console.log(filteredProperties);
 
-//     return filteredProperties;
-//   } catch (error) {
-//     console.error('Error fetching filtered properties:', error);
-//     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
-//   }
-// };
-
-
-
-
-
-
-// export const fetchFilteredProperties = async (originalFilters) => {
-//   try {
-//     const propertiesCollectionRef = collection(db, 'properties');
-
-//     const filters = { ...originalFilters };
-
-//     if (filters.startDate && typeof filters.startDate === 'string') {
-//       filters.startDate = new Date(filters.startDate);
-//     }
-//     if (filters.endDate && typeof filters.endDate === 'string') {
-//       filters.endDate = new Date(filters.endDate);
-//     }
-
-//     let baseQuery = propertiesCollectionRef;
-
-//     // Ajustando las rutas de campo según la estructura del documento
-//     if (filters.numRooms) {
-//       baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.numRooms)));
-//     }
-//     if (filters.guest) {
-//       baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
-//     }
-
-//     const baseSnapshot = await getDocs(baseQuery);
-//     const baseProperties = baseSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-//     if (filters.startDate && filters.endDate) {
-//       return baseProperties.filter(property => {
-//         if (!property.availableDates) {
-//             return false;
-//         }
-//         const propertyStartDate = new Date(property.availableDates.start);
-//         const propertyEndDate = new Date(property.availableDates.end);
-//         return propertyStartDate <= filters.endDate && propertyEndDate >= filters.startDate;
-//       });
-//     } else {
-//       return baseProperties;
-//     }
-//   } catch (error) {
-//     console.error('Error fetching filtered properties:', error);
-//     return [];
-//   }
-// };
 
 
 export const getAllBookings = async () => {
@@ -834,7 +778,7 @@ export const fetchFilteredProperties = async (filters) => {
     }
 
     const querySnapshot = await getDocs(baseQuery);
-    const filteredProperties = querySnapshot.docs.map(doc => doc.data());
+    const filteredProperties = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
 
     return filteredProperties;
   } catch (error) {

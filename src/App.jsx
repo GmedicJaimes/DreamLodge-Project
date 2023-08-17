@@ -51,7 +51,7 @@ function App() {
       }
     }
     fetchProperties();
-  }, []);
+  }, [location.pathname]);
 
 
   return (

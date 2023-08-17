@@ -30,7 +30,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
   
-
+  
   // const handleAvailableProperties = async () => {
   //   if (startDate && endDate) {
   //     const filters = {
@@ -89,53 +89,42 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
-      console.log(`enddddd`, host)
 
     }
 
     fetchFilteredHost();
   }, [guest, rooms]);
 
-
   useEffect(() => {
-    async function fetchData() {
-        // Fetch properties
+    async function fetchAndUpdateHost() {
+      if (!allProperties.length) {
         const propertiesCollectionRef = collection(db, "properties");
         const propertiesSnapshot = await getDocs(propertiesCollectionRef);
         const properties = propertiesSnapshot.docs.map(doc => doc.data());
-
-        // Fetch bookings
-        const fetchedBookings = await getAllBookings();
-
-        // Update states
+  
         setAllProperties(properties);
-        setBookings(fetchedBookings);
+      }
+  
+      let filteredHost = [...allProperties];
+  
+      if (rooms) {
+        filteredHost = filteredHost.filter(
+          (host) => host.stances && host.stances.rooms === Number(rooms)
+        );
+      }
+  
+      if (guest) {
+        filteredHost = filteredHost.filter((property) => {
+          return property.stances && property.stances.guest === Number(guest);
+        });
+      }
+  
+      setHost(filteredHost);
     }
-    fetchData();
-}, []);
-
-
-  useEffect(() => {
-    let filteredHost = [...allProperties]; // Creamos una copia de todas las propiedades
-
-    // Filtrado por rooms
-    if (rooms) {
-      filteredHost = filteredHost.filter(
-        (host) => host.stances && host.stances.rooms === Number(rooms)
-      );
-    }
-
-    // Filtrado por guest
-    if (guest) {
-      filteredHost = filteredHost.filter((property) => {
-        return property.stances && property.stances.guest === Number(guest);
-      });
-    }
-
-    // Filtrado por fechas
-
-    setHost(filteredHost);
+  console.log(host,"desde hompeage")
+    fetchAndUpdateHost();
   }, [guest, rooms, allProperties]);
+  
 
   
 
