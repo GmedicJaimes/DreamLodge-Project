@@ -28,31 +28,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
-<<<<<<< HEAD
-  
-  
-  // const handleAvailableProperties = async () => {
-  //   if (startDate && endDate) {
-  //     const filters = {
-  //       rooms: rooms,
-  //       guest: guest,
-  //       startDate: startDate,
-  //       endDate: endDate
-  //     };
-  //    const availableProperties = await fetchFilteredProperties(filters);
 
-  //       console.log(`soy guest`,)
-  //     if (availableProperties.length === 0) {
-  //       console.log("No hay propiedades disponibles");
-  //     } else {
-  //       setHost(availableProperties);
-  //       setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
-  //     }
-  //   }
-  // };
-=======
-
->>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
+  
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -86,17 +63,12 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
-<<<<<<< HEAD
-
-=======
->>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
     }
 
     fetchFilteredHost();
   }, [guest, rooms]);
 
   useEffect(() => {
-<<<<<<< HEAD
     async function fetchAndUpdateHost() {
       if (!allProperties.length) {
         const propertiesCollectionRef = collection(db, "properties");
@@ -124,37 +96,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
   console.log(host,"desde hompeage")
     fetchAndUpdateHost();
-=======
-    async function fetchData() {
-      const propertiesCollectionRef = collection(db, "properties");
-      const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-      const properties = propertiesSnapshot.docs.map((doc) => doc.data());
-
-      const fetchedBookings = await getAllBookings();
-
-      setAllProperties(properties);
-      setBookings(fetchedBookings);
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    let filteredHost = [...allProperties];
-
-    if (rooms) {
-      filteredHost = filteredHost.filter(
-        (property) => property.stances && property.stances.rooms === Number(rooms)
-      );
-    }
-
-    if (guest) {
-      filteredHost = filteredHost.filter((property) => {
-        return property.stances && property.stances.guest === Number(guest);
-      });
-    }
-
-    setHost(filteredHost);
->>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
   }, [guest, rooms, allProperties]);
   
 
