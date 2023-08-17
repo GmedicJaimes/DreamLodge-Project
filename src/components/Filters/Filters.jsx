@@ -4,86 +4,153 @@ import React, { useState, useEffect } from 'react';
 import { US_STATE_CITIES } from "../../views/Post/infoLocation";
 
 
-const Filters = ({ setHost, originalHost, filteredHost,handleSortByPrice, ascending }) => {
+const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
     const [selectedState, setSelectedState] = useState(null);
     const [selectedCity, setSelectedCity] = useState(null);
     const availableStates = Object.keys(US_STATE_CITIES);
-    const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
+    const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados 
+
+    useEffect(() => {
+        applyFilters();
+      }, [selectedState, selectedCity, selectedTypes]);
     
 
-    const handleStateSelect = async (state) => {
-        setSelectedState(state);
+    // const handleStateSelect = async (state) => {
+    //     setSelectedState(state);
 
-        if (selectedCity) {
-            setSelectedCity(null);
-        }
-
-        if (state) {
-            const properties = await filterByStateAndCity(state, null);
-            setHost(properties);
-        } else {
-            setHost(originalHost);
-        }
-    };
-
-    const handleCitySelect = async (city) => {
-        setSelectedCity(city);
-
-        if (city) {
-            const properties = await filterByStateAndCity(selectedState, city);
-            setHost(properties);
-        } else {
-            const propertiesInSelectedState = await filterByStateAndCity(selectedState, null);
-            setHost(propertiesInSelectedState);
-        }
-    };
-
-    // const handleFilter = async () => {
-    //     try {
-    //       if (selectedTypes.length > 0) {
-    //         const properties = await getPropertiesByMultipleTypes(selectedTypes);
-    //         setHost(properties);
-    //       } else {
-    //         setHost(originalHost);
-    //       }
-          
-    //       handleSortByPrice(); // Agrega esto para ordenar las propiedades después de aplicar los filtros
-    //     } catch (error) {
-    //       console.log(error);
+    //     if (selectedCity) {
+    //         setSelectedCity(null);
     //     }
-    //   };
-      
-    const toggleType = (type) => {
+
+    //     if (state) {
+    //         const properties = await filterByStateAndCity(state, null);
+    //         setHost(properties);
+    //     } else {
+    //         setHost(originalHost);
+    //     }
+    // };
+
+    // const handleCitySelect = async (city) => {
+    //     setSelectedCity(city);
+
+    //     if (city) {
+    //         const properties = await filterByStateAndCity(selectedState, city);
+    //         setHost(properties);
+    //     } else {
+    //         const propertiesInSelectedState = await filterByStateAndCity(selectedState, null);
+    //         setHost(propertiesInSelectedState);
+    //     }
+    // };
+
+    const handleStateSelect = (state) => {
+        setSelectedState(state);
+        setSelectedCity(null);
+      };
+    
+      const handleCitySelect = (city) => {
+        setSelectedCity(city);
+      };
+
+      const toggleType = (type) => {
         if (selectedTypes.includes(type)) {
           setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
         } else {
           setSelectedTypes([...selectedTypes, type]);
         }
       };
+
+    // const toggleType = (type) => {
+    //     if (selectedTypes.includes(type)) {
+    //         setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
+    //     } else {
+    //         setSelectedTypes([...selectedTypes, type]);
+    //     }
+    // };
     
-      const applyFilters = () => {
+    const applyFilters = async () => {
+        let filteredProperties = [...originalHost];
+    
+        if (selectedState) {
+          filteredProperties = await filterByStateAndCity(selectedState, selectedCity);
+        }
+    
         if (selectedTypes.length > 0) {
-          const filteredProperties = originalHost.filter((property) =>
+          filteredProperties = filteredProperties.filter((property) =>
             selectedTypes.every((type) => property.type.includes(type))
           );
-          setHost(filteredProperties);
-    
-        } else {
-          setHost(originalHost);
         }
+    
+        setHost(filteredProperties);
       };
-      
-    //   const handleSortFilterByPrice = () => {
-    //     setAscending(!ascending);
-    //     const sortedProperties = sortPropertiesByPrice([...filteredHost], ascending);
-    //     setHost(sortedProperties);
-    //   };
+
+    // const applyFilters = () => {
+    //     if (selectedState || selectedCity || selectedTypes.length > 0) {
+    //         let filteredProperties = [...originalHost];
+    
+    //         // Filtrar por tipos de propiedad
+    //         if (selectedTypes.length > 0) {
+    //             filteredProperties = filteredProperties.filter(property =>
+    //                 selectedTypes.some(type => property.type.includes(type))
+    //             );
+    //         }
+    
+    //         // Filtrar por estado y ciudad
+    //         if (selectedState) {
+    //             filteredProperties = filteredProperties.filter(property =>
+    //                 property.location.state === selectedState
+    //             );
+    //         }
+    
+    //         if (selectedCity) {
+    //             filteredProperties = filteredProperties.filter(property =>
+    //                 property.location.city === selectedCity
+    //             );
+    //         }
+    
+    //         setHost(filteredProperties);
+    //     } else {
+    //         setHost(originalHost);
+    //     }
+    // };
+    
+
+    // const applyFilters = () => {
+    //     let filteredProperties = [...originalHost];
+    
+    //     if (selectedTypes.length > 0) {
+    //         filteredProperties = filteredProperties.filter(property =>
+    //             selectedTypes.some(type => property.type.includes(type))
+    //         );
+    //     }
+    
+    //     if (selectedState) {
+    //         const stateFilteredProperties = filteredProperties.filter(property =>
+    //             property.location.state === selectedState
+    //         );
+    //         filteredProperties = stateFilteredProperties;
+    //     }
+    
+    //     if (selectedCity) {
+    //         const cityFilteredProperties = filteredProperties.filter(property =>
+    //             property.location.city === selectedCity
+    //         );
+    //         filteredProperties = cityFilteredProperties;
+    //     }
+    
+    //     setHost(filteredProperties);
+    // };
+
+    // const cleanFilter = () => {
+    //     setSelectedTypes([]); // Limpia los tipos seleccionados
+    //     setHost(originalHost); // Restablece las propiedades originales
+    // };
 
     const cleanFilter = () => {
-        setSelectedTypes([]); // Limpia los tipos seleccionados
-        setHost(originalHost); // Restablece las propiedades originales
+        setSelectedState(null);
+        setSelectedCity(null);
+        setSelectedTypes([]);
+        setHost(originalHost);
     };
-
     return (
         <div className={styles.containerFilter}>
             <div className={styles.filter}>
@@ -117,7 +184,7 @@ const Filters = ({ setHost, originalHost, filteredHost,handleSortByPrice, ascend
                 <button onClick={() => { toggleType("Countryside");  }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png" />Countryside</button>
                 <img />
                 <button onClick={() => { toggleType("Room") }} > <img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
-                <button onClick={applyFilters}>Aplicar Filtros</button>
+                {/* <button onClick={applyFilters}>Aplicar Filtros</button> */}
                 <button onClick={handleSortByPrice}>Ordenar por precio {ascending ? 'ascendente' : 'descendente'} </button>
                 <button onClick={cleanFilter}>Clean</button>
             </div>
