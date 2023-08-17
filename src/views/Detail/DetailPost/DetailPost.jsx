@@ -28,6 +28,7 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+ 
 
 
   //CALENDAR DATES ============================================
@@ -36,6 +37,7 @@ const DetailPost = () => {
   const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
   const [occupiedDates, setOccupiedDates] = useState([]);
 
+  console.log(`SOY ID PARAMS DE DETAIL POST`, id)
 
 
 
@@ -258,7 +260,6 @@ const DetailPost = () => {
     fetchData();
   }, []); 
   
-  
 
  
  const formattedOccupiedDates = occupiedDates.map(date => {
@@ -302,7 +303,7 @@ const DetailPost = () => {
         handleEndDateChange={handleEndDateChange}
         property={property}
         formattedOccupiedDates={formattedOccupiedDates}
-        id ={id}
+        id ={id }
         />
         
         <section className={styles.overviewRating}>
