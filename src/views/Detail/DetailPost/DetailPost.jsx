@@ -37,7 +37,7 @@ const DetailPost = () => {
   const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
   const [occupiedDates, setOccupiedDates] = useState([]);
 
-  console.log(`soy idddd de paramassss pa `, id)
+  console.log(`SOY ID PARAMS DE DETAIL POST`, id)
 
 
 
@@ -259,7 +259,6 @@ const DetailPost = () => {
     fetchData();
   }, []); 
   
-console.log(`soyyyyyy property detaillllll` , property)
 
  
  const formattedOccupiedDates = occupiedDates.map(date => {

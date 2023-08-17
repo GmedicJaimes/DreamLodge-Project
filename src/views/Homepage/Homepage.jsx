@@ -52,12 +52,10 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   // };
   const handleRoomsChange = (value) => {
     setRooms(value);
-    console.log(rooms)
   };
 
   const handleGuestChange = (value) => {
     setGuest(value);
-    console.log(guest)
   };
 
  

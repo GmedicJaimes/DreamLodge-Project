@@ -132,7 +132,6 @@ const[preferenceId, setPreferenceId] = useState(null);
           
   // ==========================================================
 
-console.log(property)
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
 const generateOccupiedDatesSet = (e) => {
