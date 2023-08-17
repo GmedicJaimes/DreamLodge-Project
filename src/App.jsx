@@ -51,7 +51,7 @@ function App() {
       }
     }
     fetchProperties();
-  }, []);
+  }, [location.pathname]);
 
 
   return (
@@ -80,4 +80,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
