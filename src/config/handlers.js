@@ -690,45 +690,52 @@ export const registerPurchases = async (userId, propertyId) => {
 // Función para obtener las propiedades libres en un rango de fechas
 export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
   try {
+    const startJSDate = startDate.$d;
+    const endJSDate = endDate.$d;
+
+    console.log('Selected Range:', startJSDate, endJSDate);
+
     const bookingsRef = collection(db, "bookings");
+
+    // Consulta para reservas que comienzan antes de que termine el rango seleccionado
+    const startBeforeEndQuery = query(bookingsRef, where("startDate", "<=", endJSDate));
+    const startBeforeEndSnapshot = await getDocs(startBeforeEndQuery);
+
+    // Consulta para reservas que terminan después de que comienza el rango seleccionado
+    const endAfterStartQuery = query(bookingsRef, where("endDate", ">=", startJSDate));
+    const endAfterStartSnapshot = await getDocs(endAfterStartQuery);
+
+    // Intersección: encuentre reservas que se superpongan con el rango seleccionado
+    const overlappingBookings = startBeforeEndSnapshot.docs.filter(doc =>
+      endAfterStartSnapshot.docs.some(endDoc => endDoc.id === doc.id)
+    );
+
+    const bookedPropertyIds = overlappingBookings.map(doc => doc.data().propertyId);
+
+    console.log('Booked Property IDs:', bookedPropertyIds);
+
     const propertiesRef = collection(db, "properties");
-
-    // Obtener todas las reservas que coincidan con el rango de fechas
-    const querySnapshot = await getDocs(bookingsRef);
-
-    const bookedPropertyIds = [];
-    querySnapshot.forEach(doc => {
-      const booking = doc.data();
-      const bookingEndDate = new Date(booking.endDate); // O dayjs(booking.endDate).toDate()
-      const bookingStartDate = new Date(booking.startDate); // O dayjs(booking.startDate).toDate()
-
-
-      if (
-        (bookingStartDate <= endDate && bookingEndDate >= startDate)
-    )
-     {
-        bookedPropertyIds.push(booking.propertyId);
-      }
-    });
-
-    // Obtener todas las propiedades
     const allPropertiesSnapshot = await getDocs(propertiesRef);
+
     const allProperties = allPropertiesSnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
 
-    // Filtrar las propiedades que no están reservadas
-    const availableProperties = allProperties.filter(property => !bookedPropertyIds.includes(property.id));
+    const availableProperties = allProperties.filter(property => 
+      !bookedPropertyIds.includes(property.id)
+    );
 
-    console.log(availableProperties);
+    console.log('Available Properties:', availableProperties);
+    
     return availableProperties;
   } catch (error) {
     console.error('Error fetching available properties in range:', error);
     return [];
   }
 };
-  
+
+
 
 
 //======================================== CALENDARIO FILTRADO========================================
@@ -804,7 +811,12 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 // };
 
 
-
+export const getAllBookings = async () => {
+  const bookingsCollectionRef = collection(db, "bookings");
+  const querySnapshot = await getDocs(bookingsCollectionRef);
+  const bookings = querySnapshot.docs.map(doc => doc.data());
+  return bookings;
+};
 
 
 
@@ -832,3 +844,4 @@ export const fetchFilteredProperties = async (filters) => {
     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
   }
 }
+
