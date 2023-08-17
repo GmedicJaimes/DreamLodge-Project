@@ -23,14 +23,11 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
-  const [loading, setLoading] = useState(true);
-  const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
+  const [ascending, setAscending] = useState(true);
+  const { startDate, endDate, setDateRange } = useContext(DateContext);
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
-  
-
 
   const handleRoomsChange = (value) => {
     setRooms(value);
@@ -40,10 +37,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     setGuest(value);
   };
 
- 
-
- 
-
   const handleStartDateChange = async (date) => {
     setDateRange(date, endDate);
     if (endDate) {
@@ -51,16 +44,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(availableProperties);
     }
   };
-  
+
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
-
     if (startDate) {
       const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
       setHost(availableProperties);
     }
   };
-  
 
   useEffect(() => {
     const filters = {
@@ -71,60 +62,48 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
-      console.log(`enddddd`, host)
-
     }
 
     fetchFilteredHost();
   }, [guest, rooms]);
 
-
   useEffect(() => {
     async function fetchData() {
-        // Fetch properties
-        const propertiesCollectionRef = collection(db, "properties");
-        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-        const properties = propertiesSnapshot.docs.map(doc => doc.data());
+      const propertiesCollectionRef = collection(db, "properties");
+      const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+      const properties = propertiesSnapshot.docs.map((doc) => doc.data());
 
-        // Fetch bookings
-        const fetchedBookings = await getAllBookings();
+      const fetchedBookings = await getAllBookings();
 
-        // Update states
-        setAllProperties(properties);
-        setBookings(fetchedBookings);
+      setAllProperties(properties);
+      setBookings(fetchedBookings);
     }
     fetchData();
-}, []);
-
+  }, []);
 
   useEffect(() => {
-    let filteredHost = [...allProperties]; // Creamos una copia de todas las propiedades
+    let filteredHost = [...allProperties];
 
-    // Filtrado por rooms
     if (rooms) {
       filteredHost = filteredHost.filter(
-        (host) => host.stances && host.stances.rooms === Number(rooms)
+        (property) => property.stances && property.stances.rooms === Number(rooms)
       );
     }
 
-    // Filtrado por guest
     if (guest) {
       filteredHost = filteredHost.filter((property) => {
         return property.stances && property.stances.guest === Number(guest);
       });
     }
 
-    // Filtrado por fechas
-
     setHost(filteredHost);
   }, [guest, rooms, allProperties]);
 
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
     setHost(sortedProperties);
     setAscending(!ascending);
   };
-
 
   return (
     <div>
@@ -139,15 +118,15 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
-            <Calendar
-              guest={guest}
-              rooms={rooms}
-              onGuestChange={handleGuestChange}
-              onRoomsChange={handleRoomsChange}
-              onStartChange={handleStartDateChange}
-              onEndChange={handleEndDateChange}
-              className={styles.calendar}
-            />
+          <Calendar
+            guest={guest}
+            rooms={rooms}
+            onGuestChange={handleGuestChange}
+            onRoomsChange={handleRoomsChange}
+            onStartChange={handleStartDateChange}
+            onEndChange={handleEndDateChange}
+            className={styles.calendar}
+          />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
