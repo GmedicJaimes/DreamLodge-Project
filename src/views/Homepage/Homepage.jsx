@@ -25,11 +25,11 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
-
   const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
+  
 
   // const handleAvailableProperties = async () => {
   //   if (startDate && endDate) {
@@ -97,7 +97,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
     fetchFilteredHost();
   }, [guest, rooms]);
-
 
 
   useEffect(() => {
@@ -181,11 +180,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   //   }, 500); //  ajustar el tiempo
   // };
 
-  // const handleSortByPrice = () => {
-  //   const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
-  //   setHost(sortedProperties);
-  //   setAscending(!ascending);
-  // };
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
