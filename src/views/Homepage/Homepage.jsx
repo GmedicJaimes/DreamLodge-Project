@@ -165,7 +165,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 ))
               ) : ( */}
               <Cards host={host} />
-              {/* )} */}
+               {/* )}  */}
             </div>
           </section>
         </div>
