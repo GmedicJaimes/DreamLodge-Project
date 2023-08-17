@@ -1,6 +1,6 @@
 import styles from "./DetailPost.module.css"
 import React, { useContext,useState, useEffect } from 'react';
-import { query, collection, where, getDocs } from "firebase/firestore";
+import { query, collection, where, getDocs, addDoc } from "firebase/firestore";
 import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png"
 import door from "../../../assets/puerta.png"
@@ -28,7 +28,6 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
- 
 
 
   //CALENDAR DATES ============================================
@@ -105,6 +104,7 @@ const DetailPost = () => {
   const [reviewAuthor, setReviewAuthor] = useState("");
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
+  const [reviews, setReviews] = useState([])
   const [hasPurchased, setHasPurchased] = useState(null);
   
   const submitReview = async (propertyId) => {
@@ -144,24 +144,24 @@ const DetailPost = () => {
 
 
   // CONFIGURACION DEL PAGO=======================================
-  const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
-    const createPreference = async()=>{
-        try {
-            const response = await axios.post(`http://localhost:3001/createorder`, {
-                description: `${property.name}`,
-                price: `${totalPrice}`,
-                quantity: `${selectedDays}`,
-                currency_id: "ARS",
-            });
+  // const[preferenceId, setPreferenceId] = useState(null);
+  // initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+  //   const createPreference = async()=>{
+  //       try {
+  //           const response = await axios.post(`http://localhost:3001/createorder`, {
+  //               description: `${property.name}`,
+  //               price: `${totalPrice}`,
+  //               quantity: `${selectedDays}`,
+  //               currency_id: "ARS",
+  //           });
 
-            const { id } = response.data;
+  //           const { id } = response.data;
 
-            return id
-        } catch (error) {
-            console.log(error)
-        }
-    }
+  //           return id
+  //       } catch (error) {
+  //           console.log(error)
+  //       }
+  //   }
 
     const [infoTicket, setInfoTicket] = React.useState({
       idTicket: "",
@@ -172,34 +172,34 @@ const DetailPost = () => {
       buyerIdTicket: ""
     })
 
-    const handleBuy = async()=>{
-        const id = await createPreference();
-        //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
-        if (id){
-            setPreferenceId(id);
-            //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
-            try {
-                await new Promise((resolve)=>{
-                    const intervalPay = setInterval(async()=>{
-                    const paymentStatus = await getPaymentStatus(id);
-                    if(paymentStatus === 'approved'){
-                        //si el pago fue aprovado se actualiza el avaible de "true" a "false"
-                        updateAvaible(property.id, preferenceId);
-                        //cortamos el problema y resolvemos la promesa
-                        clearInterval(intervalPay)
-                        resolve()
-                    }else if(paymentStatus === 'rejected'){
-                        //si el pago es rechazado, se corda el intervalo sin actualizar
-                        clearInterval(intervalPay);
-                        resolve()
-                    }
-                    })
-                }, 10000)
-            } catch (error) {
-                console.error("Error en la obtencion del status de pago", error);
-            }
-        };
-    };
+    // const handleBuy = async()=>{
+    //     const id = await createPreference();
+    //     //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
+    //     if (id){
+    //         setPreferenceId(id);
+    //         //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
+    //         try {
+    //             await new Promise((resolve)=>{
+    //                 const intervalPay = setInterval(async()=>{
+    //                 const paymentStatus = await getPaymentStatus(id);
+    //                 if(paymentStatus === 'approved'){
+    //                     //si el pago fue aprovado se actualiza el avaible de "true" a "false"
+    //                     updateAvaible(property.id, preferenceId);
+    //                     //cortamos el problema y resolvemos la promesa
+    //                     clearInterval(intervalPay)
+    //                     resolve()
+    //                 }else if(paymentStatus === 'rejected'){
+    //                     //si el pago es rechazado, se corda el intervalo sin actualizar
+    //                     clearInterval(intervalPay);
+    //                     resolve()
+    //                 }
+    //                 })
+    //             }, 10000)
+    //         } catch (error) {
+    //             console.error("Error en la obtencion del status de pago", error);
+    //         }
+    //     };
+    // };
 
       React.useEffect(() => {
         localStorage.setItem('propertyData', JSON.stringify({ 
@@ -225,19 +225,19 @@ const DetailPost = () => {
 
   useEffect(() => {
     async function fetchData() {
-      // Obtener detalles de la propiedad
+    
       try {
         const detailPost = await detailId(id);
         setPropertyDetail(detailPost);
   
-        // Obtener reseñas de la propiedad
+        
         const reviewsSnapshot = await getDocs(
           query(collection(db, "reviews"), where("propertyId", "==", id))
         );
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) => reviewDoc.data());
-        // Aquí puedes hacer algo con reviewsData si es necesario, como actualizar el estado.
+        setReviews(reviewsData)
   
-        // Si el usuario loggeado compró la propiedad
+        
         if (auth.currentUser) {
           const userId = auth.currentUser.uid;
           const purchasesQuery = query(collection(db, "purchases"), 
@@ -247,7 +247,7 @@ const DetailPost = () => {
           const purchasesSnapshot = await getDocs(purchasesQuery);
           const hasPurchased = !purchasesSnapshot.empty;
   
-          // Modificar el estado hasPurchased
+      
           setHasPurchased(hasPurchased);
         }
       } catch (error) {
@@ -258,7 +258,7 @@ const DetailPost = () => {
     fetchData();
   }, []); 
   
-console.log(`soyyyyyy property detaillllll` , property)
+  
 
  
  const formattedOccupiedDates = occupiedDates.map(date => {
@@ -302,7 +302,7 @@ console.log(`soyyyyyy property detaillllll` , property)
         handleEndDateChange={handleEndDateChange}
         property={property}
         formattedOccupiedDates={formattedOccupiedDates}
-        id ={id }
+        id ={id}
         />
         
         <section className={styles.overviewRating}>
@@ -387,7 +387,13 @@ console.log(`soyyyyyy property detaillllll` , property)
             </select>
             <button onClick={() => submitReview(id)}>Enviar Reseña</button></div>}
             
-
+            {reviews && reviews.map((r)=>(
+              <div key={r.id}>
+                <p>Author: {r.author}</p>
+                <p>Comment: {r.content}</p>
+                <p>Rating: {r.rating}</p>
+              </div>
+            ))}
             <About></About>
             </div>
   
@@ -398,7 +404,6 @@ console.log(`soyyyyyy property detaillllll` , property)
 
 
 export default DetailPost;
-
 
 
 // import styles from "./DetailPost.module.css"
