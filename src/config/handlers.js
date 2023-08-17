@@ -822,4 +822,10 @@ export const fetchFilteredGuests = async (numberOfGuests) => {
     console.error('Error fetching filtered guests:', error);
     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
   }
-}
+};
+export const getAllBookings = async () => {
+  const bookingsCollectionRef = collection(db, "bookings");
+  const querySnapshot = await getDocs(bookingsCollectionRef);
+  const bookings = querySnapshot.docs.map(doc => doc.data());
+  return bookings;
+};
