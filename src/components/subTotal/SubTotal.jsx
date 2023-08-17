@@ -132,6 +132,7 @@ const[preferenceId, setPreferenceId] = useState(null);
           
   // ==========================================================
 
+console.log(property)
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
 const generateOccupiedDatesSet = (e) => {
@@ -180,7 +181,7 @@ const generateOccupiedDatesSet = (e) => {
   };
 
 
-  const subTotal = countSelectedDays() * property.price
+  const subTotal = countSelectedDays() 
  
 
 //   React.useEffect(() => {
@@ -250,22 +251,7 @@ const generateOccupiedDatesSet = (e) => {
          minDate={today}
          onChange={handleStartDateChange}
          shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
-         renderDay={(date, _dateState) => {
-           const isOccupied = generatedOccupiedDates.has(date.format("YYYY-MM-DD"));
-           const isSelected = date.isSame(startDate, "day");
-           const isDisabled = isOccupied || (!_dateState.isBeforeMaxDate && !_dateState.isAfterMinDate);
-           return (
-             <div
-               style={{
-                backgroundColor: isOccupied ? "grey" : isSelected ? "blue" : "white",
-                color: isDisabled ? "gray" : "black",
-                 pointerEvents: isDisabled ? "none" : "auto",
-               }}
-             >
-               {date.format("D")}
-             </div>
-           );
-         }}
+      
       />
 
               
@@ -278,22 +264,7 @@ const generateOccupiedDatesSet = (e) => {
      onChange={handleEndDateChange}
      disabled={isSecondPickerDisabled}
      shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
-     renderDay={(date, _dateState) => {
-       const isOccupied = generatedOccupiedDates.has(date.format("YYYY-MM-DD"));
-       const isSelected = date.isSame(endDate, "day");
-       const isDisabled = isOccupied || (!_dateState.isBeforeMaxDate && !_dateState.isAfterMinDate);
-       return (
-         <div
-           style={{
-            backgroundColor: isOccupied ? "grey" : isSelected ? "blue" : "white",
-            color: isDisabled ? "gray" : "black",
-             pointerEvents: isDisabled ? "none" : "auto",
-           }}
-         >
-           {date.format("D")}
-         </div>
-       );
-     }}
+    
       />
             </DemoContainer>
 
