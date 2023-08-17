@@ -28,8 +28,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
 
-  const [guest, setGuest] = useState(1);
-  const [rooms, setRooms] = useState(1);
+  const [guest, setGuest] = useState(0);
+  const [rooms, setRooms] = useState(0);
 
   // const handleAvailableProperties = async () => {
   //   if (startDate && endDate) {
@@ -52,39 +52,17 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   // };
   const handleRoomsChange = (value) => {
     setRooms(value);
+    console.log(rooms)
   };
 
   const handleGuestChange = (value) => {
     setGuest(value);
+    console.log(guest)
   };
 
  
 
-  // const handleRoomsChange = async (value) => {
-  //   setRooms(value);
-  //   const filters = {
-  //     rooms: value,
-  //     guest
-
-  //   };
-  //   const filteredHost = await fetchFilteredProperties(filters);
-  //   setHost(filteredHost);
-  //   console.log("FILTERED ROOM" ,filteredHost)
-
-  // };
-
-  // const handleGuestChange = async (value) => {
-  //   setGuest(value);
-  //   const filters = {
-  //     guest: value,
-  //     rooms
-
-  //   };
-  //   const filteredHost = await fetchFilteredProperties(filters);
-  //   setHost(filteredHost);
-  //   console.log(" HOST GUEST" ,filteredHost)
-
-  // };
+ 
 
   const handleStartDateChange = async (date) => {
     setDateRange(date, endDate);
@@ -120,22 +98,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     fetchFilteredHost();
   }, [guest, rooms]);
 
-  // useEffect(() => {
-  //   // Llamada a fetchFilteredProperties cuando guest cambia
-  //   const filters = {
-  //     guest: guest,
-  //     rooms: rooms,
-  //     startDate: startDate,
-  //     endDate: endDate
-  //   };
 
-  //   async function fetchFilteredHost() {
-  //     const filteredHost = await fetchFilteredProperties(filters);
-  //     setHost(filteredHost);
-  //   }
-
-  //   fetchFilteredHost();
-  // }, [guest, rooms, startDate, endDate]);
 
   useEffect(() => {
     async function fetchData() {

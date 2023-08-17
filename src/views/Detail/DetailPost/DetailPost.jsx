@@ -37,6 +37,7 @@ const DetailPost = () => {
   const { startDate, endDate,setDateRange  } = useContext(DateContext); // Use the imported useContext
   const [occupiedDates, setOccupiedDates] = useState([]);
 
+  console.log(`soy idddd de paramassss pa `, id)
 
 
 
