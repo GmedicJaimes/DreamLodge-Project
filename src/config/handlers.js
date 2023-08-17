@@ -327,9 +327,7 @@ export const getPropertiesList = async () => {
 export const detailId = async (id) =>{
   try {
     const refProperty = doc(db, 'properties' , id)
-    console.log(refProperty)
     const propertySnapshot = await getDoc(refProperty);
-    console.log(propertySnapshot.exists());
 
    
     if(propertySnapshot.exists()){

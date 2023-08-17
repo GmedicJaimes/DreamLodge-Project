@@ -5,6 +5,10 @@ import React from 'react';
 const Card = ({ property }) => {
   const { id, name, price, location} = property;
 
+   if (!id) {
+    // Si el ID es undefined, puedes manejarlo de alguna manera
+    return <div>No se puede cargar la tarjeta sin un ID</div>;
+  }
   return (
     <Link to={`/rooms/${id}`} className={styles.link}>
       <div className={styles.containerCard}>
