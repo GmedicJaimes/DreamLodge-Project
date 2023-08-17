@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: blue;
+  /* background-color: blue; */
   width: 79vw;
   height: 40vh;
 }
@@ -27,31 +27,41 @@
 }
 
 .dashboardSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   background-color: #EADCCF;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.274);
   padding: 20px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
-  height: 130px;
+  height: 100px;
   width: 340px;
-  margin: 15px;
+  margin: 9px 10px;
+  border-left: 4px solid #79615c;
 }
 
 .dashboardSection:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  border-left: 4px solid #CD5A3E;
 }
 
 .dashboardSection h2 {
   color: #CD5A3E;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 1.1em;
+  /* margin-bottom: 10px; */
 }
 
 .dashboardSection p {
   color: #1E1E23;
-  font-size: 1.3rem;
+  font-size: 1.1em;
+  padding-left: 10px;
+  font-family: 'Lexend Deca';
 }
 
 /* .container {

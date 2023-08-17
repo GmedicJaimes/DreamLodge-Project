@@ -50,7 +50,7 @@ function App() {
         const imagesSnapshot = await listAll(imageUrlRef);
         setTotalImages(imagesSnapshot.items.length);
       } catch (error) {
-        console.error("Error fetching properties:", error);
+        // console.error("Error fetching properties:", error);
       }
     }
     fetchProperties();
