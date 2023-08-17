@@ -23,12 +23,12 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
-  const [loading, setLoading] = useState(true);
-  const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
+  const [ascending, setAscending] = useState(true);
+  const { startDate, endDate, setDateRange } = useContext(DateContext);
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
+<<<<<<< HEAD
   
   
   // const handleAvailableProperties = async () => {
@@ -50,6 +50,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   //     }
   //   }
   // };
+=======
+
+>>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -58,10 +61,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     setGuest(value);
   };
 
- 
-
- 
-
   const handleStartDateChange = async (date) => {
     setDateRange(date, endDate);
     if (endDate) {
@@ -69,16 +68,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(availableProperties);
     }
   };
-  
+
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
-
     if (startDate) {
       const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
       setHost(availableProperties);
     }
   };
-  
 
   useEffect(() => {
     const filters = {
@@ -89,13 +86,17 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
     }
 
     fetchFilteredHost();
   }, [guest, rooms]);
 
   useEffect(() => {
+<<<<<<< HEAD
     async function fetchAndUpdateHost() {
       if (!allProperties.length) {
         const propertiesCollectionRef = collection(db, "properties");
@@ -123,57 +124,45 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
   console.log(host,"desde hompeage")
     fetchAndUpdateHost();
+=======
+    async function fetchData() {
+      const propertiesCollectionRef = collection(db, "properties");
+      const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+      const properties = propertiesSnapshot.docs.map((doc) => doc.data());
+
+      const fetchedBookings = await getAllBookings();
+
+      setAllProperties(properties);
+      setBookings(fetchedBookings);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    let filteredHost = [...allProperties];
+
+    if (rooms) {
+      filteredHost = filteredHost.filter(
+        (property) => property.stances && property.stances.rooms === Number(rooms)
+      );
+    }
+
+    if (guest) {
+      filteredHost = filteredHost.filter((property) => {
+        return property.stances && property.stances.guest === Number(guest);
+      });
+    }
+
+    setHost(filteredHost);
+>>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
   }, [guest, rooms, allProperties]);
   
 
-  
-
-
-
-  //   useEffect(() => {
-  //     async function fetchProperties() {
-  //       try {
-  //         const properties = await getPropertiesList();
-  //         setOriginalHost(properties);
-  //         setHost(properties);
-  //         console.log(properties)
-  //       } catch (error) {
-  //         console.error("Error fetching properties:", error);
-  //       } finally {
-  //         setLoading(false); // Finalizado el proceso, establece loading en false
-  //       }
-  //     }
-  //     fetchProperties();
-  //   }, []);
-
-  // const loadMoreProperties = async () => {
-  //   // Simulamos una carga demorada para dar tiempo a ver el efecto
-  //   setTimeout(async () => {
-  //     const propertiesPerPage = 8; // Número de propiedades por página
-  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
-
-  //     // Obtener propiedades adicionales según la página actual
-  //     const additionalProperties = await getPropertiesList(
-  //       currentPage,
-  //       propertiesPerPage
-  //     );
-
-  //     // Si no hay más propiedades para cargar, desactivamos el scroll infinito
-  //     if (additionalProperties.length === 0) {
-  //       setHasMore(false);
-  //     } else {
-  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
-  //     }
-  //   }, 500); //  ajustar el tiempo
-  // };
-
-
   const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
     setHost(sortedProperties);
     setAscending(!ascending);
   };
-
 
   return (
     <div>
@@ -188,15 +177,15 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
-            <Calendar
-              guest={guest}
-              rooms={rooms}
-              onGuestChange={handleGuestChange}
-              onRoomsChange={handleRoomsChange}
-              onStartChange={handleStartDateChange}
-              onEndChange={handleEndDateChange}
-              className={styles.calendar}
-            />
+          <Calendar
+            guest={guest}
+            rooms={rooms}
+            onGuestChange={handleGuestChange}
+            onRoomsChange={handleRoomsChange}
+            onStartChange={handleStartDateChange}
+            onEndChange={handleEndDateChange}
+            className={styles.calendar}
+          />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>

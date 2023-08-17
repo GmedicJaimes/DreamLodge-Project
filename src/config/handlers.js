@@ -778,8 +778,8 @@ export const fetchFilteredProperties = async (filters) => {
     }
 
     const querySnapshot = await getDocs(baseQuery);
-    const filteredProperties = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-
+    const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    console.log(filteredProperties)
     return filteredProperties;
   } catch (error) {
     console.error('Error fetching filtered properties:', error);

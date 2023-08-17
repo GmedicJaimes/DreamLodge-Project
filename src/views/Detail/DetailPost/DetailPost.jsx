@@ -28,7 +28,11 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+<<<<<<< HEAD
 
+=======
+  console.log(id)
+>>>>>>> 667253e1b80155ed8a2deae0abd676624fee6aee
 
   //CALENDAR DATES ============================================
 
@@ -89,16 +93,6 @@ const DetailPost = () => {
     fetchBookedDates();
 }, [id]); 
 
- 
-
-
-
-
-    //CALENDAR DATES ============================================
-
-
-
-
   //REVIEWS============================================
 
   const [reviewAuthor, setReviewAuthor] = useState("");
@@ -141,28 +135,6 @@ const DetailPost = () => {
     }
   };
 
-
-
-  // CONFIGURACION DEL PAGO=======================================
-  // const[preferenceId, setPreferenceId] = useState(null);
-  // initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
-  //   const createPreference = async()=>{
-  //       try {
-  //           const response = await axios.post(`http://localhost:3001/createorder`, {
-  //               description: `${property.name}`,
-  //               price: `${totalPrice}`,
-  //               quantity: `${selectedDays}`,
-  //               currency_id: "ARS",
-  //           });
-
-  //           const { id } = response.data;
-
-  //           return id
-  //       } catch (error) {
-  //           console.log(error)
-  //       }
-  //   }
-
     const [infoTicket, setInfoTicket] = React.useState({
       idTicket: "",
       propertyTicket: {},
@@ -172,34 +144,7 @@ const DetailPost = () => {
       buyerIdTicket: ""
     })
 
-    // const handleBuy = async()=>{
-    //     const id = await createPreference();
-    //     //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
-    //     if (id){
-    //         setPreferenceId(id);
-    //         //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
-    //         try {
-    //             await new Promise((resolve)=>{
-    //                 const intervalPay = setInterval(async()=>{
-    //                 const paymentStatus = await getPaymentStatus(id);
-    //                 if(paymentStatus === 'approved'){
-    //                     //si el pago fue aprovado se actualiza el avaible de "true" a "false"
-    //                     updateAvaible(property.id, preferenceId);
-    //                     //cortamos el problema y resolvemos la promesa
-    //                     clearInterval(intervalPay)
-    //                     resolve()
-    //                 }else if(paymentStatus === 'rejected'){
-    //                     //si el pago es rechazado, se corda el intervalo sin actualizar
-    //                     clearInterval(intervalPay);
-    //                     resolve()
-    //                 }
-    //                 })
-    //             }, 10000)
-    //         } catch (error) {
-    //             console.error("Error en la obtencion del status de pago", error);
-    //         }
-    //     };
-    // };
+
 
       React.useEffect(() => {
         localStorage.setItem('propertyData', JSON.stringify({ 
