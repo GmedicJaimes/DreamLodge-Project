@@ -25,6 +25,10 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
+  const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
+
+  const [guest, setGuest] = useState(0);
+  const [rooms, setRooms] = useState(0);
   
 
   // const handleAvailableProperties = async () => {
@@ -116,22 +120,22 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     fetchFilteredHost();
   }, [guest, rooms]);
 
-  // useEffect(() => {
-  //   // Llamada a fetchFilteredProperties cuando guest cambia
-  //   const filters = {
-  //     guest: guest,
-  //     rooms: rooms,
-  //     startDate: startDate,
-  //     endDate: endDate
-  //   };
+  useEffect(() => {
+    // Llamada a fetchFilteredProperties cuando guest cambia
+    const filters = {
+      guest: guest,
+      rooms: rooms,
+      startDate: startDate,
+      endDate: endDate
+    };
 
-  //   async function fetchFilteredHost() {
-  //     const filteredHost = await fetchFilteredProperties(filters);
-  //     setHost(filteredHost);
-  //   }
+    async function fetchFilteredHost() {
+      const filteredHost = await fetchFilteredProperties(filters);
+      setHost(filteredHost);
+    }
 
-  //   fetchFilteredHost();
-  // }, [guest, rooms, startDate, endDate]);
+    fetchFilteredHost();
+  }, [guest, rooms, startDate, endDate]);
 
   useEffect(() => {
     async function fetchData() {
