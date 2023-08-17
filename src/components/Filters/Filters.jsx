@@ -15,32 +15,7 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
       }, [selectedState, selectedCity, selectedTypes]);
     
 
-    // const handleStateSelect = async (state) => {
-    //     setSelectedState(state);
 
-    //     if (selectedCity) {
-    //         setSelectedCity(null);
-    //     }
-
-    //     if (state) {
-    //         const properties = await filterByStateAndCity(state, null);
-    //         setHost(properties);
-    //     } else {
-    //         setHost(originalHost);
-    //     }
-    // };
-
-    // const handleCitySelect = async (city) => {
-    //     setSelectedCity(city);
-
-    //     if (city) {
-    //         const properties = await filterByStateAndCity(selectedState, city);
-    //         setHost(properties);
-    //     } else {
-    //         const propertiesInSelectedState = await filterByStateAndCity(selectedState, null);
-    //         setHost(propertiesInSelectedState);
-    //     }
-    // };
 
     const handleStateSelect = (state) => {
         setSelectedState(state);
@@ -59,13 +34,7 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         }
       };
 
-    // const toggleType = (type) => {
-    //     if (selectedTypes.includes(type)) {
-    //         setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
-    //     } else {
-    //         setSelectedTypes([...selectedTypes, type]);
-    //     }
-    // };
+  
     
     const applyFilters = async () => {
         let filteredProperties = [...originalHost];
@@ -83,67 +52,7 @@ const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
         setHost(filteredProperties);
       };
 
-    // const applyFilters = () => {
-    //     if (selectedState || selectedCity || selectedTypes.length > 0) {
-    //         let filteredProperties = [...originalHost];
-    
-    //         // Filtrar por tipos de propiedad
-    //         if (selectedTypes.length > 0) {
-    //             filteredProperties = filteredProperties.filter(property =>
-    //                 selectedTypes.some(type => property.type.includes(type))
-    //             );
-    //         }
-    
-    //         // Filtrar por estado y ciudad
-    //         if (selectedState) {
-    //             filteredProperties = filteredProperties.filter(property =>
-    //                 property.location.state === selectedState
-    //             );
-    //         }
-    
-    //         if (selectedCity) {
-    //             filteredProperties = filteredProperties.filter(property =>
-    //                 property.location.city === selectedCity
-    //             );
-    //         }
-    
-    //         setHost(filteredProperties);
-    //     } else {
-    //         setHost(originalHost);
-    //     }
-    // };
-    
-
-    // const applyFilters = () => {
-    //     let filteredProperties = [...originalHost];
-    
-    //     if (selectedTypes.length > 0) {
-    //         filteredProperties = filteredProperties.filter(property =>
-    //             selectedTypes.some(type => property.type.includes(type))
-    //         );
-    //     }
-    
-    //     if (selectedState) {
-    //         const stateFilteredProperties = filteredProperties.filter(property =>
-    //             property.location.state === selectedState
-    //         );
-    //         filteredProperties = stateFilteredProperties;
-    //     }
-    
-    //     if (selectedCity) {
-    //         const cityFilteredProperties = filteredProperties.filter(property =>
-    //             property.location.city === selectedCity
-    //         );
-    //         filteredProperties = cityFilteredProperties;
-    //     }
-    
-    //     setHost(filteredProperties);
-    // };
-
-    // const cleanFilter = () => {
-    //     setSelectedTypes([]); // Limpia los tipos seleccionados
-    //     setHost(originalHost); // Restablece las propiedades originales
-    // };
+   
 
     const cleanFilter = () => {
         setSelectedState(null);

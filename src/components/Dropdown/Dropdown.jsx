@@ -15,9 +15,17 @@ const Dropdown = () => {
 
     const [open, setOpen] = React.useState(false)
 
+
+    const closeMenu = () => {
+        setOpen(false);
+      };
+
+      const toggleMenu = () => {
+        setOpen(!open);
+      };
     return(
         <div className={styles.menuContainer}>
-            <div className={styles.menuTrigger} onClick={() => {setOpen(!open)}}>
+            <div className={styles.menuTrigger} onClick={toggleMenu}>
                 <img src={user} alt="" />
             </div>
             <div className={`${styles.dropdownMenu} ${open ? styles.active : styles.inactive}`}>
@@ -25,10 +33,10 @@ const Dropdown = () => {
                 <span>{auth.currentUser.email}</span></h3>
                 <ul>
                     <Link to={`user/${auth.currentUser.uid}`}>
-                        <DropDownItem img={user} text={"My Profile"}/>
+                        <DropDownItem img={user} text={"My Profile"} onClick={closeMenu}/>
                     </Link>
                     <Link to={`/config/${auth.currentUser.uid}`}>
-                        <DropDownItem img={edit} text={"Edit Profile"}/>
+                        <DropDownItem img={edit} text={"Edit Profile"} onClick={closeMenu}/>
                     </Link>
                     {/* <DropDownItem img={msg} text={"Inbox"}/>
                     <DropDownItem img={settings} text={"Settings"}/>
