@@ -20,8 +20,6 @@ import axios from 'axios';
   const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
   const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
-<<<<<<< HEAD
-=======
  
 //integracion mercado pago: 
 const[preferenceId, setPreferenceId] = useState(null);
@@ -133,7 +131,6 @@ const[preferenceId, setPreferenceId] = useState(null);
           };
           
   // ==========================================================
->>>>>>> 63f8a11726e73d5727eb13a4fce6debb73094a21
 
 console.log(property)
 const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);

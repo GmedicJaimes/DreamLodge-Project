@@ -1,12 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
 
-.dashboardContainer {
+.dashContainer{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: blue;
+  width: 79vw;
+  height: 40vh;
+}
+
+.cardsDash {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin: 40px auto;
-  max-width: 1000px;
-  padding: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+  margin-top: 30px;
+}
+.menuDash{
+  width: 20%;
+}
+
+.containerDashInfo {
+  
+  justify-content: center;
+  width: 80%;
+  margin: 20px;
 }
 
 .dashboardSection {
@@ -16,6 +33,9 @@
   padding: 20px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
+  height: 130px;
+  width: 340px;
+  margin: 15px;
 }
 
 .dashboardSection:hover {
@@ -34,7 +54,7 @@
   font-size: 1.3rem;
 }
 
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,7 +64,7 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   font-family: 'Lexend Deca';
-}
+} */
 
 .headerLanding {
   display: flex;

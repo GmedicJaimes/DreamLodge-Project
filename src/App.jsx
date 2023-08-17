@@ -21,6 +21,8 @@ import {db, storage} from './config/firebase';
 import {collection, getDocs,  } from 'firebase/firestore';
 import { listAll, ref } from 'firebase/storage';
 import { getPropertiesList } from './config/handlers';
+import Dashboard from './views/Dashboard/Dash/Dashboard';
+import UsersPanel from './components/UserPanel/UserPanel';
 function App() {
 
   const imageUrlRef = ref(storage, 'properties/');
@@ -74,7 +76,13 @@ function App() {
         <Route path='/post' element={<Post/>}/>  
         <Route path='/nice' element={<AceptedPay/>}/>
         <Route path='/tutorial' element={<TutorialPost/>}/>
-        <Route path='/admin' element={<DashboardAdmin totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
+        <Route path='/admin' element={<DashboardAdmin />}>
+          <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
+          <Route path='/admin/propertys' element={''}/>
+          <Route path='/admin/users' element={''}/>
+          <Route path='/admin/images' element={''}/>
+          <Route path='/admin/rent-profit' element={''}/>
+        </Route>
       </Routes>
     </div>
   )

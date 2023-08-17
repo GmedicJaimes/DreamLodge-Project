@@ -17,17 +17,8 @@ import { DateContext } from "../../Contex/DateContex";
 
 
 
-<<<<<<< HEAD
-const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
- 
-
-  const [allProperties, setAllProperties] = useState([]);
-
-
-
-=======
 const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
->>>>>>> 63f8a11726e73d5727eb13a4fce6debb73094a21
+  const [allProperties, setAllProperties] = useState([]);
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
   const [loading, setLoading] = useState(true);
 
