@@ -31,25 +31,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [rooms, setRooms] = useState(0);
   
 
-  // const handleAvailableProperties = async () => {
-  //   if (startDate && endDate) {
-  //     const filters = {
-  //       rooms: rooms,
-  //       guest: guest,
-  //       startDate: startDate,
-  //       endDate: endDate
-  //     };
-  //    const availableProperties = await fetchFilteredProperties(filters);
 
-  //       console.log(`soy guest`,)
-  //     if (availableProperties.length === 0) {
-  //       console.log("No hay propiedades disponibles");
-  //     } else {
-  //       setHost(availableProperties);
-  //       setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
-  //     }
-  //   }
-  // };
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -136,48 +118,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
     setHost(filteredHost);
   }, [guest, rooms, allProperties]);
-
-  
-
-
-
-  //   useEffect(() => {
-  //     async function fetchProperties() {
-  //       try {
-  //         const properties = await getPropertiesList();
-  //         setOriginalHost(properties);
-  //         setHost(properties);
-  //         console.log(properties)
-  //       } catch (error) {
-  //         console.error("Error fetching properties:", error);
-  //       } finally {
-  //         setLoading(false); // Finalizado el proceso, establece loading en false
-  //       }
-  //     }
-  //     fetchProperties();
-  //   }, []);
-
-  // const loadMoreProperties = async () => {
-  //   // Simulamos una carga demorada para dar tiempo a ver el efecto
-  //   setTimeout(async () => {
-  //     const propertiesPerPage = 8; // Número de propiedades por página
-  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
-
-  //     // Obtener propiedades adicionales según la página actual
-  //     const additionalProperties = await getPropertiesList(
-  //       currentPage,
-  //       propertiesPerPage
-  //     );
-
-  //     // Si no hay más propiedades para cargar, desactivamos el scroll infinito
-  //     if (additionalProperties.length === 0) {
-  //       setHasMore(false);
-  //     } else {
-  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
-  //     }
-  //   }, 500); //  ajustar el tiempo
-  // };
-
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
