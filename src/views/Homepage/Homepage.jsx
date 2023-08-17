@@ -16,7 +16,7 @@ import Calendar from "../../components/Calendar/Calendar";
 
 const Homepage = ({host, setHost, originalHost, setOriginalHost}) => {
   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
-  const [loading, setLoading] = useState(true);
+
   
 
 //   const handleAvailableProperties = async () => {
@@ -134,12 +134,6 @@ const handleRoomsChange = async (value) => {
   //   }, 500); //  ajustar el tiempo
   // };
 
-
-  // const handleSortByPrice = () => {
-  //   const sortedProperties = sortPropertiesByPrice([...originalHost], ascending);
-  //   setHost(sortedProperties);
-  //   setAscending(!ascending);
-  // };
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice([...host], ascending); // Ordenar el arreglo host actual
