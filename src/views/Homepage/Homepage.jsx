@@ -18,6 +18,7 @@ import { ref } from "firebase/storage";
 import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
+import SideFilters from "../../components/SideFilters/SideFilters";
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -29,6 +30,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
+  
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -68,36 +70,35 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   }, [guest, rooms]);
 
   useEffect(() => {
-    async function fetchData() {
-      const propertiesCollectionRef = collection(db, "properties");
-      const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-      const properties = propertiesSnapshot.docs.map((doc) => doc.data());
-
-      const fetchedBookings = await getAllBookings();
-
-      setAllProperties(properties);
-      setBookings(fetchedBookings);
+    async function fetchAndUpdateHost() {
+      if (!allProperties.length) {
+        const propertiesCollectionRef = collection(db, "properties");
+        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+        const properties = propertiesSnapshot.docs.map(doc => doc.data());
+  
+        setAllProperties(properties);
+      }
+  
+      let filteredHost = [...allProperties];
+  
+      if (rooms) {
+        filteredHost = filteredHost.filter(
+          (host) => host.stances && host.stances.rooms === Number(rooms)
+        );
+      }
+  
+      if (guest) {
+        filteredHost = filteredHost.filter((property) => {
+          return property.stances && property.stances.guest === Number(guest);
+        });
+      }
+  
+      setHost(filteredHost);
     }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    let filteredHost = [...allProperties];
-
-    if (rooms) {
-      filteredHost = filteredHost.filter(
-        (property) => property.stances && property.stances.rooms === Number(rooms)
-      );
-    }
-
-    if (guest) {
-      filteredHost = filteredHost.filter((property) => {
-        return property.stances && property.stances.guest === Number(guest);
-      });
-    }
-
-    setHost(filteredHost);
+  console.log(host,"desde hompeage")
+    fetchAndUpdateHost();
   }, [guest, rooms, allProperties]);
+  
 
   // Función para manejar el ordenamiento por precio
   const handleSortByPrice = () => {
@@ -132,6 +133,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onEndChange={handleEndDateChange}
             className={styles.calendar}
           />
+          <SideFilters
+          setHost={setHost}
+          originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
+          handleSortByPrice={handleSortByPrice}
+          ascending={ascending}
+        />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
@@ -149,7 +157,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 ))
               ) : ( */}
               <Cards host={host} />
-              {/* )} */}
+               {/* )}  */}
             </div>
           </section>
         </div>

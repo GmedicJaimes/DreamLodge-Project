@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
+
+.dashboardContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.menuDash{
+  width: 20%;
+}
+
+.containerDashInfo {
+  
+  justify-content: center;
+  width: 80%;
+}
+

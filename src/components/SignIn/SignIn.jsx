@@ -249,7 +249,7 @@ const SignIn = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <select
+          <select className={styles.selectSignIn}
             name="country"
             value={register.country}
             onChange={handleRegisterForm}
