@@ -95,7 +95,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
       setHost(filteredHost);
     }
-  console.log(host,"desde hompeage")
     fetchAndUpdateHost();
   }, [guest, rooms, allProperties]);
   
