@@ -7,52 +7,56 @@ import { US_STATE_CITIES } from "../../views/Post/infoLocation";
 const Filters = ({ setHost, originalHost, handleSortByPrice, ascending }) => {
     const [selectedState, setSelectedState] = useState(null);
     const [selectedCity, setSelectedCity] = useState(null);
-    const availableStates = Object.keys(US_STATE_CITIES);
-    const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados 
+    const availableStates = Object.keys(US_STATE_CITIES);  // Lista de states y cities disponibles
+    const [selectedTypes, setSelectedTypes] = useState([]); // Estado para types seleccionados 
 
     useEffect(() => {
-        applyFilters();
-      }, [selectedState, selectedCity, selectedTypes]);
+        applyFilters();  // Llama a la función applyFilters para aplicar los filtros y actualizar las propiedades mostradas 
+      }, [selectedState, selectedCity, selectedTypes]); //se ejecuta cada vez que cambia selectedState, selectedCity o selectedTypes
     
-
-
-
+      // Función para manejar la selección de un state
     const handleStateSelect = (state) => {
         setSelectedState(state);
-        setSelectedCity(null);
+        setSelectedCity(null); // Limpia la city seleccionada cuando se selecciona un nuevo state
       };
     
+      // Función para manejar la selección de una city
       const handleCitySelect = (city) => {
         setSelectedCity(city);
       };
-
+      
+      // Función para alternar los tipos seleccionados
       const toggleType = (type) => {
+         // Comprueba si el type ya está en la lista de types seleccionados
         if (selectedTypes.includes(type)) {
+          // Si el type está en la lista, lo elimina de la lista de types seleccionados
           setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
         } else {
+           // Si el type no está en la lista, agrega el tipo a la lista de types seleccionados
           setSelectedTypes([...selectedTypes, type]);
         }
       };
 
   
-    
+     // Función para aplicar los filtros seleccionados
     const applyFilters = async () => {
         let filteredProperties = [...originalHost];
     
+        // Filtrar por estado y ciudad si se seleccionó un state
         if (selectedState) {
           filteredProperties = await filterByStateAndCity(selectedState, selectedCity);
         }
     
+         // Filtrar por tipos de propiedad seleccionados
         if (selectedTypes.length > 0) {
           filteredProperties = filteredProperties.filter((property) =>
             selectedTypes.every((type) => property.type.includes(type))
           );
         }
     
+         // Actualiza las propiedades mostradas con las propiedades filtradas
         setHost(filteredProperties);
       };
-
-   
 
     const cleanFilter = () => {
         setSelectedState(null);

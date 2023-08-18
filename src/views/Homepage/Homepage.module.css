@@ -6,11 +6,13 @@
 
 .aside{
   width: 25vw;
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: center; */
   background-color: hsl(29, 39%, 86%);
   padding-top: 10px;
 }
+
 .calendarHome{
   width: 72vw;
   padding-top: 4px;

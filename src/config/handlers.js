@@ -71,32 +71,13 @@ export const signIn = async (auth, email, password) => {
 
 // AGUARDA POR VERIFICAION DE EMAIL
 
-// export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
-//   return new Promise((resolve, reject) => {
-//       let totalTime = 0;
 
-//       const checkEmailVerification = async () => {
-//           await user.reload();
-
-//           if (user.emailVerified) {
-//               resolve();
-//           } else if (totalTime >= timeout) {
-//               reject(new Error('La verificación ha tardado demasiado'));
-//           } else {
-//               totalTime += interval;
-//               setTimeout(checkEmailVerification, interval);
-//           }
-//       };
-
-//       checkEmailVerification();
-//   });
-// };
 
 export const registerUserInFirestore = async (uid, user) => {
   const usersCollectionRef = collection(db, "users");
   try {
     await setDoc(doc(usersCollectionRef, uid), user); // Utiliza el uid como ID de documento
-    console.log("Usuario registrado con éxito en Firestore.");
+    // console.log("Usuario registrado con éxito en Firestore.");
   } catch (error) {
     console.error("Error al registrar al usuario en Firestore:", error);
   }
@@ -185,7 +166,6 @@ export const doesEmailExistInFirestore = async (email) => {
 //   }
 // };
 
-
 export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -198,6 +178,10 @@ export const signInGoogle = async () => {
       const userSnapshot = await getDoc(doc(db, 'users', user.uid));
       if (userSnapshot.exists()) {
         console.log('El usuario ya existe en la base de datos.');
+
+        // Aquí puedes ejecutar la lógica adicional para el caso en que el usuario ya existe en la base de datos
+        // Por ejemplo, mostrar un mensaje, redirigirlo a otra página, etc.
+
       } else {
         const nameParts = user.displayName.split(' ');
         const firstName = nameParts[0];
@@ -217,18 +201,20 @@ export const signInGoogle = async () => {
 
         await setDoc(doc(db, 'users', user.uid), userData);
 
-        // Envía el correo de bienvenida solo si el usuario es nuevo
-        await sendPasswordResetEmail(auth, email, {
-          url: "http://localhost:5173/",
-          handleCodeInApp: true
-        });
+        // Verifica si este es el primer inicio de sesión del usuario
+        if (user.providerData.length === 1 && user.providerData[0].providerId === "google.com") {
+          await sendPasswordResetEmail(auth, email, {
+            url: "http://localhost:5173/",
+            handleCodeInApp: true
+          });
+        }
       }
 
       // Envía un mensaje al padre indicando autenticación exitosa
       if (window.opener) {
         window.opener.postMessage('auth-success', window.location.origin);
       } else {
-        console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+        // console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
       }
     }
   } catch (error) {
@@ -289,7 +275,7 @@ export const createProp = async (formData, file) => {
       userId: userId
     });
 
-    console.log(formData)
+    // console.log(formData)
 
 
     getPropertiesList();
@@ -425,7 +411,7 @@ export const uploadFile = async (file) => {
   
   try {
     await uploadBytes(folderRef, file);
-    console.log(folderRef.fullPath);
+    // console.log(folderRef.fullPath);
     alert('The image was successfully uploaded to the database');
   } catch (error) {
     console.log(error);
@@ -450,35 +436,16 @@ export const dowloadImg = ()=> {
   })
 };
 
-//funcion para FILTRAR POR TYPE.......................................................
-// export const getPropertiesByType = async (type) => {
-//   try {
-//     const propertiesQuery = query(propertiesCollectionRef, where('type', 'array-contains-any', [type]));
-//     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-
-//     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-//       const propertyData = doc.data();
-//       return {
-//         ...propertyData,
-//         id: doc.id
-//       };
-//     });
-
-//     return filteredProperties;
-//   } catch (error) {
-//     console.log(error);
-//     return []; // Maneja el error de manera adecuada retornando un array vacío u otra respuesta que consideres.
-//   }
-// };
-
 export const getPropertiesByMultipleTypes = async (types) => {
   try {
+     // Consulta la colección de propiedades desde la base de datos
     const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
-
+    
+    // Filtra y mapea las propiedades según los types seleccionados
     const filteredProperties = propertiesQuerySnapshot.docs
       .filter((doc) => types.some(type => doc.data().type.includes(type)))
       .map((doc) => {
-        const propertyData = doc.data();
+        const propertyData = doc.data(); // Obtenemos los datos del documento (propiedad)
         return {
           ...propertyData,
           id: doc.id
@@ -487,14 +454,12 @@ export const getPropertiesByMultipleTypes = async (types) => {
 
     return filteredProperties;
   } catch (error) {
-    console.log(error);
+     // En caso de error devuelve un arreglo vacío
     return [];
   }
 };
 
-
-
-
+//..................................................................................................
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -527,13 +492,17 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//................................................................................................
+
 //FUNCIONES PARA FILTROS STATE Y CITY........................................................
 export const filterPropertiesByState = async (state) => {
   try {
+    // Crea una consulta para buscar propiedades con el estado elegido
     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
-    console.log(propertiesQuery); // Convierte a cadena antes de imprimir
+    // console.log(propertiesQuery); // Convierte a cadena antes de imprimir
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+    // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -542,10 +511,9 @@ export const filterPropertiesByState = async (state) => {
       };
     });
 
-    console.log(filteredProperties)
+    // console.log(filteredProperties)
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state:', error);
     return [];
   }
 };
@@ -554,15 +522,17 @@ export const filterByStateAndCity = async (state, city) => {
   try {
     let propertiesQuery = query(propertiesCollectionRef);
 
+    // se construye la consulta basada en el estado y la ciudad proporcionados
     if (state && city) {
       propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
     } else if (state) {
       propertiesQuery = query(propertiesQuery, where('location.state', '==', state));
     }
 
-    console.log(city); 
+    // console.log(city); 
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+     // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -573,10 +543,12 @@ export const filterByStateAndCity = async (state, city) => {
 
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state and city:', error);
     return [];
   }
-  }
+}
+
+//....................................................................................................
+
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
@@ -611,9 +583,9 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
     const startWithinSnapshot = await getDocs(startWithinQuery);
     const endWithinSnapshot = await getDocs(endWithinQuery);
 
-    // Si hay alguna reserva que comienza o termina dentro del rango de fechas, la propiedad no está disponible
-    console.log(startWithinSnapshot.docs)
-console.log(endWithinSnapshot.docs)
+//     // Si hay alguna reserva que comienza o termina dentro del rango de fechas, la propiedad no está disponible
+//     console.log(startWithinSnapshot.docs)
+// console.log(endWithinSnapshot.docs)
 
     return startWithinSnapshot.size === 0 && endWithinSnapshot.size === 0;
 
@@ -750,7 +722,7 @@ export const registerPurchases = async (userId, propertyId) => {
       purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
     });
 
-    console.log('Compra registrada exitosamente');
+    // console.log('Compra registrada exitosamente');
   } catch (error) {
     console.error('Error al registrar la compra:', error);
   }}
@@ -762,7 +734,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
     const startJSDate = startDate.$d;
     const endJSDate = endDate.$d;
 
-    console.log('Selected Range:', startJSDate, endJSDate);
+    // console.log('Selected Range:', startJSDate, endJSDate);
 
     const bookingsRef = collection(db, "bookings");
 
@@ -781,7 +753,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 
     const bookedPropertyIds = overlappingBookings.map(doc => doc.data().propertyId);
 
-    console.log('Booked Property IDs:', bookedPropertyIds);
+    // console.log('Booked Property IDs:', bookedPropertyIds);
 
     const propertiesRef = collection(db, "properties");
     const allPropertiesSnapshot = await getDocs(propertiesRef);
@@ -795,7 +767,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
       !bookedPropertyIds.includes(property.id)
     );
 
-    console.log('Available Properties:', availableProperties);
+    // console.log('Available Properties:', availableProperties);
     
     return availableProperties;
   } catch (error) {
@@ -811,6 +783,8 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 //======================================== CALENDARIO FILTRADO========================================
 //======================================== CALENDARIO FILTRADO========================================
 //======================================== CALENDARIO FILTRADO========================================
+
+
 
 
 
@@ -841,6 +815,7 @@ export const fetchFilteredProperties = async (filters) => {
 
     const querySnapshot = await getDocs(baseQuery);
     const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // console.log(filteredProperties)
     return filteredProperties;
   } catch (error) {
     // console.error('Error fetching filtered properties:', error);

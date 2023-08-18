@@ -18,6 +18,7 @@ import { ref } from "firebase/storage";
 import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
+import SideFilters from "../../components/SideFilters/SideFilters";
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -99,9 +100,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   }, [guest, rooms, allProperties]);
   
 
+  // Función para manejar el ordenamiento por precio
   const handleSortByPrice = () => {
+    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
     const sortedProperties = sortPropertiesByPrice([...host], ascending);
+
+     // Actualiza el estado "host" con las propiedades ordenadas por precio
     setHost(sortedProperties);
+    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
     setAscending(!ascending);
   };
 
@@ -127,6 +133,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onEndChange={handleEndDateChange}
             className={styles.calendar}
           />
+          <SideFilters
+          setHost={setHost}
+          originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
+          handleSortByPrice={handleSortByPrice}
+          ascending={ascending}
+        />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>

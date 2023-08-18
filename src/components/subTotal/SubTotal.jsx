@@ -69,6 +69,7 @@ const[preferenceId, setPreferenceId] = useState(null);
               }
             };
           };
+          
           const submitBooking = async () => {
             if (!startDate || !endDate) {
               alert('Please select both start and end dates.');
@@ -88,6 +89,7 @@ const[preferenceId, setPreferenceId] = useState(null);
               alert('An error occurred while making the booking.');
             }
           };
+
           const bookingAndBuy = async () => {
             try {
               const id = await createPreference();
@@ -194,7 +196,9 @@ const generateOccupiedDatesSet = (e) => {
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  React.useEffect(() => {
+    setDateRange(null, null);
+  }, []);
 
 
 
