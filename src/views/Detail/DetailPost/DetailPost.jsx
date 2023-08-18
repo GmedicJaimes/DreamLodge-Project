@@ -28,7 +28,7 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
-  console.log(id)
+  // console.log(id)
 
   //CALENDAR DATES ============================================
 
