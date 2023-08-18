@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../config/firebase';
-import UsersPanel from '../../../components/UserPanel/UserPanel';
-import PropertiesPanel from '../../../components/PropertiesPanel/PropertiesPanel';
 
 import styles from './Dashboard.module.css'
 
 const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
 
   const [purchaseSize, setPurchaseSize] = useState(0);
-  const [users, setUsers] = useState([]);  
-  const [allProperties, setAllProperties] = useState([])
 
   useEffect(() => {
-    const fetchAllProperties = async () => {
-      try {
-        const propertiesRef = collection(db, 'properties');
-        const querySnapshot = await getDocs(propertiesRef);
-        const properties = querySnapshot.docs.map(doc => doc.data());
-        setAllProperties(properties);
-      } catch (error) {
-        console.error('Error al obtener todas las propiedades:', error);
-      }
-    };
-    fetchAllProperties();
     const getPurchaseCount = async () => {
       try {
         const purchasesSnapshot = await getDocs(collection(db, 'purchases'));
@@ -34,17 +19,6 @@ const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
       }
     };
     getPurchaseCount();
-    const getUsers = async () => {
-      try {
-        const usersSnapshot = await getDocs(collection(db, 'users'));
-        const usersData = usersSnapshot.docs.map(doc => doc.data());
-        setUsers(usersData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getUsers();
-  
 
   }, []);
 
@@ -76,9 +50,6 @@ const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
             <p>{purchaseSize ? purchaseSize : "$0"}</p>
           </div>
       </div>
-          
-            {/* <UsersPanel users={users} handleDeleteUsers={handleDeleteUsers}/>
-            <PropertiesPanel properties={allProperties} handleDeleteProperty={handleDeleteProperty}/> */}
     </div>
   )
 }
