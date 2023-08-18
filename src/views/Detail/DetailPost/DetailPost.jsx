@@ -2,7 +2,7 @@ import styles from "./DetailPost.module.css";
 import React, { useContext, useState, useEffect } from "react";
 import { query, collection, where, getDocs, addDoc } from "firebase/firestore";
 import About from "../../../components/About/About";
-import guest from "../../../assets/gente-junta.png";
+import guest from "../../../assets/gente_junta.png";
 import door from "../../../assets/puerta.png";
 import bed from "../../../assets/cama.png";
 import bathroomicon from "../../../assets/bano-publico.png";
@@ -376,12 +376,6 @@ const DetailPost = () => {
   );
 };
 
-<<<<<<< HEAD
-
-
-
-export default DetailPost;
-=======
 export default DetailPost;
 
 // import styles from "./DetailPost.module.css"
@@ -707,4 +701,3 @@ export default DetailPost;
 // };
 
 // export default DetailPost;
->>>>>>> 4bd868d05f8dd1353b70ed0a37fa7f299886145d
