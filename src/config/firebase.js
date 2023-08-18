@@ -24,6 +24,8 @@ const firebaseConfig = {
   measurementId: "G-6TB25EM3W8"
 };
 
+
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);

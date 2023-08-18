@@ -249,14 +249,13 @@ const SignIn = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <select
+          <select 
+            // className={styles.selectSignIn}
             name="country"
             value={register.country}
             onChange={handleRegisterForm}
             placeholder="Country"
-            className={` ${
-              register.country === "" ? styles.grayText : ""
-            }`}
+            className={` ${register.country === "" ? styles.grayText : ""}`}
           >
             <option value="" disabled>
               Select Country

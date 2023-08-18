@@ -65,7 +65,7 @@
     font-weight: 900;
 }
 
-select {
+.selectSignIn {
     width: 48%;
     padding: 1em;
     height: 50px;
