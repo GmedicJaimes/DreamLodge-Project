@@ -107,16 +107,16 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   };
 
   return (
-    <div>
+    <div className={styles.homeContainerMain}>
       <div className={styles.containerHome}>
-        <Filters
+        {/* <Filters
           setHost={setHost}
           originalHost={originalHost}
           filteredHost={host} // Pasar el arreglo host filtrado
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
-        />
-
+        /> */}
+        <div className={styles.barritaFacha}>Aca van los filtros</div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
           <Calendar
