@@ -132,6 +132,58 @@ export const doesEmailExistInFirestore = async (email) => {
 };
 
 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// export const signInGoogle = async () => {
+//   try {
+//     const result = await signInWithPopup(auth, googleProvider);
+
+//     if (result.user) {
+//       const user = result.user;
+
+//       const nameParts = user.displayName.split(' ');
+//       const firstName = nameParts[0];
+//       const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+
+//       const userData = {
+//         email: user.email,
+//         name: firstName,
+//         lastName: lastName,
+//         id: user.uid,
+//         country: "USA", 
+//         language: ["english"], 
+//         image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+//         createdAt: new Date().toLocaleDateString(),
+//         banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+//       };
+
+//       // Pide al usuario información adicional
+//       // const additionalData = await requestAdditionalData();
+//       // userData.country = additionalData.country;
+//       // userData.language = additionalData.language;
+
+//       await setDoc(doc(db, 'users', user.uid), userData);
+
+//       await sendPasswordResetEmail(auth, user.email, {
+//         url: "http://localhost:5173/",
+//         handleCodeInApp: true
+//     });
+//     await sendPasswordResetEmail(user);
+
+
+//       // Envía un mensaje al padre indicando autenticación exitosa
+//       if (window.opener) {
+//         window.opener.postMessage('auth-success', window.location.origin);
+//     } else {
+//         console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+//     }
+//     }
+//   } catch (error) {
+//     console.log('Error durante la autenticación con Google:', error);
+//   }
+// };
 
 
 export const signInGoogle = async () => {
@@ -140,44 +192,44 @@ export const signInGoogle = async () => {
 
     if (result.user) {
       const user = result.user;
+      const email = user.email;
 
-      const nameParts = user.displayName.split(' ');
-      const firstName = nameParts[0];
-      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+      // Verifica si el usuario ya existe en la base de datos
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+      if (userSnapshot.exists()) {
+        console.log('El usuario ya existe en la base de datos.');
+      } else {
+        const nameParts = user.displayName.split(' ');
+        const firstName = nameParts[0];
+        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
+        const userData = {
+          email: email,
+          name: firstName,
+          lastName: lastName,
+          id: user.uid,
+          country: "USA", 
+          language: ["english"], 
+          image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+          createdAt: new Date().toLocaleDateString(),
+          banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+        };
 
-      const userData = {
-        email: user.email,
-        name: firstName,
-        lastName: lastName,
-        id: user.uid,
-        country: "USA", 
-        language: ["english"], 
-        image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
-        createdAt: new Date().toLocaleDateString(),
-        banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
-      };
+        await setDoc(doc(db, 'users', user.uid), userData);
 
-      // Pide al usuario información adicional
-      // const additionalData = await requestAdditionalData();
-      // userData.country = additionalData.country;
-      // userData.language = additionalData.language;
-
-      await setDoc(doc(db, 'users', user.uid), userData);
-
-      await sendPasswordResetEmail(auth, user.email, {
-        url: "http://localhost:5173/",
-        handleCodeInApp: true
-    });
-    await sendPasswordResetEmail(user);
-
+        // Envía el correo de bienvenida solo si el usuario es nuevo
+        await sendPasswordResetEmail(auth, email, {
+          url: "http://localhost:5173/",
+          handleCodeInApp: true
+        });
+      }
 
       // Envía un mensaje al padre indicando autenticación exitosa
       if (window.opener) {
         window.opener.postMessage('auth-success', window.location.origin);
-    } else {
+      } else {
         console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
-    }
+      }
     }
   } catch (error) {
     console.log('Error durante la autenticación con Google:', error);
@@ -185,6 +237,16 @@ export const signInGoogle = async () => {
 };
 
 
+
+
+
+
+
+
+
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
 
 
 // funcion para LOGOUT
