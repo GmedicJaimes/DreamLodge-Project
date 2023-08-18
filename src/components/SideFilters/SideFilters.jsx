@@ -100,15 +100,15 @@ const SideFilters = ({ setHost, originalHost, handleSortByPrice, ascending }) =>
                 </section>
                 <section className={styles.typeBtnSection}>
                     <p>Type:</p>
-                <button className={styles.btnSection} onClick={() => { toggleType("Cabins"); }}  ><img src="https://cdn-icons-png.flaticon.com/128/4614/4614488.png" /> Cabins</button>
+                <button className={selectedTypes.includes("Cabins") ? styles.sfTypeSelected : styles.btnSection} onClick={() => { toggleType("Cabins"); }}  ><img src="https://cdn-icons-png.flaticon.com/128/4614/4614488.png" /> Cabins</button>
                 
-                <button className={styles.btnSection} onClick={() => { toggleType("Beachfront");  }}  ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/8404/8404761.png" /> Beachfront</button>
+                <button className={selectedTypes.includes("Beachfront") ? styles.sfTypeSelected : styles.btnSection} onClick={() => { toggleType("Beachfront");  }}  ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/8404/8404761.png" /> Beachfront</button>
                 
-                <button className={styles.btnSection} onClick={() => { toggleType("Mansion");  }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/5904/5904415.png" /> Mansions</button>
+                <button className={selectedTypes.includes("Mansion") ? styles.sfTypeSelected : styles.btnSection} onClick={() => { toggleType("Mansion");  }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/5904/5904415.png" /> Mansions</button>
                 
-                <button className={styles.btnSection} onClick={() => { toggleType("Countryside");  }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png" />Countryside</button>
+                <button className={selectedTypes.includes("Countryside") ? styles.sfTypeSelected : styles.btnSection} onClick={() => { toggleType("Countryside");  }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/7276/7276711.png" />Countryside</button>
                 
-                <button className={styles.btnSection} onClick={() => { toggleType("Room") }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
+                <button className={selectedTypes.includes("Room") ? styles.sfTypeSelected : styles.btnSection} onClick={() => { toggleType("Room") }} ><img rel="shortcut icon" src="https://cdn-icons-png.flaticon.com/128/566/566589.png" />Rooms</button>
                 {/* <button onClick={applyFilters}>Aplicar Filtros</button> */}
                 </section>
                 <button className={styles.orderButton} onClick={handleSortByPrice}>Order by price {ascending ? 'ascendent' : 'descendent'} </button>

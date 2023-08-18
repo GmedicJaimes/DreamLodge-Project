@@ -93,3 +93,19 @@
     font-size: 14px;
     font-weight: 500;
 }
+
+.sfTypeSelected{
+    width: 85px;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    margin: 4px;
+    border: 1px solid rgb(185, 185, 185);
+    background-color: #B8B8B8;
+}
+
+.sfTypeSelected img{
+    width: 40px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}

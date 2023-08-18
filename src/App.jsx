@@ -73,7 +73,7 @@ function App() {
         <Route path='/' element={<Landing/>}/>
         <Route path='/home' element={<Homepage host={host} setHost={setHost} originalHost={originalHost} setOriginalHost={setOriginalHost}/>}/>
         <Route path='/reserve/:id' element={<Reserve/>}/>
-        <Route path='/login' element={<LoginSignin/>}/>
+        <Route path='/login' element={<LoginSignin/>} />
         <Route path='/signin' element={<SignInView/>}/>
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>

@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items:center;
-  height: 767px;
+  height: 100vh;
   background-image: url(../../assets/landingImg.jpeg);;
   background-repeat: no-repeat;
   background-size: 100% 100%; 
@@ -87,4 +87,43 @@
   border: #CD5A3E;
   color: white;
   cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+
+.container{
+  margin: 0 auto
+}
+
+  .headerLanding h1 {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .headerLanding button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    margin-right: 1rem;
+  }
+
+  .sectionLanding { /* Cambio aquí */
+    padding: 2rem;
+    height: auto;
+    width: 50%;
+  }
+
+  .sectionLanding h1 {
+    font-size: 2rem;
+  }
+
+  .sectionLanding p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sectionLanding button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
 }
