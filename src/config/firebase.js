@@ -5,15 +5,20 @@ import {getAuth, GoogleAuthProvider, FacebookAuthProvider} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC_YrDe0cR-pUS5vk_QvZ6Z28f_lylJCJ8",
-  authDomain: "pruebadeploy-8f459.firebaseapp.com",
-  projectId: "pruebadeploy-8f459",
-  storageBucket: "pruebadeploy-8f459.appspot.com",
-  messagingSenderId: "191809447425",
-  appId: "1:191809447425:web:30b9622277fc63f85b4200",
-  measurementId: "G-KK3JWKX9LE"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC_YrDe0cR-pUS5vk_QvZ6Z28f_lylJCJ8",
+//   authDomain: "pruebadeploy-8f459.firebaseapp.com",
+//   projectId: "pruebadeploy-8f459",
+//   storageBucket: "pruebadeploy-8f459.appspot.com",
+//   messagingSenderId: "191809447425",
+//   appId: "1:191809447425:web:30b9622277fc63f85b4200",
+//   measurementId: "G-KK3JWKX9LE"
+// };
+
+
+
+
+
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
 //   authDomain: "dreamlodgeprueba.firebaseapp.com",
@@ -24,6 +29,18 @@ const firebaseConfig = {
 //   measurementId: "G-6TB25EM3W8"
 // };
 
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
+  authDomain: "foodiesitelab-99c62.firebaseapp.com",
+  projectId: "foodiesitelab-99c62",
+  storageBucket: "foodiesitelab-99c62.appspot.com",
+  messagingSenderId: "195800164351",
+  appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
+  measurementId: "G-XG83CW4362"
+};
 
 
 const app = initializeApp(firebaseConfig);

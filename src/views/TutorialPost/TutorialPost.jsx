@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./TutorialPost.module.css"; 
 import { useNavigate } from "react-router-dom";
+import About from "../../components/About/About";
 
 const TutorialPost = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,7 +31,7 @@ const TutorialPost = () => {
     switch (currentStep) {
         case 0:
         return (
-          <div className={styles.stepContent}>
+          <div className={`${styles.stepContent} ${styles.stepContentOne}`}>
             <h3>Would you like to do the tutorial to publish a property?</h3>
             <p>Embark on a journey to bring your property dreams to life! Our interactive tutorial will guide you step by step through the exciting process of creating your very own property listing. Whether it's a cozy apartment, a spacious villa, or a charming cottage, we've got you covered.</p>
             <p>Don't miss out on this opportunity to showcase your property in the best light and attract potential guests or buyers. Let's get started on making your property shine!</p>
@@ -42,7 +43,7 @@ const TutorialPost = () => {
         );
         case 1:
             return (
-                <div className={styles.stepContent}>
+                <div className={`${styles.stepContent} ${styles.stepContentTwo}`}>
                 <h3>Step 1: Unleash Your Creativity</h3>
                 <p>Welcome to the first step of creating your property listing! This is your chance to let your imagination run wild and choose a name that captures the essence of your unique property.</p>
                 <p>Imagine your property as a story waiting to be told – a name that not only stands out but also paints a vivid picture in the minds of your potential guests or buyers. Whether it's a name that reflects the stunning views, the cozy interiors, or the vibrant neighborhood, let it be a reflection of what makes your property one-of-a-kind.</p>
@@ -102,6 +103,8 @@ const TutorialPost = () => {
   };
 
   return (
+    <div className={styles.tutorialContainerOne}>
+
     <div className={styles.tutorialContainer}>
       <h2>Create a Property Tutorial</h2>
       {renderStepContent()}
@@ -122,6 +125,8 @@ const TutorialPost = () => {
           )}
         </div>
       )}
+    <About />
+    </div>
     </div>
   );
   
