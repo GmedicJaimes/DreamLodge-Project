@@ -196,7 +196,9 @@ const generateOccupiedDatesSet = (e) => {
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  React.useEffect(() => {
+    setDateRange(null, null);
+  }, []);
 
 
 

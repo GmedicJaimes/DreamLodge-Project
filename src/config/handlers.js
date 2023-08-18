@@ -166,7 +166,6 @@ export const doesEmailExistInFirestore = async (email) => {
 //   }
 // };
 
-
 export const signInGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -179,6 +178,10 @@ export const signInGoogle = async () => {
       const userSnapshot = await getDoc(doc(db, 'users', user.uid));
       if (userSnapshot.exists()) {
         console.log('El usuario ya existe en la base de datos.');
+
+        // Aquí puedes ejecutar la lógica adicional para el caso en que el usuario ya existe en la base de datos
+        // Por ejemplo, mostrar un mensaje, redirigirlo a otra página, etc.
+
       } else {
         const nameParts = user.displayName.split(' ');
         const firstName = nameParts[0];
@@ -198,19 +201,21 @@ export const signInGoogle = async () => {
 
         await setDoc(doc(db, 'users', user.uid), userData);
 
-        // Envía el correo de bienvenida solo si el usuario es nuevo
-        await sendPasswordResetEmail(auth, email, {
-          url: "http://localhost:5173/",
-          handleCodeInApp: true
-        });
+        // Verifica si este es el primer inicio de sesión del usuario
+        if (user.providerData.length === 1 && user.providerData[0].providerId === "google.com") {
+          await sendPasswordResetEmail(auth, email, {
+            url: "http://localhost:5173/",
+            handleCodeInApp: true
+          });
+        }
       }
 
       // Envía un mensaje al padre indicando autenticación exitosa
       if (window.opener) {
         window.opener.postMessage('auth-success', window.location.origin);
-    } else {
+      } else {
         // console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
-    }
+      }
     }
   } catch (error) {
     console.log('Error durante la autenticación con Google:', error);

@@ -81,7 +81,7 @@ const DetailPost = () => {
         console.error("Error obteniendo las fechas:", error);
       }
     }
-
+    window.scrollTo(0, 0);
     fetchBookedDates();
   }, [id]);
 
