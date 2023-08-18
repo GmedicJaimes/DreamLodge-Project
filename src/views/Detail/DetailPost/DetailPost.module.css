@@ -65,7 +65,7 @@
   background-color: #bd4e3391;
   width: 90%;
   margin: auto;
-  margin-top: 1.3em;
+  margin-top: -10px;
   margin-bottom: 4em;
   border-radius: 1em;
 }
@@ -117,6 +117,13 @@
   width: 30px;
 }
 
+.servicesD {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
 .servicesD li{
   font-size: 1.2em;
   text-align: start;
@@ -124,6 +131,12 @@
   list-style-type:circle
 
 }
+
+.twoColumns {
+  column-count: 2;
+}
+
+
 
 .imageRelative{
   position: relative;
@@ -277,9 +290,16 @@ a{
 .containerSection{
   display: flex;
   margin: 0 auto;
+  height: 1200px;
   justify-content: space-between;
   width: 90%;
 }
+
+.listServices {
+  width: calc(50% - 10px); /* Ajusta el ancho según tus necesidades */
+  margin-bottom: 10px;
+}
+
 
 .containerSectionOne{
   width: 45%;
@@ -287,7 +307,8 @@ a{
 }
 
 .containerSectionOne section{
-  margin: 3.3rem 0;
+  margin: 1rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .containerSectionOne section h3 {
