@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PropertiesPanel from "../../../components/PropertiesPanel/PropertiesPanel";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../config/firebase';
+import style from '../../Dashboard/PropertyDash/property.module.css'
 
 const PropertyDash = () => {
 
@@ -22,7 +23,40 @@ const PropertyDash = () => {
   })
 
   const handleDeleteProperty = async (propertyId) => {
-    const confirmDelete = window.confirm('¿Estás seguro de que deseas borrar esta propiedad?');
+    const confirmDelete = swal({
+      title: 'Delet Property', 
+      text:'Are you sure you want to delete this property?', 
+      icon:'warning', 
+      buttons: {
+        cancel: {
+          text: 'Nope',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Delete ',
+          value: true,
+          visible: true,
+          className: style.button
+        },
+      }, 
+      
+    }).then(respuesta => {
+      if(respuesta){
+        swal({
+          text: 'The property has been deleted successfully',
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'Ok ',
+              value: true,
+              visible: true,
+              className: style.nice,
+            },
+          }
+        })
+      }
+    });
     if (confirmDelete) {
       try {
        
@@ -47,7 +81,6 @@ const PropertyDash = () => {
   return(
     <div>
       <PropertiesPanel properties={allProperties} handleDeleteProperty={handleDeleteProperty}/>
-      <h1>Estamos en el Profit perros</h1>
     </div>
   )
 }

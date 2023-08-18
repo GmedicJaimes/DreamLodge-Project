@@ -4,7 +4,7 @@ import styles from './UsersPanel.module.css';
 const UsersPanel = ({ users, handleDeleteUsers }) => {
   return (
     <div className={styles.panelContainer}>
-      <h2>Usuarios:</h2>
+      <h2>Users:</h2>
       {users.length > 0 && (
         <div className={styles.userListContainer}>
           <ul className={styles.userList} >
@@ -16,6 +16,7 @@ const UsersPanel = ({ users, handleDeleteUsers }) => {
                   <p>Apellido: {user.lastName}</p>
                   <p>País:  {user.country}</p>
                   <p>Create: {user.createdAt}</p>
+                  {/* <p>{user.id}</p> */}
                   <span>Email: {user.email}</span>
                 </div>
                 <button

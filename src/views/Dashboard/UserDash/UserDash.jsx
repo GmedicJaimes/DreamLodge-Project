@@ -2,7 +2,7 @@ import UsersPanel from "../../../components/UserPanel/UserPanel";
 import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from '../../../config/firebase';
-
+import style from '../PropertyDash/property.module.css'
 const UserDash = () => {
 
   const [users, setUsers] = useState([]);
@@ -21,7 +21,40 @@ const UserDash = () => {
   }, [])
 
   const handleDeleteUsers = async (userId) => {
-    const confirmDelete = window.confirm('¿Estas seguro de que deseas borrar este usuario?');
+    const confirmDelete = swal({
+      title: 'Delet User', 
+      text:'Are you sure you want to delete this user?', 
+      icon:'warning', 
+      buttons: {
+        cancel: {
+          text: 'Nope',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Delete ',
+          value: true,
+          visible: true,
+          className: style.button
+        },
+      }, 
+      
+    }).then(respuesta => {
+      if(respuesta){
+        swal({
+          text: 'The user has been deleted successfully',
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'Ok ',
+              value: true,
+              visible: true,
+              className: style.nice,
+            },
+          }
+        })
+      }
+    });
     if (confirmDelete) {
       try {
        
@@ -37,7 +70,7 @@ const UserDash = () => {
   
         console.log(`Usuario con ID ${userId} borrada lógicamente.`);
       } catch (error) {
-        console.error('Error al borrar el usuario:', error);
+        // console.error('Error al borrar el usuario:', error);
       }
     }
   };
