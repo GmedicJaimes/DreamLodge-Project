@@ -30,6 +30,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
+  
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -69,36 +70,35 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   }, [guest, rooms]);
 
   useEffect(() => {
-    async function fetchData() {
-      const propertiesCollectionRef = collection(db, "properties");
-      const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-      const properties = propertiesSnapshot.docs.map((doc) => doc.data());
-
-      const fetchedBookings = await getAllBookings();
-
-      setAllProperties(properties);
-      setBookings(fetchedBookings);
+    async function fetchAndUpdateHost() {
+      if (!allProperties.length) {
+        const propertiesCollectionRef = collection(db, "properties");
+        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+        const properties = propertiesSnapshot.docs.map(doc => doc.data());
+  
+        setAllProperties(properties);
+      }
+  
+      let filteredHost = [...allProperties];
+  
+      if (rooms) {
+        filteredHost = filteredHost.filter(
+          (host) => host.stances && host.stances.rooms === Number(rooms)
+        );
+      }
+  
+      if (guest) {
+        filteredHost = filteredHost.filter((property) => {
+          return property.stances && property.stances.guest === Number(guest);
+        });
+      }
+  
+      setHost(filteredHost);
     }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    let filteredHost = [...allProperties];
-
-    if (rooms) {
-      filteredHost = filteredHost.filter(
-        (property) => property.stances && property.stances.rooms === Number(rooms)
-      );
-    }
-
-    if (guest) {
-      filteredHost = filteredHost.filter((property) => {
-        return property.stances && property.stances.guest === Number(guest);
-      });
-    }
-
-    setHost(filteredHost);
+  console.log(host,"desde hompeage")
+    fetchAndUpdateHost();
   }, [guest, rooms, allProperties]);
+  
 
   const handleSortByPrice = () => {
     const sortedProperties = sortPropertiesByPrice([...host], ascending);
@@ -152,7 +152,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 ))
               ) : ( */}
               <Cards host={host} />
-              {/* )} */}
+               {/* )}  */}
             </div>
           </section>
         </div>

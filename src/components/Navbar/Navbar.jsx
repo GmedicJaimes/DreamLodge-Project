@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>  
         <div className={styles.button}>
-        <Link to={"/admin"}>Dashboard Admin</Link>
+          <Link to={"/admin"}>Dashboard Admin</Link>
           {
             currentUser !== null 
             ? <div className={styles.button}>

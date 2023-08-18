@@ -37,7 +37,7 @@ const Calendar = ({
 
   const handleGuestChange = (event) => {
     const { value } = event.target;
-    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
+    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
       onGuestChange(value);
     }
 
@@ -46,7 +46,7 @@ const Calendar = ({
 
 
   const handleRoomsChange = (inputValue) => {
-    if (inputValue === "" || (Number(inputValue) > 0 && !inputValue.includes("-"))) {
+    if (inputValue === "" || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
       onRoomsChange(inputValue);
     }
   };
@@ -240,7 +240,8 @@ const Calendar = ({
                   variant="standard"
                   onChange={(e) => handleGuestChange(e)}
                   inputProps={{
-                    style: { textAlign: "center" }, // Centra el texto dentro del TextField
+                    style: { textAlign: "center" },
+                    max:10
                   }}
                 />
               </Grid>
@@ -258,6 +259,7 @@ const Calendar = ({
                   onChange={(e) => handleRoomsChange(e.target.value)} // Pasa el valor en lugar del evento
                   inputProps={{
                     style: { textAlign: "center" }, // Centra el texto dentro del TextField
+                    max: 6 
                   }}
                 />
               </Grid>
