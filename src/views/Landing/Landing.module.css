@@ -92,7 +92,9 @@
 
 @media (max-width: 768px) {
 
-
+.container{
+  margin: 0 auto
+}
 
   .headerLanding h1 {
     font-size: 1.2rem;
