@@ -360,7 +360,7 @@ export const getPropertiesList = async () => {
 
     return properties; // Devuelve la lista de propiedades procesadas
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
   }
 };
@@ -843,7 +843,7 @@ export const fetchFilteredProperties = async (filters) => {
     const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching filtered properties:', error);
+    // console.error('Error fetching filtered properties:', error);
     return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
   }
 }
