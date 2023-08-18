@@ -304,7 +304,7 @@ margin: 1rem;
   width: 500px;
 }
 .spanproperty{
-  margin-right: 1.1rem;
+  margin-right: 0.3rem;
 }
 .roomsDTwoBed{
   display: inline-block;
@@ -327,4 +327,5 @@ margin: 1rem;
 
 .containerSection{
   height: 600px;
+  margin-bottom:60px;
 }

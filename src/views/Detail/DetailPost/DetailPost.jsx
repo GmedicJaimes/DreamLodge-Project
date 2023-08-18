@@ -278,7 +278,7 @@ const DetailPost = () => {
               <h3>The Room</h3>
               <div>
                 <div className={styles.roomsDOne}>
-                  <img src={guest} /> Capacity:{" "}
+                  <img src={guest} /> Guests:{" "}
                   <span className={styles.spanServices}>
                     {property?.stances?.guest}
                   </span>
@@ -314,7 +314,7 @@ const DetailPost = () => {
           </div>
         </div>
         <div className={styles.falseLine}></div>
-        <section id="pie" className={styles.paymentBox}></section>
+        <section id="" className={styles.paymentBox}></section>
         {/* <section>
             <div className={styles.priceDiv}>{property?.price} USD/night</div>
             {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
