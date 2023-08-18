@@ -201,7 +201,9 @@ const generateOccupiedDatesSet = (e) => {
 
 
   return (
-    <div style={{ width: "500px" }}>
+    <div style={{ width: "500px",
+                  height: "380px",
+                  radius: "10px" }}>
       
    {/*      <Alert severity="warning">
           Selected dates are not available.
@@ -209,7 +211,7 @@ const generateOccupiedDatesSet = (e) => {
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#9A98FE",
+          backgroundColor: "#CD5A3E",
           alignContent: "center",
           padding: "15px",
           margin: "20px",
@@ -221,7 +223,7 @@ const generateOccupiedDatesSet = (e) => {
           sx={{
             fontSize: "20px",
             fontWeight: "bold",
-            color: "#FAFAFF",
+            color: "white",
             textAlign: "center",
           }}
         >
@@ -232,7 +234,7 @@ const generateOccupiedDatesSet = (e) => {
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#F3F3F7",
+          backgroundColor: "#eadccf",
           height: "auto",
           padding: "15px",
           margin: "20px",
@@ -270,7 +272,7 @@ const generateOccupiedDatesSet = (e) => {
            
           </LocalizationProvider>
         </Grid>
-        <StyledDivider />
+        <StyledDivider  />
 
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
@@ -279,7 +281,7 @@ const generateOccupiedDatesSet = (e) => {
               sx={{
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "#868688",
+                color: "#CD5A3E",
                 marginTop: "30px",
                 marginLeft: '45PX'
               }}
@@ -292,7 +294,7 @@ const generateOccupiedDatesSet = (e) => {
               sx={{
                 fontSize: "13px",
                 fontWeight: "bold",
-                color: "#C2C2C2",
+                color: "#CD5A3E",
                 marginTop: "10px",
                 marginLeft: "50px",
                 display: 'flex'
@@ -314,7 +316,7 @@ const generateOccupiedDatesSet = (e) => {
               sx={{
                 fontSize: "35px",
                 fontWeight: "bold",
-                color: "#0400CB",
+                color: "#CD5A3E",
                 marginTop: "20px",
                 marginLeft: '30px'
               }}
@@ -327,7 +329,7 @@ const generateOccupiedDatesSet = (e) => {
               sx={{
                 fontSize: "15px",
                 fontWeight: "bold",
-                color: "#9A98FE",
+                color: "#CD5A3E",
                 marginLeft: "80px",
               }}
             >
@@ -348,9 +350,9 @@ const generateOccupiedDatesSet = (e) => {
                   width: "150px",
                 }}
                 sx={{
-                  backgroundColor: "#9A98FE",
+                  backgroundColor: "#CD5A3E",
                   "&:hover": {
-                    backgroundColor: "#c2c1fe",
+                    backgroundColor: "#E57951",
                   },
                 }}
                 onClick={bookingAndBuy}
@@ -366,7 +368,7 @@ const generateOccupiedDatesSet = (e) => {
               sx={{
                 fontSize: "10px",
                 fontWeight: "bold",
-                color: "#9A98FE",
+                color: "#CD5A3E",
                 margin: "20px",
               }}
             >
