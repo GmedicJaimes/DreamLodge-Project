@@ -100,9 +100,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   }, [guest, rooms, allProperties]);
   
 
+  // Función para manejar el ordenamiento por precio
   const handleSortByPrice = () => {
+    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
     const sortedProperties = sortPropertiesByPrice([...host], ascending);
+
+     // Actualiza el estado "host" con las propiedades ordenadas por precio
     setHost(sortedProperties);
+    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
     setAscending(!ascending);
   };
 

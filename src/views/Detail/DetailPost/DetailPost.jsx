@@ -377,8 +377,8 @@ const DetailPost = () => {
     </div>
   );
 };
-
 export default DetailPost;
+
 
 
 

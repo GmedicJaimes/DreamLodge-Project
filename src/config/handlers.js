@@ -433,12 +433,14 @@ export const dowloadImg = ()=> {
 
 export const getPropertiesByMultipleTypes = async (types) => {
   try {
+     // Consulta la colección de propiedades desde la base de datos
     const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
-
+    
+    // Filtra y mapea las propiedades según los types seleccionados
     const filteredProperties = propertiesQuerySnapshot.docs
       .filter((doc) => types.some(type => doc.data().type.includes(type)))
       .map((doc) => {
-        const propertyData = doc.data();
+        const propertyData = doc.data(); // Obtenemos los datos del documento (propiedad)
         return {
           ...propertyData,
           id: doc.id
@@ -447,14 +449,12 @@ export const getPropertiesByMultipleTypes = async (types) => {
 
     return filteredProperties;
   } catch (error) {
-    console.log(error);
+     // En caso de error devuelve un arreglo vacío
     return [];
   }
 };
 
-
-
-
+//..................................................................................................
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -487,13 +487,17 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//................................................................................................
+
 //FUNCIONES PARA FILTROS STATE Y CITY........................................................
 export const filterPropertiesByState = async (state) => {
   try {
+    // Crea una consulta para buscar propiedades con el estado elegido
     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
     // console.log(propertiesQuery); // Convierte a cadena antes de imprimir
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+    // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -505,7 +509,6 @@ export const filterPropertiesByState = async (state) => {
     // console.log(filteredProperties)
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state:', error);
     return [];
   }
 };
@@ -514,6 +517,7 @@ export const filterByStateAndCity = async (state, city) => {
   try {
     let propertiesQuery = query(propertiesCollectionRef);
 
+    // se construye la consulta basada en el estado y la ciudad proporcionados
     if (state && city) {
       propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
     } else if (state) {
@@ -523,6 +527,7 @@ export const filterByStateAndCity = async (state, city) => {
     // console.log(city); 
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+     // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -533,10 +538,12 @@ export const filterByStateAndCity = async (state, city) => {
 
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state and city:', error);
     return [];
   }
-  }
+}
+
+//....................................................................................................
+
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
