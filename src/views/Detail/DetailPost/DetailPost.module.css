@@ -47,16 +47,26 @@
 
 .imageCarrousel{
   width: 90%;
-  height: 50%;
+  height: 90%;
 }
 
+.falseLineOne{
+    height: 1px;
+    background-color: #bd4e3391;
+    width: 90%;
+    margin: auto;
+    margin-top: 0.1rem;
+    margin-bottom: 1.5em;
+    border-radius: 1em;
+  
+}
 .falseLine{
   height: 1px;
   background-color: #bd4e3391;
   width: 90%;
   margin: auto;
   margin-top: 1.3em;
-  margin-bottom: 1.3em;
+  margin-bottom: 4em;
   border-radius: 1em;
 }
 
@@ -117,6 +127,7 @@
 
 .imageRelative{
   position: relative;
+  height: 500px;
 }
 .prevButton{
   width: 35px;
@@ -161,6 +172,7 @@
   color: #CD5A3E;
   cursor: pointer;
 }
+
 
 .paymentBox{
   height: 11em;

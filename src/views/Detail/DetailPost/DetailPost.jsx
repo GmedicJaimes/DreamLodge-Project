@@ -231,12 +231,13 @@ const DetailPost = () => {
             <div></div>
           </section>
         </header>
-        <section className={styles.imageRelative}>
           <div className={styles.falseLine}></div>
+        <section className={styles.imageRelative}>
           <button onClick={prevImage} className={styles.prevButton}>
             <img
               src="https://cdn-icons-png.flaticon.com/128/271/271220.png"
               alt=""
+              className={styles.imageDetail}
             />
           </button>
           <img
@@ -251,7 +252,7 @@ const DetailPost = () => {
             />
           </button>
         </section>
-        <div className={styles.falseLine}></div>
+        <div className={styles.falseLineOne}></div>
 
         <div className={styles.containerSection}>
           <div className={styles.containerSectionOne}>
