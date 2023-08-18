@@ -18,6 +18,7 @@ import { ref } from "firebase/storage";
 import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
+import SideFilters from "../../components/SideFilters/SideFilters";
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -127,6 +128,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onEndChange={handleEndDateChange}
             className={styles.calendar}
           />
+          <SideFilters
+          setHost={setHost}
+          originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
+          handleSortByPrice={handleSortByPrice}
+          ascending={ascending}
+        />
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
