@@ -5,6 +5,7 @@ import logout from "../../assets/logout.png"
 import msg from "../../assets/mensaje.png"
 import help from "../../assets/informacion.png"
 import edit from "../../assets/editar.png"
+import posteito from "../../assets/postLodge.png"
 import React from "react"
 import { logOut } from "../../config/handlers"
 import { Link } from "react-router-dom"
@@ -37,6 +38,9 @@ const Dropdown = () => {
                     </Link>
                     <Link to={`/config/${auth.currentUser.uid}`}>
                         <DropDownItem img={edit} text={"Edit Profile"} onClick={closeMenu}/>
+                    </Link>
+                    <Link to={`/tutorial`}>
+                        <DropDownItem img={posteito} text={"Post Lodge"} onClick={closeMenu}/>
                     </Link>
                     {/* <DropDownItem img={msg} text={"Inbox"}/>
                     <DropDownItem img={settings} text={"Settings"}/>

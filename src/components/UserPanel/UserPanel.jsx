@@ -4,23 +4,25 @@ import styles from './UsersPanel.module.css';
 const UsersPanel = ({ users, handleDeleteUsers }) => {
   return (
     <div className={styles.panelContainer}>
-      <h2>Usuarios:</h2>
+      <h2>Users:</h2>
       {users.length > 0 && (
         <div className={styles.userListContainer}>
-          <ul className={styles.userList}>
+          <ul className={styles.userList} >
             {users.map((user) => (
               <li key={user.id} className={styles.userListItem}>
                 <div>
-                  <p>Nombre:</p>
-                  <p>Apellido:</p>
-                  <p>País: </p>
-                  <p>Email: </p>
+                  <img src={user.image} alt="" />
+                  <p>Nombre: {user.name}</p>
+                  <p>Apellido: {user.lastName}</p>
+                  <p>País:  {user.country}</p>
+                  <p>Create: {user.createdAt}</p>
+                  {/* <p>{user.id}</p> */}
+                  <span>Email: {user.email}</span>
                 </div>
                 <button
                   onClick={() => handleDeleteUsers(user.id)}
-                  className={styles.deleteButton}
-                >
-                  X
+                  className={styles.deleteButton}>
+                  <img src="https://cdn-icons-png.flaticon.com/128/657/657059.png" alt="" />
                 </button>
               </li>
             ))}

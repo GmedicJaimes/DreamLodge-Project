@@ -10,7 +10,7 @@ const MenuDash = () => {
           <p>Dashboard</p>
         </Link>
         <Link to={'/admin/propertys'}>
-          <p>Propertys</p>
+          <p>Properties</p>
         </Link>
         <Link to={'/admin/users'}>
           <p>Users</p>
