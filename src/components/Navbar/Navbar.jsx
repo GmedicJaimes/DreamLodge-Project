@@ -22,10 +22,13 @@ const Navbar = () => {
         <div className={styles.containertwo}>
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>  
+        
         <div className={styles.button}>
-        {currentUser && currentUser.email === "agustinibarperrotta@gmail.com" ? (
-          <Link to={"/admin"}>Dashboard Admin</Link>
-        ) : null}
+          <div className={styles.adminNav}>
+            {currentUser && currentUser.email === "dreamlodgeadmin@gmail.com" ? (
+              <Link to={"/admin"} className={styles.admin}>Dashboard Admin</Link>
+            ) : null}
+          </div>
           {
             currentUser !== null 
             ? <div className={styles.button}>
@@ -33,13 +36,13 @@ const Navbar = () => {
                   <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.user}>
-                  <Dropdown></Dropdown>
+                  <Dropdown className={styles.menuNav}></Dropdown>
                 </div>
               </div>
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {alert("You must be logged in")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {swal("You must be logged in")}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>

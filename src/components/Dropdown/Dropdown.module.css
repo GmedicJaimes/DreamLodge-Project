@@ -17,6 +17,10 @@ ul {
   font-family: 'Lexend Deca';
 }
 
+.menuTrigger{
+  width: 155px;
+}
+
 .menuTrigger img{
   position: absolute;
   top: 15px;

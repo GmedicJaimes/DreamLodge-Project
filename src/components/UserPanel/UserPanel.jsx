@@ -5,6 +5,14 @@ const UsersPanel = ({ users, handleDeleteUsers }) => {
   return (
     <div className={styles.panelContainer}>
       <h2>Users:</h2>
+      <div className={styles.userListItemName}>
+        <p>Name </p>
+        <p>Lastname </p>
+        <p>Country </p>
+        <p>Create </p>
+        <span>Email </span>
+        {/* <p>Tipo: {property.type}</p> */}
+      </div>
       {users.length > 0 && (
         <div className={styles.userListContainer}>
           <ul className={styles.userList} >
@@ -12,12 +20,12 @@ const UsersPanel = ({ users, handleDeleteUsers }) => {
               <li key={user.id} className={styles.userListItem}>
                 <div>
                   <img src={user.image} alt="" />
-                  <p>Nombre: {user.name}</p>
-                  <p>Apellido: {user.lastName}</p>
-                  <p>País:  {user.country}</p>
-                  <p>Create: {user.createdAt}</p>
+                  <p>{user.name}</p>
+                  <p>{user.lastName}</p>
+                  <p>{user.country}</p>
+                  <p>{user.createdAt}</p>
                   {/* <p>{user.id}</p> */}
-                  <span>Email: {user.email}</span>
+                  <span>{user.email}</span>
                 </div>
                 <button
                   onClick={() => handleDeleteUsers(user.id)}
