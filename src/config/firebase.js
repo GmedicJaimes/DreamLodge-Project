@@ -14,14 +14,6 @@ import {getStorage} from 'firebase/storage';
 //   appId: "1:191809447425:web:30b9622277fc63f85b4200",
 //   measurementId: "G-KK3JWKX9LE"
 // };
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> 9288c0f23ced0ddae05b448478e107510d4c8917
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
 //   authDomain: "dreamlodgeprueba.firebaseapp.com",
@@ -31,17 +23,6 @@ import {getStorage} from 'firebase/storage';
 //   appId: "1:937226421893:web:13d4f51541cebda5bb8bec",
 //   measurementId: "G-6TB25EM3W8"
 // };
-const firebaseConfig = {
-  apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
-  authDomain: "foodiesitelab-99c62.firebaseapp.com",
-  projectId: "foodiesitelab-99c62",
-  storageBucket: "foodiesitelab-99c62.appspot.com",
-  messagingSenderId: "195800164351",
-  appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
-  measurementId: "G-XG83CW4362"
-};
-
-
 
 
 const firebaseConfig = {
