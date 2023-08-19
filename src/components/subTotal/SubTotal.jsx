@@ -14,10 +14,9 @@ import axios from 'axios';
 
 
 
- const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,propertyId }) => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,propertyId }) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext);
-  const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
   const today = dayjs();
  
 
@@ -193,6 +192,7 @@ const[preferenceId, setPreferenceId] = useState(null);
         });
   
         setBookedDates(allBookedDates);
+       
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
