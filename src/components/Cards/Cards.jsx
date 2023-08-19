@@ -9,18 +9,15 @@ const Cards = ({ host }) => {
 
   // State for the current page, initial value is 1
   const [currentPage, SetCurrentPage] = useState(1);
-  console.log("ALL CARDS", allCards);
 
   // State for the number of countries per page, initial value is 10
   const [cardsPerPage, SetCardsPerPage] = useState(6);
 
   // Calculate the index of the last country on the current page
   const indexOfLastCard = currentPage * cardsPerPage;
-  console.log("indexOfLastCard", indexOfLastCard);
 
   // Calculate the index of the first country on the current page
   const indexfOfFirstCard = indexOfLastCard - cardsPerPage;
-  console.log(`INDEXOFFIRSTCARDS`, indexfOfFirstCard);
 
   // Function to change the current page
   const paginate = (pageNumber) => {
@@ -33,7 +30,6 @@ const Cards = ({ host }) => {
   };
 
   const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
-  console.log(`CURRENT CARDS`, currentCards);
 
   return (
     <div className={styles.containerCards}>
