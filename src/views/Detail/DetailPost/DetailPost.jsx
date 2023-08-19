@@ -198,16 +198,6 @@ const propertyId = id
     fetchData();
   }, []);
 
-  const formattedOccupiedDates = occupiedDates
-    .map((date) => {
-      if (date instanceof Date && !isNaN(date)) {
-        return date.toISOString();
-      } else {
-        console.warn("Found a non-Date object:", date);
-        return null;
-      }
-    })
-    .filter((date) => date); // Filter out any null values
 
     const isTwoColumns = property?.services?.length > 5;
 
@@ -318,7 +308,6 @@ const propertyId = id
               handleStartDateChange={handleStartDateChange}
               handleEndDateChange={handleEndDateChange}
               property={property}
-              formattedOccupiedDates={formattedOccupiedDates}
               propertyId={propertyId}
             />
           </div>
