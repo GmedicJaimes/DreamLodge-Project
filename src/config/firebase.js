@@ -24,13 +24,23 @@ const firebaseConfig = {
   measurementId: "G-6TB25EM3W8"
 };
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
+//   authDomain: "foodiesitelab-99c62.firebaseapp.com",
+//   projectId: "foodiesitelab-99c62",
+//   storageBucket: "foodiesitelab-99c62.appspot.com",
+//   messagingSenderId: "195800164351",
+//   appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
+//   measurementId: "G-XG83CW4362"
+// };
+
 
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
-export const db = getFirestore(app)
+export const db = getFirestore(app);
 export const storage = getStorage(app);
-export const  facebookProvider = new FacebookAuthProvider()
+export const  facebookProvider = new FacebookAuthProvider();
 

@@ -23,14 +23,35 @@ import SideFilters from "../../components/SideFilters/SideFilters";
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [bookings, setBookings] = useState([]);
-
+  // console.log(host)
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
-  
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
+
+  const [stateFilter, setStateFilter] = useState(null);
+
+  const [cityFilter, setCityFilter] = useState(null);
+
+  const [priceRangeFilter, setPriceRangeFilter] = useState(null);
+
+  const handlePriceRangeChange = (value) => {
+    setPriceRangeFilter(value);
+  };
+
+  const handleStateFilter = (value)=>{
+    setStateFilter(value);
+  };
+  const handleCityFilter = (value)=>{
+    setCityFilter(value)
+  };
+
+  const handlePropertyTypeFilterChange = (value) => {
+    setPropertyTypeFilter(value);
+  };
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -59,6 +80,10 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     const filters = {
       guest: guest,
       rooms: rooms,
+      propertyType: propertyTypeFilter,
+      stateFilter: stateFilter,
+      cityFilter: cityFilter,
+      priceRangeFilter: priceRangeFilter
     };
 
     async function fetchFilteredHost() {
@@ -67,79 +92,86 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
 
     fetchFilteredHost();
-  }, [guest, rooms]);
+  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter, priceRangeFilter]);
 
-  useEffect(() => {
-    async function fetchAndUpdateHost() {
-      if (!allProperties.length) {
-        const propertiesCollectionRef = collection(db, "properties");
-        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-        const properties = propertiesSnapshot.docs.map(doc => doc.data());
+  // useEffect(() => {
+  //   async function fetchAndUpdateHost() {
+  //     if (!host.length) {
+  //       const propertiesCollectionRef = collection(db, "properties");
+  //       const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+  //       const properties = propertiesSnapshot.docs.map(doc => doc.data());
   
-        setAllProperties(properties);
-      }
+  //       setHost(properties);
+  //     }
   
-      let filteredHost = [...allProperties];
+  //     let filteredHost = [...host];
   
-      if (rooms) {
-        filteredHost = filteredHost.filter(
-          (host) => host.stances && host.stances.rooms === Number(rooms)
-        );
-      }
+  //     if (rooms) {
+  //       filteredHost = filteredHost.filter(
+  //         (host) => host.stances && host.stances.rooms === Number(rooms)
+  //       );
+  //     }
   
-      if (guest) {
-        filteredHost = filteredHost.filter((property) => {
-          return property.stances && property.stances.guest === Number(guest);
-        });
-      }
+  //     if (guest) {
+  //       filteredHost = filteredHost.filter((property) => {
+  //         return property.stances && property.stances.guest === Number(guest);
+  //       });
+  //     }
   
-      setHost(filteredHost);
-    }
-  console.log(host,"desde hompeage")
-    fetchAndUpdateHost();
-  }, [guest, rooms, allProperties]);
+  //     setHost(filteredHost);
+  //   }
+  // // console.log(host,"desde hompeage")
+  //   fetchAndUpdateHost();
+  // }, [guest, rooms, allProperties]);
   
 
-  // Función para manejar el ordenamiento por precio
-  const handleSortByPrice = () => {
-    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
-    const sortedProperties = sortPropertiesByPrice([...host], ascending);
+  // // Función para manejar el ordenamiento por precio
+  // const handleSortByPrice = () => {
+  //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
+  //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
 
-     // Actualiza el estado "host" con las propiedades ordenadas por precio
-    setHost(sortedProperties);
-    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
-    setAscending(!ascending);
-  };
+  //    // Actualiza el estado "host" con las propiedades ordenadas por precio
+  //   setHost(sortedProperties);
+  //   // Invierte el valor de "ascending" para alternar entre ascendente y descendente
+  //   setAscending(!ascending);
+  // };
 
   return (
     <div>
       <div className={styles.containerHome}>
-        <Filters
+        {/* <Filters
           setHost={setHost}
           originalHost={originalHost}
           filteredHost={host} // Pasar el arreglo host filtrado
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
-        />
+        /> */}
 
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
           <Calendar
             guest={guest}
             rooms={rooms}
+            propertyTypeFilter={propertyTypeFilter}
+            stateFilter={stateFilter}
+            cityFilter={cityFilter}
+            priceRangeFilter={priceRangeFilter}
             onGuestChange={handleGuestChange}
             onRoomsChange={handleRoomsChange}
             onStartChange={handleStartDateChange}
             onEndChange={handleEndDateChange}
-            className={styles.calendar}
+            onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
+            onStateChange={handleStateFilter}
+            onCityChange={handleCityFilter}
+            onPriceRangeFilter={handlePriceRangeChange}
           />
-          <SideFilters
+          {/* <SideFilters
           setHost={setHost}
           originalHost={originalHost}
           filteredHost={host} // Pasar el arreglo host filtrado
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
-        />
+        /> */}
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
