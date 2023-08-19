@@ -2,8 +2,8 @@
   background-color: #f7f3f0;
   margin: 0 auto;
   margin-top: 3em;
-  width: 80em;
-  height: auto;
+  max-width: 75em;
+  border-radius: 2em;
 }
 
 .bigContainerDetail header{
@@ -53,7 +53,7 @@
 
 .falseLineOne{
     height: 1px;
-    background-color: #bd4e3391;
+    background-color: #e9d4c391;
     width: 90%;
     margin: auto;
     margin-top: 0.1rem;
@@ -63,7 +63,7 @@
 }
 .falseLine{
   height: 1px;
-  background-color: #bd4e3391;
+  background-color: #e9d4c391;
   width: 90%;
   margin: auto;
   margin-top: -10px;
@@ -72,7 +72,6 @@
 }
 
 .overviewRating{
-  height: 11em;
   width: 80%;
   margin: auto;
   background-color: #EADCCF;
@@ -189,22 +188,18 @@
 }
 
 
-.paymentBox{
-  height: 11em;
-  width: 80%;
+.reviewBigBox{
+  min-height: 11em;
+  width: 85%;
   margin: auto;
   background-color: #EADCCF;
   border-radius: 1em;
   margin-top: 2em;
-  margin-bottom: 2em;
-  display: flex;
-  height: 15em;
-  justify-content: space-evenly;
-  align-items: center;
   margin-bottom: 5rem;
+  padding: 1em 2em;
 }
 
-.paymentBox .priceDiv{
+.reviewBox .priceDiv{
   background-color: #CD5A3E;
   border-radius: 5px;
   color: white;
@@ -248,7 +243,6 @@ a{
 
 .reservebtn{
   background-color: #CD5A3E;
-  border-radius: 0.2em;
   color: white;
   font-weight: 700;
   font-size: 1.7em;
@@ -290,12 +284,14 @@ a{
 
 
 
+
+
 .containerSection{
   display: flex;
   margin: 0 auto;
-  height: 1200px;
   justify-content: space-between;
-  width: 90%;
+  flex-wrap: wrap;
+  padding: 0 3.5em;
 }
 
 .listServices {
@@ -305,7 +301,14 @@ a{
 
 
 .containerSectionOne{
-  width: 45%;
+  margin: 0 auto;
+  max-width: 35em;
+  text-align: left;
+}
+
+.containerSectionTwo{
+  margin: 0 auto;
+  max-width: 35em;
   text-align: left;
 }
 
@@ -362,7 +365,7 @@ margin: 1rem;
 
 
 .containerSection{
-  height: 600px;
+  /* height: 600px; */
   margin-bottom:60px;
 }
 
@@ -373,4 +376,31 @@ margin: 1rem;
   }
 
 
+}
+
+.tittleSpan{
+  background-color: #99997A;
+  color: white;
+  padding: 0 6px;
+}
+
+.headRev{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+
+.singleReview{
+  max-width: 45%;
+  padding: 20px;
+  display: flex;
+  background-color: rgb(247, 244, 232);
+  border-radius: 7px;
+}
+
+.iconUserReview{
+  width: 3em;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: 0 1em;
 }

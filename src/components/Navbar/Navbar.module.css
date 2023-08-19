@@ -6,7 +6,7 @@
   align-items: center;
   height: 75px;
   background-color: #EADCCF;
-
+  
 }
 
 .containertwo {
@@ -87,9 +87,6 @@
 @media (max-width: 600px){
 
 
-  .container{
-    width: 100%;
-  }
 
   
   

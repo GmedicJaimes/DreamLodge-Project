@@ -214,7 +214,7 @@ const[preferenceId, setPreferenceId] = useState(null);
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#CD5A3E",
+          backgroundColor: "#eadccf",
           alignContent: "center",
           padding: "15px",
           margin: "20px",
@@ -224,9 +224,8 @@ const[preferenceId, setPreferenceId] = useState(null);
         <Typography
           variant="h1"
           sx={{
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "white",
+            marginTop: "1em",
+            fontSize: "30px",
             textAlign: "center",
           }}
         >

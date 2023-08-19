@@ -51,6 +51,7 @@ import {getStorage} from 'firebase/storage';
 //   measurementId: "G-KK3JWKX9LE"
 // };
 
+<<<<<<< HEAD
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
 //   authDomain: "dreamlodgeprueba.firebaseapp.com",
@@ -72,6 +73,18 @@ const firebaseConfig = {
 };
 
 
+=======
+const firebaseConfig = {
+  apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
+  authDomain: "dreamlodgeprueba.firebaseapp.com",
+  projectId: "dreamlodgeprueba",
+  storageBucket: "dreamlodgeprueba.appspot.com",
+  messagingSenderId: "937226421893",
+  appId: "1:937226421893:web:13d4f51541cebda5bb8bec",
+  measurementId: "G-6TB25EM3W8"
+};
+
+>>>>>>> e482b0bafad5e4d846335dcc06154a415ebb4bc3
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
