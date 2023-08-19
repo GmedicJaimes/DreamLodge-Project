@@ -36,10 +36,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [cityFilter, setCityFilter] = useState(null);
 
-  const [priceRangeFilter, setPriceRangeFilter] = useState(null);
+  const [priceSortOrder, setPriceSortOrder] = useState("asc");
 
-  const handlePriceRangeChange = (value) => {
-    setPriceRangeFilter(value);
+  const togglePriceSortOrder = () => {
+    if (priceSortOrder === "asc") {
+      setPriceSortOrder("desc");
+    } else {
+      setPriceSortOrder("asc");
+    }
   };
 
   const handleStateFilter = (value)=>{
@@ -82,8 +86,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       rooms: rooms,
       propertyType: propertyTypeFilter,
       stateFilter: stateFilter,
-      cityFilter: cityFilter,
-      priceRangeFilter: priceRangeFilter
+      cityfilter: cityFilter
     };
 
     async function fetchFilteredHost() {
@@ -92,7 +95,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
 
     fetchFilteredHost();
-  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter, priceRangeFilter]);
+  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
 
   // useEffect(() => {
   //   async function fetchAndUpdateHost() {
@@ -137,9 +140,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   // };
 
   return (
-    <div className={styles.homeContainerMain}>
+    <div>
       <div className={styles.containerHome}>
-        {/* <Filters
         {/* <Filters
           setHost={setHost}
           originalHost={originalHost}
@@ -156,7 +158,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             propertyTypeFilter={propertyTypeFilter}
             stateFilter={stateFilter}
             cityFilter={cityFilter}
-            priceRangeFilter={priceRangeFilter}
             onGuestChange={handleGuestChange}
             onRoomsChange={handleRoomsChange}
             onStartChange={handleStartDateChange}
@@ -164,7 +165,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
             onStateChange={handleStateFilter}
             onCityChange={handleCityFilter}
-            onPriceRangeFilter={handlePriceRangeChange}
+            togglePriceSortOrder={togglePriceSortOrder}
           />
           {/* <SideFilters
           setHost={setHost}
