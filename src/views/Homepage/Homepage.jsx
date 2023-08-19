@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 
 import styles from "./Homepage.module.css";
-// import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
 import {
@@ -9,6 +9,7 @@ import {
   sortPropertiesByPrice,
   getAllBookings,
   fetchAvailablePropertiesInRange,
+  getPropertiesList
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import { listAll } from "firebase/storage";
@@ -29,6 +30,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
+
+  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
   
   const handleRoomsChange = (value) => {
@@ -111,6 +114,26 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     setAscending(!ascending);
   };
 
+  // const handleScrollInfinite = async () => {
+  //   try {
+  //     const propertiesPerPage = 8;
+  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
+  
+  //     const additionalProperties = await getPropertiesList(
+  //       currentPage,
+  //       propertiesPerPage
+  //     );
+  
+  //     if (additionalProperties.length === 0) {
+  //       setHasMore(false);
+  //     } else {
+  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error loading more properties:", error);
+  //   }
+  // };
+
   return (
     <div>
       <div className={styles.containerHome}>
@@ -143,13 +166,11 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-            {/* <InfiniteScroll
-            dataLength={host.length}
-            next={loadMoreProperties}
-            hasMore={hasMore} // Controla si hay más elementos para cargar
-            loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
-          > */}
-            {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
+          {/* <InfiniteScroll
+          dataLength={host.length}
+          next={handleScrollInfinite}
+          hasMore={hasMore} // Controla si hay más elementos para cargar
+          loader={<SkeletonCard />} > */}
             <div className={styles.skeletonContainer}>
               {/* {loading ? (
                 Array.from({ length: host.length || 12 }).map((_, idx) => (
@@ -157,12 +178,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 ))
               ) : ( */}
               <Cards host={host} />
-               {/* )}  */}
+                {/* )}   */}
             </div>
-          </section>
-        </div>
-
+            {/* {host.map((property) => (
+        <PropertyComponent key={property.id} property={property} />
+      ))}  */}
         {/* </InfiniteScroll> */}
+        </section>
+        </div>
       </div>
     </div>
   );

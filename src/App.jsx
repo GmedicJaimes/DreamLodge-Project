@@ -42,7 +42,7 @@ function App() {
         setOriginalHost(properties);
         setHost(properties);
         setTotalProperties(properties.length);
-        console.log(properties)
+      
 
         const usersSnapshot = await getDocs(collection(db, 'users'));
         setTotalUsers(usersSnapshot.size);
