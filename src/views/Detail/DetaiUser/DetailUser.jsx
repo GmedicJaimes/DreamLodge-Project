@@ -27,7 +27,6 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
-console.log(user);
     return (
         <div>
 
