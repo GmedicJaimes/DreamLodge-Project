@@ -151,7 +151,7 @@ const Post = () => {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    console.log(formData);
+    // console.log(formData);
     if (name === "imageFile") {
       setFormData((prevState) => ({
         ...prevState,
