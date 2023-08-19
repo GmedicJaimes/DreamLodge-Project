@@ -74,21 +74,29 @@ const EditUser = () => {
                 <section className={styles.configBox}>
                     <h1>Account Info</h1>
                     <section>
-                        <label>First name: </label>
-                        <input
-                            className={styles.midInput} 
-                            type="text" name="name"
-                            value={user?.name}
-                            onChange={handleChange}
-                        />
+                        <section className={styles.dobleInput}>
+                            <div>
+                                <label>First name: </label>
+                                <br />
+                                <input
+                                    className={styles.midInput} 
+                                    type="text" name="name"
+                                    value={user?.name}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label>Last name: </label>
+                                <br />
+                                <input 
+                                    className={styles.midInput}
+                                    type="text" name="lastName"
+                                    value={user?.lastName}
+                                    onChange={handleChange}
+                                />
 
-                        <label>Last name: </label>
-                        <input 
-                            className={styles.midInput}
-                            type="text" name="lastName"
-                            value={user?.lastName}
-                            onChange={handleChange}
-                        />
+                            </div>
+                        </section>
                     </section>
                     <div>
                         <label htmlFor="">Display Name: </label>
@@ -100,6 +108,7 @@ const EditUser = () => {
                     </div>
                     <div>
                         <label>Email: </label>
+                        <br />
                         <input 
                             className={styles.bigInput} 
                             type="text" name="email"
@@ -123,24 +132,31 @@ const EditUser = () => {
                         />
                         <img src={user?.image} alt="Avatar" className={styles.avatar}/>
                     </div>
+                    <button className={styles.btnBlue} onSubmit={handleUpdate}>Save Changes</button>
                 </section>
 
                 <section className={styles.configBox}>
                     <h1>Profile Details</h1>
-                    <section className={styles.fixInput}>
-                        <label>Country: </label>
-                        <input 
-                        className={styles.midInput} 
-                            type="text" name="country"
-                            value={user?.country}
-                            onChange={handleChange}
-                        />
+                    <section className={styles.dobleInput}>
+                        <div>
+                            <label>Country: </label>
+                            <br />
+                            <input 
+                            className={styles.midInput} 
+                                type="text" name="country"
+                                value={user?.country}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div>
                             <label htmlFor="">State: </label>
+                            <br />
                             <input
                             className={styles.midInput} 
                             type="text" 
                             name="" id="" 
                             placeholder="State"/>
+                        </div>
                         
                     </section>
                     <div>
@@ -165,7 +181,7 @@ const EditUser = () => {
                             type="text" 
                             value={user?.languages} 
                         readOnly />
-                        <select name="languages" onChange={handleLang}>
+                        <select name="languages" className={styles.languageSelect} onChange={handleLang}>
                             {
                             languagesAvailable.map((lang) => {
                                 return(

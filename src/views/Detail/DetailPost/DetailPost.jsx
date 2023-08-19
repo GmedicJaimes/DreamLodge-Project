@@ -9,7 +9,6 @@ import bathroomicon from "../../../assets/bano-publico.png";
 import SubTotal from "../../../components/subTotal/SubTotal";
 import { DateContext } from "../../../Contex/DateContex";
 import {
-  fetchAvailablePropertiesInRange,
   getBookedDatesForProperty,
   isPropertyAvailable,
 } from "../../../config/handlers";
@@ -31,7 +30,12 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+
+
   // console.log(id)
+
+const propertyId = id
+
 
   //CALENDAR DATES ============================================
 
@@ -153,7 +157,7 @@ const DetailPost = () => {
   const [selectedDays, setSelectedDays] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const handleCalculatePrice = () => {
-    const pricePerDay = property.price;
+    const pricePerDay = property?.price;
     const calculatedPrice = selectedDays * pricePerDay;
     setTotalPrice(calculatedPrice);
   }; //CALCULAR EL PRECIO
@@ -182,7 +186,7 @@ const DetailPost = () => {
             where("propertyId", "==", id)
           );
           const purchasesSnapshot = await getDocs(purchasesQuery);
-          const hasPurchased = !purchasesSnapshot.empty;
+          const hasPurchased = !purchasesSnapshot?.empty;
 
           setHasPurchased(hasPurchased);
         }
@@ -315,7 +319,7 @@ const DetailPost = () => {
               handleEndDateChange={handleEndDateChange}
               property={property}
               formattedOccupiedDates={formattedOccupiedDates}
-              id={id}
+              propertyId={propertyId}
             />
           </div>
         </div>
