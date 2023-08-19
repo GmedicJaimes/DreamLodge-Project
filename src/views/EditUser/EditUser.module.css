@@ -84,3 +84,14 @@
     border-radius: 4px;
     margin: 0.5em;
 }
+
+
+@media (max-width: 600px) {
+   
+    .mainContainerOne{
+      display: flex;
+      justify-content: center;
+        margin-left: 33rem;
+    }
+  }
+  
