@@ -3,7 +3,7 @@
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items:center;
   height: 100vh;
   background-image: url(../../assets/landingImg.jpeg);;
@@ -20,6 +20,8 @@
   width: 100%;
   background-color: #EADCCF;
   height: 70px;
+  position: fixed;
+  top:0;
 }
 .link {
   padding: 0;
@@ -90,10 +92,19 @@
 }
 
 
-@media (max-width: 768px) {
+
+
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+
+@media (max-width: 589px) {
 
 .container{
-  margin: 0 auto
+  margin: 0 auto;
+  height: 1400px;
+  object-fit: cover;
+  object-position: center top; 
 }
 
   .headerLanding h1 {

@@ -245,6 +245,8 @@ const generateOccupiedDatesSet = (e) => {
         }}
       >
         <Grid container justifyContent="center">
+        <Grid item sm={6}> {/* En dispositivos pequeños, ocupará toda la anchura */}
+
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer
               components={["DatePicker"]}
@@ -275,6 +277,7 @@ const generateOccupiedDatesSet = (e) => {
 
            
           </LocalizationProvider>
+          </Grid>
         </Grid>
         <StyledDivider  />
 

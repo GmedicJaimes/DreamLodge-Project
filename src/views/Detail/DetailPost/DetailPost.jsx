@@ -210,7 +210,7 @@ const DetailPost = () => {
 
   return (
     <div>
-      <div className={styles.bigContainerDetail}>
+      <div className={styles.bigContainerDetail}> 
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
@@ -320,26 +320,28 @@ const DetailPost = () => {
           </div>
         </div>
         <div className={styles.falseLine}></div>
-        <section id="" className={styles.paymentBox}></section>
-        {/* <section>
-            <div className={styles.priceDiv}>{property?.price} USD/night</div>
-            {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
-            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
-          </section>
-          <div>
-            <h3>Select the number of reservation days:</h3>
-            <input
-              className={styles.reservationDays}
-              type="number"
-              min="1"
-              value={selectedDays}
-              onChange={(e) => setSelectedDays(Number(e.target.value))}
-            />
-            <button className={styles.otroBoton} onClick={handleCalculatePrice}>Calculate Price</button>
-            {preferenceId && (
-              <Wallet initialization={{ preferenceId: preferenceId }} />
-            )}
-          </div> */}
+        <section id="" className={styles.paymentBox}>
+              
+              <h3>Reviews <span>4.5(Review icon)</span></h3>
+
+              <div className={styles.reviewsBox}>
+         {/*      {reviews &&
+        reviews.map((r) => (
+          <div key={r.id}>
+            <p>Author: {r.author}</p>
+            <p>Comment: {r.content}</p>
+            <p>Rating: {r.rating}</p>
+          </div>
+        ))}
+        
+ */}
+
+
+
+              </div>
+          
+        </section>
+        
       </div>
       {hasPurchased && (
         <div>
@@ -369,14 +371,7 @@ const DetailPost = () => {
         </div>
       )}
 
-      {reviews &&
-        reviews.map((r) => (
-          <div key={r.id}>
-            <p>Author: {r.author}</p>
-            <p>Comment: {r.content}</p>
-            <p>Rating: {r.rating}</p>
-          </div>
-        ))}
+      
       <About></About>
     </div>
   );
@@ -386,3 +381,26 @@ export default DetailPost;
 
 
 
+
+
+
+
+{/* <section>
+            <div className={styles.priceDiv}>{property?.price} USD/night</div>
+            {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
+            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
+          </section>
+          <div>
+            <h3>Select the number of reservation days:</h3>
+            <input
+              className={styles.reservationDays}
+              type="number"
+              min="1"
+              value={selectedDays}
+              onChange={(e) => setSelectedDays(Number(e.target.value))}
+            />
+            <button className={styles.otroBoton} onClick={handleCalculatePrice}>Calculate Price</button>
+            {preferenceId && (
+              <Wallet initialization={{ preferenceId: preferenceId }} />
+            )}
+          </div> */}
