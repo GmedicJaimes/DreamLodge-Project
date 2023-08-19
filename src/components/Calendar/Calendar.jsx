@@ -30,16 +30,11 @@ const Calendar = ({
   onStateChange,
   onCityChange,
   stateFilter,
-  cityFilter,
-  priceRangeFilter,
-  onPriceRangeFilter
+  cityFilter
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
 
-  const handlePriceRangeChange=(event)=>{
-    onPriceRangeFilter(event.target.value);
-  };
   
   const handlePropertyStateFilterChange=(event)=>{
     onStateChange(event.target.value)
@@ -316,6 +311,7 @@ const Calendar = ({
               ))}
             </Select>
           </FormControl>
+
           <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%" }}>
             <InputLabel>City</InputLabel>
             <Select
@@ -332,21 +328,6 @@ const Calendar = ({
                 ))}
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "5px" }}>
-            <InputLabel>Price Range</InputLabel>
-            <Select
-              value={priceRangeFilter}
-              onChange={handlePriceRangeChange}
-              label="Price Range"
-            >
-              <MenuItem value={null}>All</MenuItem>
-              <MenuItem value="0-100">$0 - $100</MenuItem>
-              <MenuItem value="100-200">$100 - $200</MenuItem>
-              <MenuItem value="200-300">$200 - $300</MenuItem>
-              <MenuItem value="300-400">$300 - $400</MenuItem>
-            </Select>
-          </FormControl>
-
         </Grid>
       </Card>
     </div>
