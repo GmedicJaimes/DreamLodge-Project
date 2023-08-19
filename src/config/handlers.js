@@ -9,7 +9,9 @@ import { serverTimestamp } from 'firebase/firestore';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
+
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
+
 const imageUrlRef = ref(storage, 'properties/')
 
 
@@ -963,24 +965,45 @@ export const getBookingsByPropertyId = async (propertyId) => {
 export const fetchFilteredProperties = async (filters) => {
   try {
     const propertiesCollectionRef = collection(db, 'properties');
-    
+    console.log(filters)
     let baseQuery = propertiesCollectionRef;
-
+    
     if (filters.rooms) {
       baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.rooms)));
-    }
+    };
 
     if (filters.guest) {
       baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
     }
-
+    if (filters.propertyType) {
+      baseQuery = query(baseQuery, where('type', 'array-contains', filters.propertyType));
+    };
+    if (filters.stateFilter) {
+      baseQuery = query(baseQuery, where('location.state', '==', filters.stateFilter));
+    };
+    
+    if (filters.cityFilter) {
+      baseQuery = query(baseQuery, where('location.city', '==', filters.cityFilter));
+    };
+    
+    // if (filters.priceRangeFilter) {
+    //   const [minPrice, maxPrice] = filters.priceRangeFilter.split('-');
+    //   // console.log('minPrice:', minPrice);
+    //   // console.log('maxPrice:', maxPrice);
+    //   baseQuery = query(
+    //     baseQuery,
+    //     where('price', '>=', Number(minPrice, 10)),
+    //     where('price', '<=', Number(maxPrice, 10))
+    //   );
+    // };
     const querySnapshot = await getDocs(baseQuery);
     const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
     // console.log(filteredProperties)
-    return filteredProperties;
+    return filteredProperties? filteredProperties : "No hay propiedades con esas caracteristicas"
   } catch (error) {
     // console.error('Error fetching filtered properties:', error);
-    return []; // Maneja el error retornando un array vacío u otra respuesta adecuada.
+    return []; 
   }
-}
+};
 

@@ -61,7 +61,6 @@ const firebaseConfig = {
   measurementId: "G-6TB25EM3W8"
 };
 
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
 //   authDomain: "foodiesitelab-99c62.firebaseapp.com",
@@ -73,6 +72,7 @@ const firebaseConfig = {
 // };
 
 
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
@@ -80,3 +80,4 @@ export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const  facebookProvider = new FacebookAuthProvider();
+

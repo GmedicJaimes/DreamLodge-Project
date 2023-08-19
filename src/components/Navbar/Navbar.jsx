@@ -17,14 +17,15 @@ const Navbar = () => {
   }, [auth]);
 
 
-
     return(
       <div className={styles.container}> 
         <div className={styles.containertwo}>
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>  
         <div className={styles.button}>
+        {currentUser && currentUser.email === "agustinibarperrotta@gmail.com" ? (
           <Link to={"/admin"}>Dashboard Admin</Link>
+        ) : null}
           {
             currentUser !== null 
             ? <div className={styles.button}>
