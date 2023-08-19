@@ -36,11 +36,6 @@ const SignIn = () => {
 
   const [errors, setErrors] = useState({});
 
-
-
-
-
-
   const languagesAvailable = [
     "English",
     "Spanish",
