@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  width: 1500px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -85,8 +85,10 @@
 
 
 @media (max-width: 600px){
-  .containerTwo{
-      width: 100%;
+
+
+  .container{
+    width: 220%;
   }
 
   
