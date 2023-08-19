@@ -9,7 +9,6 @@ import bathroomicon from "../../../assets/bano-publico.png";
 import SubTotal from "../../../components/subTotal/SubTotal";
 import { DateContext } from "../../../Contex/DateContex";
 import {
-  fetchAvailablePropertiesInRange,
   getBookedDatesForProperty,
   isPropertyAvailable,
 } from "../../../config/handlers";
@@ -31,7 +30,12 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+
+
   // console.log(id)
+
+const propertyId = id
+
 
   //CALENDAR DATES ============================================
 
@@ -81,7 +85,7 @@ const DetailPost = () => {
         console.error("Error obteniendo las fechas:", error);
       }
     }
-
+    window.scrollTo(0, 0);
     fetchBookedDates();
   }, [id]);
 
@@ -153,7 +157,7 @@ const DetailPost = () => {
   const [selectedDays, setSelectedDays] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const handleCalculatePrice = () => {
-    const pricePerDay = property.price;
+    const pricePerDay = property?.price;
     const calculatedPrice = selectedDays * pricePerDay;
     setTotalPrice(calculatedPrice);
   }; //CALCULAR EL PRECIO
@@ -182,7 +186,7 @@ const DetailPost = () => {
             where("propertyId", "==", id)
           );
           const purchasesSnapshot = await getDocs(purchasesQuery);
-          const hasPurchased = !purchasesSnapshot.empty;
+          const hasPurchased = !purchasesSnapshot?.empty;
 
           setHasPurchased(hasPurchased);
         }
@@ -205,9 +209,12 @@ const DetailPost = () => {
     })
     .filter((date) => date); // Filter out any null values
 
+    const isTwoColumns = property?.services?.length > 5;
+
+
   return (
     <div>
-      <div className={styles.bigContainerDetail}>
+      <div className={styles.bigContainerDetail}> 
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
@@ -233,12 +240,13 @@ const DetailPost = () => {
             <div></div>
           </section>
         </header>
-        <section className={styles.imageRelative}>
           <div className={styles.falseLine}></div>
+        <section className={styles.imageRelative}>
           <button onClick={prevImage} className={styles.prevButton}>
             <img
               src="https://cdn-icons-png.flaticon.com/128/271/271220.png"
               alt=""
+              className={styles.imageDetail}
             />
           </button>
           <img
@@ -253,7 +261,7 @@ const DetailPost = () => {
             />
           </button>
         </section>
-        <div className={styles.falseLine}></div>
+        <div className={styles.falseLineOne}></div>
 
         <div className={styles.containerSection}>
           <div className={styles.containerSectionOne}>
@@ -261,10 +269,10 @@ const DetailPost = () => {
               <h3>Description</h3>
               <p>{property?.description}</p>
             </section>
-            <section className={styles.servicesD}>
+            <section >
               <h3>Facilities</h3>
-              <div>
-                <ul>
+              <div className={styles.servicesD}>
+              <ul className={isTwoColumns ? styles.twoColumns : ''}>
                   {property?.services?.map((serviceItem) => {
                     return (
                       <li key={serviceItem} className={styles.listServices}>
@@ -311,31 +319,33 @@ const DetailPost = () => {
               handleEndDateChange={handleEndDateChange}
               property={property}
               formattedOccupiedDates={formattedOccupiedDates}
-              id={id}
+              propertyId={propertyId}
             />
           </div>
         </div>
         <div className={styles.falseLine}></div>
-        <section id="" className={styles.paymentBox}></section>
-        {/* <section>
-            <div className={styles.priceDiv}>{property?.price} USD/night</div>
-            {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
-            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
-          </section>
-          <div>
-            <h3>Select the number of reservation days:</h3>
-            <input
-              className={styles.reservationDays}
-              type="number"
-              min="1"
-              value={selectedDays}
-              onChange={(e) => setSelectedDays(Number(e.target.value))}
-            />
-            <button className={styles.otroBoton} onClick={handleCalculatePrice}>Calculate Price</button>
-            {preferenceId && (
-              <Wallet initialization={{ preferenceId: preferenceId }} />
-            )}
-          </div> */}
+        <section id="" className={styles.paymentBox}>
+              
+              <h3>Reviews <span>4.5(Review icon)</span></h3>
+
+              <div className={styles.reviewsBox}>
+         {/*      {reviews &&
+        reviews.map((r) => (
+          <div key={r.id}>
+            <p>Author: {r.author}</p>
+            <p>Comment: {r.content}</p>
+            <p>Rating: {r.rating}</p>
+          </div>
+        ))}
+        
+ */}
+
+
+
+              </div>
+          
+        </section>
+        
       </div>
       {hasPurchased && (
         <div>
@@ -365,14 +375,7 @@ const DetailPost = () => {
         </div>
       )}
 
-      {reviews &&
-        reviews.map((r) => (
-          <div key={r.id}>
-            <p>Author: {r.author}</p>
-            <p>Comment: {r.content}</p>
-            <p>Rating: {r.rating}</p>
-          </div>
-        ))}
+      
       <About></About>
     </div>
   );
@@ -382,3 +385,26 @@ export default DetailPost;
 
 
 
+
+
+
+
+{/* <section>
+            <div className={styles.priceDiv}>{property?.price} USD/night</div>
+            {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
+            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
+          </section>
+          <div>
+            <h3>Select the number of reservation days:</h3>
+            <input
+              className={styles.reservationDays}
+              type="number"
+              min="1"
+              value={selectedDays}
+              onChange={(e) => setSelectedDays(Number(e.target.value))}
+            />
+            <button className={styles.otroBoton} onClick={handleCalculatePrice}>Calculate Price</button>
+            {preferenceId && (
+              <Wallet initialization={{ preferenceId: preferenceId }} />
+            )}
+          </div> */}

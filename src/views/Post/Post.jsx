@@ -261,7 +261,7 @@ const Post = () => {
   };
 
   return (
-    <div>
+    <div className={styles.bodyContainerForm}>
       <div className={styles.bigContainer}>
           <header>
             <h2>Post your Lodge</h2>
@@ -304,9 +304,7 @@ const Post = () => {
                   onChange={handleLocation}
                   name="state"
                   value={formData.location.state}
-                  className={`${styles.selectLocation} ${
-                    formData.location.state === "" ? styles.grayText : ""
-                  }`}
+                  className={styles.selectPostForm}
                 >
                   <option value="" disabled selected hidden>Choose State</option>
                   {Object.keys(US_STATE_CITIES).map((state) => (
@@ -319,9 +317,7 @@ const Post = () => {
                   onChange={handleLocation}
                   name="city"
                   value={formData.location.city}
-                  className={`${styles.selectLocation} ${
-                    formData.location.city === "" ? styles.grayText : ""
-                  }`}
+                  className={styles.selectPostForm}
                 >
                   <option value="" disabled selected hidden>Choose City</option>
 
@@ -452,8 +448,8 @@ const Post = () => {
             <button type="submit">Post Lodge</button>
             <button type="button" onClick={resetForm}>Reset Form</button>
           </section>
-          {errores[0] && <span className={styles.postError}>{errores[0]}</span>}
           </form>
+          {errores[0] && <span className={styles.postError}>{errores[0]}</span>}
       </div>
       <About />
     </div>

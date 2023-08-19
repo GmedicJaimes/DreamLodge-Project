@@ -137,8 +137,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   // };
 
   return (
-    <div>
+    <div className={styles.homeContainerMain}>
       <div className={styles.containerHome}>
+        {/* <Filters
         {/* <Filters
           setHost={setHost}
           originalHost={originalHost}

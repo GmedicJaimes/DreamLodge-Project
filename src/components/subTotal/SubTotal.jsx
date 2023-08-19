@@ -8,19 +8,22 @@ import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Im
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
 import { Link } from "react-router-dom"
-import { createBooking } from "../../config/handlers";
+import { createBooking, isPropertyAvailable,  getBookingsByPropertyId} from "../../config/handlers";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 
 
 
- const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,id }) => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,propertyId }) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
-  const [occupiedDates, setOccupiedDates] = useState([]);
   const today = dayjs();
  
+
+  const [bookedDates, setBookedDates] = useState([]);
+
+
 //integracion mercado pago: 
 const[preferenceId, setPreferenceId] = useState(null);
   initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
@@ -83,7 +86,7 @@ const[preferenceId, setPreferenceId] = useState(null);
           
             try {
             
-              await createBooking(id, startDate, endDate);
+              await createBooking(propertyId, startDate, endDate);
             } catch (error) {
               console.log(error);
               alert('An error occurred while making the booking.');
@@ -121,7 +124,9 @@ const[preferenceId, setPreferenceId] = useState(null);
                 }
           
                 try {
-                  await createBooking(id, startDate, endDate);
+                  const hola = await isPropertyAvailable(propertyId,startDate,endDate)
+                  console.log(`IM AVAILABLE PROPERTY`,hola)
+                  await createBooking(propertyId, startDate, endDate);
                 } catch (error) {
                   console.log(error);
                   alert('An error occurred while making the booking.');
@@ -134,38 +139,7 @@ const[preferenceId, setPreferenceId] = useState(null);
           
   // ==========================================================
 
-const validBookings = deserializedDates?.filter(booking => booking.startDate && booking.endDate);
 
-const generateOccupiedDatesSet = (e) => {
-  const deserializedDatesSet = new Set();
-
-  e && e?.forEach(booking => {
-    if (!booking.startDate || !booking.endDate) {
-      console.warn('A booking has an undefined start or end date:', booking);
-      return; // skip this iteration
-    }
-
-    const startDate = dayjs(booking.startDate, "YYYY-MM-DD");
-    const endDate = dayjs(booking.endDate, "YYYY-MM-DD");
-
-    console.log("Parsed startDate:", startDate);
-    console.log("Parsed endDate:", endDate);
-
-    let currentDate = startDate;
-
-    while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
-      deserializedDatesSet.add(currentDate.format("YYYY-MM-DD")); // Cambio realizado aquí
-      currentDate = currentDate.add(1, 'day');
-    }
-  });
-
-  return deserializedDatesSet;
-}
-
-  
-
-
-  const generatedOccupiedDates = generateOccupiedDatesSet(validBookings);
 
 
 
@@ -182,7 +156,7 @@ const generateOccupiedDatesSet = (e) => {
   };
 
 
-  const subTotal = countSelectedDays() * property.price
+  const subTotal = countSelectedDays() * property?.price
  
 
 //   React.useEffect(() => {
@@ -196,10 +170,37 @@ const generateOccupiedDatesSet = (e) => {
   const isSecondPickerDisabled = !startDate;
 
 
+  React.useEffect(() => {
+    setDateRange(null, null);
+  }, []);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const fetchedBookings = await getBookingsByPropertyId(propertyId);
+        const allBookedDates = [];
   
-
-
-
+        fetchedBookings.forEach(booking => {
+          const start = dayjs(booking.startDate.toDate()); // Asumiendo que las fechas vienen en formato Timestamp
+          const end = dayjs(booking.endDate.toDate());
+          
+          let current = start;
+  
+          while (current.isBefore(end) || current.isSame(end)) {
+            allBookedDates.push(current.toISOString());
+            current = current.add(1, 'day');
+          }
+        });
+  
+        setBookedDates(allBookedDates);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };
+  
+    fetchBookings();
+  }, [propertyId]);
+  
 
 
   return (
@@ -243,6 +244,8 @@ const generateOccupiedDatesSet = (e) => {
         }}
       >
         <Grid container justifyContent="center">
+        <Grid item sm={6}> {/* En dispositivos pequeños, ocupará toda la anchura */}
+
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer
               components={["DatePicker"]}
@@ -253,8 +256,8 @@ const generateOccupiedDatesSet = (e) => {
          value={startDate}
          minDate={today}
          onChange={handleStartDateChange}
-         shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
-      
+         shouldDisableDate={date => bookedDates.includes(date.toISOString())}
+
       />
 
               
@@ -266,13 +269,16 @@ const generateOccupiedDatesSet = (e) => {
      minDate={secondDateMin}
      onChange={handleEndDateChange}
      disabled={isSecondPickerDisabled}
-     shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
-    
+     shouldDisableDate={date => bookedDates.includes(date.toISOString())}
+
+
+     
       />
             </DemoContainer>
 
            
           </LocalizationProvider>
+          </Grid>
         </Grid>
         <StyledDivider  />
 
@@ -388,6 +394,9 @@ const generateOccupiedDatesSet = (e) => {
 export default SubTotal
 
 
+
+
+
 // import React, { useContext, useState, useEffect } from "react";
 // import dayjs from "dayjs";
 // import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -398,19 +407,23 @@ export default SubTotal
 // import { StyledDivider } from "./SubTotalStyled";
 // import { DateContext } from "../../../src/Contex/DateContex";
 // import { Link } from "react-router-dom"
-// import { createBooking } from "../../config/handlers";
+// import { createBooking, isPropertyAvailable,  getBookingsByPropertyId} from "../../config/handlers";
 // import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 // import axios from 'axios';
 
 
 
-//  const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,id }) => {
+//  const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,propertyId }) => {
 
 //   const { startDate, endDate, setDateRange } = useContext(DateContext);
 //   const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
 //   const [occupiedDates, setOccupiedDates] = useState([]);
 //   const today = dayjs();
  
+//   const [bookings, setBookings] = useState([]);
+
+
+
 // //integracion mercado pago: 
 // const[preferenceId, setPreferenceId] = useState(null);
 //   initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
@@ -459,6 +472,7 @@ export default SubTotal
 //               }
 //             };
 //           };
+          
 //           const submitBooking = async () => {
 //             if (!startDate || !endDate) {
 //               alert('Please select both start and end dates.');
@@ -472,12 +486,13 @@ export default SubTotal
           
 //             try {
             
-//               await createBooking(id, startDate, endDate);
+//               await createBooking(propertyId, startDate, endDate);
 //             } catch (error) {
 //               console.log(error);
 //               alert('An error occurred while making the booking.');
 //             }
 //           };
+
 //           const bookingAndBuy = async () => {
 //             try {
 //               const id = await createPreference();
@@ -509,7 +524,9 @@ export default SubTotal
 //                 }
           
 //                 try {
-//                   await createBooking(id, startDate, endDate);
+//                   const hola = await isPropertyAvailable(propertyId,startDate,endDate)
+//                   console.log(`IM AVAILABLE PROPERTY`,hola)
+//                   await createBooking(propertyId, startDate, endDate);
 //                 } catch (error) {
 //                   console.log(error);
 //                   alert('An error occurred while making the booking.');
@@ -536,8 +553,7 @@ export default SubTotal
 //     const startDate = dayjs(booking.startDate, "YYYY-MM-DD");
 //     const endDate = dayjs(booking.endDate, "YYYY-MM-DD");
 
-//     console.log("Parsed startDate:", startDate);
-//     console.log("Parsed endDate:", endDate);
+
 
 //     let currentDate = startDate;
 
@@ -570,7 +586,7 @@ export default SubTotal
 //   };
 
 
-//   const subTotal = countSelectedDays() 
+//   const subTotal = countSelectedDays() * property?.price
  
 
 // //   React.useEffect(() => {
@@ -584,14 +600,30 @@ export default SubTotal
 //   const isSecondPickerDisabled = !startDate;
 
 
+//   React.useEffect(() => {
+//     setDateRange(null, null);
+//   }, []);
+
+
+//   useEffect(() => {
+//     const fetchBookings = async () => {
+//       try {
+//         const fetchedBookings = await getBookingsByPropertyId(propertyId);
+//         setBookings(fetchedBookings);
+//       } catch (error) {
+//         console.error('Error fetching bookings:', error);
+//       }
+//     };
   
-
-
+//     fetchBookings();
+//   }, [propertyId]);
 
 
 
 //   return (
-//     <div style={{ width: "500px" }}>
+//     <div style={{ width: "500px",
+//                   height: "380px",
+//                   radius: "10px" }}>
       
 //    {/*      <Alert severity="warning">
 //           Selected dates are not available.
@@ -599,7 +631,7 @@ export default SubTotal
 //       <Card
 //         elevation={0}
 //         sx={{
-//           backgroundColor: "#9A98FE",
+//           backgroundColor: "#CD5A3E",
 //           alignContent: "center",
 //           padding: "15px",
 //           margin: "20px",
@@ -611,7 +643,7 @@ export default SubTotal
 //           sx={{
 //             fontSize: "20px",
 //             fontWeight: "bold",
-//             color: "#FAFAFF",
+//             color: "white",
 //             textAlign: "center",
 //           }}
 //         >
@@ -622,13 +654,15 @@ export default SubTotal
 //       <Card
 //         elevation={0}
 //         sx={{
-//           backgroundColor: "#F3F3F7",
+//           backgroundColor: "#eadccf",
 //           height: "auto",
 //           padding: "15px",
 //           margin: "20px",
 //         }}
 //       >
 //         <Grid container justifyContent="center">
+//         <Grid item sm={6}> {/* En dispositivos pequeños, ocupará toda la anchura */}
+
 //           <LocalizationProvider dateAdapter={AdapterDayjs}>
 //             <DemoContainer
 //               components={["DatePicker"]}
@@ -653,14 +687,16 @@ export default SubTotal
 //      onChange={handleEndDateChange}
 //      disabled={isSecondPickerDisabled}
 //      shouldDisableDate={date => generatedOccupiedDates.has(date.format("YYYY-MM-DD"))}
-    
+
+     
 //       />
 //             </DemoContainer>
 
            
 //           </LocalizationProvider>
+//           </Grid>
 //         </Grid>
-//         <StyledDivider />
+//         <StyledDivider  />
 
 //         <Grid container spacing={4}>
 //           <Grid item xs={12} sm={6}>
@@ -669,7 +705,7 @@ export default SubTotal
 //               sx={{
 //                 fontSize: "20px",
 //                 fontWeight: "bold",
-//                 color: "#868688",
+//                 color: "#CD5A3E",
 //                 marginTop: "30px",
 //                 marginLeft: '45PX'
 //               }}
@@ -682,7 +718,7 @@ export default SubTotal
 //               sx={{
 //                 fontSize: "13px",
 //                 fontWeight: "bold",
-//                 color: "#C2C2C2",
+//                 color: "#CD5A3E",
 //                 marginTop: "10px",
 //                 marginLeft: "50px",
 //                 display: 'flex'
@@ -704,7 +740,7 @@ export default SubTotal
 //               sx={{
 //                 fontSize: "35px",
 //                 fontWeight: "bold",
-//                 color: "#0400CB",
+//                 color: "#CD5A3E",
 //                 marginTop: "20px",
 //                 marginLeft: '30px'
 //               }}
@@ -717,7 +753,7 @@ export default SubTotal
 //               sx={{
 //                 fontSize: "15px",
 //                 fontWeight: "bold",
-//                 color: "#9A98FE",
+//                 color: "#CD5A3E",
 //                 marginLeft: "80px",
 //               }}
 //             >
@@ -738,9 +774,9 @@ export default SubTotal
 //                   width: "150px",
 //                 }}
 //                 sx={{
-//                   backgroundColor: "#9A98FE",
+//                   backgroundColor: "#CD5A3E",
 //                   "&:hover": {
-//                     backgroundColor: "#c2c1fe",
+//                     backgroundColor: "#E57951",
 //                   },
 //                 }}
 //                 onClick={bookingAndBuy}
@@ -756,7 +792,7 @@ export default SubTotal
 //               sx={{
 //                 fontSize: "10px",
 //                 fontWeight: "bold",
-//                 color: "#9A98FE",
+//                 color: "#CD5A3E",
 //                 margin: "20px",
 //               }}
 //             >
@@ -772,3 +808,5 @@ export default SubTotal
 
 
 // export default SubTotal
+
+

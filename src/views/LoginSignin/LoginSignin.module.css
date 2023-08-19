@@ -1,10 +1,57 @@
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
 .bigContainer{
     background-color: white;
     width: 86vw;
-    height: 86vh;
+    min-height: 89vh;
     margin: auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
+
+
+
+@media (max-width: 500px){
+
+   
+    .loginContainer{
+        min-height: 100px;
+    }
+
+    .bigContainer{
+        min-height: 1150px;
+    }
+   
+}
+
+
+@media (max-width: 400px){
+
+    .loginContainer{
+        min-height: 300px;
+    }
+
+    .bigContainer{
+        min-height: 1000px;
+    }
+   
+}
+
+@media (max-width: 300px){
+
+    .loginContainer{
+        min-height: 1000px;
+    }
+
+    .bigContainer{
+        min-height: 2000px;
+    }
+   
+}

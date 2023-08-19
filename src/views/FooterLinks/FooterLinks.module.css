@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 1500px;
+    height: auto;
+    margin-top: 3rem;
 
 }
 
@@ -31,4 +32,35 @@
 line-height: 0.2rem;
 letter-spacing: 0.1rem;
 text-align: left;
+}
+
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+
+
+@media (max-width: 1338px) {
+
+
+    .ctnFooter{
+        height: auto;
+        width: 75%;
+    }
+
+    .ctnFooter div{
+
+        height: auto
+        
+
+    }
+
+
+
+}
+
+@media (max-width: 600px){
+    .ctnFooter{
+        margin: 0 auto;
+        width: 80%;
+    }
 }
