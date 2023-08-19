@@ -6,7 +6,7 @@
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
     margin: auto;
-    margin-top: 13em;
+    margin-top: 3em;
     max-width: 90em;
     padding-bottom: 3em;
     margin-bottom: 3em;
@@ -219,8 +219,6 @@
 .btnFoot{
     margin: 1em auto 0;
     width: 100%;
-    padding: 3em;
-    margin-bottom: 5em;
 }
 
 .btnFoot button{
