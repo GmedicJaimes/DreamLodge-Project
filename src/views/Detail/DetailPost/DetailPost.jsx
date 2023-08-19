@@ -5,6 +5,7 @@ import About from "../../../components/About/About";
 import guest from "../../../assets/gente-junta.png";
 import door from "../../../assets/puerta.png";
 import bed from "../../../assets/cama.png";
+import usuario from "../../../assets/usuario.png"
 import bathroomicon from "../../../assets/bano-publico.png";
 import SubTotal from "../../../components/subTotal/SubTotal";
 import { DateContext } from "../../../Contex/DateContex";
@@ -13,6 +14,7 @@ import {
   isPropertyAvailable,
 } from "../../../config/handlers";
 import { db } from "../../../config/firebase";
+
 
 import dayjs from "dayjs";
 
@@ -34,7 +36,7 @@ const DetailPost = () => {
 
   // console.log(id)
 
-const propertyId = id
+  const propertyId = id
 
 
   //CALENDAR DATES ============================================
@@ -198,27 +200,17 @@ const propertyId = id
     fetchData();
   }, []);
 
-  const formattedOccupiedDates = occupiedDates
-    .map((date) => {
-      if (date instanceof Date && !isNaN(date)) {
-        return date.toISOString();
-      } else {
-        console.warn("Found a non-Date object:", date);
-        return null;
-      }
-    })
-    .filter((date) => date); // Filter out any null values
 
-    const isTwoColumns = property?.services?.length > 5;
+  const isTwoColumns = property?.services?.length > 5;
 
 
   return (
     <div>
-      <div className={styles.bigContainerDetail}> 
+      <div className={styles.bigContainerDetail}>
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
-            <span className={styles.tittleSpan}>4.2 (Reviews)</span>
+            <span className={styles.tittleSpan}>★4.2</span>
             <h5 className={styles.location}>
               {property?.location?.city}, {property?.location?.state}
             </h5>
@@ -240,7 +232,7 @@ const propertyId = id
             <div></div>
           </section>
         </header>
-          <div className={styles.falseLine}></div>
+        <div className={styles.falseLine}></div>
         <section className={styles.imageRelative}>
           <button onClick={prevImage} className={styles.prevButton}>
             <img
@@ -272,7 +264,7 @@ const propertyId = id
             <section >
               <h3>Facilities</h3>
               <div className={styles.servicesD}>
-              <ul className={isTwoColumns ? styles.twoColumns : ''}>
+                <ul className={isTwoColumns ? styles.twoColumns : ''}>
                   {property?.services?.map((serviceItem) => {
                     return (
                       <li key={serviceItem} className={styles.listServices}>
@@ -288,7 +280,7 @@ const propertyId = id
               <h3>The Room</h3>
               <div>
                 <div className={styles.roomsDOne}>
-                  <img src={guest} /> Guests:{" "}
+                  <img src={guest} /> Capacity:{" "}
                   <span className={styles.spanServices}>
                     {property?.stances?.guest}
                   </span>
@@ -318,34 +310,31 @@ const propertyId = id
               handleStartDateChange={handleStartDateChange}
               handleEndDateChange={handleEndDateChange}
               property={property}
-              formattedOccupiedDates={formattedOccupiedDates}
               propertyId={propertyId}
             />
           </div>
         </div>
         <div className={styles.falseLine}></div>
-        <section id="" className={styles.paymentBox}>
-              
-              <h3>Reviews <span>4.5(Review icon)</span></h3>
-
-              <div className={styles.reviewsBox}>
-         {/*      {reviews &&
-        reviews.map((r) => (
-          <div key={r.id}>
-            <p>Author: {r.author}</p>
-            <p>Comment: {r.content}</p>
-            <p>Rating: {r.rating}</p>
+        <section id="" className={styles.reviewBigBox}>
+          <h3>Reviews <span className={styles.tittleSpan}>4.5</span></h3>
+          <div className={styles.reviewsBox}>
+            {reviews &&
+              reviews.map((r) => (
+                <div className={styles.singleReview} key={r.id}>
+                  <div>
+                    <img className={styles.iconUserReview} src={usuario} alt="" />
+                  </div>
+                  <div>
+                    <div className={styles.headRev}>
+                      <p className={styles.reviewAut}>{r.author}</p>
+                      <p className={styles.reviewRat}><span className={styles.tittleSpan}>★{r.rating}</span></p>
+                    </div>
+                    <p className={styles.reviewCont}> {r.content}</p>
+                  </div>
+                </div>
+              ))}
           </div>
-        ))}
-        
- */}
-
-
-
-              </div>
-          
         </section>
-        
       </div>
       {hasPurchased && (
         <div>
@@ -375,8 +364,8 @@ const propertyId = id
         </div>
       )}
 
-      
-      <About></About>
+
+      <About />
     </div>
   );
 };

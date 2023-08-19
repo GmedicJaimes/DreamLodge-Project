@@ -24,6 +24,9 @@ const Dropdown = () => {
       const toggleMenu = () => {
         setOpen(!open);
       };
+
+      console.log(auth.currentUser);
+
     return(
         <div className={styles.menuContainer}>
             <div className={styles.menuTrigger} onClick={toggleMenu}>

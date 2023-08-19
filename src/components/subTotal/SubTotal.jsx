@@ -14,10 +14,9 @@ import axios from 'axios';
 
 
 
- const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,formattedOccupiedDates,propertyId }) => {
+ const SubTotal = ({ handleStartDateChange, handleEndDateChange,property,propertyId }) => {
 
   const { startDate, endDate, setDateRange } = useContext(DateContext);
-  const deserializedDates = formattedOccupiedDates?.map(dateString => new Date(dateString));
   const today = dayjs();
  
 
@@ -193,6 +192,7 @@ const[preferenceId, setPreferenceId] = useState(null);
         });
   
         setBookedDates(allBookedDates);
+       
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -214,7 +214,7 @@ const[preferenceId, setPreferenceId] = useState(null);
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#CD5A3E",
+          backgroundColor: "#eadccf",
           alignContent: "center",
           padding: "15px",
           margin: "20px",
@@ -224,9 +224,8 @@ const[preferenceId, setPreferenceId] = useState(null);
         <Typography
           variant="h1"
           sx={{
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "white",
+            marginTop: "1em",
+            fontSize: "30px",
             textAlign: "center",
           }}
         >

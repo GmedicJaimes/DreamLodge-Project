@@ -965,7 +965,7 @@ export const getBookingsByPropertyId = async (propertyId) => {
 export const fetchFilteredProperties = async (filters) => {
   try {
     const propertiesCollectionRef = collection(db, 'properties');
-    console.log(filters)
+
     let baseQuery = propertiesCollectionRef;
     
     if (filters.rooms) {

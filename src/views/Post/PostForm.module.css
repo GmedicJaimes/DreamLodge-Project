@@ -1,5 +1,5 @@
 .bodyContainerForm{
-    max-height: 80vh;
+    /* max-height: 80vh; */
 }
 
 .bigContainer{
@@ -7,7 +7,7 @@
     background-color: #eadccf;
     margin: auto;
     margin-top: 3em;
-    max-width: 75em;
+    max-width: 90em;
     padding-bottom: 3em;
     margin-bottom: 3em;
     border-radius: 1em;
