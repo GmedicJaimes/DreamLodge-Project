@@ -302,6 +302,7 @@ export const updateProperty = async( id, property )=>{
     }
 };
 
+//? Funcion para actualizar usario
 export const updateUser = async( user ) => {
   const { uid, name, lastName, email, country, languages, image } = user
 

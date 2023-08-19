@@ -110,6 +110,7 @@ align-items: center;
   cursor: not-allowed;
   /* Otros estilos opcionales para hacer que el botón se vea diferente cuando esté deshabilitado */
   opacity: 0.7;
+  
   /* Otros estilos visuales que desees agregar */
 }
 
