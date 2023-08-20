@@ -67,12 +67,12 @@ const[preferenceId, setPreferenceId] = useState(null);
                 }
           
                 if (!startDate || !endDate) {
-                  alert('Please select both start and end dates.');
+                  swal('Please select both start and end dates.');
                   return;
                 }
           
                 if (startDate.isAfter(endDate)) {
-                  alert('Start date cannot be after end date.');
+                  swal('Start date cannot be after end date.');
                   return;
                 }
           
@@ -82,7 +82,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                   await createBooking(propertyId, startDate, endDate);
                 } catch (error) {
                   console.log(error);
-                  alert('An error occurred while making the booking.');
+                  swal('An error occurred while making the booking.');
                 }
               }
             } catch (error) {

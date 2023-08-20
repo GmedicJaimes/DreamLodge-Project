@@ -61,12 +61,11 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      alert("Welcome to DreamLodge!");
+      swal("Success", "You have successfully logged in!", "success");
       // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
   } catch (error) {
-    console.log("Error in signIn function:", error);
     throw error;
   }
 };
@@ -237,7 +236,7 @@ export const logOut = async()=>{
     try {
         await signOut(auth)
     } catch (error) {
-        console.log(error)
+        console.error
     }
 };
 
@@ -277,7 +276,7 @@ export const createProp = async (formData, file) => {
 
     getPropertiesList();
 
-    alert('¡Propiedad creada!');
+   
   } catch (error) {
     console.log(error)
   }
@@ -802,16 +801,16 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
         userId: auth?.currentUser?.uid,
       });
 
-      alert('¡Reserva realizada!');
+      swal( 'Success','Reservation made!', "success");
 
     } else {
       console.log('Property is not available for the selected dates');
-      alert('La propiedad no está disponible en las fechas seleccionadas.');
+      swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 
   } catch (error) {
     console.log(error)
-    alert('Error al realizar la reserva.');
+    swal('Error' ,'Error making the reservation.', 'error');
   }
 };
 

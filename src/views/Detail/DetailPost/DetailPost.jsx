@@ -2,7 +2,7 @@ import styles from "./DetailPost.module.css";
 import React, { useContext, useState, useEffect } from "react";
 import { query, collection, where, getDocs, addDoc } from "firebase/firestore";
 import About from "../../../components/About/About";
-import guest from "../../../assets/gente-junta.png";
+import guest from "../../../assets/gente_junta.png";
 import door from "../../../assets/puerta.png";
 import bed from "../../../assets/cama.png";
 import usuario from "../../../assets/usuario.png"
@@ -50,7 +50,7 @@ const DetailPost = () => {
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
       if (!isAvailable) {
-        alert("La propiedad no está disponible para estas fechas.");
+        swal( 'Error',"The property is not available for these dates.", 'error');
       }
     }
   };
@@ -61,7 +61,7 @@ const DetailPost = () => {
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {
-        alert("La propiedad no está disponible para estas fechas.");
+        swal( 'Error',"The property is not available for these dates.", 'error');
         // Aquí puedes manejar cualquier otra lógica que necesites,
         // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
       }
@@ -114,7 +114,7 @@ const DetailPost = () => {
       setReviewContent("");
       setReviewRating(0);
 
-      alert("Reseña enviada con éxito");
+      swal("Review sent successfully");
     } catch (error) {
       console.log(error);
     }
@@ -134,12 +134,12 @@ const DetailPost = () => {
     }
   };
 
-  // React.useEffect(() => {
-  //   localStorage.setItem(
-  //     "propertyData",
-  //     JSON.stringify(property)
-  //   );
-  // }, [property]);
+  React.useEffect(() => {
+    localStorage.setItem(
+      "propertyData",
+      JSON.stringify({property})
+    );
+  }, [property]);
 
   //CALCULAR EL PRECIO p/dias========================================
   const [selectedDays, setSelectedDays] = useState(1);
@@ -355,4 +355,5 @@ const DetailPost = () => {
     </div>
   );
 };
+
 export default DetailPost;
