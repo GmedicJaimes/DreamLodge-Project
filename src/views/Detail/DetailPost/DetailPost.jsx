@@ -50,7 +50,7 @@ const DetailPost = () => {
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
       if (!isAvailable) {
-        swal("La propiedad no está disponible para estas fechas.");
+        swal( 'Error',"The property is not available for these dates.", 'error');
       }
     }
   };
@@ -61,7 +61,7 @@ const DetailPost = () => {
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {
-        swal("The property is not available for these dates.");
+        swal( 'Error',"The property is not available for these dates.", 'error');
         // Aquí puedes manejar cualquier otra lógica que necesites,
         // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
       }

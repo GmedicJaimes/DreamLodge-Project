@@ -159,7 +159,7 @@ const SignIn = () => {
       try {
         await sendPasswordResetEmail(userCredential.user);
         localStorage.setItem("email", email);
-        alert(`¡Correo verificado exitosamente!`);
+        swal('Succes' ,`Mail verified successfully!`, 'succes');
         navigate(`/home`);
     } catch (error) {
         setLoginLoading(false);

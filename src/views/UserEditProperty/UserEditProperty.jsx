@@ -76,7 +76,7 @@ const UserEditProperty = () => {
         event.preventDefault()
         try {
             await updateProperty(id, property)
-            alert("Property modified")
+            swal("Property modified")
         } catch (error) {
             console.log(error);
         }

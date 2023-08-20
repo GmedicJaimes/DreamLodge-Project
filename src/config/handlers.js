@@ -801,16 +801,16 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
         userId: auth?.currentUser?.uid,
       });
 
-      alert('¡Reserva realizada!');
+      swal( 'Success','Reservation made!', "success");
 
     } else {
       console.log('Property is not available for the selected dates');
-      alert('La propiedad no está disponible en las fechas seleccionadas.');
+      swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 
   } catch (error) {
     console.log(error)
-    alert('Error al realizar la reserva.');
+    swal('Error' ,'Error making the reservation.', 'error');
   }
 };
 
