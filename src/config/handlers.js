@@ -803,7 +803,7 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
 
     } else {
       console.log('Property is not available for the selected dates');
-      swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
+      // swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 
   } catch (error) {
