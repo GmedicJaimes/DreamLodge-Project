@@ -27,8 +27,14 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
+    if (user && user.delete) {
+        return (
+            <div>
+                <h2>Este perfil ha sido eliminado.</h2>
+            </div>
+        );
+    }
 
-    console.log(user);
     return (
         <div className={styles.containerInfoOne}>
 

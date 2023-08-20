@@ -16,6 +16,7 @@ const Cards = ({ host }) => {
   // Calculate the index of the last country on the current page
   const indexOfLastCard = currentPage * cardsPerPage;
 
+
   // Calculate the index of the first country on the current page
   const indexfOfFirstCard = indexOfLastCard - cardsPerPage;
 
@@ -56,3 +57,16 @@ const Cards = ({ host }) => {
 };
 
 export default Cards;
+
+// const Cards = ({ host }) => {
+//   return (
+//     <div className={styles.containerCards}>
+//       {Array.isArray(host) &&
+//         host.map((property) => (
+//           !property.delete && <Card property={property} key={property.id} />
+//         ))}
+//     </div>
+//   );
+// };
+
+// export default Cards;

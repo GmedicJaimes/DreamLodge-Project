@@ -18,13 +18,11 @@ import { db } from "../../../config/firebase";
 
 import dayjs from "dayjs";
 
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import axios from "axios";
 
 import { useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
 
-import { getPaymentStatus, updateAvaible } from "../../../config/handlers";
+
 import { auth } from "../../../config/firebase";
 
 const DetailPost = () => {
@@ -32,6 +30,7 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
+  
 
 
   // console.log(id)

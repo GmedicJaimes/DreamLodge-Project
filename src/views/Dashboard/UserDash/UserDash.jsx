@@ -1,6 +1,6 @@
 import UsersPanel from "../../../components/UserPanel/UserPanel";
 import { useEffect, useState } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from '../../../config/firebase';
 
 
@@ -12,7 +12,7 @@ const UserDash = () => {
     const getUsers = async () => {
       try {
         const usersSnapshot = await getDocs(collection(db, 'users'));
-        const usersData = usersSnapshot.docs.map(doc => doc.data());
+        const usersData = usersSnapshot.docs.map(doc =>({ id: doc.id, ...doc.data() }));
         setUsers(usersData);
       } catch (error) {
         console.error(error);
@@ -58,20 +58,17 @@ const UserDash = () => {
     });
     if (confirmDelete) {
       try {
-       
-        const propertyRef = db.collection('users').doc(userId);
-  
- 
-        await propertyRef.update({ deleted: true });
-  
-       
-        setFilteredProperties(prevProperties =>
-          prevProperties.filter(property => property.id !== propertyId)
+        const userRef = doc(db, 'users', userId); 
+    
+        await updateDoc(userRef, { delete: true });
+    
+        setUsers(prevUsers =>
+          prevUsers.filter(user => user.id !== userId)
         );
-  
-        console.log(`Usuario con ID ${userId} borrada lógicamente.`);
+    
+        console.log(`User ${userId} deleted successfully`);
       } catch (error) {
-        // console.error('Error al borrar el usuario:', error);
+        console.error('Error deleting user:', error);
       }
     }
   };

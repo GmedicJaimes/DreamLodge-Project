@@ -18,9 +18,9 @@ const AceptedPay = () => {
             const parsedRecipe = JSON.parse(savedRecipe)
             setDataRecipe(parsedRecipe)
             const user = await getUserByUID(parsedRecipe.property.userId)
-            console.log(user);
+            // console.log(user);
             setUserData(user);
-            console.log(parsedRecipe.property.uui)
+            // console.log(parsedRecipe.property.uui)
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
             console.log(parsedRecipe.buyerId, parsedRecipe.propertyId);
