@@ -38,3 +38,13 @@
   width: 90em;
   height: 3em;
 }
+
+.headerHomePage{
+  height: 250px;
+}
+
+.headerHomePage img{
+  height: 250px;
+  width: 120%;
+  object-fit: cover;
+  object-position: -200px 53%;}

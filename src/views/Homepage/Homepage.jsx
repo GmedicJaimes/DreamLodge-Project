@@ -20,6 +20,7 @@ import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
 import SideFilters from "../../components/SideFilters/SideFilters";
+import landingImg from "../../assets/landingImg.jpeg"
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -169,7 +170,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
         /> */}
-
+        <div className={styles.headerHomePage}>
+            <img src={landingImg} alt="" srcset="" />
+        </div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
           <Calendar
