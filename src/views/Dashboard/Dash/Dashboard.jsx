@@ -24,6 +24,9 @@ const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
 
   return(
     <div className={styles.dashContainer}>
+      <div className={styles.title}>
+        <h2>Dashboard:</h2>
+      </div>
       <div className={styles.cardsDash}>
           <div className={styles.dashboardSection}>
             <h2>Total de Propiedades:</h2>

@@ -1,14 +1,12 @@
 .footer {
-    width: 100%;
+    max-width: 100%;
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #99997A;
     color: #EADCCF;
-    position: fixed; /* Agrega esta línea */
-    bottom: 0; /* Agrega esta línea */
-    left: 0; 
+ 
   
   }
   
@@ -40,5 +38,9 @@
 
 
 
-
+@media (max-width: 600px){
+  .footer{
+    background-color: red;
+  }
+}
  

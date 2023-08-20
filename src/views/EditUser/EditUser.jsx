@@ -67,6 +67,7 @@ const EditUser = () => {
 
     return(
         <div>
+            <div className={styles.mainContainerOne}>
             <div className={styles.mainContainer}>
                 
             
@@ -216,6 +217,7 @@ const EditUser = () => {
                 
             </form>
             </div>
+        </div>
             <About></About>
         </div>
     )
