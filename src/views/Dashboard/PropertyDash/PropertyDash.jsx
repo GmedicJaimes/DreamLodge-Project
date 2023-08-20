@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropertiesPanel from "../../../components/PropertiesPanel/PropertiesPanel";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../config/firebase';
-import style from '../../Dashboard/PropertyDash/property.module.css'
+
 
 const PropertyDash = () => {
 
@@ -37,9 +37,9 @@ const PropertyDash = () => {
           text: 'Delete ',
           value: true,
           visible: true,
-          className: style.button
         },
       }, 
+      dangerMode: true
       
     }).then(respuesta => {
       if(respuesta){
@@ -51,9 +51,9 @@ const PropertyDash = () => {
               text: 'Ok ',
               value: true,
               visible: true,
-              className: style.nice,
             },
-          }
+          },
+          dangerMode: true
         })
       }
     });
