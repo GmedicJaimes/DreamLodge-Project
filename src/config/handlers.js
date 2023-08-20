@@ -61,12 +61,11 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      alert("Welcome to DreamLodge!");
+      swal("Success", "You have successfully logged in!", "success");
       // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
   } catch (error) {
-    console.log("Error in signIn function:", error);
     throw error;
   }
 };
@@ -237,7 +236,7 @@ export const logOut = async()=>{
     try {
         await signOut(auth)
     } catch (error) {
-        console.log(error)
+        console.error
     }
 };
 
@@ -277,7 +276,7 @@ export const createProp = async (formData, file) => {
 
     getPropertiesList();
 
-    alert('¡Propiedad creada!');
+   
   } catch (error) {
     console.log(error)
   }
