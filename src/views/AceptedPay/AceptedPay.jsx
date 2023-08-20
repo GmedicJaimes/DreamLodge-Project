@@ -32,6 +32,7 @@ const AceptedPay = () => {
         event.preventDefault()
         registerPurchases()
     } 
+    
     return(
         <div>
             <div>

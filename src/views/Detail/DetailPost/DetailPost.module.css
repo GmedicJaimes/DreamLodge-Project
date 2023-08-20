@@ -4,6 +4,8 @@
   margin-top: 3em;
   max-width: 75em;
   border-radius: 2em;
+  padding-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 
 .bigContainerDetail header{
@@ -292,6 +294,7 @@ a{
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0 3.5em;
+  min-height: 37em;
 }
 
 .listServices {
@@ -310,6 +313,7 @@ a{
   margin: 0 auto;
   max-width: 35em;
   text-align: left;
+  min-height: 40em;
 }
 
 .containerSectionOne section{

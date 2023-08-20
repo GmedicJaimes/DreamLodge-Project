@@ -20,7 +20,6 @@ const Dropdown = () => {
     React.useEffect(() => {
         if(!liveUser.auth){
             setLiveUser(auth.currentUser)
-            console.log(auth.currentUser);
         }
     }, [])
 
