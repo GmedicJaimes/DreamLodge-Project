@@ -12,7 +12,9 @@ const AceptedPay = () => {
     const [ dataRecipe, setDataRecipe ] = React.useState({})
     const [ userData, setUserData ] = React.useState()
 
-    React.useEffect( async () => {
+    React.useEffect( () => {
+
+        const defineRecipe = async () => {
         const savedRecipe = localStorage.getItem("propertyData")
         if (savedRecipe) {
             const parsedRecipe = JSON.parse(savedRecipe)
@@ -25,14 +27,15 @@ const AceptedPay = () => {
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
             console.log(parsedRecipe.buyerId, parsedRecipe.propertyId);
             await registerPurchases(parsedRecipe.buyerId, parsedRecipe.propertyId)
-        };
+        };}
+        defineRecipe()
     }, []);
     
     const handleMagia = (event) => {
         event.preventDefault()
         registerPurchases()
     } 
-    
+
     return(
         <div>
             <div>
