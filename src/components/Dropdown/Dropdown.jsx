@@ -15,7 +15,14 @@ import { auth } from "../../config/firebase";
 const Dropdown = () => {
 
     const [open, setOpen] = React.useState(false)
+    const [ liveUser, setLiveUser ] = React.useState({})
 
+    React.useEffect(() => {
+        if(!liveUser.auth){
+            setLiveUser(auth.currentUser)
+            console.log(auth.currentUser);
+        }
+    }, [])
 
     const closeMenu = () => {
         setOpen(false);
@@ -25,21 +32,19 @@ const Dropdown = () => {
         setOpen(!open);
       };
 
-      console.log(auth.currentUser);
-
     return(
         <div className={styles.menuContainer}>
             <div className={styles.menuTrigger} onClick={toggleMenu}>
                 <img src={user} alt="" />
             </div>
             <div className={`${styles.dropdownMenu} ${open ? styles.active : styles.inactive}`}>
-                <h3>{auth.currentUser.displayName}<br/>
-                <span>{auth.currentUser.email}</span></h3>
+                <h3>{liveUser?.auth?.currentUser.displayName}<br/>
+                <span>{liveUser?.auth?.currentUser.email}</span></h3>
                 <ul>
-                    <Link to={`user/${auth.currentUser.uid}`}>
+                    <Link to={`user/${liveUser?.auth?.currentUser.uid}`}>
                         <DropDownItem img={user} text={"My Profile"} onClick={closeMenu}/>
                     </Link>
-                    <Link to={`/config/${auth.currentUser.uid}`}>
+                    <Link to={`/config/${liveUser?.auth?.currentUser.uid}`}>
                         <DropDownItem img={edit} text={"Edit Profile"} onClick={closeMenu}/>
                     </Link>
                     <Link to={`/tutorial`}>

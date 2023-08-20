@@ -134,12 +134,12 @@ const DetailPost = () => {
     }
   };
 
-  React.useEffect(() => {
-    localStorage.setItem(
-      "propertyData",
-      JSON.stringify(property)
-    );
-  }, [property]);
+  // React.useEffect(() => {
+  //   localStorage.setItem(
+  //     "propertyData",
+  //     JSON.stringify(property)
+  //   );
+  // }, [property]);
 
   //CALCULAR EL PRECIO p/dias========================================
   const [selectedDays, setSelectedDays] = useState(1);

@@ -7,7 +7,7 @@
 
 .bigContainer{
     background-color: white;
-    width: 86vw;
+    max-width: 86vw;
     min-height: 89vh;
     margin: auto;
     display: flex;
