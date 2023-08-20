@@ -6,7 +6,7 @@
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
-    width: 80%;
+    max-width: 55em;
     margin: auto;
     padding: 2.1em;
     height: 400px;

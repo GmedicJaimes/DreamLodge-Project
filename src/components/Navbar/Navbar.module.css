@@ -1,12 +1,12 @@
 .container {
-  width: 1500px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 75px;
   background-color: #EADCCF;
-
+  
 }
 
 .containertwo {
@@ -16,12 +16,26 @@
   width: 88%;
 }
 
-.containeSearch{
+.adminNav{
   display: flex;
-  justify-content: center;
-
+  width: 200px;
+  margin-left: 40%;
+  margin-right: 20px;
 }
 
+
+.admin{
+  text-decoration: none;
+  background-color: #CD5A3E;
+  width: 200px;
+  color: #fdfdfd;
+  font-weight: 500;
+  padding: 0.6rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+  font-size: 1.1rem;
+
+}
 
 .logo{
   font-family: 'Montserrat';
@@ -35,10 +49,9 @@
 .button{
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
-
 }
 
 .login{
@@ -57,26 +70,25 @@
 
 .postBtn{
   width: 150px;
-  margin-right: 20%;
-  
+  margin-right: 5%;
 }
 
 .post {
   text-decoration: none;
-  width: 100px;
+  background-color: #d1ada4;
+  width: 120px;
   color: #fdfdfd;
   font-weight: 500;
   padding: 0.8rem;
-  border-radius: 45px;
+  border-radius: 10px;
   transition: background-color 0.3s ease; /* Add a smooth transition effect */
   font-size: 1.1rem;
 }
   
 .post:hover{
   background-color: rgba(205, 90, 62, 0.9); /* Semi-transparent #CD5A3E color with 90% opacity */
-  border: #CD5A3E;
   padding: 0.8rem;
-  border-radius: 45px;
+  border-radius: 10px;
 }
 
 /************************************************RESPONSIVE *************************************************/
@@ -87,9 +99,6 @@
 @media (max-width: 600px){
 
 
-  .container{
-    width: 220%;
-  }
 
   
   

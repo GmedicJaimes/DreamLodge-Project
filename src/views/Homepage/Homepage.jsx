@@ -26,6 +26,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   // console.log(host)
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
+  const [loading, setLoading] = useState(true); // Agrega el estado de carga
+
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
@@ -82,9 +84,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
-    }
 
+    }
+    
+    
     fetchFilteredHost();
+    setLoading(false);
+
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
 
   useEffect(() => {
@@ -166,26 +172,20 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-            {/* <InfiniteScroll
-            dataLength={host.length}
-            next={loadMoreProperties}
-            hasMore={hasMore} // Controla si hay más elementos para cargar
-            loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
-          > */}
+           
             {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
             <div className={styles.skeletonContainer}>
-              {/* {loading ? (
+              {loading ? (
                 Array.from({ length: host.length || 12 }).map((_, idx) => (
                   <SkeletonCard key={idx} />
                 ))
-              ) : ( */}
+              ) : ( 
               <Cards host={host} />
-               {/* )}  */}
+               )}  
             </div>
           </section>
         </div>
 
-        {/* </InfiniteScroll> */}
       </div>
     </div>
   );

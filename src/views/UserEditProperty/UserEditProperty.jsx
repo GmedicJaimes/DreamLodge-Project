@@ -232,6 +232,7 @@ const UserEditProperty = () => {
                 </form>
                 <button type="submit" className={styles.buttonSubmit}>Upgrade</button> 
             </div>
+
         </div>
     )
 }

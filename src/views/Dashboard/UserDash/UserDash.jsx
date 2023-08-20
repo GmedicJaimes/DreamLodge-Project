@@ -2,7 +2,8 @@ import UsersPanel from "../../../components/UserPanel/UserPanel";
 import { useEffect, useState } from "react";
 import { getDocs, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from '../../../config/firebase';
-import style from '../PropertyDash/property.module.css'
+
+
 const UserDash = () => {
 
   const [users, setUsers] = useState([]);
@@ -35,9 +36,9 @@ const UserDash = () => {
           text: 'Delete ',
           value: true,
           visible: true,
-          className: style.button
         },
       }, 
+      dangerMode: true
       
     }).then(respuesta => {
       if(respuesta){
@@ -49,9 +50,9 @@ const UserDash = () => {
               text: 'Ok ',
               value: true,
               visible: true,
-              className: style.nice,
             },
-          }
+          },
+          dangerMode: true
         })
       }
     });

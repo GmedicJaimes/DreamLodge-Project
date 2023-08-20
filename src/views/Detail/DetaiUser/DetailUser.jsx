@@ -36,7 +36,7 @@ const DetailUser = () => {
     }
 
     return (
-        <div>
+        <div className={styles.containerInfoOne}>
 
             <div className={styles.containerInfo}>
                 <h1>My Account</h1>

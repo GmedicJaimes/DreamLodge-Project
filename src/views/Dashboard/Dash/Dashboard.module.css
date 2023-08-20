@@ -2,18 +2,33 @@
 
 .dashContainer{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   /* background-color: blue; */
-  width: 79vw;
-  height: 40vh;
+  width: 81vw;
+  /* height: 40vh; */
+  padding: 10px;
+}
+
+.title h2{
+  width: 80vw;
+  height: 40px;
+  text-align: left;
+  /* margin-top: 20px; */
+  /* margin-bottom: 20px; */
+  padding-bottom: 46px;
+  padding-left: 10px;
+  border-bottom: 2px solid #EADCCF;
+  /* background-color: #CD5A3E; */
 }
 
 .cardsDash {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0px;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-left: 8%;
 }
 .menuDash{
   width: 20%;
