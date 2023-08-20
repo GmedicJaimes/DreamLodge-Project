@@ -89,6 +89,7 @@ const DetailPost = () => {
     }
     window.scrollTo(0, 0);
     fetchBookedDates();
+    return 
   }, [id]);
 
   //REVIEWS============================================
@@ -133,25 +134,10 @@ const DetailPost = () => {
     }
   };
 
-  const [infoTicket, setInfoTicket] = React.useState({
-    idTicket: "",
-    propertyTicket: {},
-    daysTicket: "",
-    priceTicket: "",
-    propertyId: "",
-    buyerIdTicket: "",
-  });
-
   React.useEffect(() => {
     localStorage.setItem(
       "propertyData",
-      JSON.stringify({
-        property: property,
-        selectedDays: selectedDays,
-        totalPrice: totalPrice,
-        propertyId: id,
-        buyerId: auth?.currentUser?.uid,
-      })
+      JSON.stringify(property)
     );
   }, [property]);
 
@@ -370,30 +356,3 @@ const DetailPost = () => {
   );
 };
 export default DetailPost;
-
-
-
-
-
-
-
-
-{/* <section>
-            <div className={styles.priceDiv}>{property?.price} USD/night</div>
-            {totalPrice > 0 && <div className={styles.priceDiv}>Total to pay: $ {totalPrice}</div>}
-            <div className={styles.reservebtn} onClick={handleBuy}>Reserve</div>
-          </section>
-          <div>
-            <h3>Select the number of reservation days:</h3>
-            <input
-              className={styles.reservationDays}
-              type="number"
-              min="1"
-              value={selectedDays}
-              onChange={(e) => setSelectedDays(Number(e.target.value))}
-            />
-            <button className={styles.otroBoton} onClick={handleCalculatePrice}>Calculate Price</button>
-            {preferenceId && (
-              <Wallet initialization={{ preferenceId: preferenceId }} />
-            )}
-          </div> */}
