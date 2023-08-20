@@ -8,14 +8,14 @@
 }
 
 
-ul{
+.ulChris{
     display: flex;
     justify-content: center;
     margin-top: 1rem;;
     width: 100%;
 }
 
-li{
+.liChris{
     list-style: none;
     padding: 0.6rem;
     border-top: 1px solid white;
@@ -25,7 +25,7 @@ li{
 
 }
 
-li:hover{
+.liChris:hover{
     background-color: rgba(47, 46, 48, 0.7);
 }
 

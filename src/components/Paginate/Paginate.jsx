@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Paginate.module.css";
+import styles from "./Paginate.module.css";
 
 export const Paginate = ({ cardsPerPage, allCards, paginate, currentPage }) => {
   const pageNumbers = [];
@@ -9,10 +9,10 @@ export const Paginate = ({ cardsPerPage, allCards, paginate, currentPage }) => {
   }
 
   return (
-    <div className={style.paginateCtn}>
-      <ul>
+    <div className={styles.paginateCtn}>
+      <ul className={styles.ulChris}>
         {pageNumbers.map((number) => (
-          <li
+          <li className={styles.liChris}
             onClick={() => paginate(number)}
             key={number}
             style={{
@@ -25,7 +25,7 @@ export const Paginate = ({ cardsPerPage, allCards, paginate, currentPage }) => {
              
             }}
           >
-            <a className={style.paginateAnchor}>{number}</a>
+            <a className={styles.paginateAnchor}>{number}</a>
           </li>
         ))}
       </ul>
