@@ -1,12 +1,12 @@
 .container {
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 75px;
   background-color: #EADCCF;
-
+  
 }
 
 .containertwo {
@@ -77,4 +77,17 @@
   border: #CD5A3E;
   padding: 0.8rem;
   border-radius: 45px;
+}
+
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+
+
+@media (max-width: 600px){
+
+
+
+  
+  
 }

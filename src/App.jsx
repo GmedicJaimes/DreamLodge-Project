@@ -23,6 +23,12 @@ import { listAll, ref } from 'firebase/storage';
 import { getPropertiesList } from './config/handlers';
 import Dashboard from './views/Dashboard/Dash/Dashboard';
 import UsersPanel from './components/UserPanel/UserPanel';
+import PropertyDash from './views/Dashboard/PropertyDash/PropertyDash';
+import UserDash from './views/Dashboard/UserDash/UserDash';
+import Profit from './views/Dashboard/Profit/Profit';
+
+
+
 function App() {
 
   const imageUrlRef = ref(storage, 'properties/');
@@ -67,7 +73,7 @@ function App() {
         <Route path='/' element={<Landing/>}/>
         <Route path='/home' element={<Homepage host={host} setHost={setHost} originalHost={originalHost} setOriginalHost={setOriginalHost}/>}/>
         <Route path='/reserve/:id' element={<Reserve/>}/>
-        <Route path='/login' element={<LoginSignin/>}/>
+        <Route path='/login' element={<LoginSignin/>} />
         <Route path='/signin' element={<SignInView/>}/>
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>
@@ -79,10 +85,10 @@ function App() {
         <Route path='/tutorial' element={<TutorialPost/>}/>
         <Route path='/admin' element={<DashboardAdmin />}>
           <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
-          <Route path='/admin/propertys' element={''}/>
-          <Route path='/admin/users' element={''}/>
+          <Route path='/admin/propertys' element={<PropertyDash />}/>
+          <Route path='/admin/users' element={<UserDash />}/>
           <Route path='/admin/images' element={''}/>
-          <Route path='/admin/rent-profit' element={''}/>
+          <Route path='/admin/rent-profit' element={<Profit />}/>
         </Route>
       </Routes>
     </div>

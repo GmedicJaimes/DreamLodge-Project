@@ -27,9 +27,10 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
-console.log(user);
+
+    console.log(user);
     return (
-        <div>
+        <div className={styles.containerInfoOne}>
 
             <div className={styles.containerInfo}>
                 <h1>My Account</h1>

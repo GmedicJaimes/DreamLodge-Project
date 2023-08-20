@@ -6,12 +6,12 @@ import About from "../../components/About/About"
 
 export const LoginSignin = () => {
   return (
-    <div >
+    <div className={styles.loginContainer} >
       <div className={styles.bigContainer}>
         <Login/>
         {/* <SignIn/> */}
       </div>
-        <About/>
+        <About className={styles.aboutLogin}/>
     </div>
   )
 }

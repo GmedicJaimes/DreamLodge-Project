@@ -3,9 +3,9 @@
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items:center;
-  height: 767px;
+  height: 100vh;
   background-image: url(../../assets/landingImg.jpeg);;
   background-repeat: no-repeat;
   background-size: 100% 100%; 
@@ -20,6 +20,8 @@
   width: 100%;
   background-color: #EADCCF;
   height: 70px;
+  position: fixed;
+  top:0;
 }
 .link {
   padding: 0;
@@ -87,4 +89,52 @@
   border: #CD5A3E;
   color: white;
   cursor: pointer;
+}
+
+
+
+
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+
+@media (max-width: 589px) {
+
+.container{
+  margin: 0 auto;
+  height: 1400px;
+  object-fit: cover;
+  object-position: center top; 
+}
+
+  .headerLanding h1 {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .headerLanding button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    margin-right: 1rem;
+  }
+
+  .sectionLanding { /* Cambio aquí */
+    padding: 2rem;
+    height: auto;
+    width: 50%;
+  }
+
+  .sectionLanding h1 {
+    font-size: 2rem;
+  }
+
+  .sectionLanding p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sectionLanding button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
 }

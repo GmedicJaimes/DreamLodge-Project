@@ -1,8 +1,9 @@
 .bigContainerDetail {
   background-color: #f7f3f0;
-  margin: auto;
+  margin: 0 auto;
   margin-top: 3em;
-  width: 80em;
+  max-width: 75em;
+  border-radius: 2em;
 }
 
 .bigContainerDetail header{
@@ -47,21 +48,30 @@
 
 .imageCarrousel{
   width: 90%;
-  height: 50%;
+  height: 90%;
 }
 
+.falseLineOne{
+    height: 1px;
+    background-color: #e9d4c391;
+    width: 90%;
+    margin: auto;
+    margin-top: 0.1rem;
+    margin-bottom: 1.5em;
+    border-radius: 1em;
+  
+}
 .falseLine{
   height: 1px;
-  background-color: #bd4e3391;
+  background-color: #e9d4c391;
   width: 90%;
   margin: auto;
-  margin-top: 1.3em;
-  margin-bottom: 1.3em;
+  margin-top: -10px;
+  margin-bottom: 4em;
   border-radius: 1em;
 }
 
 .overviewRating{
-  height: 11em;
   width: 80%;
   margin: auto;
   background-color: #EADCCF;
@@ -80,7 +90,7 @@
   display: flex;
   margin: auto;
   justify-content: space-evenly;
-  list-style-type:circle
+  list-style-type:circle;
 
 }
 
@@ -101,11 +111,19 @@
   margin-top: 1.1em;
   font-size: 1.6em;
   text-align: start;
+
 }
 
 .roomsD img{
   width: 30px;
 }
+
+.servicesD {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 
 .servicesD li{
   font-size: 1.2em;
@@ -115,8 +133,15 @@
 
 }
 
+.twoColumns {
+  column-count: 2;
+}
+
+
+
 .imageRelative{
   position: relative;
+  height: 500px;
 }
 .prevButton{
   width: 35px;
@@ -162,21 +187,19 @@
   cursor: pointer;
 }
 
-.paymentBox{
-  height: 11em;
-  width: 80%;
+
+.reviewBigBox{
+  min-height: 11em;
+  width: 85%;
   margin: auto;
   background-color: #EADCCF;
   border-radius: 1em;
   margin-top: 2em;
-  margin-bottom: 2em;
-  display: flex;
-  height: 15em;
-  justify-content: space-evenly;
-  align-items: center;
+  margin-bottom: 5rem;
+  padding: 1em 2em;
 }
 
-.paymentBox .priceDiv{
+.reviewBox .priceDiv{
   background-color: #CD5A3E;
   border-radius: 5px;
   color: white;
@@ -220,7 +243,6 @@ a{
 
 .reservebtn{
   background-color: #CD5A3E;
-  border-radius: 0.2em;
   color: white;
   font-weight: 700;
   font-size: 1.7em;
@@ -262,20 +284,37 @@ a{
 
 
 
+
+
 .containerSection{
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
-  width: 90%;
+  flex-wrap: wrap;
+  padding: 0 3.5em;
 }
 
+.listServices {
+  width: calc(50% - 10px); /* Ajusta el ancho según tus necesidades */
+  margin-bottom: 10px;
+}
+
+
 .containerSectionOne{
-  width: 45%;
+  margin: 0 auto;
+  max-width: 35em;
+  text-align: left;
+}
+
+.containerSectionTwo{
+  margin: 0 auto;
+  max-width: 35em;
   text-align: left;
 }
 
 .containerSectionOne section{
-  margin: 3.3rem 0;
+  margin: 1rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .containerSectionOne section h3 {
@@ -326,6 +365,42 @@ margin: 1rem;
 
 
 .containerSection{
-  height: 600px;
+  /* height: 600px; */
   margin-bottom:60px;
+}
+
+
+@media(max-width:600){
+  .bigContainerDetail{
+    width: 60%;
+  }
+
+
+}
+
+.tittleSpan{
+  background-color: #99997A;
+  color: white;
+  padding: 0 6px;
+}
+
+.headRev{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+
+.singleReview{
+  max-width: 45%;
+  padding: 20px;
+  display: flex;
+  background-color: rgb(247, 244, 232);
+  border-radius: 7px;
+}
+
+.iconUserReview{
+  width: 3em;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: 0 1em;
 }
