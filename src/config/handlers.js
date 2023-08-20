@@ -542,80 +542,6 @@ export const filterByStateAndCity = async (state, city) => {
   }
 }
 
-//....................................................................................................
-
-//======================================== BOOKING SECTION ========================================
-//======================================== BOOKING SECTION ========================================
-//======================================== BOOKING SECTION ========================================
-//======================================== BOOKING SECTION ========================================
-
-
-// export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
-//   try {
-//     const bookingsRef = collection(db, "bookings");
-
-//     // Convertir las fechas a objetos Date nativos
-//     const formattedStartDate = Timestamp.fromDate(new Date(startDate));
-//     const formattedEndDate = Timestamp.fromDate(new Date(endDate));
-
-//     // 1. Reservas que comienzan dentro de tu rango.
-//     const startWithinSnapshot = await getDocs(
-//       query(
-//         bookingsRef,
-//         where("propertyId", "==", propertyId),
-//         where("startDate", ">=", formattedStartDate),
-//         where("startDate", "<=", formattedEndDate)
-//       )
-//     );
-
-//     // 2. Reservas que terminan dentro de tu rango.
-//     const endWithinSnapshot = await getDocs(
-//       query(
-//         bookingsRef,
-//         where("propertyId", "==", propertyId),
-//         where("endDate", ">=", formattedStartDate),
-//         where("endDate", "<=", formattedEndDate)
-//       )
-//     );
-
-//     // 3. Reservas que comienzan antes de tu fecha de inicio y terminan después o en la fecha de inicio.
-//     const overlappingStartPart1Snapshot = await getDocs(
-//       query(
-//         bookingsRef,
-//         where("propertyId", "==", propertyId),
-//         where("startDate", "<=", formattedStartDate)
-//       )
-//     );
-//     const overlappingStartResults = overlappingStartPart1Snapshot.docs.filter(
-//       doc => doc.data().endDate >= formattedStartDate
-//     );
-        
-
-//     // 4. Reservas que comienzan y terminan dentro de tus fechas.
-//     const containedWithinSnapshot = await getDocs(
-//       query(
-//         bookingsRef,
-//         where("propertyId", "==", propertyId),
-//         where("startDate", ">=", formattedStartDate),
-//         where("endDate", "<=", formattedEndDate)
-//       )
-//     );
-//     console.log("Reservas que comienzan dentro del rango:", startWithinSnapshot.docs.map(doc => doc.data()));
-// console.log("Reservas que terminan dentro del rango:", endWithinSnapshot.docs.map(doc => doc.data()));
-// console.log("Reservas que se superponen al inicio:", overlappingStartSnapshot.docs.map(doc => doc.data()));
-// console.log("Reservas contenidas dentro del rango:", containedWithinSnapshot.docs.map(doc => doc.data()));
-
-
-//     return startWithinSnapshot.size === 0 
-//       && endWithinSnapshot.size === 0 
-//       && overlappingStartResults.size === 0 
-//       && containedWithinSnapshot.size === 0;
-
-//   } catch (error) {
-//     console.error('Error checking property availability:', error);
-//     return false;
-//   }
-// };
 
 
 //======================================== BOOKING SECTION ========================================
@@ -664,7 +590,7 @@ const checkOverlappingStart = async (propertyId, formattedStartDate) => {
   const overlappingStartResults = snapshot.docs.filter(
     doc => doc.data().endDate >= formattedStartDate
   );
-  //console.log("Reservas que se superponen al inicio:", overlappingStartResults.map(doc => doc.data()));
+  console.log("Reservas que se superponen al inicio:", overlappingStartResults.map(doc => doc.data()));
 
   return overlappingStartResults.length === 0;
 }
@@ -694,7 +620,7 @@ const checkContainedWithin = async (propertyId, formattedStartDate, formattedEnd
     doc.data().endDate <= formattedEndDate && endSnapshot.docs.includes(doc)
   );
 
-  //console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
+  console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
 
   return filteredDocs.length === 0;
 }
@@ -772,7 +698,7 @@ export const getBookedDatesForProperty = async (propertyId) => {
     return bookedDates;
 
   } catch (error) {
-    console.error("Error obteniendo las fechas reservadas:", error);
+   // console.error("Error obteniendo las fechas reservadas:", error);
     return [];
   }
 };
@@ -802,7 +728,7 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
       swal( 'Success','Reservation made!', "success");
 
     } else {
-      console.log('Property is not available for the selected dates');
+     // console.log('Property is not available for the selected dates');
       // swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 
@@ -870,7 +796,7 @@ export const registerPurchases = async (userId, propertyId) => {
 
     // console.log('Compra registrada exitosamente');
   } catch (error) {
-    console.error('Error al registrar la compra:', error);
+    //console.error('Error al registrar la compra:', error);
   }}
 
   
@@ -917,7 +843,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
     
     return availableProperties;
   } catch (error) {
-    console.error('Error fetching available properties in range:', error);
+   // console.error('Error fetching available properties in range:', error);
     return [];
   }
 };
