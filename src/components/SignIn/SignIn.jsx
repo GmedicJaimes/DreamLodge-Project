@@ -203,6 +203,7 @@ const SignIn = () => {
  
   const isFormValid = Object.keys(errors).length === 0 && register.email && register.password; // Add other fields as needed
 
+  
 
 
 

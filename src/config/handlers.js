@@ -61,7 +61,7 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      alert("Welcome to DreamLodge!");
+      swal("Success", "You have successfully logged in!", "success");
       // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
