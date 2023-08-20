@@ -106,10 +106,8 @@ const[preferenceId, setPreferenceId] = useState(null);
       JSON.stringify(dataTicket)
     );
   }, [property]);
-
-
-
-  const countSelectedDays = () => {
+  
+  useEffect(() => {
     if (startDate && endDate) {
       const start = dayjs(startDate);
       const end = dayjs(endDate);
@@ -117,7 +115,17 @@ const[preferenceId, setPreferenceId] = useState(null);
       setDataTicket({
         ...dataTicket,
         daysTicket: diff
-      })
+      });
+    }
+  }, [startDate, endDate]);
+  
+
+
+  const countSelectedDays = () => {
+    if (startDate && endDate) {
+      const start = dayjs(startDate);
+      const end = dayjs(endDate);
+      const diff = end.diff(start, "day")
       return diff;
     }
     return 0;
