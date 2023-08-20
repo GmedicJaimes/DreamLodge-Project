@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 
 import styles from "./Homepage.module.css";
-// import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
 import {
@@ -9,6 +9,7 @@ import {
   sortPropertiesByPrice,
   getAllBookings,
   fetchAvailablePropertiesInRange,
+  getPropertiesList
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import { listAll } from "firebase/storage";
@@ -32,6 +33,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
+  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
+
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
 
   const [stateFilter, setStateFilter] = useState(null);
@@ -41,7 +44,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const handleStateFilter = (value)=>{
     setStateFilter(value);
   };
-  const handleCityFilter = (value)=>{
+  const handleCityFilter = (value) => {
     setCityFilter(value)
   };
 
@@ -86,8 +89,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(filteredHost);
 
     }
-    
-    
+
+
     fetchFilteredHost();
     setLoading(false);
 
@@ -135,6 +138,27 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   //   setAscending(!ascending);
   // };
 
+  // const handleScrollInfinite = async () => {
+  //   try {
+  //     const propertiesPerPage = 8;
+  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
+
+  //     const additionalProperties = await getPropertiesList(
+  //       currentPage,
+  //       propertiesPerPage
+  //     );
+
+  //     if (additionalProperties.length === 0) {
+  //       setHasMore(false);
+  //     } else {
+  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error loading more properties:", error);
+  //   }
+  // };
+
+
   return (
     <div>
       <div className={styles.containerHome}>
@@ -172,23 +196,35 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-           
+            {/* <InfiniteScroll
+    dataLength={host.length}
+    next={loadMoreProperties}
+    hasMore={hasMore} // Controla si hay más elementos para cargar
+    loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
+  > */}
             {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
             <div className={styles.skeletonContainer}>
               {loading ? (
                 Array.from({ length: host.length || 12 }).map((_, idx) => (
                   <SkeletonCard key={idx} />
                 ))
-              ) : ( 
-              <Cards host={host} />
-               )}  
+              ) : (
+                <Cards host={host} />
+              )}
             </div>
+            {/* {host.map((property) => (
+      <PropertyComponent key={property.id} property={property} />
+    ))} */}
+            {/* </InfiniteScroll> */}
           </section>
+
         </div>
 
+        {/* </InfiniteScroll> */}
       </div>
     </div>
   );
 };
+
 
 export default Homepage;

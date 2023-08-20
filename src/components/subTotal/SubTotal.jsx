@@ -23,7 +23,6 @@ import axios from 'axios';
 
   const [bookedDates, setBookedDates] = useState([]);
 
-
 //integracion mercado pago: 
 const[preferenceId, setPreferenceId] = useState(null);
   initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
@@ -43,62 +42,17 @@ const[preferenceId, setPreferenceId] = useState(null);
             console.log(error)
         }
     }
-   
-    const handleBuy = async()=>{
-      const id = await createPreference();
-      //si la preferencia nos devuelve un id, seteamos el estado local para renderizar el boton
-      if (id){
-          setPreferenceId(id);
-          //ademas, comienza el intervalo loopeado y la locomotora del sabor del dinero, esperando que MP nos de una respuesta del pago;
-          try {
-              await new Promise((resolve)=>{
-                  const intervalPay = setInterval(async()=>{
-                  const paymentStatus = await getPaymentStatus(id);
-                  if(paymentStatus === 'approved'){
-                      //si el pago fue aprovado se actualiza el avaible de "true" a "false"
-                      updateAvaible(property.id, preferenceId);
-                      //cortamos el problema y resolvemos la promesa
-                      clearInterval(intervalPay)
-                      resolve()
-                    }else if(paymentStatus === 'rejected'){
-                      //si el pago es rechazado, se corda el intervalo sin actualizar
-                      clearInterval(intervalPay);
-                      resolve()
-                    }
-                  })
-                }, 10000)
-              } catch (error) {
-                console.error("Error en la obtencion del status de pago", error);
-              }
-            };
-          };
-          
-          const submitBooking = async () => {
-            if (!startDate || !endDate) {
-              alert('Please select both start and end dates.');
-              return;
-            }
-          
-            if (startDate.isAfter(endDate)) {
-              alert('Start date cannot be after end date.');
-              return;
-            }
-          
-            try {
-            
-              await createBooking(propertyId, startDate, endDate);
-            } catch (error) {
-              console.log(error);
-              alert('An error occurred while making the booking.');
-            }
-          };
 
           const bookingAndBuy = async () => {
             try {
               const id = await createPreference();
               if (id) {
                 setPreferenceId(id);
-          
+                setDataTicket({
+                  ...dataTicket,
+                  idTicket: id,
+                  totalTicket: subTotal
+                })
                 try {
                   const intervalPay = setInterval(async () => {
                     const paymentStatus = await getPaymentStatus(id);
@@ -114,12 +68,12 @@ const[preferenceId, setPreferenceId] = useState(null);
                 }
           
                 if (!startDate || !endDate) {
-                  alert('Please select both start and end dates.');
+                  swal('Please select both start and end dates.');
                   return;
                 }
           
                 if (startDate.isAfter(endDate)) {
-                  alert('Start date cannot be after end date.');
+                  swal('Start date cannot be after end date.');
                   return;
                 }
           
@@ -129,7 +83,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                   await createBooking(propertyId, startDate, endDate);
                 } catch (error) {
                   console.log(error);
-                  alert('An error occurred while making the booking.');
+                  swal('An error occurred while making the booking.');
                 }
               }
             } catch (error) {
@@ -140,8 +94,18 @@ const[preferenceId, setPreferenceId] = useState(null);
   // ==========================================================
 
 
+  const [ dataTicket, setDataTicket ] = React.useState({
+    daysTicket: "",
+    totalTicket: "",
+    idTicket: ""
+  })
 
-
+  React.useEffect(() => {
+    localStorage.setItem(
+      "dataTicket",
+      JSON.stringify(dataTicket)
+    );
+  }, [property]);
 
 
 
@@ -150,6 +114,10 @@ const[preferenceId, setPreferenceId] = useState(null);
       const start = dayjs(startDate);
       const end = dayjs(endDate);
       const diff = end.diff(start, "day")
+      setDataTicket({
+        ...dataTicket,
+        daysTicket: diff
+      })
       return diff;
     }
     return 0;
