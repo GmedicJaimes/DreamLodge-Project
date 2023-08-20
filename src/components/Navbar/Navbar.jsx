@@ -42,7 +42,7 @@ const Navbar = () => {
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {swal("You must be logged in")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {swal({title: 'Warning',text: "You must be logged in",icon: 'warning', dangerMode: true })}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>

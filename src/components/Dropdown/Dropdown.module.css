@@ -46,6 +46,14 @@ ul {
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.486);
 }
 
+/* .dropdownMenu ul{
+  display: flex;
+  flex-direction: column;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+} */
+
 .dropdownMenu::before{
   content: "";
   position: absolute;
