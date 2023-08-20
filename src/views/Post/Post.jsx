@@ -138,6 +138,9 @@ const Post = () => {
           imageFile: [],
           available: true,
         });
+
+        resetForm(); // reiniciar el formulario después de la publicación exitosa
+        alertPost(); // Mostrar la alerta de publicación exitosa
       } catch (error) {
         console.log(error);
       }
@@ -258,6 +261,10 @@ const Post = () => {
       imageFile: [],
       available: true,
     });
+  };
+
+  const alertPost = () => {
+    swal("Success", "The property has been published successfully", "success");
   };
 
   return (
@@ -445,7 +452,7 @@ const Post = () => {
             </div>
           </section>
           <section className={styles.btnFoot}>
-            <button type="submit">Post Lodge</button>
+            <button type="submit"  onClick={handleSubmit}>Post Lodge</button>
             <button type="button" onClick={resetForm}>Reset Form</button>
           </section>
           </form>

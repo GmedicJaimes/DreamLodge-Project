@@ -276,7 +276,7 @@ export const createProp = async (formData, file) => {
 
     getPropertiesList();
 
-    alert('¡Propiedad creada!');
+   
   } catch (error) {
     console.log(error)
   }

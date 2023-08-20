@@ -50,7 +50,7 @@ const DetailPost = () => {
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
       if (!isAvailable) {
-        alert("La propiedad no está disponible para estas fechas.");
+        swal("La propiedad no está disponible para estas fechas.");
       }
     }
   };
@@ -61,7 +61,7 @@ const DetailPost = () => {
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {
-        alert("La propiedad no está disponible para estas fechas.");
+        swal("The property is not available for these dates.");
         // Aquí puedes manejar cualquier otra lógica que necesites,
         // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
       }
@@ -113,7 +113,7 @@ const DetailPost = () => {
       setReviewContent("");
       setReviewRating(0);
 
-      alert("Reseña enviada con éxito");
+      swal("Review sent successfully");
     } catch (error) {
       console.log(error);
     }
