@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PropertiesPanel from "../../../components/PropertiesPanel/PropertiesPanel";
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../../config/firebase';
 import style from '../../Dashboard/PropertyDash/property.module.css'
 
@@ -13,7 +13,7 @@ const PropertyDash = () => {
       try {
         const propertiesRef = collection(db, 'properties');
         const querySnapshot = await getDocs(propertiesRef);
-        const properties = querySnapshot.docs.map(doc => doc.data());
+        const properties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setAllProperties(properties);
       } catch (error) {
         console.error('Error al obtener todas las propiedades:', error);
@@ -59,17 +59,14 @@ const PropertyDash = () => {
     });
     if (confirmDelete) {
       try {
-       
-        const propertyRef = db.collection('properties').doc(propertyId);
-  
- 
-        await propertyRef.update({ deleted: true });
-  
-       
-        setFilteredProperties(prevProperties =>
+        const propertyRef = doc(db, 'properties', propertyId); // Corregido
+    
+        await updateDoc(propertyRef, { delete: true });
+    
+        setAllProperties(prevProperties =>
           prevProperties.filter(property => property.id !== propertyId)
         );
-  
+    
         console.log(`Propiedad con ID ${propertyId} borrada lógicamente.`);
       } catch (error) {
         console.error('Error al borrar la propiedad:', error);

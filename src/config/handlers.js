@@ -9,9 +9,7 @@ import { serverTimestamp } from 'firebase/firestore';
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
 const propertiesCollectionRef= collection(db, "properties"); 
-
 // const propertiesDetailId = collection(db, `properties/${documentId}`)
-
 const imageUrlRef = ref(storage, 'properties/')
 
 
@@ -965,7 +963,7 @@ export const getBookingsByPropertyId = async (propertyId) => {
 export const fetchFilteredProperties = async (filters) => {
   try {
     const propertiesCollectionRef = collection(db, 'properties');
-    console.log(filters)
+    // console.log(filters)
     let baseQuery = propertiesCollectionRef;
     
     if (filters.rooms) {
@@ -986,16 +984,7 @@ export const fetchFilteredProperties = async (filters) => {
       baseQuery = query(baseQuery, where('location.city', '==', filters.cityFilter));
     };
     
-    // if (filters.priceRangeFilter) {
-    //   const [minPrice, maxPrice] = filters.priceRangeFilter.split('-');
-    //   // console.log('minPrice:', minPrice);
-    //   // console.log('maxPrice:', maxPrice);
-    //   baseQuery = query(
-    //     baseQuery,
-    //     where('price', '>=', Number(minPrice, 10)),
-    //     where('price', '<=', Number(maxPrice, 10))
-    //   );
-    // };
+    
     const querySnapshot = await getDocs(baseQuery);
     const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 

@@ -36,16 +36,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [cityFilter, setCityFilter] = useState(null);
 
-  const [priceSortOrder, setPriceSortOrder] = useState("asc");
-
-  const togglePriceSortOrder = () => {
-    if (priceSortOrder === "asc") {
-      setPriceSortOrder("desc");
-    } else {
-      setPriceSortOrder("asc");
-    }
-  };
-
   const handleStateFilter = (value)=>{
     setStateFilter(value);
   };
@@ -86,7 +76,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       rooms: rooms,
       propertyType: propertyTypeFilter,
       stateFilter: stateFilter,
-      cityfilter: cityFilter
+      cityFilter: cityFilter
     };
 
     async function fetchFilteredHost() {
@@ -97,38 +87,38 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     fetchFilteredHost();
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
 
-  // useEffect(() => {
-  //   async function fetchAndUpdateHost() {
-  //     if (!host.length) {
-  //       const propertiesCollectionRef = collection(db, "properties");
-  //       const propertiesSnapshot = await getDocs(propertiesCollectionRef);
-  //       const properties = propertiesSnapshot.docs.map(doc => doc.data());
+  useEffect(() => {
+    async function fetchAndUpdateHost() {
+      if (!host.length) {
+        const propertiesCollectionRef = collection(db, "properties");
+        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+        const properties = propertiesSnapshot.docs.map(doc => doc.data());
   
-  //       setHost(properties);
-  //     }
+        setHost(properties);
+      }
   
-  //     let filteredHost = [...host];
+      let filteredHost = [...host];
   
-  //     if (rooms) {
-  //       filteredHost = filteredHost.filter(
-  //         (host) => host.stances && host.stances.rooms === Number(rooms)
-  //       );
-  //     }
+      if (rooms) {
+        filteredHost = filteredHost.filter(
+          (host) => host.stances && host.stances.rooms === Number(rooms)
+        );
+      }
   
-  //     if (guest) {
-  //       filteredHost = filteredHost.filter((property) => {
-  //         return property.stances && property.stances.guest === Number(guest);
-  //       });
-  //     }
+      if (guest) {
+        filteredHost = filteredHost.filter((property) => {
+          return property.stances && property.stances.guest === Number(guest);
+        });
+      }
   
-  //     setHost(filteredHost);
-  //   }
-  // // console.log(host,"desde hompeage")
-  //   fetchAndUpdateHost();
-  // }, [guest, rooms, allProperties]);
+      setHost(filteredHost);
+    }
+  // console.log(host,"desde hompeage")
+    fetchAndUpdateHost();
+  }, [guest, rooms, allProperties]);
   
 
-  // // Función para manejar el ordenamiento por precio
+  // Función para manejar el ordenamiento por precio
   // const handleSortByPrice = () => {
   //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
   //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
@@ -165,7 +155,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
             onStateChange={handleStateFilter}
             onCityChange={handleCityFilter}
-            togglePriceSortOrder={togglePriceSortOrder}
           />
           {/* <SideFilters
           setHost={setHost}
