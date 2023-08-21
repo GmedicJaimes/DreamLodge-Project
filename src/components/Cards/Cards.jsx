@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Cards.module.css";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Paginate } from "../Paginate/Paginate";
+import Calendar from "../Calendar/Calendar"
+
 
 const Cards = ({ host, currentPage, SetCurrentPage }) => {
   const allCards = host;
@@ -32,18 +34,35 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
 
   const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
 
+  const resetCurrentPage = () => {
+    SetCurrentPage(1);
+  };
+
+
+
+
   return (
     <div className={styles.containerCards}>
 
+
+        
+    
 <div className={styles.containerTop}>
-{Array.isArray(currentCards) && currentCards.length > 0 ? (
+{Array.isArray(currentCards) && 
   currentCards.map((property) => (
     <Card property={property} key={property.id} />
   ))
+<<<<<<< HEAD
 ) : (
   <div className={styles.sorryP}>Sorry, no properties are available with those search criteria. </div>
 )}
+=======
+}
+
+
+>>>>>>> 258e7a4a26f63744e3fdc1fba4f305f6acf55567
       </div>
+ 
       <div className={styles.containerBottom}>
         <Paginate
           cardsPerPage={cardsPerPage} // Number of countries per page
@@ -52,24 +71,11 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
           currentPage={currentPage} // Current page number
         />
       </div>
-     
-      
+
+    
      
     </div>
   );
 };
 
 export default Cards;
-
-// const Cards = ({ host }) => {
-//   return (
-//     <div className={styles.containerCards}>
-//       {Array.isArray(host) &&
-//         host.map((property) => (
-//           !property.delete && <Card property={property} key={property.id} />
-//         ))}
-//     </div>
-//   );
-// };
-
-// export default Cards;

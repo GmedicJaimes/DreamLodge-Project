@@ -6,57 +6,55 @@ mercadopago.configure({
 })
 
 
+//   let preference = {
+//       items: [
+//         {
+//           title: req.body.description,
+//           unit_price: Number(req.body.price),
+//           quantity: Number(req.body.quantity),
+//         },
+//       ],
+//       back_urls: {
+//           success:"http://localhost:5173/nice",
+//           failure: "http://localhost:3001/failure",
+//       },
+//       auto_return: "approved"
+//     };
+  
+//     mercadopago.preferences
+// .create(preference)
+// .then(function (response) {
+//   res.json({id : response.body.id})
+// })
+// .catch(function (error) {
+//   console.log(error);
+// });
 const createPayment = async(req, res)=>{
     try {
-        let preference = {
-            items: [
+      const result = await mercadopago.preferences.create({
+          items:[
               {
-                title: req.body.description,
-                unit_price: Number(req.body.price),
-                quantity: Number(req.body.quantity),
-              },
-            ],
-            back_urls: {
-                success:"http://localhost:5173/nice",
-                failure: "http://localhost:3001/failure",
-            },
-            auto_return: "approved"
-          };
-        
-          mercadopago.preferences
-      .create(preference)
-      .then(function (response) {
-        res.json({id : response.body.id})
+                  title: req.body.description,
+                  unit_price: Number(req.body.price),
+                  currency_id: "ARS",
+                  quantity: Number(req.body.quantity),
+                  propertyId: req.body.propertyId,
+                  userId: req.body.userId
+              }
+          ],
+          back_urls: {
+              success:" http://localhost:5173/nice"
+          },
+          notification_url: "https://a3ec-2800-810-5ab-2d5-510e-b1c-3123-df0b.ngrok.io/webhook"
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+  
+      // console.log(result)
+      res.send(result.body)
         
     } catch (error) {
         console.log(error)
-        return res.status(404).send('Algo salio mal en el createPayment')
+        return res.status(404).send(error)
     }
-    // mercadopago.configure({
-    //     access_token:"TEST-1217239966605378-080822-11c74257002c2927c70422faaaaf3e94-1446217996"
-    // });
-    
-    // const result = await mercadopago.preferences.create({
-    //     items:[
-    //         {
-    //             title: "Casita en Punta Cogote",
-    //             unit_price: 1500,
-    //             currency_id: "ARS",
-    //             quantity: 1
-    //         }
-    //     ],
-    //     back_urls: {
-    //         success:"http://localhost:3001/success"
-    //     },
-    //     notification_url: " https://2107-2800-810-5ab-2d5-2887-feca-165c-6836.ngrok.io/webhook"
-    // })
-
-    // console.log(result)
-    // res.send(result.body)
 };
 const listenWebHook = async(req, res)=>{
     const payment = req.query;

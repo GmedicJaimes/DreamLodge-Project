@@ -90,6 +90,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const filters = {
       guest: guest,
       rooms: rooms,
@@ -100,12 +101,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
+      setLoading(false); // Set loading to false only after data is fetched
       setHost(filteredHost);
-      setLoading(false);
+
+
     }
 
     fetchFilteredHost();
-    
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
 
   
@@ -192,22 +194,31 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           ascending={ascending}
         /> */}
           </aside>
+
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-            {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
-            <div className={styles.skeletonContainer}>
-              {loading ? (
-                Array.from({ length: host.length || 12 }).map((_, idx) => (
-                  <SkeletonCard key={idx} />
-                ))
-              ) : (
-                <Cards host={host}  currentPage={currentPage} SetCurrentPage={SetCurrentPage}/>
-              )}
-            </div>
-            {/* {host.map((property) => (
-      <PropertyComponent key={property.id} property={property} />
-    ))} */}  
-          </section>
+  <div className={styles.skeletonContainer}>
+    {loading ? (
+      Array.from({ length: host.length || 12 }).map((_, idx) => (
+        <SkeletonCard key={idx} />
+      ))
+    ) : (
+      host.length > 0 ? (
+        <Cards host={host} />
+      ) : null
+    )}
+  </div>
+  
+    <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
+      Sorry, no properties are available with those search criteria.
+    </p>
+
+
+</section>
+
+
+
+
         </div>
       </div>
     </div>
@@ -216,3 +227,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
 
 export default Homepage;
+
+
+//Sorry, no properties are available with those search criteria.
