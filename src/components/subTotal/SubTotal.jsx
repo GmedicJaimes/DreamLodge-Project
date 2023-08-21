@@ -8,9 +8,10 @@ import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Im
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
 import { Link } from "react-router-dom"
-import { createBooking, isPropertyAvailable,  getBookingsByPropertyId} from "../../config/handlers";
+import { createBooking, isPropertyAvailable,  getBookingsByPropertyId, getPaymentStatus} from "../../config/handlers";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
+import { auth } from "../../config/firebase";
 
 
 
@@ -33,6 +34,8 @@ const[preferenceId, setPreferenceId] = useState(null);
                 price: `${subTotal}`,
                 quantity: `${countSelectedDays()}`,
                 currency_id: "ARS",
+                propertyId: propertyId,
+                userId: auth.currentUser.uid
             });
 
             const { id } = response.data;
@@ -106,7 +109,7 @@ const[preferenceId, setPreferenceId] = useState(null);
       JSON.stringify(dataTicket)
     );
   }, [property]);
-  
+
   useEffect(() => {
     if (startDate && endDate) {
       const start = dayjs(startDate);
@@ -135,12 +138,7 @@ const[preferenceId, setPreferenceId] = useState(null);
   const subTotal = countSelectedDays() * property?.price
  
 
-//   React.useEffect(() => {
-//     if (startDate && endDate) {
-//       const count = countSelectedDays();
-//       console.log(`counted days` , count);
-//     }
-//   }, [startDate, endDate]);
+
 
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;

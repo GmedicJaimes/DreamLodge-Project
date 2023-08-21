@@ -37,7 +37,6 @@ const DetailPost = () => {
 
   const propertyId = id
 
-
   //CALENDAR DATES ============================================
 
   const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
@@ -108,7 +107,7 @@ const DetailPost = () => {
         rating: reviewRating,
       });
 
-      // Limpia los campos del formulario después de enviar la reseña
+      
       setReviewAuthor("");
       setReviewContent("");
       setReviewRating(0);
