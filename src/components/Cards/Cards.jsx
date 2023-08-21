@@ -36,10 +36,14 @@ const Cards = ({ host }) => {
     <div className={styles.containerCards}>
 
 <div className={styles.containerTop}>
-        {Array.isArray(currentCards) &&
-          currentCards.map((property) => (
-            <Card property={property} key={property.id} />
-          ))}
+{Array.isArray(currentCards) && currentCards.length > 0 ? (
+  currentCards.map((property) => (
+    <Card property={property} key={property.id} />
+  ))
+) : (
+  <div className={styles.sorryP}>Sorry, no properties are available with those search criteria. </div>
+)}
+
       </div>
       <div className={styles.containerBottom}>
         <Paginate
