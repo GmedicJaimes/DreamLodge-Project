@@ -85,11 +85,10 @@
 }
 
 .bodyContainer{
-    display: flex;
-
-    margin: 2rem 17%;
-    margin-right: 200rem;
-
+    /* display: flex; */
+    min-height: 45vh;
+    margin: auto;
+    /* margin-right: 200em; */
     border-radius: 0.3em;
 }
 
@@ -110,7 +109,7 @@
   margin-bottom: 3em;
 }
 
-.h4 {
+.h4MP {
 font-size: 2rem;
 color: #CD5A3E;
 text-align: center;
@@ -240,10 +239,12 @@ margin-right: 51rem;
   .noProperties{
     color: black;
     text-align: center;
-    /* margin-left: 20rem; */
+    margin-left: 20rem;
     font-size: 1.5em;
     width: 400px;
     /* margin: 2em; */
+    /* margin: auto; */
+    
     margin-bottom: 99px;
   }
 
@@ -262,6 +263,9 @@ margin-right: 51rem;
 }
 
 
+.containerInfoOne{
+  min-height: 100vh;
+}
 
 /* .seeMbtn {
     padding: 1em;

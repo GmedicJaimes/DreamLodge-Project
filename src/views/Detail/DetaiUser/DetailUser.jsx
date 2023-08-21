@@ -62,12 +62,10 @@ const DetailUser = () => {
                         <h5>Score</h5>
                         <p className={styles.blockP}>{/* {user?.review} */} 4.7</p>
                     </div>
-
                 </div>
             </div>
-            
                 <div className={styles.hrHalfWay}> </div>
-                <h4 className={styles.h4}>My Properties</h4>
+                <h4 className={styles.h4MP}>My Properties</h4>
                 <div className={styles.bodyContainer}>
                 <div className={styles.menuSide}>
                     
