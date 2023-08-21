@@ -34,7 +34,11 @@ const SubTotal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
-
+  const [dataTicket, setDataTicket] = React.useState({
+    daysTicket: "",
+    totalTicket: "",
+    idTicket: "",
+  });
 
   //integracion mercado pago:
   const [preferenceId, setPreferenceId] = useState(null);
@@ -119,15 +123,10 @@ const SubTotal = ({
 
   // ==========================================================
 
-  const [dataTicket, setDataTicket] = React.useState({
-    daysTicket: "",
-    totalTicket: "",
-    idTicket: "",
-  });
 
   React.useEffect(() => {
-    localStorage.setItem("dataTicket", JSON.stringify(dataTicket));
-  }, [property]);
+    localStorage.setItem("dataTicket", JSON.stringify({dataTicket}));
+  }, [dataTicket]);
 
   useEffect(() => {
     if (startDate && endDate) {

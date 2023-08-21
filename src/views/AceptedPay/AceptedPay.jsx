@@ -12,15 +12,25 @@ const AceptedPay = () => {
 
     const [ dataRecipe, setDataRecipe ] = React.useState({})
     const [ userData, setUserData ] = React.useState()
+    const [ ticketInfo, setTicketInfo ] = React.useState({})
 
     React.useEffect( () => {
 
         const defineRecipe = async () => {
         const savedRecipe = localStorage.getItem("propertyData")
-        if (savedRecipe) {
+
+        const infoRecipe = localStorage.getItem("dataTicket")
+        
+        if (savedRecipe || infoRecipe) {
             const parsedRecipe = JSON.parse(savedRecipe)
+            
+            const parsedInfo = JSON.parse(infoRecipe)
+            setTicketInfo(parsedInfo)
+
             setDataRecipe(parsedRecipe)
-            const user = await getUserByUID(parsedRecipe.property.userId)
+            const idOwner = parsedRecipe.property.userId
+
+            const user = await getUserByUID(idOwner)
             // console.log(user);
             setUserData(user);
             // console.log(parsedRecipe.property.uui)
@@ -31,6 +41,7 @@ const AceptedPay = () => {
         defineRecipe()
     }, []);
 
+    
     return(
         <div>
             <div className={styles.containerPrev}>
@@ -49,10 +60,10 @@ const AceptedPay = () => {
                             <h1>Recipe</h1>
                             <p>-----------------------------</p>
                             <p>Location: {dataRecipe?.propertyTicket?.name}</p>
-                            <p>Ticket: {dataRecipe?.idTicket}</p>
-                            <p>Total Days {dataRecipe?.daysTicket}</p>
+                            <p>Ticket: {ticketInfo?.dataTicket?.idTicket}</p>
+                            <p>Total Days {ticketInfo?.dataTicket?.daysTicket}</p>
                             <p>-----------------------------</p>
-                            <h2>Total price: {dataRecipe?.priceTicket}</h2>
+                            <h2>Total price: {ticketInfo?.dataTicket?.totalTicket}$USD</h2>
                         </div>
                     </div>
                 </div>
