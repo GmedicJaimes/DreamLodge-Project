@@ -49,10 +49,6 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
-
-  // const handlePropertyTypeFilterChange = (event) => {
-  //   setSelectedTypes(event.target.value);
-  // };
   
 
   const today = dayjs();
@@ -264,7 +260,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="number"
+                  type="text"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -282,7 +278,7 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="number"
+                  type="text"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
@@ -343,7 +339,7 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
+            {/* <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem> */}
            <button onClick={handleResetFilters}>Clean filtered</button>
           </FormControl>
           <MenuItem onClick={sortByPrice}

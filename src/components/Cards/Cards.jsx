@@ -43,7 +43,6 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
 ) : (
   <div className={styles.sorryP}>Sorry, no properties are available with those search criteria. </div>
 )}
-
       </div>
       <div className={styles.containerBottom}>
         <Paginate

@@ -9,7 +9,8 @@ import {
   sortPropertiesByPrice,
   getAllBookings,
   fetchAvailablePropertiesInRange,
-  getPropertiesList
+  getPropertiesList,
+  isPropertyAvailable
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import { listAll } from "firebase/storage";
@@ -29,7 +30,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
-  const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
 
 
   const [guest, setGuest] = useState(0);
@@ -37,8 +37,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   //estado local para paginado
   const [currentPage, SetCurrentPage] = useState(1);
-
-  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
 
@@ -51,6 +49,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     SetCurrentPage(1)
     
   };
+
   const handleCityFilter = (value) => {
     setCityFilter(value)
     SetCurrentPage(1)
@@ -80,6 +79,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     SetCurrentPage(1)
   };
 
+
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
     if (startDate) {
@@ -101,14 +101,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setHost(filteredHost);
-
+      setLoading(false);
     }
 
-
     fetchFilteredHost();
-    setLoading(false);
-
+    
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
+
+  
 
   useEffect(() => {
     async function fetchAndUpdateHost() {
@@ -124,13 +124,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
       if (rooms) {
         filteredHost = filteredHost.filter(
-          (host) => host.stances && host.stances.rooms === Number(rooms)
+          (host) => host.stances && host.stances.rooms == Number(rooms)
         );
       }
   
       if (guest) {
         filteredHost = filteredHost.filter((property) => {
-          return property.stances && property.stances.guest === Number(guest);
+          return property.stances && property.stances.guest == Number(guest);
         });
       }
   
