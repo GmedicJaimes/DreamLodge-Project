@@ -80,6 +80,8 @@ const SubTotal = ({
           }, 10000);
         } catch (error) {
           console.error("Error in obtaining payment status", error);
+          setIsLoading(true); // Finaliza estado de "cargando"
+
         }
 
         if (!startDate || !endDate) {
@@ -98,18 +100,20 @@ const SubTotal = ({
             startDate,
             endDate
           );
-          console.log(`IM AVAILABLE PROPERTY`, hola);
           await createBooking(propertyId, startDate, endDate);
         } catch (error) {
           console.log(error);
           swal("An error occurred while making the booking.");
+          setIsLoading(true); // Finaliza estado de "cargando"
+
         }
       }
     } catch (error) {
       console.error("ERROR SUBMIT AND BUY FUNCTION");
+      setIsLoading(true); // Finaliza estado de "cargando"
+
     }
     finally {
-      setIsLoading(false); // Finaliza estado de "cargando"
     }
   };
 
@@ -190,6 +194,7 @@ const SubTotal = ({
     };
 
     fetchBookings();
+    setIsDisabled(false)
   }, [propertyId]);
 
   return (

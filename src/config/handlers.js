@@ -559,7 +559,7 @@ const checkStartWithin = async (propertyId, formattedStartDate, formattedEndDate
       where("startDate", "<=", formattedEndDate)
     )
   );
-  //console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
   return snapshot.size === 0;
 }
 
@@ -573,7 +573,7 @@ const checkEndWithin = async (propertyId, formattedStartDate, formattedEndDate) 
       where("endDate", "<=", formattedEndDate)
     )
   );
-  //console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+  console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
 
   return snapshot.size === 0;
 }
@@ -620,7 +620,7 @@ const checkContainedWithin = async (propertyId, formattedStartDate, formattedEnd
     doc.data().endDate <= formattedEndDate && endSnapshot.docs.includes(doc)
   );
 
-  //console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
+  console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
 
   return filteredDocs.length === 0;
 }
@@ -698,7 +698,7 @@ export const getBookedDatesForProperty = async (propertyId) => {
     return bookedDates;
 
   } catch (error) {
-   // console.error("Error obteniendo las fechas reservadas:", error);
+   //console.error("Error obteniendo las fechas reservadas:", error);
     return [];
   }
 };
@@ -727,8 +727,8 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
 
 
     } else {
-     // console.log('Property is not available for the selected dates');
-      // swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
+     console.log('Property is not available for the selected dates');
+      swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 
   } catch (error) {
