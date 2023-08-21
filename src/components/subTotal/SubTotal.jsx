@@ -31,6 +31,10 @@ const SubTotal = ({
   const today = dayjs();
 
   const [bookedDates, setBookedDates] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+
 
   //integracion mercado pago:
   const [preferenceId, setPreferenceId] = useState(null);
@@ -53,6 +57,8 @@ const SubTotal = ({
   };
 
   const bookingAndBuy = async () => {
+    setIsLoading(true); // Inicia estado de "cargando"
+    setIsDisabled(true)
     try {
       const id = await createPreference();
       if (id) {
@@ -101,6 +107,9 @@ const SubTotal = ({
       }
     } catch (error) {
       console.error("ERROR SUBMIT AND BUY FUNCTION");
+    }
+    finally {
+      setIsLoading(false); // Finaliza estado de "cargando"
     }
   };
 
@@ -330,26 +339,28 @@ const SubTotal = ({
               }}
             >
               <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{
-                  marginTop: "30px",
-                  marginBottom: "10px",
-                  borderRadius: "20px",
-                  fontSize: "17px",
-                  width: "150px",
-                }}
-                sx={{
-                  backgroundColor: "#CD5A3E",
-                  "&:hover": {
-                    backgroundColor: "#E57951",
-                  },
-                }}
-                onClick={bookingAndBuy}
-              >
-                Reserve
-              </Button>
+  type="submit"
+  variant="contained"
+  color="primary"
+  style={{
+    marginTop: "30px",
+    marginBottom: "10px",
+    borderRadius: "20px",
+    fontSize: "17px",
+    width: "150px",
+  }}
+  sx={{
+    backgroundColor: "#CD5A3E",
+    "&:hover": {
+      backgroundColor: "#E57951",
+    },
+  }}
+  onClick={bookingAndBuy}
+  disabled={isLoading || !startDate || !endDate || isDisabled} // Botón deshabilitado si isLoading, startDate o endDate son falsy
+>
+  {isLoading ? "Loading..." : "Reserve"}
+</Button>
+
               {preferenceId && (
                 <div >
                   <Wallet initialization={{ preferenceId: preferenceId }} />
