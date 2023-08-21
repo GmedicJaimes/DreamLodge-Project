@@ -559,7 +559,7 @@ const checkStartWithin = async (propertyId, formattedStartDate, formattedEndDate
       where("startDate", "<=", formattedEndDate)
     )
   );
-console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+//console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
   return snapshot.size === 0;
 }
 
@@ -573,7 +573,7 @@ const checkEndWithin = async (propertyId, formattedStartDate, formattedEndDate) 
       where("endDate", "<=", formattedEndDate)
     )
   );
-  console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+ // console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
 
   return snapshot.size === 0;
 }
@@ -620,7 +620,7 @@ const checkContainedWithin = async (propertyId, formattedStartDate, formattedEnd
     doc.data().endDate <= formattedEndDate && endSnapshot.docs.includes(doc)
   );
 
-  console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
+ // console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
 
   return filteredDocs.length === 0;
 }
@@ -640,10 +640,10 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
     const isOverlappingStart = await checkOverlappingStart(propertyId, formattedStartDate);
     const isContainedWithin = await checkContainedWithin(propertyId, formattedStartDate, formattedEndDate);
 
-    console.log('isStartWithin:', isStartWithin);
-    console.log('isEndWithin:', isEndWithin);
-    console.log('isOverlappingStart:', isOverlappingStart);
-    console.log('isContainedWithin:', isContainedWithin);
+    // console.log('isStartWithin:', isStartWithin);
+    // console.log('isEndWithin:', isEndWithin);
+    // console.log('isOverlappingStart:', isOverlappingStart);
+    // console.log('isContainedWithin:', isContainedWithin);
 
     const finalResult = isStartWithin && isEndWithin && isOverlappingStart && isContainedWithin;
     console.log('Final availability result:', finalResult);
@@ -651,7 +651,7 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
     return finalResult;
 
   } catch (error) {
-    console.error('Error checking property availability:', error);
+   // console.error('Error checking property availability:', error);
     return false;
   }
 };
