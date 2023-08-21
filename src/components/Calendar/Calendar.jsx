@@ -82,7 +82,16 @@ const Calendar = ({
 
 
   
-
+  const handleResetFilters = () => {
+    onGuestChange(0);
+    onRoomsChange(0);
+    onStartChange(null);
+    onEndChange(null);
+    onPropertyTypeFilterChange(null);
+    onStateChange(null);
+    onCityChange(null);
+  };
+  
 
 
   // Función para contar la cantidad de días seleccionados
@@ -95,17 +104,6 @@ const Calendar = ({
     }
     return 0;
   };
-
-  // const handleCleanFilter = () => {
-  //   onGuestChange(0);
-  //   onRoomsChange(0);
-  //   onStartChange(null);
-  //   onEndChange(null);
-  //   onPropertyTypeFilterChange(null);
-  //   onStateChange(null);
-  //   onCityChange(null);
-  //   setSelectedTypes([]); // Limpiar tipos seleccionados
-  // };
 
   return (
     <div>
@@ -347,8 +345,8 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-          
-            {/* <MenuItem onClick={handleCleanFilter}>Clean filtered</MenuItem> */}
+            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
+           <button onClick={handleResetFilters}>Clean filtered</button>
           </FormControl>
           <MenuItem onClick={sortByPrice}
              style={{

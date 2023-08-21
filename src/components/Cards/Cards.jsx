@@ -6,11 +6,11 @@ import { Paginate } from "../Paginate/Paginate";
 import Calendar from "../Calendar/Calendar"
 
 
-const Cards = ({ host }) => {
+const Cards = ({ host, currentPage, SetCurrentPage }) => {
   const allCards = host;
 
   // State for the current page, initial value is 1
-  const [currentPage, SetCurrentPage] = useState(1);
+  // const [currentPage, SetCurrentPage] = useState(1);
 
   // State for the number of countries per page, initial value is 10
   const [cardsPerPage, SetCardsPerPage] = useState(6);
