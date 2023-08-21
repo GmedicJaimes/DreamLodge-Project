@@ -1,4 +1,4 @@
-.propertyPanel {
+.panelContainer {
   border-radius: 10px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   padding: 10px;
@@ -7,38 +7,14 @@
   height: 500px;
 }
 
-.propertyPanel h2{
+.panelContainer h2{
   text-align: left;
   padding-bottom: 10px;
   padding-left: 10px;
   border-bottom: 2px solid #EADCCF;
 }
 
-.properListContainer {
-  height: 500px;
-  overflow: auto;
-  margin: 0;
-  padding-top: 10px;
-}
-
-.properListContainer::-webkit-scrollbar{
-  width: 7px;
-}
-
-.properListContainer::-webkit-scrollbar-thumb{
-  background-color: #cd5b3e;
-  border-radius: 5px;
-}
-
-.properList {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  padding: 0 10px;
-  margin: 0;
-}
-
-.properListItemName{
+.userListItemName{
   background-color: #e4e4e4;
   display: flex;
   flex-direction: row;
@@ -52,80 +28,104 @@
   border-radius: 5px;
 }
 
-.properListItemName p {
+.userListItemName p {
   font-family: 'Lexend Deca';
   font-weight: 500;
-  /* margin-right: 10px; */
-  width: 200px;
+  margin-right: 20px;
+  width: 160px;
 }
 
-.properListItemName span{
+.userListItemName span{
   font-family: 'Lexend Deca';
   font-size: 1em;
   font-weight: 500;
-  width: 380px;
-  /* background-color: #cd5b3e; */
+  width: 100px;
+  margin-right: 20%;
 }
 
-.properListItem {
+.userListItemName .rating{
+  width: 120px;
+  margin-right: 90px;
+}
+
+
+.userListContainer {
+  height: 500px;
+  overflow: auto;
+  margin: 0;
+  padding-top: 10px;
+}
+
+.userListContainer::-webkit-scrollbar{
+  width: 7px;
+}
+
+.userListContainer::-webkit-scrollbar-thumb{
+  background-color: #cd5b3e;
+  border-radius: 5px;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.userListItem {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   margin-bottom: 10px;
   padding: 10px;
   border: none;
   box-shadow: 0 5px 8px 0px rgba(0, 0, 0, 0.192);
   border-radius: 5px;
-  /* background-color: #ebebeb; */
-  transition: 0.3s ease;
 }
 
-.properListItem:hover{
+.userListItem:hover{
   background-color: #e4e4e4;
   cursor: pointer;
   transform: translateY( -3px);
 }
 
-.properListItem div{
+.userListItem div{
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   text-align: left;
 }
 
-/* .properListItem img{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.userListItem p {
+  font-family: 'Lexend Deca';
+  font-weight: 400;
+  margin-left: 40px;
   margin-right: 20px;
-} */
-
-.properListItem p {
-  font-family: 'Lexend Deca';
-  font-weight: 400;
-  margin-left: 10px;
-  width: 200px;
+  width: 100px;
 }
 
-.properListItem span{
-  font-family: 'Lexend Deca';
-  font-size: 1em;
-  font-weight: 400;
-  margin-right: 0px;
-  width: 370px;
+.userListItem .contentReviews{
+  width: 380px;
   /* background-color: #cd5b3e; */
+  margin-right: 8px;
+  font-family: 'Lexend Deca';
+  font-weight: 400;
 }
 
-.deleteButtonProper {
+
+.deleteButton {
   background-color: transparent;
   width: 25px;
   border: none;
   color: white;
   cursor: pointer;
+  margin-right: 20px;
 }
 
-.deleteButtonProper img{
-  width: 15px;
-  height: 15px;
+.deleteButton img{
+  width: 20px;
+  height: 20px;
 }

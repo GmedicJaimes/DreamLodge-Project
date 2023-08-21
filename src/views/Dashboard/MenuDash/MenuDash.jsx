@@ -15,12 +15,12 @@ const MenuDash = () => {
         <Link to={'/admin/users'}>
           <p>Users</p>
         </Link>
-        <Link to={'/admin/images'}>
-          <p>Images</p>
+        <Link to={'/admin/reviews'}>
+          <p>Reviews</p>
         </Link>
-        <Link to={'/admin/rent-profit'}>
+        {/* <Link to={'/admin/rent-profit'}>
           <p>Rent & Profit</p>
-        </Link>
+        </Link> */}
       </aside>
     </div>
   )

@@ -136,7 +136,7 @@ const DetailPost = () => {
   React.useEffect(() => {
     localStorage.setItem(
       "propertyData",
-      JSON.stringify({property})
+      JSON.stringify({property, propertyId})
     );
   }, [property]);
 

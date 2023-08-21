@@ -23,39 +23,13 @@ const UserDash = () => {
 
   const handleDeleteUsers = async (userId) => {
     const confirmDelete = swal({
-      title: 'Delet User', 
-      text:'Are you sure you want to delete this user?', 
-      icon:'warning', 
-      buttons: {
-        cancel: {
-          text: 'Nope',
-          value: false,
-          visible: true,
-        },
-        confirm: {
-          text: 'Delete ',
-          value: true,
-          visible: true,
-        },
-      }, 
+      title: 'User Deleted', 
+      text:'The user has been deleted successfully', 
+      icon:'success', 
       dangerMode: true
       
-    }).then(respuesta => {
-      if(respuesta){
-        swal({
-          text: 'The user has been deleted successfully',
-          icon: 'success',
-          buttons: {
-            confirm: {
-              text: 'Ok ',
-              value: true,
-              visible: true,
-            },
-          },
-          dangerMode: true
-        })
-      }
-    });
+    })
+
     if (confirmDelete) {
       try {
         const userRef = doc(db, 'users', userId); 

@@ -26,6 +26,7 @@ import UsersPanel from './components/UserPanel/UserPanel';
 import PropertyDash from './views/Dashboard/PropertyDash/PropertyDash';
 import UserDash from './views/Dashboard/UserDash/UserDash';
 import Profit from './views/Dashboard/Profit/Profit';
+import ReviewsDash from './views/Dashboard/ReviewDash/ReviewDash';
 
 
 
@@ -87,7 +88,7 @@ function App() {
           <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
           <Route path='/admin/propertys' element={<PropertyDash />}/>
           <Route path='/admin/users' element={<UserDash />}/>
-          <Route path='/admin/images' element={''}/>
+          <Route path='/admin/reviews' element={<ReviewsDash/>}/>
           <Route path='/admin/rent-profit' element={<Profit />}/>
         </Route>
       </Routes>
