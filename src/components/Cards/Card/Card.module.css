@@ -2,7 +2,7 @@
   text-decoration: none;
 }
 
-.container {
+.containerCard {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,7 +10,7 @@
   border-radius: 10px;
   overflow: hidden;
   margin: 1rem 0;
-  width: 330px;
+  width: 310px;
   height: 400px;
   color: black;
   box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
@@ -18,7 +18,7 @@
 
 }
 
-.container:hover{
+.containerCard:hover{
   transform: translateY(-10px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
   cursor: pointer;
@@ -30,18 +30,17 @@
   justify-content: left;
   align-items: flex-start;
   background-color: #f7f3f0;
-  height:120px;
-  padding: 1rem;
+  height: 50%;
+  padding-left:.8rem;
+  padding-top: 1rem;
 }
 .info h3{
   font-size: 1.3rem;
-  font-family: 'Montserrat' !important;
-
-
+  font-family: 'Montserrat';
 }
 
 .infoName{
-  margin: 1rem 0;
+  padding: 5px 0;
   font-weight: 500;
   text-align: left;
   color: #59595b;
@@ -55,7 +54,7 @@
 
 .image {
   width: 330px; /* Ajusta el ancho deseado */
-  height: 250px; /* Ajusta el alto deseado */
+  height: 100%; /* Ajusta el alto deseado */
   overflow: hidden; /* Ocultar el contenido que desborda del contenedor */
 }
 

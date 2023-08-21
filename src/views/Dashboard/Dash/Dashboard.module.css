@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
+
+.dashContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* background-color: blue; */
+  width: 81vw;
+  /* height: 40vh; */
+  padding: 10px;
+}
+
+.title h2{
+  width: 80vw;
+  height: 40px;
+  text-align: left;
+  /* margin-top: 20px; */
+  /* margin-bottom: 20px; */
+  padding-bottom: 46px;
+  padding-left: 10px;
+  border-bottom: 2px solid #EADCCF;
+  /* background-color: #CD5A3E; */
+}
+
+.cardsDash {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+  margin-top: 10px;
+  margin-left: 8%;
+}
+.menuDash{
+  width: 20%;
+}
+
+.containerDashInfo {
+  
+  justify-content: center;
+  width: 80%;
+  margin: 20px;
+}
+
+.dashboardSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #EADCCF;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.274);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100px;
+  width: 340px;
+  margin: 9px 10px;
+  border-left: 4px solid #79615c;
+}
+
+.dashboardSection:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  border-left: 4px solid #CD5A3E;
+}
+
+.dashboardSection h2 {
+  color: #CD5A3E;
+  font-size: 1.1em;
+  /* margin-bottom: 10px; */
+}
+
+.dashboardSection p {
+  color: #1E1E23;
+  font-size: 1.1em;
+  padding-left: 10px;
+  font-family: 'Lexend Deca';
+}
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 767px;
+  background-image: url(../../assets/landingImg.jpeg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  font-family: 'Lexend Deca';
+} */
+
+.headerLanding {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #EADCCF;
+  height: 70px;
+}
+
+.link {
+  padding: 0;
+  margin: 0;
+}
+
+.headerLanding h1 {
+  letter-spacing: 0.1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-left: 2rem;
+  color: #1E1E23;
+}
+
+.headerLanding button {
+  font-weight: 100;
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
+  padding: 0.8rem;
+  margin-right: 2rem;
+  width: 150px;
+  background-color: #CD5A3E;
+  border: #CD5A3E;
+  color: white;
+}
+
+.section {
+  display: flex;
+  padding: 4rem;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #EADCCF;
+  background-color: rgba(234, 220, 207, 0.9); /* Fondo con opacidad del 90% */
+  border-radius: 20px;
+  height: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra suave */
+}
+
+.section h1 {
+  font-family: 'Tenor sans';
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.section p {
+  margin-top: 1rem;
+  font-size: 1.6rem; /* Tamaño de letra aumentado */
+  font-weight: 100;
+  letter-spacing: 0.1rem;
+  line-height: 2rem;
+}
+
+.section button {
+  margin-top: 2rem;
+  padding: 1rem;
+  font-weight: 100;
+  letter-spacing: 0.1rem;
+  font-size: 1.1rem;
+  width: 135px;
+  background-color: #CD5A3E;
+  border: #CD5A3E;
+  color: white;
+  cursor: pointer;
+}
+/* ... Otros estilos ... */
+
+.allPropertiesSection {
+    background-color: #EADCCF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+    width: 90%; /* Ancho del 90% de la pantalla */
+    max-width: 400px; /* Ancho máximo de 400px */
+  }
+  
+  .propertyListContainer {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .propertyList {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .propertyListItem {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .deleteButton {
+    background-color: #CD5A3E;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1rem;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

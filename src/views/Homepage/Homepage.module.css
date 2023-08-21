@@ -1,3 +1,50 @@
-.container{
-    width: 80vw;
+.homeContainerMain {
+  background-image: url('../../assets/landingImg.jpeg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  padding-top: 8em;
+  /* background-position-y: 150%;
+  background-position-x: 50%; */
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+.containerSections{
+  display: flex;
+  flex-direction: row;
+  max-width: 90em;
+  margin: 0 auto;
+  background-color: antiquewhite;
+}
+
+.aside{
+  width: 21em;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: center; */
+  background-color: hsl(29, 39%, 86%);
+  padding-top: 10px auto 0;
+  margin: 0 auto;
+}
+
+.calendarHome{
+  width: 79em;
+  padding-top: 4px;
+}
+
+.barritaFacha{
+  margin: 0 auto;
+  background-color: #EADCCF;
+  width: 90em;
+  height: 3em;
+}
+
+.headerHomePage{
+  height: 250px;
+}
+
+.headerHomePage img{
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  object-position: 0px 53%;}

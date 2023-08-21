@@ -1,0 +1,41 @@
+.dashboardMenu{
+  display: flex;
+  height: 90vh;
+  /* height: 100vh; */
+}
+
+.asideDash{
+  width: 100%;
+  background-color: #cd5b3e;
+}
+
+.asideDash h3{
+  color: white;
+  font-size: 1.5em;
+  font-weight: 900;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid white;
+  margin: 20px;
+}
+
+.asideDash a {
+  color: black;
+}
+
+.asideDash p{
+  /* margin: 0px 20px; */
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  text-align: left;
+  font-size: 1.2em;
+  font-family: 'Lexend Deca';
+  font-weight: 400;
+}
+
+.asideDash p:hover{
+  /* color: #CD5A3E; */
+  background-color: white;
+  cursor: pointer;
+}

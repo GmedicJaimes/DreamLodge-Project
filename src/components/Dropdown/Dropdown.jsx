@@ -5,6 +5,7 @@ import logout from "../../assets/logout.png"
 import msg from "../../assets/mensaje.png"
 import help from "../../assets/informacion.png"
 import edit from "../../assets/editar.png"
+import posteito from "../../assets/postLodge.png"
 import React from "react"
 import { logOut } from "../../config/handlers"
 import { Link } from "react-router-dom"
@@ -14,21 +15,39 @@ import { auth } from "../../config/firebase";
 const Dropdown = () => {
 
     const [open, setOpen] = React.useState(false)
+    const [ liveUser, setLiveUser ] = React.useState({})
+
+    React.useEffect(() => {
+        if(!liveUser.auth){
+            setLiveUser(auth.currentUser)
+        }
+    }, [])
+
+    const closeMenu = () => {
+        setOpen(false);
+      };
+
+      const toggleMenu = () => {
+        setOpen(!open);
+      };
 
     return(
         <div className={styles.menuContainer}>
-            <div className={styles.menuTrigger} onClick={() => {setOpen(!open)}}>
+            <div className={styles.menuTrigger} onClick={toggleMenu}>
                 <img src={user} alt="" />
             </div>
             <div className={`${styles.dropdownMenu} ${open ? styles.active : styles.inactive}`}>
-                <h3>{auth.currentUser.displayName}<br/>
-                <span>{auth.currentUser.email}</span></h3>
+                <h3>{liveUser?.auth?.currentUser.displayName}<br/>
+                <span>{liveUser?.auth?.currentUser.email}</span></h3>
                 <ul>
-                    <Link to={`user/${auth.currentUser.uid}`}>
-                        <DropDownItem img={user} text={"My Profile"}/>
+                    <Link to={`user/${liveUser?.auth?.currentUser.uid}`}>
+                        <DropDownItem img={user} text={"My Profile"} onClick={closeMenu}/>
                     </Link>
-                    <Link to={`/config/${auth.currentUser.uid}`}>
-                        <DropDownItem img={edit} text={"Edit Profile"}/>
+                    <Link to={`/config/${liveUser?.auth?.currentUser.uid}`}>
+                        <DropDownItem img={edit} text={"Edit Profile"} onClick={closeMenu}/>
+                    </Link>
+                    <Link to={`/tutorial`}>
+                        <DropDownItem img={posteito} text={"Post Lodge"} onClick={closeMenu}/>
                     </Link>
                     {/* <DropDownItem img={msg} text={"Inbox"}/>
                     <DropDownItem img={settings} text={"Settings"}/>

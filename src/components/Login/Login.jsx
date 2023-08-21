@@ -103,7 +103,7 @@ const regex =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
           <button
             className={styles.loginWG}
             type="button"
-            onClick={() => signInGoogle()}
+            onClick={signInGoogle}
           >
             Login with Google
           </button>

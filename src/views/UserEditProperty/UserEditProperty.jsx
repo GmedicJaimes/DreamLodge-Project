@@ -76,7 +76,7 @@ const UserEditProperty = () => {
         event.preventDefault()
         try {
             await updateProperty(id, property)
-            alert("Property modified")
+            swal("Property modified")
         } catch (error) {
             console.log(error);
         }
@@ -232,6 +232,7 @@ const UserEditProperty = () => {
                 </form>
                 <button type="submit" className={styles.buttonSubmit}>Upgrade</button> 
             </div>
+
         </div>
     )
 }

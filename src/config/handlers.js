@@ -1,12 +1,10 @@
-
-import { useState } from 'react';
-import {getDocs, collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
+import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
-import {createUserWithEmailAndPassword, sendEmailVerification,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, sendPasswordResetEmail,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import { storage, db, auth, googleProvider } from './firebase';
 import axios from 'axios';
-
+import { serverTimestamp } from 'firebase/firestore';
 
 
 //VARIABLES CON INFORMACION DE RUTAS/REFERENCIAS DE FIREBASE:
@@ -61,44 +59,24 @@ export const signIn = async (auth, email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      alert("Welcome to DreamLodge!");
+      swal("Success", "You have successfully logged in!", "success");
       // No es necesario enviar la verificación de correo electrónico aquí
     }
     return userCredential;      
   } catch (error) {
-    console.log("Error in signIn function:", error);
     throw error;
   }
 };
 
 // AGUARDA POR VERIFICAION DE EMAIL
 
-// export  const waitForEmailVerification = (user, timeout = 60000, interval = 5000) => {
-//   return new Promise((resolve, reject) => {
-//       let totalTime = 0;
 
-//       const checkEmailVerification = async () => {
-//           await user.reload();
-
-//           if (user.emailVerified) {
-//               resolve();
-//           } else if (totalTime >= timeout) {
-//               reject(new Error('La verificación ha tardado demasiado'));
-//           } else {
-//               totalTime += interval;
-//               setTimeout(checkEmailVerification, interval);
-//           }
-//       };
-
-//       checkEmailVerification();
-//   });
-// };
 
 export const registerUserInFirestore = async (uid, user) => {
   const usersCollectionRef = collection(db, "users");
   try {
     await setDoc(doc(usersCollectionRef, uid), user); // Utiliza el uid como ID de documento
-    console.log("Usuario registrado con éxito en Firestore.");
+    // console.log("Usuario registrado con éxito en Firestore.");
   } catch (error) {
     console.error("Error al registrar al usuario en Firestore:", error);
   }
@@ -134,6 +112,59 @@ export const doesEmailExistInFirestore = async (email) => {
 };
 
 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// export const signInGoogle = async () => {
+//   try {
+//     const result = await signInWithPopup(auth, googleProvider);
+
+//     if (result.user) {
+//       const user = result.user;
+
+//       const nameParts = user.displayName.split(' ');
+//       const firstName = nameParts[0];
+//       const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+
+
+//       const userData = {
+//         email: user.email,
+//         name: firstName,
+//         lastName: lastName,
+//         id: user.uid,
+//         country: "USA", 
+//         language: ["english"], 
+//         image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+//         createdAt: new Date().toLocaleDateString(),
+//         banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+//       };
+
+//       // Pide al usuario información adicional
+//       // const additionalData = await requestAdditionalData();
+//       // userData.country = additionalData.country;
+//       // userData.language = additionalData.language;
+
+//       await setDoc(doc(db, 'users', user.uid), userData);
+
+//       await sendPasswordResetEmail(auth, user.email, {
+//         url: "http://localhost:5173/",
+//         handleCodeInApp: true
+//     });
+//     await sendPasswordResetEmail(user);
+
+
+//       // Envía un mensaje al padre indicando autenticación exitosa
+//       if (window.opener) {
+//         window.opener.postMessage('auth-success', window.location.origin);
+//     } else {
+//         console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+//     }
+//     }
+//   } catch (error) {
+//     console.log('Error durante la autenticación con Google:', error);
+//   }
+// };
+
 
 export const signInGoogle = async () => {
   try {
@@ -141,36 +172,43 @@ export const signInGoogle = async () => {
 
     if (result.user) {
       const user = result.user;
+      const email = user.email;
 
-      const nameParts = user.displayName.split(' ');
-      const firstName = nameParts[0];
-      const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
+      // Verifica si el usuario ya existe en la base de datos
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+      if (userSnapshot.exists()) {
+        console.log('El usuario ya existe en la base de datos.');
+      } else {
+        const nameParts = user.displayName.split(' ');
+        const firstName = nameParts[0];
+        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
+        const userData = {
+          email: email,
+          name: firstName,
+          lastName: lastName,
+          id: user.uid,
+          country: "USA", 
+          language: ["english"], 
+          image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
+          createdAt: new Date().toLocaleDateString(),
+          banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
+        };
 
-      const userData = {
-        email: user.email,
-        name: firstName,
-        lastName: lastName,
-        id: user.uid,
-        country: "USA", 
-        language: ["english"], 
-        image: user.photoURL ? user.photoURL : "https://randomuser.me/api/portraits/men/7.jpg",
-        createdAt: new Date().toLocaleDateString(),
-        banner: "https://fastly.picsum.photos/id/350/900/312.jpg?hmac=2opChRRZ2uKiCmlNIWYbHe3rH2jfQbDIRcfzTwdFGtc",
-      };
+        await setDoc(doc(db, 'users', user.uid), userData);
 
-      // Pide al usuario información adicional
-      // const additionalData = await requestAdditionalData();
-      // userData.country = additionalData.country;
-      // userData.language = additionalData.language;
-
-      await setDoc(doc(db, 'users', user.uid), userData);
+        // Envía el correo de bienvenida solo si el usuario es nuevo
+        await sendPasswordResetEmail(auth, email, {
+          url: "http://localhost:5173/",
+          handleCodeInApp: true
+        });
+      }
 
       // Envía un mensaje al padre indicando autenticación exitosa
       if (window.opener) {
         window.opener.postMessage('auth-success', window.location.origin);
     } else {
-        console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
+        // console.log('window.opener es null. ¿Estás seguro de que esta página se abrió desde una ventana emergente?');
     }
     }
   } catch (error) {
@@ -180,12 +218,23 @@ export const signInGoogle = async () => {
 
 
 
+
+
+
+
+
+
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+// NO BORRAR AUN 
+
+
 // funcion para LOGOUT
 export const logOut = async()=>{
     try {
         await signOut(auth)
     } catch (error) {
-        console.log(error)
+        console.error
     }
 };
 
@@ -220,12 +269,12 @@ export const createProp = async (formData, file) => {
       userId: userId
     });
 
-    console.log(formData)
+    // console.log(formData)
 
 
     getPropertiesList();
 
-    alert('¡Propiedad creada!');
+   
   } catch (error) {
     console.log(error)
   }
@@ -252,6 +301,7 @@ export const updateProperty = async( id, property )=>{
     }
 };
 
+//? Funcion para actualizar usario
 export const updateUser = async( user ) => {
   const { uid, name, lastName, email, country, languages, image } = user
 
@@ -291,7 +341,7 @@ export const getPropertiesList = async () => {
 
     return properties; // Devuelve la lista de propiedades procesadas
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
   }
 };
@@ -328,15 +378,12 @@ export const getPropertiesList = async () => {
 //* funcion para RENDERIZAR EL DETAIL DE UNA PROPIEDAD
 export const detailId = async (id) =>{
   try {
-    const refProperty = doc(db, 'properties' , id)
-    console.log(refProperty)
-    const propertySnapshot = await getDoc(refProperty);
-    console.log(propertySnapshot.exists());
+    const refProperty = doc(db, 'properties' , id) 
+   const propertySnapshot = await getDoc(refProperty);
 
    
     if(propertySnapshot.exists()){
       
-      console.log( 'Document data:  ', propertySnapshot.data())
       return propertySnapshot.data();
     } else {
       console.log( 'no existe nada de info') 
@@ -359,7 +406,7 @@ export const uploadFile = async (file) => {
   
   try {
     await uploadBytes(folderRef, file);
-    console.log(folderRef.fullPath);
+    // console.log(folderRef.fullPath);
     alert('The image was successfully uploaded to the database');
   } catch (error) {
     console.log(error);
@@ -384,67 +431,30 @@ export const dowloadImg = ()=> {
   })
 };
 
-
-export const getPropertiesByType = async (type) => {
+export const getPropertiesByMultipleTypes = async (types) => {
   try {
-    const propertiesQuery = query(propertiesCollectionRef, where('type', 'array-contains-any', [type]));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
-      const propertyData = doc.data();
-      return {
-        ...propertyData,
-        id: doc.id
-      };
-    });
+     // Consulta la colección de propiedades desde la base de datos
+    const propertiesQuerySnapshot = await getDocs(propertiesCollectionRef);
+    
+    // Filtra y mapea las propiedades según los types seleccionados
+    const filteredProperties = propertiesQuerySnapshot.docs
+      .filter((doc) => types.some(type => doc.data().type.includes(type)))
+      .map((doc) => {
+        const propertyData = doc.data(); // Obtenemos los datos del documento (propiedad)
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      });
 
     return filteredProperties;
   } catch (error) {
-    console.log(error);
-    return []; // Maneja el error de manera adecuada retornando un array vacío u otra respuesta que consideres.
+     // En caso de error devuelve un arreglo vacío
+    return [];
   }
 };
 
-// export const getPropertiesByType = async (type) => {
-//   try {
-//     if (!type) {
-//       console.log('no llega el type'); // Si el tipo no está definido, retornamos un array vacío
-//     }
-
-//     console.log(type)
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("type", "array_contains", type)));
-//     const properties = [];
-
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
-//     if(!properties.length){
-//     console.log('properties empty')
-//     }
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
-
-// export const getPropertiesByState = async (state) => {
-//   try {
-//     const querySnapshot = await getDocs(query(propertiesCollectionRef, where("location.state", "==", state)));
-//     const properties = [];
-
-//     querySnapshot.forEach((doc) => {
-//       const property = doc.data();
-//       properties.push(property);
-//     });
-
-//     return properties;
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// };
+//..................................................................................................
 
 //filtro para buscar por DISPONIBLE!!!
 export const getAvailableProperties = async () => {
@@ -464,22 +474,6 @@ export const getAvailableProperties = async () => {
   }
 };
 
-//.............................TODAVIA NO ANDA....................................................
-// filtro para BUSCAR POR NAME DE PROPERTIES!!!!
-export const filterPropertiesByName = async (searchValue) => {
-  try {
-    const propertiesQuery = query(propertiesCollectionRef, where('name', '==', searchValue));
-    const propertiesQuerySnapshot = await getDocs(propertiesQuery);
-
-    const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => doc.data());
-
-    return filteredProperties;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
-
 //................................................................................................
 
 // Función para ordenar propiedades por precio
@@ -493,13 +487,17 @@ export const sortPropertiesByPrice = (properties, ascending) => {
   });
 };
 
+//................................................................................................
+
 //FUNCIONES PARA FILTROS STATE Y CITY........................................................
 export const filterPropertiesByState = async (state) => {
   try {
+    // Crea una consulta para buscar propiedades con el estado elegido
     const propertiesQuery = query(propertiesCollectionRef, where('location.state', '==', state));
-    console.log(propertiesQuery); // Convierte a cadena antes de imprimir
+    // console.log(propertiesQuery); // Convierte a cadena antes de imprimir
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+    // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -508,10 +506,9 @@ export const filterPropertiesByState = async (state) => {
       };
     });
 
-    console.log(filteredProperties)
+    // console.log(filteredProperties)
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state:', error);
     return [];
   }
 };
@@ -520,15 +517,17 @@ export const filterByStateAndCity = async (state, city) => {
   try {
     let propertiesQuery = query(propertiesCollectionRef);
 
+    // se construye la consulta basada en el estado y la ciudad proporcionados
     if (state && city) {
       propertiesQuery = query(propertiesQuery, where('location.state', '==', state), where('location.city', '==', city));
     } else if (state) {
       propertiesQuery = query(propertiesQuery, where('location.state', '==', state));
     }
 
-    console.log(city); 
+    // console.log(city); 
     const propertiesQuerySnapshot = await getDocs(propertiesQuery);
 
+     // Mapea los documentos de la instantánea a objetos de propiedades filtradas
     const filteredProperties = propertiesQuerySnapshot.docs.map((doc) => {
       const propertyData = doc.data();
       return {
@@ -539,14 +538,212 @@ export const filterByStateAndCity = async (state, city) => {
 
     return filteredProperties;
   } catch (error) {
-    console.error('Error fetching properties by state and city:', error);
+    return [];
+  }
+}
+
+
+
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+
+const checkStartWithin = async (propertyId, formattedStartDate, formattedEndDate) => {
+  const bookingsRef = collection(db, "bookings");
+  const snapshot = await getDocs(
+    query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("startDate", ">=", formattedStartDate),
+      where("startDate", "<=", formattedEndDate)
+    )
+  );
+//console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+  return snapshot.size === 0;
+}
+
+const checkEndWithin = async (propertyId, formattedStartDate, formattedEndDate) => {
+  const bookingsRef = collection(db, "bookings");
+  const snapshot = await getDocs(
+    query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("endDate", ">=", formattedStartDate),
+      where("endDate", "<=", formattedEndDate)
+    )
+  );
+ // console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+
+  return snapshot.size === 0;
+}
+
+const checkOverlappingStart = async (propertyId, formattedStartDate) => {
+  const bookingsRef = collection(db, "bookings");
+  const snapshot = await getDocs(
+    query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("startDate", "<=", formattedStartDate)
+    )
+  );
+  const overlappingStartResults = snapshot.docs.filter(
+    doc => doc.data().endDate >= formattedStartDate
+  );
+ // console.log("Reservas que se superponen al inicio:", overlappingStartResults.map(doc => doc.data()));
+
+  return overlappingStartResults.length === 0;
+}
+const checkContainedWithin = async (propertyId, formattedStartDate, formattedEndDate) => {
+  const bookingsRef = collection(db, "bookings");
+  
+  // Primera consulta: reservas que comienzan después de la fecha de inicio
+  const startSnapshot = await getDocs(
+    query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("startDate", ">=", formattedStartDate)
+    )
+  );
+
+  // Segunda consulta: reservas que terminan antes de la fecha de fin
+  const endSnapshot = await getDocs(
+    query(
+      bookingsRef,
+      where("propertyId", "==", propertyId),
+      where("endDate", "<=", formattedEndDate)
+    )
+  );
+
+  // Filtrar reservas que realmente están contenidas dentro del rango
+  const filteredDocs = startSnapshot.docs.filter(doc => 
+    doc.data().endDate <= formattedEndDate && endSnapshot.docs.includes(doc)
+  );
+
+ // console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
+
+  return filteredDocs.length === 0;
+}
+
+
+
+
+
+
+export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
+  try {
+    const formattedStartDate = Timestamp.fromDate(new Date(startDate));
+    const formattedEndDate = Timestamp.fromDate(new Date(endDate));
+
+    const isStartWithin = await checkStartWithin(propertyId, formattedStartDate, formattedEndDate);
+    const isEndWithin = await checkEndWithin(propertyId, formattedStartDate, formattedEndDate);
+    const isOverlappingStart = await checkOverlappingStart(propertyId, formattedStartDate);
+    const isContainedWithin = await checkContainedWithin(propertyId, formattedStartDate, formattedEndDate);
+
+    // console.log('isStartWithin:', isStartWithin);
+    // console.log('isEndWithin:', isEndWithin);
+    // console.log('isOverlappingStart:', isOverlappingStart);
+    // console.log('isContainedWithin:', isContainedWithin);
+
+    const finalResult = isStartWithin && isEndWithin && isOverlappingStart && isContainedWithin;
+    console.log('Final availability result:', finalResult);
+
+    return finalResult;
+
+  } catch (error) {
+   // console.error('Error checking property availability:', error);
+    return false;
+  }
+};
+
+
+
+
+
+
+
+
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+
+export const getBookedDatesForProperty = async (propertyId) => {
+  try {
+    const reservationsCollection = collection(db, "bookings");
+    const reservationsQuery = query(
+      reservationsCollection,
+      where("propertyId", "==", propertyId)
+    );
+    const reservationsSnapshot = await getDocs(reservationsQuery);
+
+    const bookedDates = reservationsSnapshot.docs.map((doc) => {
+      const data = doc.data();
+      
+      // Verificamos que startDate y endDate existen y tienen el método toDate
+      if (data.startDate?.toDate && data.endDate?.toDate) {
+        return {
+          startDate: data.startDate.toDate(),
+          endDate: data.endDate.toDate(),
+        };
+      } else {
+        // Si no, logueamos el documento que tiene problemas
+        console.warn("Documento con datos faltantes o incorrectos:", doc.id, data);
+        return null; // Este valor se filtrará en el siguiente paso
+      }
+    }).filter(date => date);  // Filtramos valores nulos
+
+   
+
+    return bookedDates;
+
+  } catch (error) {
+   //console.error("Error obteniendo las fechas reservadas:", error);
     return [];
   }
 };
 
 
+
+
+export const createBooking = async (propertyId, startDate, endDate) => {
+  try {
+    // Verificamos la disponibilidad primero
+
+const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as needed
+
+    if (await isPropertyAvailable(propertyId, startDate, endDate)) {
+
+      // Convertir las fechas a Timestamp antes de guardarlas
+      const startDateTimestamp = Timestamp.fromDate(new Date(startDate));
+      const endDateTimestamp = Timestamp.fromDate(new Date(endDate));
+
+      await addDoc(bookingsCollectionRef, {
+        propertyId: propertyId,
+        startDate: startDateTimestamp,
+        endDate: endDateTimestamp,
+        userId: auth?.currentUser?.uid,
+      });
+
+
+    } else {
+     console.log('Property is not available for the selected dates');
+      swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
+    }
+
+  } catch (error) {
+    console.log(error)
+    swal('Error' ,'Error making the reservation.', 'error');
+  }
+};
+
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+//======================================== BOOKING SECTION ========================================
+
 //funcion para deshabilitar propiedades
-export const updateAvaible = async(id, preferenceId) => {
+export const updateAvaible = async(id) => {
   try {
     const db = getFirestore()
     const propertyDB = doc(db, 'properties', id);
@@ -583,3 +780,143 @@ export const getPaymentStatus = async (preferenceId) => {
     return 'error'; 
   }
 };
+
+export const registerPurchases = async (userId, propertyId) => {
+  try {
+    // Referencia a la colección "purchases"
+    const purchasesCollectionRef = collection(db, 'purchases');
+
+    // Agregar un nuevo documento con la información de la compra
+    await addDoc(purchasesCollectionRef, {
+      userId: userId,
+      propertyId: propertyId,
+      purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
+    });
+
+    // console.log('Compra registrada exitosamente');
+  } catch (error) {
+    //console.error('Error al registrar la compra:', error);
+  }}
+
+  
+// Función para obtener las propiedades libres en un rango de fechas
+export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
+  try {
+    const startJSDate = startDate.$d;
+    const endJSDate = endDate.$d;
+
+    // console.log('Selected Range:', startJSDate, endJSDate);
+
+    const bookingsRef = collection(db, "bookings");
+
+    // Consulta para reservas que comienzan antes de que termine el rango seleccionado
+    const startBeforeEndQuery = query(bookingsRef, where("startDate", "<=", endJSDate));
+    const startBeforeEndSnapshot = await getDocs(startBeforeEndQuery);
+
+    // Consulta para reservas que terminan después de que comienza el rango seleccionado
+    const endAfterStartQuery = query(bookingsRef, where("endDate", ">=", startJSDate));
+    const endAfterStartSnapshot = await getDocs(endAfterStartQuery);
+
+    // Intersección: encuentre reservas que se superpongan con el rango seleccionado
+    const overlappingBookings = startBeforeEndSnapshot.docs.filter(doc =>
+      endAfterStartSnapshot.docs.some(endDoc => endDoc.id === doc.id)
+    );
+
+    const bookedPropertyIds = overlappingBookings.map(doc => doc.data().propertyId);
+
+    // console.log('Booked Property IDs:', bookedPropertyIds);
+
+    const propertiesRef = collection(db, "properties");
+    const allPropertiesSnapshot = await getDocs(propertiesRef);
+
+    const allProperties = allPropertiesSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    const availableProperties = allProperties.filter(property => 
+      !bookedPropertyIds.includes(property.id)
+    );
+
+    // console.log('Available Properties:', availableProperties);
+    
+    return availableProperties;
+  } catch (error) {
+   // console.error('Error fetching available properties in range:', error);
+    return [];
+  }
+};
+
+
+
+
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+//======================================== CALENDARIO FILTRADO========================================
+
+
+
+
+
+
+export const getAllBookings = async () => {
+  const bookingsCollectionRef = collection(db, "bookings");
+  const querySnapshot = await getDocs(bookingsCollectionRef);
+  const bookings = querySnapshot.docs.map(doc => doc.data());
+  return bookings;
+};
+
+
+export const getBookingsByPropertyId = async (propertyId) => {
+  const bookingsCollectionRef = collection(db, "bookings");
+
+  // Filtrar la consulta por el propertyId
+  const queryRef = query(bookingsCollectionRef, where("propertyId", "==", propertyId));
+  
+  const querySnapshot = await getDocs(queryRef);
+
+  const bookings = querySnapshot.docs.map(doc => doc.data());
+
+  return bookings;
+};
+
+
+
+
+export const fetchFilteredProperties = async (filters) => {
+  try {
+    const propertiesCollectionRef = collection(db, 'properties');
+    // console.log(filters)
+    let baseQuery = propertiesCollectionRef;
+    
+    if (filters.rooms) {
+      baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.rooms)));
+    };
+
+    if (filters.guest) {
+      baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
+    }
+    if (filters.propertyType) {
+      baseQuery = query(baseQuery, where('type', 'array-contains', filters.propertyType));
+    };
+    if (filters.stateFilter) {
+      baseQuery = query(baseQuery, where('location.state', '==', filters.stateFilter));
+    };
+    
+    if (filters.cityFilter) {
+      baseQuery = query(baseQuery, where('location.city', '==', filters.cityFilter));
+    };
+    
+    
+    const querySnapshot = await getDocs(baseQuery);
+    const filteredProperties = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // console.log(filteredProperties)
+    return filteredProperties? filteredProperties : "No hay propiedades con esas caracteristicas"
+  } catch (error) {
+    // console.error('Error fetching filtered properties:', error);
+    return []; 
+  }
+};
+

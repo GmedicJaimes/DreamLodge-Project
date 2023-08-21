@@ -1,244 +1,233 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
+
 import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../components/Filters/Filters";
 import Cards from "../../components/Cards/Cards";
-import { getAvailableProperties, sortPropertiesByPrice, getPropertiesList } from "../../config/handlers";
-import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
+import {
+  fetchFilteredProperties,
+  sortPropertiesByPrice,
+  getAllBookings,
+  fetchAvailablePropertiesInRange,
+  getPropertiesList
+} from "../../config/handlers";
+import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
+import { listAll } from "firebase/storage";
+import { Firestore, collection, getDoc, getDocs } from "firebase/firestore";
+import { db, storage } from "../../config/firebase";
+import { ref } from "firebase/storage";
+import DashboardAdmin from "../Dashboard/DashboardAdmin";
+import Calendar from "../../components/Calendar/Calendar";
+import { DateContext } from "../../Contex/DateContex";
+import SideFilters from "../../components/SideFilters/SideFilters";
+import landingImg from "../../assets/landingImg.jpeg"
 
-const Homepage = () => {
-  const [host, setHost] = useState([]);
-  // const [page, setPage] = useState(1);
-  const [originalHost, setOriginalHost] = useState([]);
-  const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
-  const [loading, setLoading] = useState(true);
+const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
+  const [allProperties, setAllProperties] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  // console.log(host)
+  const [ascending, setAscending] = useState(true);
+  const { startDate, endDate, setDateRange } = useContext(DateContext);
+  const [loading, setLoading] = useState(true); // Agrega el estado de carga
 
+
+  const [guest, setGuest] = useState(0);
+  const [rooms, setRooms] = useState(0);
+
+  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
+
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
+
+  const [stateFilter, setStateFilter] = useState(null);
+
+  const [cityFilter, setCityFilter] = useState(null);
+
+  const handleStateFilter = (value)=>{
+    setStateFilter(value);
+  };
+  const handleCityFilter = (value) => {
+    setCityFilter(value)
+  };
+
+  const handlePropertyTypeFilterChange = (value) => {
+    setPropertyTypeFilter(value);
+  };
+  const handleRoomsChange = (value) => {
+    setRooms(value);
+  };
+
+  const handleGuestChange = (value) => {
+    setGuest(value);
+  };
+
+  const handleStartDateChange = async (date) => {
+    setDateRange(date, endDate);
+    if (endDate) {
+      const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
+      setHost(availableProperties);
+    }
+  };
+
+  const handleEndDateChange = async (date) => {
+    setDateRange(startDate, date);
+    if (startDate) {
+      const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
+      setHost(availableProperties);
+    }
+  };
 
   useEffect(() => {
-    async function fetchProperties() {
-      try {
-        const properties = await getPropertiesList();
-        setOriginalHost(properties);
-        setHost(properties);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      } finally {
-        setLoading(false); // Finalizado el proceso, establece loading en false
-      }
-    }
-    fetchProperties();
-  }, []);
+    const filters = {
+      guest: guest,
+      rooms: rooms,
+      propertyType: propertyTypeFilter,
+      stateFilter: stateFilter,
+      cityFilter: cityFilter
+    };
 
-  const handleAvailableProperties = async () => {
-    const availableProperties = await getAvailableProperties();
+    async function fetchFilteredHost() {
+      const filteredHost = await fetchFilteredProperties(filters);
+      setHost(filteredHost);
+
+    }
+
+
+    fetchFilteredHost();
+    setLoading(false);
+
+  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
+
+  useEffect(() => {
+    async function fetchAndUpdateHost() {
+      if (!host.length) {
+        const propertiesCollectionRef = collection(db, "properties");
+        const propertiesSnapshot = await getDocs(propertiesCollectionRef);
+        const properties = propertiesSnapshot.docs.map(doc => doc.data());
   
-    if (availableProperties.length === 0) {
-      console.log("No hay propiedades disponibles");
-    } else {
-      setHost(availableProperties);
-      setHasMore(false); // Desactiva el scroll infinito al aplicar filtros
+        setHost(properties);
+      }
+  
+      let filteredHost = [...host];
+  
+      if (rooms) {
+        filteredHost = filteredHost.filter(
+          (host) => host.stances && host.stances.rooms === Number(rooms)
+        );
+      }
+  
+      if (guest) {
+        filteredHost = filteredHost.filter((property) => {
+          return property.stances && property.stances.guest === Number(guest);
+        });
+      }
+  
+      setHost(filteredHost);
     }
-  };
+  // console.log(host,"desde hompeage")
+    fetchAndUpdateHost();
+  }, [guest, rooms, allProperties]);
+  
 
-  const handleSortByPrice = () => {
-    const sortedProperties = sortPropertiesByPrice(host, ascending);
-    setHost(sortedProperties);
-    setAscending(!ascending);
-  };
+  // Función para manejar el ordenamiento por precio
+  // const handleSortByPrice = () => {
+  //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
+  //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
+
+  //    // Actualiza el estado "host" con las propiedades ordenadas por precio
+  //   setHost(sortedProperties);
+  //   // Invierte el valor de "ascending" para alternar entre ascendente y descendente
+  //   setAscending(!ascending);
+  // };
+
+  // const handleScrollInfinite = async () => {
+  //   try {
+  //     const propertiesPerPage = 8;
+  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
+
+  //     const additionalProperties = await getPropertiesList(
+  //       currentPage,
+  //       propertiesPerPage
+  //     );
+
+  //     if (additionalProperties.length === 0) {
+  //       setHasMore(false);
+  //     } else {
+  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error loading more properties:", error);
+  //   }
+  // };
+
 
   return (
     <div>
       <div className={styles.containerHome}>
-        <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
-        {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
-       
-        {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
-        <div className={styles.skeletonContainer}>
-  {loading ? (
-    Array.from({ length: host.length || 12 }).map((_, idx) => <SkeletonCard key={idx} />)
-  ) : (
-    <Cards host={host} />
-  )}
-</div>
+        {/* <Filters
+          setHost={setHost}
+          originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
+          handleSortByPrice={handleSortByPrice}
+          ascending={ascending}
+        /> */}
+        <div className={styles.headerHomePage}>
+            <img src={landingImg} alt="" srcset="" />
+        </div>
+        <div className={styles.containerSections}>
+          <aside className={styles.aside}>
+          <Calendar
+            guest={guest}
+            rooms={rooms}
+            propertyTypeFilter={propertyTypeFilter}
+            stateFilter={stateFilter}
+            cityFilter={cityFilter}
+            onGuestChange={handleGuestChange}
+            onRoomsChange={handleRoomsChange}
+            onStartChange={handleStartDateChange}
+            onEndChange={handleEndDateChange}
+            onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
+            onStateChange={handleStateFilter}
+            onCityChange={handleCityFilter}
+          />
+          {/* <SideFilters
+          setHost={setHost}
+          originalHost={originalHost}
+          filteredHost={host} // Pasar el arreglo host filtrado
+          handleSortByPrice={handleSortByPrice}
+          ascending={ascending}
+        /> */}
+          </aside>
+          {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
+          <section className={styles.calendarHome}>
+            {/* <InfiniteScroll
+    dataLength={host.length}
+    next={loadMoreProperties}
+    hasMore={hasMore} // Controla si hay más elementos para cargar
+    loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
+  > */}
+            {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
+            <div className={styles.skeletonContainer}>
+              {loading ? (
+                Array.from({ length: host.length || 12 }).map((_, idx) => (
+                  <SkeletonCard key={idx} />
+                ))
+              ) : (
+                <Cards host={host} />
+              )}
+            </div>
+            {/* {host.map((property) => (
+      <PropertyComponent key={property.id} property={property} />
+    ))} */}
+            {/* </InfiniteScroll> */}
+          </section>
+
+        </div>
+
+        {/* </InfiniteScroll> */}
       </div>
     </div>
-  )};
+  );
+};
+
 
 export default Homepage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useEffect, useState } from "react";
-// import styles from "./Homepage.module.css";
-// // import InfiniteScroll from "react-infinite-scroll-component";
-// import Filters from "../../components/Filters/Filters";
-// import Cards from "../../components/Cards/Cards";
-// import { getPropertiesList, getAvailableProperties, sortPropertiesByPrice } from "../../config/handlers";
-// import SkeletonCard from '../../components/SkeletonCard/SkeletonCard'
-
-
-
-// const Homepage = () => {
-//   const [host, setHost] = useState([]);
-//   // const [page, setPage] = useState(1);
-//   const [originalHost, setOriginalHost] = useState([]);
-//   const [ascending, setAscending] = useState(true); // Estado para controlar el orden ascendente/descendente
-//   const [loading, setLoading] = useState(true);
-
-
-
-//   // useEffect(() => {
-//   //   // Esta función obtiene las propiedades y actualiza el estado 'host'
-//   //   async function fetchProperties() {
-//   //     const properties = await getPropertiesList();
-//   //     setHost(properties);
-//   //   }
-//   //   fetchProperties();
-//   // }, []);
-
-//   useEffect(() => {
-//     async function fetchProperties() {
-//       try {
-//         const properties = await getPropertiesList();
-//         setOriginalHost(properties);
-//         setHost(properties);
-//       } catch (error) {
-//         console.error("Error fetching properties:", error);
-//       } finally {
-//         setLoading(false); // Finalizado el proceso, establece loading en false
-//       }
-//     }
-//     fetchProperties();
-//   }, []);
-
-//   const handleAvailableProperties = async () => {
-//     const availableProperties = await getAvailableProperties();
-
-//     if (availableProperties.length === 0) {
-//       console.log("No hay propiedades disponibles");
-//     } else {
-//       setHost(availableProperties);
-//     }
-//   };
-
-//   const handleSortByPrice = () => {
-//     const sortedProperties = sortPropertiesByPrice(host, ascending);
-//     setHost(sortedProperties);
-//     setAscending(!ascending);
-//   };
-
-//   return (
-//     // <InfiniteScroll
-//         //   dataLength={host.length}
-//         //   hasMore={true}
-//         //   next={() => setPage((prevPage) => prevPage + 1)}
-//         // >
-//     <div>
-//       <div className={styles.containerHome}>
-//         <Filters setHost={setHost} originalHost={originalHost} handleSortByPrice={handleSortByPrice} ascending={ascending} />
-//         <button onClick={handleAvailableProperties}>Available Lodgings</button>
-  
-//         {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
-//         <div className={styles.skeletonContainer}>
-//   {loading ? (
-//     Array.from({ length: host.length || 10 }).map((_, idx) => <SkeletonCard key={idx} />)
-//   ) : (
-//     <Cards host={host} />
-//   )}
-// </div>
-//       </div>
-//     </div>
-//         //   </InfiniteScroll>
-  
-//   );
-  
-//   };
-
-// export default Homepage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* import Filters from "../../components/Filters/Filters"
-import Cards from "../../components/Cards/Cards"
-
-// import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-// import { getAllProperties } from "../../redux/actions"
-
-import styles from "./Homepage.module.css"
-
-const Homepage = () => {
-
-    // const dispatch = useDispatch()
-
-    // const allProperties = useSelector( (state) => state.allProperties)
-
-    const [host, setHost] = useState([])
-    const [page, setPage] = useState(1)
-
-    // useEffect(() => {
-    //   // dispatch(getAllProperties())
-    //     // dispatch(setPage(getAllProperties()))
-    // }, [dispatch, page])
-
-
-    return(
-        <div>
-            <div className={styles.containerHome}>
-                <Filters/>
-                <Cards allProperties={allProperties}/> 
-            </div>
-        </div>
-    )
-}
-
-export default Homepage */
