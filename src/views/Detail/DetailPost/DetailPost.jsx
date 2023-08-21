@@ -37,7 +37,6 @@ const DetailPost = () => {
 
   const propertyId = id
 
-
   //CALENDAR DATES ============================================
 
   const { startDate, endDate, setDateRange } = useContext(DateContext); // Use the imported useContext
@@ -108,7 +107,7 @@ const DetailPost = () => {
         rating: reviewRating,
       });
 
-      // Limpia los campos del formulario después de enviar la reseña
+      
       setReviewAuthor("");
       setReviewContent("");
       setReviewRating(0);
@@ -186,6 +185,18 @@ const DetailPost = () => {
   }, []);
 
 
+    const calculateAverageRating = () => {
+      if (reviews.length === 0) {
+        return 0; 
+      }
+    
+      const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+      const averageRating = totalRating / reviews.length;
+    
+      return averageRating;
+    };
+  
+
   const isTwoColumns = property?.services?.length > 5;
 
 
@@ -195,7 +206,7 @@ const DetailPost = () => {
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
-            <span className={styles.tittleSpan}>★4.2</span>
+            <span className={styles.tittleSpan}>★{calculateAverageRating()}</span>
             <h5 className={styles.location}>
               {property?.location?.city}, {property?.location?.state}
             </h5>
@@ -301,7 +312,7 @@ const DetailPost = () => {
         </div>
         <div className={styles.falseLine}></div>
         <section id="" className={styles.reviewBigBox}>
-          <h3>Reviews <span className={styles.tittleSpan}>4.5</span></h3>
+          <h3>Reviews <span className={styles.tittleSpan}>{calculateAverageRating()}</span></h3>
           <div className={styles.reviewsBox}>
             {reviews &&
               reviews.map((r) => (
