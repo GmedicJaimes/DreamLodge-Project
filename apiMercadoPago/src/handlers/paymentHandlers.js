@@ -43,7 +43,7 @@ const createPayment = async(req, res)=>{
               }
           ],
           back_urls: {
-              success:"http://localhost:3000/nice"
+              success:" http://localhost:5173/nice"
           },
           notification_url: "https://a3ec-2800-810-5ab-2d5-510e-b1c-3123-df0b.ngrok.io/webhook"
       })
