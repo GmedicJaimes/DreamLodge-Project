@@ -35,6 +35,11 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
+  //estado local para paginado
+  const [currentPage, SetCurrentPage] = useState(1);
+
+  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
+
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
 
   const [stateFilter, setStateFilter] = useState(null);
@@ -43,21 +48,27 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const handleStateFilter = (value)=>{
     setStateFilter(value);
+    SetCurrentPage(1)
+    
   };
   const handleCityFilter = (value) => {
     setCityFilter(value)
+    SetCurrentPage(1)
   };
 
   const handlePropertyTypeFilterChange = (value) => {
     setPropertyTypeFilter(value);
+    SetCurrentPage(1)
   };
 
   const handleRoomsChange = (value) => {
     setRooms(value);
+    SetCurrentPage(1)
   };
 
   const handleGuestChange = (value) => {
     setGuest(value);
+    SetCurrentPage(1)
   };
 
   const handleStartDateChange = async (date) => {
@@ -66,6 +77,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
       setHost(availableProperties);
     }
+    SetCurrentPage(1)
   };
 
   const handleEndDateChange = async (date) => {
@@ -74,6 +86,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
       setHost(availableProperties);
     }
+    SetCurrentPage(1)
   };
 
   useEffect(() => {
@@ -188,7 +201,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                   <SkeletonCard key={idx} />
                 ))
               ) : (
-                <Cards host={host} />
+                <Cards host={host}  currentPage={currentPage} SetCurrentPage={SetCurrentPage}/>
               )}
             </div>
             {/* {host.map((property) => (

@@ -4,11 +4,11 @@ import styles from "./Cards.module.css";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Paginate } from "../Paginate/Paginate";
 
-const Cards = ({ host }) => {
+const Cards = ({ host, currentPage, SetCurrentPage }) => {
   const allCards = host;
 
   // State for the current page, initial value is 1
-  const [currentPage, SetCurrentPage] = useState(1);
+  // const [currentPage, SetCurrentPage] = useState(1);
 
   // State for the number of countries per page, initial value is 10
   const [cardsPerPage, SetCardsPerPage] = useState(6);
@@ -36,10 +36,14 @@ const Cards = ({ host }) => {
     <div className={styles.containerCards}>
 
 <div className={styles.containerTop}>
-        {Array.isArray(currentCards) &&
-          currentCards.map((property) => (
-            <Card property={property} key={property.id} />
-          ))}
+{Array.isArray(currentCards) && currentCards.length > 0 ? (
+  currentCards.map((property) => (
+    <Card property={property} key={property.id} />
+  ))
+) : (
+  <div className={styles.sorryP}>Sorry, no properties are available with those search criteria. </div>
+)}
+
       </div>
       <div className={styles.containerBottom}>
         <Paginate
