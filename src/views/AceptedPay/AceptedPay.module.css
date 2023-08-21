@@ -1,54 +1,79 @@
+.containerPrev{
+display: flex;
+justify-content: center;
+height: 80vh;
+margin-bottom: 2rem;
+}
+
 .container{
     width: 40em;
-    height: 40em;
-    margin: auto;
-    margin-top: 15vh;
+    height: auto;
+    margin: 1rem;
+    margin-top: 5vh;
     border-radius: .7rem;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #EADCCF;
+    padding: 2rem;
 }
 
+
+
 header {
-    padding: 2.5em;
+    padding:1em;
     font-size: 2em;
 }
 
+
+
 .cardHost{
-    border: 1px solid rgb(153, 143, 143);
-    width: 15em;
-    height: 20em;
+    width: 25em;
+    min-height: 18vh;
     margin: auto;
     border-radius: .7rem;
     padding-top: 3em;
-    background-color: rgb(252, 250, 180);
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.cardHost img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
 }
 
 .cardHost p{
-    margin-top: 1.5em;
+    margin: 2rem;
+    font-weight: 700;
 }
 
 .recipeNuser{
     display: flex;
+    justify-content: space-evenly;
 }
 
 .cardTicket{
     border: 1px solid rgb(224, 217, 217);
-    width: 15em;
-    height: 20em;
+    width: 50%;
+    height: 18em;
     margin: auto;
     border-radius: .7rem;
     padding-top: 3em;
     background-color: aliceblue;
     display: grid;
+    padding: 1rem;
 }
 
 .btnContact{
     border: none;
     color: white;
     background-color: orange;
+    width: 100%;
     padding: 0.4em;
     border-radius: 0.5em;
     font-size: 1.4em;
     font-weight: 700;
+    cursor: pointer;
 }

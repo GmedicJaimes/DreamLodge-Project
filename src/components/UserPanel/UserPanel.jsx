@@ -19,7 +19,7 @@ const UsersPanel = ({ users, handleDeleteUsers }) => {
             {users.map((user) => (
               <li key={user.id} className={styles.userListItem}>
                 <div>
-                  <img src={user.image} alt="" />
+                  <img src={user.image} alt="perfil" />
                   <p>{user.name}</p>
                   <p>{user.lastName}</p>
                   <p>{user.country}</p>

@@ -20,6 +20,7 @@ import DashboardAdmin from "../Dashboard/DashboardAdmin";
 import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
 import SideFilters from "../../components/SideFilters/SideFilters";
+import landingImg from "../../assets/landingImg.jpeg"
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -28,10 +29,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
+  const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
 
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
+
+  //estado local para paginado
+  const [currentPage, SetCurrentPage] = useState(1);
 
   const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
@@ -43,20 +48,27 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const handleStateFilter = (value)=>{
     setStateFilter(value);
+    SetCurrentPage(1)
+    
   };
   const handleCityFilter = (value) => {
     setCityFilter(value)
+    SetCurrentPage(1)
   };
 
   const handlePropertyTypeFilterChange = (value) => {
     setPropertyTypeFilter(value);
+    SetCurrentPage(1)
   };
+
   const handleRoomsChange = (value) => {
     setRooms(value);
+    SetCurrentPage(1)
   };
 
   const handleGuestChange = (value) => {
     setGuest(value);
+    SetCurrentPage(1)
   };
 
   const handleStartDateChange = async (date) => {
@@ -65,6 +77,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
       setHost(availableProperties);
     }
+    SetCurrentPage(1)
   };
 
   const handleEndDateChange = async (date) => {
@@ -73,6 +86,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
       setHost(availableProperties);
     }
+    SetCurrentPage(1)
   };
 
   useEffect(() => {
@@ -128,35 +142,15 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
 
   // Función para manejar el ordenamiento por precio
-  // const handleSortByPrice = () => {
-  //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
-  //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
+  const handleSortByPrice = () => {
+    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
 
-  //    // Actualiza el estado "host" con las propiedades ordenadas por precio
-  //   setHost(sortedProperties);
-  //   // Invierte el valor de "ascending" para alternar entre ascendente y descendente
-  //   setAscending(!ascending);
-  // };
-
-  // const handleScrollInfinite = async () => {
-  //   try {
-  //     const propertiesPerPage = 8;
-  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
-
-  //     const additionalProperties = await getPropertiesList(
-  //       currentPage,
-  //       propertiesPerPage
-  //     );
-
-  //     if (additionalProperties.length === 0) {
-  //       setHasMore(false);
-  //     } else {
-  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error loading more properties:", error);
-  //   }
-  // };
+     // Actualiza el estado "host" con las propiedades ordenadas por precio
+    setHost(sortedProperties);
+    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
+    setAscending(!ascending);
+  };
 
 
   return (
@@ -169,7 +163,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           handleSortByPrice={handleSortByPrice}
           ascending={ascending}
         /> */}
-
+        <div className={styles.headerHomePage}>
+            <img src={landingImg} alt="" srcset="" />
+        </div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
           <Calendar
@@ -185,6 +181,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
             onStateChange={handleStateFilter}
             onCityChange={handleCityFilter}
+            sortByPrice={handleSortByPrice}
+            ascending={ascending}
           />
           {/* <SideFilters
           setHost={setHost}
@@ -196,12 +194,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-            {/* <InfiniteScroll
-    dataLength={host.length}
-    next={loadMoreProperties}
-    hasMore={hasMore} // Controla si hay más elementos para cargar
-    loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
-  > */}
             {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
             <div className={styles.skeletonContainer}>
               {loading ? (
@@ -209,18 +201,14 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                   <SkeletonCard key={idx} />
                 ))
               ) : (
-                <Cards host={host} />
+                <Cards host={host}  currentPage={currentPage} SetCurrentPage={SetCurrentPage}/>
               )}
             </div>
             {/* {host.map((property) => (
       <PropertyComponent key={property.id} property={property} />
-    ))} */}
-            {/* </InfiniteScroll> */}
+    ))} */}  
           </section>
-
         </div>
-
-        {/* </InfiniteScroll> */}
       </div>
     </div>
   );
