@@ -369,6 +369,9 @@ margin: 1rem;
 }
 
 
+
+
+
 @media(max-width:600){
   .bigContainerDetail{
     width: 60%;
@@ -395,6 +398,7 @@ margin: 1rem;
   display: flex;
   background-color: rgb(247, 244, 232);
   border-radius: 7px;
+  margin: 1rem 
 }
 
 .iconUserReview{
@@ -402,4 +406,8 @@ margin: 1rem;
   border: 2px solid black;
   border-radius: 50%;
   margin: 0 1em;
+}
+
+.reviewsBox{
+  display: flex;
 }
