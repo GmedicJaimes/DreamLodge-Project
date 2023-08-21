@@ -7,6 +7,7 @@ import { getUserByUID } from '../../../config/handlers.js';
 import SkeletonCard from '../../../components/SkeletonCard/SkeletonCard';
 import config from "../../../assets/ajustes.png"
 
+
 const DetailUser = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,10 +27,17 @@ const DetailUser = () => {
 
         fetchUserData();
     }, [id]);
-console.log(user);
+    if (user && user.delete) {
+        return (
+            <div>
+                <h2>Este perfil ha sido eliminado.</h2>
+            </div>
+        );
+    }
+
     return (
-        <div>
-            
+        <div className={styles.containerInfoOne}>
+
             <div className={styles.containerInfo}>
                 <h1>My Account</h1>
                 <div className={styles.dataUser}>

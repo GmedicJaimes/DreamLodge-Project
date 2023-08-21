@@ -1,0 +1,31 @@
+.paginateCtn{
+    height: 5px;
+    width: 100%;
+    border-top: 1px solid white;
+    width: 100%;
+    margin-bottom: 5rem
+;
+}
+
+
+.ulChris{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;;
+    width: 100%;
+}
+
+.liChris{
+    list-style: none;
+    padding: 0.6rem;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.liChris:hover{
+    background-color: rgba(47, 46, 48, 0.7);
+}
+

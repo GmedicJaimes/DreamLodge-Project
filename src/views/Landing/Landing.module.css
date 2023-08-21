@@ -3,9 +3,9 @@
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items:center;
-  height: 767px;
+  height: 100vh;
   background-image: url(../../assets/landingImg.jpeg);;
   background-repeat: no-repeat;
   background-size: 100% 100%; 
@@ -20,6 +20,8 @@
   width: 100%;
   background-color: #EADCCF;
   height: 70px;
+  position: fixed;
+  top:0;
 }
 .link {
   padding: 0;
@@ -46,7 +48,7 @@
 }
 
 
-.section {
+.sectionLanding {
   display: flex;
   padding: 4rem;
   flex-direction: column;
@@ -55,19 +57,19 @@
   text-align: center;
   border: 1px solid #EADCCF;
   background-color: rgba(234, 220, 207, 0.9); /* Fondo con opacidad del 90% */
-  border-radius: 20px;
-  height: 200px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra suave */
+  border-radius: 10px;
+  height: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.507); /* Sombra suave */
 }
 
 
-.section h1{
+.sectionLanding h1{
   font-family: 'Tenor sans';
   font-size: 3rem;
   font-weight: 400;
 }
 
-.section p{
+.sectionLanding p{
   margin-top: 1rem;
   font-size: 1.5rem;
   font-weight: 100;
@@ -76,7 +78,7 @@
 
 }
 
-.section button{
+.sectionLanding button{
   margin-top: 2rem;
   padding: 1rem;
   font-weight: 100;
@@ -87,4 +89,52 @@
   border: #CD5A3E;
   color: white;
   cursor: pointer;
+}
+
+
+
+
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+/*************************************************** RESPONSIVE ****************************************************/
+
+@media (max-width: 589px) {
+
+.container{
+  margin: 0 auto;
+  height: 1400px;
+  object-fit: cover;
+  object-position: center top; 
+}
+
+  .headerLanding h1 {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .headerLanding button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    margin-right: 1rem;
+  }
+
+  .sectionLanding { /* Cambio aquí */
+    padding: 2rem;
+    height: auto;
+    width: 50%;
+  }
+
+  .sectionLanding h1 {
+    font-size: 2rem;
+  }
+
+  .sectionLanding p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sectionLanding button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
 }

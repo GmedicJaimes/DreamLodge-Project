@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { Route, Routes } from 'react-router-dom'
 import Landing from "./views/Landing/Landing"
 import Homepage from './views/Homepage/Homepage'
@@ -16,11 +16,52 @@ import UserEditProperty from './views/UserEditProperty/UserEditProperty';
 import EditUser from "./views/EditUser/EditUser"
 import AceptedPay from './views/AceptedPay/AceptedPay';
 import TutorialPost from './views/TutorialPost/TutorialPost';
+import DashboardAdmin from './views/Dashboard/DashboardAdmin';
+import {db, storage} from './config/firebase';
+import {collection, getDocs,  } from 'firebase/firestore';
+import { listAll, ref } from 'firebase/storage';
+import { getPropertiesList } from './config/handlers';
+import Dashboard from './views/Dashboard/Dash/Dashboard';
+import UsersPanel from './components/UserPanel/UserPanel';
+import PropertyDash from './views/Dashboard/PropertyDash/PropertyDash';
+import UserDash from './views/Dashboard/UserDash/UserDash';
+import Profit from './views/Dashboard/Profit/Profit';
+import ReviewsDash from './views/Dashboard/ReviewDash/ReviewDash';
+
+
 
 function App() {
 
+  const imageUrlRef = ref(storage, 'properties/');
+
+  const [host, setHost] = useState([]);
+  const [originalHost, setOriginalHost] = useState([]);
+  const [totalProperties, setTotalProperties] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalImages, setTotalImages] = useState(0);
+
   const location = useLocation();
 
+  useEffect(() => {
+    async function fetchProperties() {
+      try {
+        const properties = await getPropertiesList();
+        setOriginalHost(properties);
+        setHost(properties);
+        setTotalProperties(properties.length);
+      
+
+        const usersSnapshot = await getDocs(collection(db, 'users'));
+        setTotalUsers(usersSnapshot.size);
+
+        const imagesSnapshot = await listAll(imageUrlRef);
+        setTotalImages(imagesSnapshot.items.length);
+      } catch (error) {
+        // console.error("Error fetching properties:", error);
+      }
+    }
+    fetchProperties();
+  }, [location.pathname]);
 
 
   return (
@@ -31,9 +72,9 @@ function App() {
       
       <Routes>  
         <Route path='/' element={<Landing/>}/>
-        <Route path='/home' element={<Homepage/>}/>
+        <Route path='/home' element={<Homepage host={host} setHost={setHost} originalHost={originalHost} setOriginalHost={setOriginalHost}/>}/>
         <Route path='/reserve/:id' element={<Reserve/>}/>
-        <Route path='/login' element={<LoginSignin/>}/>
+        <Route path='/login' element={<LoginSignin/>} />
         <Route path='/signin' element={<SignInView/>}/>
         <Route path='/rooms/:id' element={<DetailPost/>}/>
         <Route path='/user/:id' element={<DetailUser/>}/>
@@ -43,9 +84,16 @@ function App() {
         <Route path='/post' element={<Post/>}/>  
         <Route path='/nice' element={<AceptedPay/>}/>
         <Route path='/tutorial' element={<TutorialPost/>}/>
+        <Route path='/admin' element={<DashboardAdmin />}>
+          <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
+          <Route path='/admin/propertys' element={<PropertyDash />}/>
+          <Route path='/admin/users' element={<UserDash />}/>
+          <Route path='/admin/reviews' element={<ReviewsDash/>}/>
+          <Route path='/admin/rent-profit' element={<Profit />}/>
+        </Route>
       </Routes>
     </div>
   )
 }
 
-export default App
+export default App;

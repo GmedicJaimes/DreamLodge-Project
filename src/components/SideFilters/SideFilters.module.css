@@ -1,0 +1,111 @@
+.containerSideFilter{
+    font-size: 11px;
+    font-weight: bold;
+    color: #FAFAFF;
+    text-align: center;
+}
+
+.sideFilterHead{
+    display: flex;
+    justify-content: space-between;
+  width: 100%;
+  border: 1px solid #CD5A3E;
+  padding: 9px;
+  border-radius: 5px;
+  background-color: #CD5A3E;
+}
+
+.SideFilterBox{
+    background-color: #F3F3F7;
+    width: 300px;
+    margin: 20px;
+    display: grid;
+    box-shadow: 1px 4px 5px 1px #B8B8B8;
+    border-radius: 0 0 4px 4px;
+}
+
+.resetFilterBtn{
+    border: none;
+    border-radius: 1em;
+    padding: 10px;
+    color: #CD5A3E;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.resetFilterBtn:hover{
+    color: #CD5A3E;
+    background-color: #fceae5;
+}
+
+.locationFilters{
+    display: flex;
+    flex-direction: column;
+}
+
+.locationFilters p{
+    color: #000000;
+    text-align: start;
+    margin: 1em 0 0 2em;
+    font-size: 14px;
+}
+
+.locationFilters select{
+    width: 80%;
+    margin: 0.5em auto;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 0.5em;
+}
+
+.typeBtnSection{
+    margin: 1em 1em 4em;
+}
+
+.typeBtnSection p{
+    color: #000000;
+    text-align: start;
+    margin: 1em 0 0 0.5em;
+    font-size: 14px;
+}
+
+.btnSection{
+    width: 85px;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.btnSection:hover{
+    background-color: rgb(218, 217, 217);
+}
+
+.btnSection img{
+    width: 40px;
+}
+
+.orderButton{
+    width: 70%;
+    margin: 0 auto 1em;
+    border: 1px solid blue;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sfTypeSelected{
+    width: 85px;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    margin: 4px;
+    border: 1px solid rgb(185, 185, 185);
+    background-color: #B8B8B8;
+}
+
+.sfTypeSelected img{
+    width: 40px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}

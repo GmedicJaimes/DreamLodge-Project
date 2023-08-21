@@ -138,7 +138,9 @@ const Post = () => {
           imageFile: [],
           available: true,
         });
-        console.log(formData)
+
+        resetForm(); // reiniciar el formulario después de la publicación exitosa
+        alertPost(); // Mostrar la alerta de publicación exitosa
       } catch (error) {
         console.log(error);
       }
@@ -152,7 +154,7 @@ const Post = () => {
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
-    console.log(formData);
+    // console.log(formData);
     if (name === "imageFile") {
       setFormData((prevState) => ({
         ...prevState,
@@ -261,8 +263,12 @@ const Post = () => {
     });
   };
 
+  const alertPost = () => {
+    swal("Success", "The property has been published successfully", "success");
+  };
+
   return (
-    <div>
+    <div className={styles.bodyContainerForm}>
       <div className={styles.bigContainer}>
           <header>
             <h2>Post your Lodge</h2>
@@ -305,9 +311,7 @@ const Post = () => {
                   onChange={handleLocation}
                   name="state"
                   value={formData.location.state}
-                  className={`${styles.selectLocation} ${
-                    formData.location.state === "" ? styles.grayText : ""
-                  }`}
+                  className={styles.selectPostForm}
                 >
                   <option value="" disabled selected hidden>Choose State</option>
                   {Object.keys(US_STATE_CITIES).map((state) => (
@@ -320,9 +324,7 @@ const Post = () => {
                   onChange={handleLocation}
                   name="city"
                   value={formData.location.city}
-                  className={`${styles.selectLocation} ${
-                    formData.location.city === "" ? styles.grayText : ""
-                  }`}
+                  className={styles.selectPostForm}
                 >
                   <option value="" disabled selected hidden>Choose City</option>
 
@@ -450,11 +452,11 @@ const Post = () => {
             </div>
           </section>
           <section className={styles.btnFoot}>
-            <button type="submit">Post Lodge</button>
+            <button type="submit"  onClick={handleSubmit}>Post Lodge</button>
             <button type="button" onClick={resetForm}>Reset Form</button>
           </section>
-          {errores[0] && <span className={styles.postError}>{errores[0]}</span>}
           </form>
+          {errores[0] && <span className={styles.postError}>{errores[0]}</span>}
       </div>
       <About />
     </div>

@@ -17,14 +17,18 @@ const Navbar = () => {
   }, [auth]);
 
 
-
     return(
       <div className={styles.container}> 
         <div className={styles.containertwo}>
           <Link to={"/home"} className={styles.logo}>DreamLodge</Link>
         </div>  
-        <div className={styles.button}>
         
+        <div className={styles.button}>
+          <div className={styles.adminNav}>
+            {currentUser && currentUser.email === "akiloty3@gmail.com" ? (
+              <Link to={"/admin"} className={styles.admin}>Dashboard Admin</Link>
+            ) : null}
+          </div>
           {
             currentUser !== null 
             ? <div className={styles.button}>
@@ -32,13 +36,13 @@ const Navbar = () => {
                   <Link to={"/tutorial"} className={styles.post}>Post Lodge</Link>
                 </div>
                 <div className={styles.user}>
-                  <Dropdown></Dropdown>
+                  <Dropdown className={styles.menuNav}></Dropdown>
                 </div>
               </div>
             : 
             <div className={styles.button}>
               <div className={styles.postBtn}>
-                <Link to={"/login"} className={styles.post} onClick={()=> {alert("You must be logged in")}}>Post Lodge</Link>
+                <Link to={"/login"} className={styles.post} onClick={()=> {swal({title: 'Warning',text: "You must be logged in",icon: 'warning', dangerMode: true })}}>Post Lodge</Link>
               </div>
               <div className={styles.loginBtn}>
                 <Link to={"/login"} className={styles.login}>Login</Link>

@@ -1,15 +1,21 @@
+.tutorialContainerOne{
+  margin: 3rem;
+}
+
 .tutorialContainer {
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
-    width: 800px;
-    margin: auto;
-    margin-top: 2%;
+    max-width: 55em;
+    margin: 0 auto;
     padding: 2.1em;
+    min-height:66vh;
+    margin-bottom: 6rem;
   }
   
   .tutorialContainer h2 {
     margin: 1rem 0;
+    
   }
   
   .stepContent {
@@ -57,4 +63,38 @@
   }
   
 
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+
+
+@media(max-width: 1400px){
+
+  .tutorialContainerOne{
+    margin-bottom: 3rem;
+  }
+
+
+  .tutorialContainer{
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+  }
   
+ 
+
+}
+
+
+
+@media(max-width: 600px){
+
+  .tutorialContainer{
+    height: auto;
+    margin-top: 2rem;
+  }
+  
+ 
+
+}
+

@@ -5,9 +5,10 @@ import React from 'react';
 const Card = ({ property }) => {
   const { id, name, price, location} = property;
 
+  
   return (
     <Link to={`/rooms/${id}`} className={styles.link}>
-      <div className={styles.container}>
+      <div className={styles.containerCard}>
         <div className={styles.image}>
         {
         property.imageUrl && (
@@ -17,11 +18,11 @@ const Card = ({ property }) => {
           )
         }
         </div>
-        <section className={styles.info}>
+        <div className={styles.info}>
           <h3>{location.state}, {location.city}</h3>
           <p className={styles.infoName}>{name}</p>
           <p className={styles.infoPrice}>$ {price} USD noche</p>
-        </section>
+        </div>
       </div>
     </Link>
   );
