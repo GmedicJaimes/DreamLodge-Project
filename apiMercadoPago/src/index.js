@@ -11,7 +11,7 @@ const corsOptions = {
     optionsSuccessStatus: 204, 
   };
   //fijense siempre que levanten, que el "origin" apunte a la pagina a la cual le queremos dar acceso a nuestro backend
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(morgan('dev'))
 app.use(payment);
 
