@@ -12,7 +12,9 @@ const AceptedPay = () => {
     const [ dataRecipe, setDataRecipe ] = React.useState({})
     const [ userData, setUserData ] = React.useState()
 
-    React.useEffect( async () => {
+    React.useEffect( () => {
+
+        const defineRecipe = async () => {
         const savedRecipe = localStorage.getItem("propertyData")
         if (savedRecipe) {
             const parsedRecipe = JSON.parse(savedRecipe)
@@ -25,17 +27,18 @@ const AceptedPay = () => {
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
             console.log(parsedRecipe.buyerId, parsedRecipe.propertyId);
             await registerPurchases(parsedRecipe.buyerId, parsedRecipe.propertyId)
-        };
+        };}
+        defineRecipe()
     }, []);
     
     const handleMagia = (event) => {
         event.preventDefault()
         registerPurchases()
     } 
-    
+
     return(
         <div>
-            <div>
+            <div className={styles.containerPrev}>
                 <div className={styles.container}>
                     <header className={styles.successPay}>PAYMENT DONE!</header>
                     <p className={styles.ticketP}>Contact your host to schedule your stay at the lodging</p>
@@ -43,7 +46,6 @@ const AceptedPay = () => {
                         <div className={styles.cardHost}>
                             <img className={styles.imageTicket} src={userData?.image} alt={userData?.name} />
                             <p>{userData?.name} {userData?.lastName}</p>
-                            <p>{userData?.country}</p>
                             <Link to={`/user/${userData?.uid}`}>
                                 <button className={styles.btnContact}>Contact Owner</button>
                             </Link>
@@ -58,7 +60,6 @@ const AceptedPay = () => {
                             <h2>Total price: {dataRecipe?.priceTicket}</h2>
                         </div>
                     </div>
-                    <button>Boton magico</button>
                 </div>
             </div>
             <About/>

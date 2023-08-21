@@ -7,15 +7,15 @@
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
     max-width: 55em;
-    margin: auto;
+    margin: 0 auto;
     padding: 2.1em;
-    height: 400px;
-
-
+    min-height:66vh;
+    margin-bottom: 6rem;
   }
   
   .tutorialContainer h2 {
     margin: 1rem 0;
+    
   }
   
   .stepContent {

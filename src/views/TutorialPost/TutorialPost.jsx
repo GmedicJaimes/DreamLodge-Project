@@ -103,6 +103,7 @@ const TutorialPost = () => {
   };
 
   return (
+    <div>
     <div className={styles.tutorialContainerOne}>
 
     <div className={styles.tutorialContainer}>
@@ -125,8 +126,9 @@ const TutorialPost = () => {
           )}
         </div>
       )}
-    <About />
     </div>
+    </div>
+    <About className={styles.footerTutorial}/>
     </div>
   );
   
