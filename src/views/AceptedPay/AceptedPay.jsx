@@ -6,6 +6,7 @@ import About from "../../components/About/About"
 import { getUserByUID, registerPurchases } from "../../config/handlers";
 
 import { updateAvaible} from '../../config/handlers';
+import { auth } from "../../config/firebase";
 
 const AceptedPay = () => {
 
@@ -25,16 +26,10 @@ const AceptedPay = () => {
             // console.log(parsedRecipe.property.uui)
 
             await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket)
-            console.log(parsedRecipe.buyerId, parsedRecipe.propertyId);
-            await registerPurchases(parsedRecipe.buyerId, parsedRecipe.propertyId)
+            await registerPurchases(auth.currentUser.uid, parsedRecipe.propertyId)
         };}
         defineRecipe()
     }, []);
-    
-    const handleMagia = (event) => {
-        event.preventDefault()
-        registerPurchases()
-    } 
 
     return(
         <div>
