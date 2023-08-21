@@ -99,11 +99,6 @@ const SubTotal = ({
         }
 
         try {
-          const hola = await isPropertyAvailable(
-            propertyId,
-            startDate,
-            endDate
-          );
           await createBooking(propertyId, startDate, endDate);
         } catch (error) {
           console.log(error);
