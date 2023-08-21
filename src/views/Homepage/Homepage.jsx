@@ -28,6 +28,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
+  const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
 
 
   const [guest, setGuest] = useState(0);
@@ -51,6 +52,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const handlePropertyTypeFilterChange = (value) => {
     setPropertyTypeFilter(value);
   };
+
   const handleRoomsChange = (value) => {
     setRooms(value);
   };
@@ -128,35 +130,15 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
 
   // Función para manejar el ordenamiento por precio
-  // const handleSortByPrice = () => {
-  //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
-  //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
+  const handleSortByPrice = () => {
+    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
 
-  //    // Actualiza el estado "host" con las propiedades ordenadas por precio
-  //   setHost(sortedProperties);
-  //   // Invierte el valor de "ascending" para alternar entre ascendente y descendente
-  //   setAscending(!ascending);
-  // };
-
-  // const handleScrollInfinite = async () => {
-  //   try {
-  //     const propertiesPerPage = 8;
-  //     const currentPage = Math.floor(host.length / propertiesPerPage) + 1;
-
-  //     const additionalProperties = await getPropertiesList(
-  //       currentPage,
-  //       propertiesPerPage
-  //     );
-
-  //     if (additionalProperties.length === 0) {
-  //       setHasMore(false);
-  //     } else {
-  //       setHost((prevHost) => [...prevHost, ...additionalProperties]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error loading more properties:", error);
-  //   }
-  // };
+     // Actualiza el estado "host" con las propiedades ordenadas por precio
+    setHost(sortedProperties);
+    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
+    setAscending(!ascending);
+  };
 
 
   return (
@@ -185,6 +167,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onPropertyTypeFilterChange={handlePropertyTypeFilterChange}
             onStateChange={handleStateFilter}
             onCityChange={handleCityFilter}
+            sortByPrice={handleSortByPrice}
+            ascending={ascending}
           />
           {/* <SideFilters
           setHost={setHost}
@@ -196,12 +180,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </aside>
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-            {/* <InfiniteScroll
-    dataLength={host.length}
-    next={loadMoreProperties}
-    hasMore={hasMore} // Controla si hay más elementos para cargar
-    loader={<SkeletonCard />} // Puedes mostrar un loader mientras se cargan más elementos
-  > */}
             {/* Verifica si host está cargando, si es así, muestra el esqueleto */}
             <div className={styles.skeletonContainer}>
               {loading ? (
@@ -214,13 +192,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             </div>
             {/* {host.map((property) => (
       <PropertyComponent key={property.id} property={property} />
-    ))} */}
-            {/* </InfiniteScroll> */}
+    ))} */}  
           </section>
-
         </div>
-
-        {/* </InfiniteScroll> */}
       </div>
     </div>
   );

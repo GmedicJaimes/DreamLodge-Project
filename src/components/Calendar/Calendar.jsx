@@ -30,10 +30,13 @@ const Calendar = ({
   onStateChange,
   onCityChange,
   stateFilter,
-  cityFilter
+  cityFilter,
+  sortByPrice,
+  ascending
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
+  // const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionado
 
   
   const handlePropertyStateFilterChange=(event)=>{
@@ -46,6 +49,10 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
+
+  // const handlePropertyTypeFilterChange = (event) => {
+  //   setSelectedTypes(event.target.value);
+  // };
   
 
   const today = dayjs();
@@ -86,6 +93,17 @@ const Calendar = ({
     }
     return 0;
   };
+
+  // const handleCleanFilter = () => {
+  //   onGuestChange(0);
+  //   onRoomsChange(0);
+  //   onStartChange(null);
+  //   onEndChange(null);
+  //   onPropertyTypeFilterChange(null);
+  //   onStateChange(null);
+  //   onCityChange(null);
+  //   setSelectedTypes([]); // Limpiar tipos seleccionados
+  // };
 
   return (
     <div>
@@ -284,9 +302,9 @@ const Calendar = ({
           <FormControl variant="outlined" sx={{ minWidth: 120 }}>
             <InputLabel>Type</InputLabel>
             <Select
-              value={propertyTypeFilter}
-              onChange={handlePropertyTypeFilterChange}
-              label="Type"
+                  value={propertyTypeFilter}
+                  onChange={handlePropertyTypeFilterChange}
+                  label="Type"
             >
               <MenuItem value={null}>All</MenuItem>
               <MenuItem value="Cabins">Cabins</MenuItem>
@@ -327,6 +345,8 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
+            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
+            {/* <MenuItem onClick={handleCleanFilter}>Clean filtered</MenuItem> */}
           </FormControl>
         </Grid>
       </Card>
