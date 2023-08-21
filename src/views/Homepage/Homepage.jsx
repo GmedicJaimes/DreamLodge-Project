@@ -35,8 +35,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
 
-  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
-
   const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
 
   const [stateFilter, setStateFilter] = useState(null);
