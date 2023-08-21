@@ -314,7 +314,7 @@ const Calendar = ({
               <MenuItem value="Room">Room</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "5px" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "3px" }}>
             <InputLabel>State</InputLabel>
             <Select
               value={stateFilter}
@@ -330,7 +330,7 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}
@@ -345,9 +345,23 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
+          
             {/* <MenuItem onClick={handleCleanFilter}>Clean filtered</MenuItem> */}
           </FormControl>
+          <MenuItem onClick={sortByPrice}
+             style={{
+              border:"1px solid #AFAFB3",
+              color:"#616163",
+              borderRadius: "5px",
+              minWidth: 119,
+              width: "45%",
+              marginRight: "4px"
+
+            }}
+            >Sort by price 
+              
+              
+               </MenuItem>
         </Grid>
       </Card>
     </div>
