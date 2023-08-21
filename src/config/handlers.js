@@ -385,9 +385,7 @@ export const detailId = async (id) =>{
     if(propertySnapshot.exists()){
       
       return propertySnapshot.data();
-    } else {
-      console.log( 'no existe nada de info') 
-    }
+    } 
   } catch (error) {
     console.log(error)
   }
@@ -559,7 +557,7 @@ const checkStartWithin = async (propertyId, formattedStartDate, formattedEndDate
       where("startDate", "<=", formattedEndDate)
     )
   );
-//console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+  // console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
   return snapshot.size === 0;
 }
 
@@ -573,7 +571,7 @@ const checkEndWithin = async (propertyId, formattedStartDate, formattedEndDate) 
       where("endDate", "<=", formattedEndDate)
     )
   );
- // console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+  // console.log("Reservas que terminan dentro del rango:", snapshot.docs.map(doc => doc.data()));
 
   return snapshot.size === 0;
 }
@@ -634,7 +632,7 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
   try {
     const formattedStartDate = Timestamp.fromDate(new Date(startDate));
     const formattedEndDate = Timestamp.fromDate(new Date(endDate));
-
+    
     const isStartWithin = await checkStartWithin(propertyId, formattedStartDate, formattedEndDate);
     const isEndWithin = await checkEndWithin(propertyId, formattedStartDate, formattedEndDate);
     const isOverlappingStart = await checkOverlappingStart(propertyId, formattedStartDate);
@@ -646,7 +644,7 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
     // console.log('isContainedWithin:', isContainedWithin);
 
     const finalResult = isStartWithin && isEndWithin && isOverlappingStart && isContainedWithin;
-    console.log('Final availability result:', finalResult);
+    // console.log('Final availability result:', finalResult);
 
     return finalResult;
 
@@ -709,6 +707,7 @@ export const getBookedDatesForProperty = async (propertyId) => {
 export const createBooking = async (propertyId, startDate, endDate) => {
   try {
     // Verificamos la disponibilidad primero
+    
 
 const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as needed
 
@@ -727,7 +726,7 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
 
 
     } else {
-     console.log('Property is not available for the selected dates');
+      // console.log('Property is not available for the selected dates');
       swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
     }
 

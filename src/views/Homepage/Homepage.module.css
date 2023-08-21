@@ -48,3 +48,14 @@
   width: 100%;
   object-fit: cover;
   object-position: 0px 53%;}
+
+  .errorMessage{
+    color: red;
+    font-size: 2rem;
+    display: none
+;
+  }
+
+  errorMessageEmpty{
+    display: block;
+  }

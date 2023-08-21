@@ -7,15 +7,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Importa Button aquí
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
-import { Link } from "react-router-dom";
-import {
-  createBooking,
-  isPropertyAvailable,
-  getBookingsByPropertyId,
-} from "../../config/handlers";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import axios from "axios";
-import styles from "./subTotal.module.css";
+import { Link } from "react-router-dom"
+import { createBooking, isPropertyAvailable,  getBookingsByPropertyId, getPaymentStatus} from "../../config/handlers";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import axios from 'axios';
+import { auth } from "../../config/firebase";
 
 const SubTotal = ({
   handleStartDateChange,
@@ -40,17 +36,19 @@ const SubTotal = ({
     idTicket: "",
   });
 
-  //integracion mercado pago:
-  const [preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
-  const createPreference = async () => {
-    try {
-      const response = await axios.post(`http://localhost:3001/createorder`, {
-        description: `${property.name}`,
-        price: `${subTotal}`,
-        quantity: `${countSelectedDays()}`,
-        currency_id: "ARS",
-      });
+//integracion mercado pago: 
+const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${subTotal}`,
+                quantity: `${countSelectedDays()}`,
+                currency_id: "ARS",
+                propertyId: propertyId,
+                userId: auth.currentUser.uid
+            });
 
       const { id } = response.data;
 
@@ -120,8 +118,11 @@ const SubTotal = ({
 
 
   React.useEffect(() => {
-    localStorage.setItem("dataTicket", JSON.stringify({dataTicket}));
-  }, [dataTicket]);
+    localStorage.setItem(
+      "dataTicket",
+      JSON.stringify(dataTicket)
+    );
+  }, [property]);
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -147,12 +148,7 @@ const SubTotal = ({
 
   const subTotal = countSelectedDays() * property?.price;
 
-  //   React.useEffect(() => {
-  //     if (startDate && endDate) {
-  //       const count = countSelectedDays();
-  //       console.log(`counted days` , count);
-  //     }
-  //   }, [startDate, endDate]);
+
 
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
