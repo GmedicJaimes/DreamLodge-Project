@@ -201,6 +201,10 @@
   padding: 1em 2em;
 }
 
+.reviewBigBox h3 {
+  margin: 1rem 0
+}
+
 .reviewBox .priceDiv{
   background-color: #CD5A3E;
   border-radius: 5px;
@@ -380,10 +384,12 @@ margin: 1rem;
 
 }
 
+
 .tittleSpan{
   background-color: #99997A;
   color: white;
-  padding: 0 6px;
+  padding: 4px 10px;
+
 }
 
 .headRev{
@@ -408,6 +414,12 @@ margin: 1rem;
   margin: 0 1em;
 }
 
-.reviewsBox{
+.reviewsBox {
   display: flex;
+  flex-wrap: wrap; /* Permite que el contenido se envuelva en múltiples filas */
+  width: 100%;
+}
+.reviewCont{
+  text-align: left;
+  margin: 1rem;
 }

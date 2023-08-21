@@ -161,7 +161,8 @@ const DetailPost = () => {
         );
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
           reviewDoc.data()
-        );
+          );
+          console.log(reviewsData)
         setReviews(reviewsData);
 
         if (auth.currentUser) {
