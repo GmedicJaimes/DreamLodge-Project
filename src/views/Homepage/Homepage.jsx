@@ -9,7 +9,8 @@ import {
   sortPropertiesByPrice,
   getAllBookings,
   fetchAvailablePropertiesInRange,
-  getPropertiesList
+  getPropertiesList,
+  isPropertyAvailable
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import { listAll } from "firebase/storage";
@@ -30,7 +31,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
-  const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
 
   // console.log(host)
 
@@ -51,6 +51,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const handleStateFilter = (value)=>{
     setStateFilter(value);
   };
+
   const handleCityFilter = (value) => {
     setCityFilter(value)
   };
@@ -74,6 +75,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(availableProperties);
     }
   };
+
 
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
@@ -99,10 +101,20 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(filteredHost);
     }
 
-
     fetchFilteredHost();
 
+    if (
+      guest === 0 &&
+      rooms === 0 &&
+      propertyTypeFilter === "" &&
+      stateFilter === "" &&
+      cityFilter === ""
+    ) {
+      setDateRange(null, null);
+    }
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
+
+  
 
   useEffect(() => {
     async function fetchAndUpdateHost() {
@@ -118,13 +130,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
       if (rooms) {
         filteredHost = filteredHost.filter(
-          (host) => host.stances && host.stances.rooms === Number(rooms)
+          (host) => host.stances && host.stances.rooms == Number(rooms)
         );
       }
   
       if (guest) {
         filteredHost = filteredHost.filter((property) => {
-          return property.stances && property.stances.guest === Number(guest);
+          return property.stances && property.stances.guest == Number(guest);
         });
       }
   

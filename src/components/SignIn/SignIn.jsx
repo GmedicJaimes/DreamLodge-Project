@@ -351,9 +351,9 @@ const SignIn = () => {
         </div>
         <div className={styles.formBtn}>
             
-        {/* <button className={styles.loginWG} onClick={signInGoogle}>
+        <button className={styles.loginWG} onClick={signInGoogle}>
           Sign In With Google
-        </button> */}
+        </button> 
         <br />
         <button
   className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`}

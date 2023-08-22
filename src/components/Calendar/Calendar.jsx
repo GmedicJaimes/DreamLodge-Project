@@ -11,6 +11,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import BedIcon from "@mui/icons-material/Bed";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { DateContext } from "../../Contex/DateContex";
+import style from "./Calendar.module.css"
 import {
 
   isPropertyAvailable,
@@ -49,10 +50,6 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
-
-  // const handlePropertyTypeFilterChange = (event) => {
-  //   setSelectedTypes(event.target.value);
-  // };
   
 
   const today = dayjs();
@@ -78,16 +75,25 @@ const Calendar = ({
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  //  const handleResetFilters = () => {
+  //   onGuestChange(0);
+  //   onRoomsChange(0);
+  //   onStartChange(null);
+  //   onEndChange(null);
+  //   onPropertyTypeFilterChange(null);
+  //   onStateChange(null);
+  //   onCityChange(null);
+  // };
+
   const handleResetFilters = () => {
     onGuestChange(0);
     onRoomsChange(0);
-    onStartChange(null);
-    onEndChange(null);
-    onPropertyTypeFilterChange(null);
-    onStateChange(null);
-    onCityChange(null);
+    onPropertyTypeFilterChange("");
+    onStateChange("");
+    onCityChange("");
   };
+  
+  
   
 
 
@@ -263,7 +269,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="number"
+                  type="text"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -281,7 +287,7 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="number"
+                  type="text"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
@@ -342,8 +348,8 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
-           <button onClick={handleResetFilters}>Clean filtered</button>
+{/*             <MenuItem onClick={sortByPrice}>Sort by price</MenuItem>
+ */}           
           </FormControl>
           <MenuItem onClick={sortByPrice}
              style={{
@@ -359,6 +365,7 @@ const Calendar = ({
               
               
                </MenuItem>
+               <button onClick={handleResetFilters} className={style.btnClean} >Clean filtered</button>
         </Grid>
       </Card>
     </div>
