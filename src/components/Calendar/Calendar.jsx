@@ -365,7 +365,7 @@ const Calendar = ({
               
               
                </MenuItem>
-               <button onClick={handleResetFilters} className={style.btnClean} >Clean filtered</button>
+               <button onClick={handleResetFilters} className={style.btnClean} >Clean Filtered</button>
         </Grid>
       </Card>
     </div>
