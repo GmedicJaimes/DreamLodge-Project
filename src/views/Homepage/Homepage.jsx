@@ -31,6 +31,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
 
+  // console.log(host)
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
@@ -38,11 +39,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   //estado local para paginado
   const [currentPage, SetCurrentPage] = useState(1);
 
-  const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
+  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
-  const [stateFilter, setStateFilter] = useState(null);
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
 
-  const [cityFilter, setCityFilter] = useState(null);
+  const [stateFilter, setStateFilter] = useState("");
+
+  const [cityFilter, setCityFilter] = useState("");
 
   const handleStateFilter = (value)=>{
     setStateFilter(value);
@@ -90,7 +93,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   };
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const filters = {
       guest: guest,
       rooms: rooms,
@@ -166,7 +169,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           ascending={ascending}
         /> */}
         <div className={styles.headerHomePage}>
-            <img src={landingImg} alt="" srcset="" />
+            <img src={landingImg} alt="" srcSet="" />
         </div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>

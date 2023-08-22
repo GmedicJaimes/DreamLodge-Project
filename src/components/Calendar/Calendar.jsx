@@ -262,7 +262,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="number"
+                  type="text"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -280,7 +280,7 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="number"
+                  type="text"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
@@ -302,7 +302,7 @@ const Calendar = ({
                   onChange={handlePropertyTypeFilterChange}
                   label="Type"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               <MenuItem value="Cabins">Cabins</MenuItem>
               <MenuItem value="Beachfront">Beachfront</MenuItem>
               <MenuItem value="Mansion">Mansion</MenuItem>
@@ -317,7 +317,7 @@ const Calendar = ({
               onChange={handlePropertyStateFilterChange}
               label="State"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               {Object.keys(US_STATE_CITIES).map((state) => (
                 <MenuItem key={state} value={state}>
                   {state}
@@ -333,7 +333,7 @@ const Calendar = ({
               onChange={handlePropertyCityFilterchange}
               label="City"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               {stateFilter &&
                 US_STATE_CITIES[stateFilter].map((city) => (
                   <MenuItem key={city} value={city}>
