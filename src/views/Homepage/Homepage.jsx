@@ -87,6 +87,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   };
 
   useEffect(() => {
+    if (isPriceSorted) {
+      const sortedProperties = sortPropertiesByPrice([...host], ascending);
+      setHost(sortedProperties);
+    }
+  }, [host, isPriceSorted, ascending]);
+
+  useEffect(() => {
     setLoading(true);
     const filters = {
       guest: guest,
