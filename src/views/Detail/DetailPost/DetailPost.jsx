@@ -175,7 +175,7 @@ const DetailPost = () => {
           const hasPurchased = !purchasesSnapshot?.empty;
           
 
-          setHasPurchased(hasPurchased);
+          setHasPurchased(true);
           setReviewAuthor(auth.currentUser.displayName);
 
         }
@@ -355,6 +355,7 @@ const DetailPost = () => {
             className={styles.reviewSelect}
 
           >
+            <option value="" selected hidden>Choose Rating</option>
             <option value={1}>★</option>
             <option value={2}>★★</option>
             <option value={3}>★★★</option>
