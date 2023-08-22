@@ -124,8 +124,8 @@ align-items: center;
 
 .formBtn {
   width: 100%;
-  flex-direction: column;
-  justify-content: center; /* Centra horizontalmente */
+ /*  flex-direction: column;
+  justify-content: center; */ /* Centra horizontalmente */
   align-items: stretch; /* Alinea verticalmente al baseline (texto base) */
   margin-top: 2em; /* Ajusta el margen superior si es necesario */
   margin-left: -12rem;

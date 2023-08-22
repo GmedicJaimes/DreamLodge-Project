@@ -162,7 +162,6 @@ const DetailPost = () => {
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
           reviewDoc.data()
           );
-          console.log(reviewsData)
         setReviews(reviewsData);
 
         if (auth.currentUser) {
@@ -174,8 +173,11 @@ const DetailPost = () => {
           );
           const purchasesSnapshot = await getDocs(purchasesQuery);
           const hasPurchased = !purchasesSnapshot?.empty;
+          
 
           setHasPurchased(hasPurchased);
+          setReviewAuthor(auth.currentUser.displayName);
+
         }
       } catch (error) {
         console.error("Hubo un error al obtener los datos:", error);
@@ -183,7 +185,7 @@ const DetailPost = () => {
     }
 
     fetchData();
-  }, []);
+  }, [reviews]);
 
 
     const calculateAverageRating = () => {
@@ -207,7 +209,7 @@ const DetailPost = () => {
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
-            <span className={styles.tittleSpan}>★{calculateAverageRating()}</span>
+            <span className={styles.tittleSpan}>★{parseFloat(calculateAverageRating()).toFixed(1)}</span>
             <h5 className={styles.location}>
               {property?.location?.city}, {property?.location?.state}
             </h5>
@@ -313,7 +315,7 @@ const DetailPost = () => {
         </div>
         <div className={styles.falseLine}></div>
         <section id="" className={styles.reviewBigBox}>
-          <h3>Reviews <span className={styles.tittleSpan}>{calculateAverageRating()}</span></h3>
+          <h3>Reviews <span className={styles.tittleSpan}>{parseFloat(calculateAverageRating()).toFixed(1)}</span></h3>
           <div className={styles.reviewsBox}>
             {reviews &&
               reviews.map((r) => (
@@ -332,33 +334,38 @@ const DetailPost = () => {
               ))}
           </div>
         </section>
-      </div>
       {hasPurchased && (
-        <div>
+        <div className={styles.createReviewBox}>
           <input
             type="text"
             placeholder="Nombre"
             value={reviewAuthor}
             onChange={(e) => setReviewAuthor(e.target.value)}
+            disabled
           />
           <textarea
-            placeholder="Contenido de la reseña"
+            placeholder="Write your review here"
             value={reviewContent}
             onChange={(e) => setReviewContent(e.target.value)}
+            className={styles.reviewTextarea}
           />
           <select
             value={reviewRating}
             onChange={(e) => setReviewRating(Number(e.target.value))}
+            className={styles.reviewSelect}
+
           >
-            <option value={1}>1 estrella</option>
-            <option value={2}>2 estrellas</option>
-            <option value={3}>3 estrellas</option>
-            <option value={4}>4 estrellas</option>
-            <option value={5}>5 estrellas</option>
+            <option value={1}>★</option>
+            <option value={2}>★★</option>
+            <option value={3}>★★★</option>
+            <option value={4}>★★★★</option>
+            <option value={5}>★★★★★</option>
           </select>
-          <button onClick={() => submitReview(id)}>Enviar Reseña</button>
+          <button onClick={() => submitReview(id)} 
+          className={styles.reviewBtn}>Submit</button>
         </div>
-      )}
+      )}      </div>
+
 
 
       <About />
