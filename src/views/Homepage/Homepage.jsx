@@ -31,6 +31,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
   const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
 
+  // console.log(host)
 
   const [guest, setGuest] = useState(0);
   const [rooms, setRooms] = useState(0);
@@ -40,11 +41,11 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
-  const [propertyTypeFilter, setPropertyTypeFilter] = useState(null);
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
 
-  const [stateFilter, setStateFilter] = useState(null);
+  const [stateFilter, setStateFilter] = useState("");
 
-  const [cityFilter, setCityFilter] = useState(null);
+  const [cityFilter, setCityFilter] = useState("");
 
   const handleStateFilter = (value)=>{
     setStateFilter(value);
@@ -166,7 +167,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           ascending={ascending}
         /> */}
         <div className={styles.headerHomePage}>
-            <img src={landingImg} alt="" srcset="" />
+            <img src={landingImg} alt="" srcSet="" />
         </div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
