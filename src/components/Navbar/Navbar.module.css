@@ -7,6 +7,9 @@
   background-color: #EADCCF;
   
 }
+.imgLogo{
+  width: 150px;
+}
 
 .containertwo {
   display: flex;

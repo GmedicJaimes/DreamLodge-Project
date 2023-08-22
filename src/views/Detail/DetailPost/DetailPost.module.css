@@ -307,6 +307,9 @@ a{
   margin-bottom: 10px;
 }
 
+.tittleD{
+  font-size: 1.5rem;
+}
 
 .containerSectionOne{
   margin: 0 auto;
@@ -509,7 +512,7 @@ border-radius: 7px;
     
   }
   .tittleD{
-    font-size: 1.3rem;
+    font-size: 1.9rem;
   }
   .twoColumns{
     column-count: 1;
