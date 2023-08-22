@@ -109,7 +109,7 @@ const Calendar = ({
   };
 
   return (
-    <div>
+    <div className={style.calendarCnt}>
       <Card
         elevation={0}
         sx={{
@@ -118,7 +118,7 @@ const Calendar = ({
           padding: "15px",
           margin: "20px",
           marginBottom: "-22px",
-          width: "300px",
+          width: "350px",
           borderRadius: '4px 4px 0px 0px'
         }}
       >
@@ -143,7 +143,7 @@ const Calendar = ({
           height: "auto",
           padding: "15px",
           margin: "20px",
-          width: "300px",
+          width: "350px",
           boxShadow: "1px 4px 5px 1px #B8B8B8",
           borderRadius: '0px 0px 4px 4px'
         }}
@@ -302,7 +302,7 @@ const Calendar = ({
               </Grid>
             </Grid>
           </LocalizationProvider>
-          <FormControl variant="outlined" sx={{ minWidth: 120 }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width:"39%" }}>
             <InputLabel>Type</InputLabel>
             <Select
                   value={propertyTypeFilter}
@@ -317,7 +317,7 @@ const Calendar = ({
               <MenuItem value="Room">Room</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "3px" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%", marginRight: "3px" }}>
             <InputLabel>State</InputLabel>
             <Select
               value={stateFilter}
@@ -333,7 +333,7 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%"}}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}
@@ -356,9 +356,9 @@ const Calendar = ({
               border:"1px solid #AFAFB3",
               color:"#616163",
               borderRadius: "5px",
-              minWidth: 119,
-              width: "45%",
-              marginRight: "4px"
+              // minWidth: 119,
+              // width: "37%",
+              marginRight: "8px"
 
             }}
             >Sort by price 
