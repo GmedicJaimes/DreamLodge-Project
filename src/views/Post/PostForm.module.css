@@ -1,15 +1,14 @@
 .bodyContainerForm{
-    /* max-height: 80vh; */
+    /* min-height: 100vh; */
+    width: 100%;
 }
 
 .bigContainer{
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
-    margin: auto;
-    margin-top: 3em;
+    margin: 10vh auto;
     max-width: 90em;
     padding-bottom: 3em;
-    margin-bottom: 3em;
     border-radius: 1em;
 }
 

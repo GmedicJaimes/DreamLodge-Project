@@ -43,15 +43,20 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
   return (
     <div className={styles.containerCards}>
 
-      <div className={styles.containerTop}>
-          {Array.isArray(currentCards) && 
-            currentCards.map((property) => (
-              <Card property={property} key={property.id} />
-          ))
-          }
+
+        
+    
+<div className={styles.containerTop}>
+{Array.isArray(currentCards) && 
+  host.map((property) => (
+    <Card property={property} key={property.id} />
+  ))
+}
+
+
       </div>
  
-      <div className={styles.containerBottom}>
+      {/* <div className={styles.containerBottom}>
         <Paginate
           cardsPerPage={cardsPerPage} // Number of countries per page
           allCards={allCards.length} // Total number of countries or searched countries
@@ -60,7 +65,7 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
         />
       </div>
 
-    
+     */}
      
     </div>
   );
