@@ -175,7 +175,7 @@ const DetailPost = () => {
           const hasPurchased = !purchasesSnapshot?.empty;
           
 
-          setHasPurchased(true);
+          setHasPurchased(hasPurchased);
           setReviewAuthor(auth.currentUser.displayName);
 
         }
