@@ -297,9 +297,9 @@ a{
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
-  flex-wrap: wrap;
   padding: 0 3.5em;
   min-height: 37em;
+  width: 100%;
 }
 
 .listServices {
@@ -312,6 +312,10 @@ a{
   margin: 0 auto;
   max-width: 35em;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .containerSectionTwo{
@@ -330,7 +334,12 @@ a{
   color: black;
   font-weight: 900;
   margin: 1rem 0;
+  font-size: 1.5rem;
 }
+.roomsD{
+  width: 80%;
+}
+
 
 .roomsD h3 div{
   display: flex;
@@ -340,8 +349,8 @@ a{
 
 .roomsDOne  {
   margin: 1rem;
-  font-family: 'Lexend Deca';
   font-weight: 500;
+
 }
 
 .roomsDOne img, .roomsDTwo img{
@@ -352,7 +361,6 @@ a{
 .roomsDTwo  {
   margin: 1rem;
   width: 500px;
-  font-family: 'Lexend Deca';
   font-weight: 500;
 }
 .spanproperty{
@@ -479,6 +487,8 @@ border-radius: 7px;
   margin: 0.5rem 0;
 }
 
+
+
 .reviewBtn{
   padding: 1rem;
   background-color: transparent;
@@ -487,4 +497,87 @@ border-radius: 7px;
   cursor: pointer;
   font-weight: 500;
   border: 1px solid #767676
+}
+
+@media (max-width: 700px){
+  .location{
+    font-size: 1rem;
+  }
+
+  .tittleSpan{
+    padding: 2px 5px;
+    
+  }
+  .tittleD{
+    font-size: 1.3rem;
+  }
+  .twoColumns{
+    column-count: 1;
+  }
+
+  .singleReview{
+    flex-direction: column;
+  }
+  .overviewBoxText{
+    width: 30%
+  }
+  .containerSectionTwo{
+    width: auto;
+  }
+
+  .roomsDiv{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .roomsDOne,.roomsDTwo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;;
+    width: 60%;
+  }
+  .roomsDOne img span {
+    margin: 0;
+  }
+  .roomsDTwoBed{
+    display: block;
+    margin-left: 0rem;
+    margin: 1rem 0rem;
+  }
+
+  .bigContainerDetail header{
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-around;
+  }
+  .priceDiv{
+    width: 200px;
+    text-align: center;
+  }
+  .singleReview{
+    max-width: 100%;
+  }
+  .prevButton{
+
+    top: 40%;
+    left: 10%;
+  }
+  .nextButton{
+
+    top: 40%;
+    right: 10%;
+  }
+  .createReviewBox{
+    width: auto;
+  }
+  
+}
+
+@media (max-width: 1200px){
+
+.containerSection{
+  flex-direction: column;
+}
+
+
 }
