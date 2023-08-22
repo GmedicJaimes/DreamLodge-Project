@@ -102,6 +102,16 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
 
     fetchFilteredHost();
+
+    if (
+      guest === 0 &&
+      rooms === 0 &&
+      propertyTypeFilter === "" &&
+      stateFilter === "" &&
+      cityFilter === ""
+    ) {
+      setDateRange(null, null);
+    }
   }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
 
   
@@ -158,7 +168,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
 
     if (currentPage > totalFilteredPages) {
-      setCurrentPage(totalFilteredPages);
+      setCurrentPage(1);
     }
   }, [host, cardsPerPage, currentPage]);
 

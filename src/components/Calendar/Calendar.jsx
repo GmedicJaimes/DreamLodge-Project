@@ -77,16 +77,25 @@ const Calendar = ({
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  //  const handleResetFilters = () => {
+  //   onGuestChange(0);
+  //   onRoomsChange(0);
+  //   onStartChange(null);
+  //   onEndChange(null);
+  //   onPropertyTypeFilterChange(null);
+  //   onStateChange(null);
+  //   onCityChange(null);
+  // };
+
   const handleResetFilters = () => {
     onGuestChange(0);
     onRoomsChange(0);
-    onStartChange(null);
-    onEndChange(null);
-    onPropertyTypeFilterChange(null);
-    onStateChange(null);
-    onCityChange(null);
+    onPropertyTypeFilterChange("");
+    onStateChange("");
+    onCityChange("");
   };
+  
+  
   
 
 
