@@ -73,7 +73,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
       setHost(availableProperties);
     }
-    // SetCurrentPage(1)
   };
 
   const handleEndDateChange = async (date) => {
@@ -187,31 +186,31 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           />
           </aside>
           <section className={styles.calendarHome}>
-            <div className={styles.skeletonContainer}>
-              {loading ? (
-                Array.from({ length: host.length || 12 }).map((_, idx) => (
-                  <SkeletonCard key={idx} />
-                ))
-              ) : (
-                
-                  <Cards host={host} />
-                
-              )}
-            </div>
-            
-              <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
-                Sorry, no properties are available with those search criteria.
-              </p>
+              <div className={styles.skeletonContainer}>
+                {loading ? (
+                  Array.from({ length: host.length || 12 }).map((_, idx) => (
+                    <SkeletonCard key={idx} />
+                  ))
+                ) : (
+                  host.length > 0 ? (
+                    <Cards host={host} currentPage={currentPage} />
+                  ) : null
+                )}
+              </div>
+              
+                <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
+                  Sorry, no properties are available with those search criteria.
+                </p>
 
 
-            {/* <section>
-                <Paginate
-                  cardsPerPage={cardsPerPage}
-                  totalCards={host.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}/>
-            </section> */}
+          <section>
+              <Paginate
+                cardsPerPage={cardsPerPage}
+                totalCards={host.length}
+                paginate={paginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}/>
+          </section>
           </section>
         </div>
       </div>
