@@ -22,6 +22,7 @@ import Calendar from "../../components/Calendar/Calendar";
 import { DateContext } from "../../Contex/DateContex";
 import SideFilters from "../../components/SideFilters/SideFilters";
 import landingImg from "../../assets/landingImg.jpeg"
+import  Paginate  from "../../components/Paginate/Paginate";
 
 const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [allProperties, setAllProperties] = useState([]);
@@ -37,9 +38,9 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [rooms, setRooms] = useState(0);
 
   //estado local para paginado
-  const [currentPage, SetCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 6;
 
-  const [hasMore, setHasMore] = useState(true); // Estado para controlar si hay más elementos a cargar en el scroll infinito
 
   const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
 
@@ -49,28 +50,22 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
   const handleStateFilter = (value)=>{
     setStateFilter(value);
-    SetCurrentPage(1)
-    
   };
 
   const handleCityFilter = (value) => {
     setCityFilter(value)
-    SetCurrentPage(1)
   };
 
   const handlePropertyTypeFilterChange = (value) => {
     setPropertyTypeFilter(value);
-    SetCurrentPage(1)
   };
 
   const handleRoomsChange = (value) => {
     setRooms(value);
-    SetCurrentPage(1)
   };
 
   const handleGuestChange = (value) => {
     setGuest(value);
-    SetCurrentPage(1)
   };
 
   const handleStartDateChange = async (date) => {
@@ -79,7 +74,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
       setHost(availableProperties);
     }
-    SetCurrentPage(1)
   };
 
 
@@ -89,7 +83,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(startDate, date);
       setHost(availableProperties);
     }
-    SetCurrentPage(1)
   };
 
   useEffect(() => {
@@ -104,10 +97,8 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
-      setLoading(false); // Set loading to false only after data is fetched
+      setLoading(false);
       setHost(filteredHost);
-
-
     }
 
     fetchFilteredHost();
@@ -157,17 +148,23 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     setAscending(!ascending);
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  
+  useEffect(() => {
+   
+    const totalFilteredPages = Math.ceil(host.length / cardsPerPage);
+
+
+    if (currentPage > totalFilteredPages) {
+      setCurrentPage(totalFilteredPages);
+    }
+  }, [host, cardsPerPage, currentPage]);
 
   return (
     <div>
       <div className={styles.containerHome}>
-        {/* <Filters
-          setHost={setHost}
-          originalHost={originalHost}
-          filteredHost={host} // Pasar el arreglo host filtrado
-          handleSortByPrice={handleSortByPrice}
-          ascending={ascending}
-        /> */}
         <div className={styles.headerHomePage}>
             <img src={landingImg} alt="" srcSet="" />
         </div>
@@ -189,39 +186,34 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             sortByPrice={handleSortByPrice}
             ascending={ascending}
           />
-          {/* <SideFilters
-          setHost={setHost}
-          originalHost={originalHost}
-          filteredHost={host} // Pasar el arreglo host filtrado
-          handleSortByPrice={handleSortByPrice}
-          ascending={ascending}
-        /> */}
           </aside>
-
-          {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-  <div className={styles.skeletonContainer}>
-    {loading ? (
-      Array.from({ length: host.length || 12 }).map((_, idx) => (
-        <SkeletonCard key={idx} />
-      ))
-    ) : (
-      host.length > 0 ? (
-        <Cards host={host} />
-      ) : null
-    )}
-  </div>
-  
-    <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
-      Sorry, no properties are available with those search criteria.
-    </p>
+              <div className={styles.skeletonContainer}>
+                {loading ? (
+                  Array.from({ length: host.length || 12 }).map((_, idx) => (
+                    <SkeletonCard key={idx} />
+                  ))
+                ) : (
+                  host.length > 0 ? (
+                    <Cards host={host} currentPage={currentPage} />
+                  ) : null
+                )}
+              </div>
+              
+                <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
+                  Sorry, no properties are available with those search criteria.
+                </p>
 
 
-</section>
-
-
-
-
+          </section>
+          <section>
+              <Paginate
+                cardsPerPage={cardsPerPage}
+                totalCards={host.length}
+                paginate={paginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}/>
+          </section>
         </div>
       </div>
     </div>
