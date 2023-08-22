@@ -73,10 +73,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       const availableProperties = await fetchAvailablePropertiesInRange(date, endDate);
       setHost(availableProperties);
     }
-<<<<<<< HEAD
     // SetCurrentPage(1)
-=======
->>>>>>> f03241f4a346c0e0071d45dc85b1f516ecbd2b6a
   };
 
   const handleEndDateChange = async (date) => {
