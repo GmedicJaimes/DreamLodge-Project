@@ -257,11 +257,11 @@ const DetailPost = () => {
         <div className={styles.containerSection}>
           <div className={styles.containerSectionOne}>
             <section className={styles.overviewBox}>
-              <h3>Description</h3>
-              <p>{property?.description}</p>
+              <h3 className={styles.h3DescRev}>Description</h3>
+              <p className={styles.overviewBoxText}>{property?.description}</p>
             </section>
             <section >
-              <h3>Facilities</h3>
+              <h3 className={styles.h3DescRev}>Facilities</h3>
               <div className={styles.servicesD}>
                 <ul className={isTwoColumns ? styles.twoColumns : ''}>
                   {property?.services?.map((serviceItem) => {
@@ -276,8 +276,8 @@ const DetailPost = () => {
             </section>
 
             <section className={styles.roomsD}>
-              <h3>The Room</h3>
-              <div>
+              <h3 className={styles.h3DescRev}>The Room</h3>
+              <div className={styles.roomsDiv}>
                 <div className={styles.roomsDOne}>
                   <img src={guest} /> Capacity:{" "}
                   <span className={styles.spanServices}>
@@ -315,7 +315,7 @@ const DetailPost = () => {
         </div>
         <div className={styles.falseLine}></div>
         <section id="" className={styles.reviewBigBox}>
-          <h3>Reviews <span className={styles.tittleSpan}>{parseFloat(calculateAverageRating()).toFixed(1)}</span></h3>
+          <h3 className={styles.h3DescRev}>Reviews <span className={styles.tittleSpan}>{parseFloat(calculateAverageRating()).toFixed(1)}</span></h3>
           <div className={styles.reviewsBox}>
             {reviews &&
               reviews.map((r) => (

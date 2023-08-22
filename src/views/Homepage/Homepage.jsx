@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 
 import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Filters from "../../components/Filters/Filters";
+import About from "../../components/About/About"
 import Cards from "../../components/Cards/Cards";
 import {
   fetchFilteredProperties,
@@ -251,6 +251,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </section>
         </div>
       </div>
+      <About/>
     </div>
   );
 };
