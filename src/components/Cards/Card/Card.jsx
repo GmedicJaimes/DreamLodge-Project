@@ -5,6 +5,9 @@ import React from 'react';
 const Card = ({ property }) => {
   const { id, name, price, location} = property;
 
+  if (property.delete) {
+    return null; 
+  };
   
   return (
     <Link to={`/rooms/${id}`} className={styles.link}>

@@ -27,6 +27,7 @@ import PropertyDash from './views/Dashboard/PropertyDash/PropertyDash';
 import UserDash from './views/Dashboard/UserDash/UserDash';
 import Profit from './views/Dashboard/Profit/Profit';
 import ReviewsDash from './views/Dashboard/ReviewDash/ReviewDash';
+import FailedPay from './views/FailedPay/FailedPay';
 
 
 
@@ -83,6 +84,7 @@ function App() {
         <Route path='/config/:id' element={<EditUser/>}/>
         <Route path='/post' element={<Post/>}/>  
         <Route path='/nice' element={<AceptedPay/>}/>
+        <Route path='/failure' element={<FailedPay/>}/>
         <Route path='/tutorial' element={<TutorialPost/>}/>
         <Route path='/admin' element={<DashboardAdmin />}>
           <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
