@@ -1,10 +1,16 @@
-.viewSign{
-    height: 744px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.containerSignView {
+  padding-top: 40px;
+  height: 680px;
 }
 
-.view{
-    height: 800px;
+.viewSign {
+  /* height: 744px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 96px;
+}
+
+.view {
+  height: 800px;
 }

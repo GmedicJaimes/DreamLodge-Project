@@ -1,105 +1,102 @@
 .mainContainerOne {
-height: 700px;
-display: flex;
-justify-content: center;
-align-items: center;
-
+  /* height: 700px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
+
 .mainContainer {
-    border-radius: 2em;
-    width: 700px;
-    box-shadow: 0 7px 20px 5px #52525288;
-    background-color: #EADCCF;
-    text-align: left;
-    height: 575px;
-    margin-top: -7rem;
-
-
-
+  border-radius: 0.5em;
+  width: 700px;
+  box-shadow: 0 4px 20px 5px #00000088;
+  background-color: #eadccf;
+  text-align: left;
+  height: 500px;
+  /* margin-top: -7rem; */
 }
 
-.mainContainer header{
-    padding: 12px;
-    margin-top: 1em;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 18px;
-    color: #333;
+.mainContainer header {
+  padding: 12px;
+  margin-top: 1em;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #333;
 }
 
-.mainContainer form{
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
+.mainContainer form {
+  background-color: #cd5a3e;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
-.formGroupOne{
+.formGroupOne {
   width: 50%;
 }
 
-.formGroupTwo{
+.formGroupTwo {
   width: 50%;
 }
-
 
 .formGroup {
-    margin: 0 0.5em 10px 1em;
-
+  margin: 0 0.5em 10px 1em;
 }
 
 .formGroup label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 0.8;
-    text-align: start;
-    margin-left: 1.2em;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.8;
+  text-align: start;
+  margin-left: 1.2em;
 }
 
 .formGroup input {
-    width: 100%;
-    padding: 1em;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    max-width: 280px;
-    background-color: #f4e9de;
+  width: 100%;
+  padding: 1em;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  max-width: 280px;
+  background-color: #f4e9de;
 }
 
 .btn {
-    padding: 11px 95px;
-    margin: 1em 1.2em;
-    font-size: 13px;
-    border: none;
-    border-radius: 0.2em;
-    background-color: #CD5A3E;
-    color: #fff;
-    cursor: pointer
+  padding: 11px 95px;
+  margin: 1em 1.2em;
+  font-size: 13px;
+  border: none;
+  border-radius: 0.2em;
+  background-color: #cd5a3e;
+  color: #fff;
+  cursor: pointer;
 }
 
 .foot {
-    font-size: 0.8em;
-    color: #959595;
-    margin-left: 4rem;
+  font-size: 0.8em;
+  color: #959595;
+  margin-left: 4rem;
 }
 
 .linkfoot {
-    color: #CD5A3E;
-    font-weight: 900;
+  color: #cd5a3e;
+  font-weight: 900;
 }
 
 .selectSignIn {
-    width: 90%;
-    padding: 1em;
-    height: 50px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
+  width: 90%;
+  padding: 1em;
+  height: 50px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
 
-    background-color: #f4e9de;
+  background-color: #f4e9de;
 }
-.ErrorValid{
-  color:red;
+.ErrorValid {
+  color: red;
   font-size: 14px;
   margin: 0.2rem;
 }
@@ -110,7 +107,7 @@ align-items: center;
   cursor: not-allowed;
   /* Otros estilos opcionales para hacer que el botón se vea diferente cuando esté deshabilitado */
   opacity: 0.7;
-  
+
   /* Otros estilos visuales que desees agregar */
 }
 
@@ -118,120 +115,99 @@ align-items: center;
   color: gray;
 }
 
-.forcedLine{
-    height: 6px;
+.forcedLine {
+  height: 6px;
 }
 
 .formBtn {
   width: 100%;
- /*  flex-direction: column;
+  /*  flex-direction: column;
   justify-content: center; */ /* Centra horizontalmente */
   align-items: stretch; /* Alinea verticalmente al baseline (texto base) */
   margin-top: 2em; /* Ajusta el margen superior si es necesario */
   margin-left: -12rem;
 }
 
-
-
-
-
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 .loginWG {
-    transition: background-color .3s, box-shadow .3s;
-      
-    width: 90%;
-    margin-left: 15px;
-    padding: 12px 16px 12px 42px;
-    border: none;
-    border-radius: 3px;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    
-    color: #757575;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-    
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: 12px 11px;
-    cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
 
-    &:hover {
-      box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25)
-    }
-    
-    &:active {
-      background-color: #eeeeee;
-    }
-    
-    &:focus {
-      outline: none;
-      box-shadow: 
-        0 -1px 0 rgba(0, 0, 0, .04),
-        0 2px 4px rgba(0, 0, 0, .25),
-        0 0 0 3px #c8dafc;
-    }
-    
-    &:disabled {
-      filter: grayscale(100%);
-      background-color: #ebebeb;
-      box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-      cursor: not-allowed;
-    }
+  width: 90%;
+  margin-left: 15px;
+  padding: 12px 16px 12px 42px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+
+  color: #757575;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: 12px 11px;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
   }
-  
-  
-  
-  
+
+  &:active {
+    background-color: #eeeeee;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
+      0 0 0 3px #c8dafc;
+  }
+
+  &:disabled {
+    filter: grayscale(100%);
+    background-color: #ebebeb;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+  }
+}
+
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 
-  
-  
 /* ///////////////////////////////////// RESPONSIVE  */
 /* ///////////////////////////////////// RESPONSIVE  */
 /* ///////////////////////////////////// RESPONSIVE  */
 /* ///////////////////////////////////// RESPONSIVE  */
 /* ///////////////////////////////////// RESPONSIVE  */
 
+@media (max-width: 600px) {
+  .mainContainer form {
+    display: flex;
+    flex-direction: column;
+  }
 
+  .mainContainer {
+    width: 500px;
+    height: 800px;
+    margin-top: 300px;
+  }
 
+  .formBtn {
+    margin-left: 0;
+    width: 100%;
+  }
 
+  .btn {
+    padding: 1rem;
+  }
 
-@media (max-width: 600px){
-.mainContainer form{
-  display: flex;
- flex-direction: column;
+  .selectSignIn {
+    width: 100%;
+  }
 }
-
-.mainContainer {
-  width: 500px;
-  height: 800px;
-  margin-top: 300px;
-}
-
-
-.formBtn {
-margin-left: 0;
-width: 100%;
-
-}
-
-
-.btn {
-  padding: 1rem;
-
-}
-
-.selectSignIn{
-  width: 100%;
-}
-
-
-}
-
