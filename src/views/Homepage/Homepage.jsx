@@ -90,7 +90,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const filters = {
       guest: guest,
       rooms: rooms,

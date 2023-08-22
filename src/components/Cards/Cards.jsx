@@ -52,15 +52,9 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
   currentCards.map((property) => (
     <Card property={property} key={property.id} />
   ))
-<<<<<<< HEAD
-) : (
-  <div className={styles.sorryP}>Sorry, no properties are available with those search criteria. </div>
-)}
-=======
 }
 
 
->>>>>>> 258e7a4a26f63744e3fdc1fba4f305f6acf55567
       </div>
  
       <div className={styles.containerBottom}>

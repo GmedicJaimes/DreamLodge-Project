@@ -262,7 +262,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="text"
+                  type="number"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -280,7 +280,7 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="text"
+                  type="number"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
