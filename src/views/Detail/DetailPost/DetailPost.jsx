@@ -161,7 +161,8 @@ const DetailPost = () => {
         );
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
           reviewDoc.data()
-        );
+          );
+          console.log(reviewsData)
         setReviews(reviewsData);
 
         if (auth.currentUser) {
@@ -320,7 +321,7 @@ const DetailPost = () => {
                   <div>
                     <img className={styles.iconUserReview} src={usuario} alt="" />
                   </div>
-                  <div>
+                  <div className={styles.contentReview}>
                     <div className={styles.headRev}>
                       <p className={styles.reviewAut}>{r.author}</p>
                       <p className={styles.reviewRat}><span className={styles.tittleSpan}>★{r.rating}</span></p>
