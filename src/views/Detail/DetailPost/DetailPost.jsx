@@ -335,7 +335,6 @@ const DetailPost = () => {
       </div>
       {hasPurchased && (
         <div>
-          <h3>Deja una reseña:</h3>
           <input
             type="text"
             placeholder="Nombre"

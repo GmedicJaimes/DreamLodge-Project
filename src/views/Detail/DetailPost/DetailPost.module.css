@@ -1,16 +1,16 @@
 .bigContainerDetail {
   background-color: #f7f3f0;
   margin: 0 auto;
-  margin-top: 3em;
+  /* margin-top: 3em; */
   max-width: 75em;
-  border-radius: 2em;
+  /* border-radius: 2em; */
   padding-bottom: 1.5em;
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
 }
 
 .bigContainerDetail header{
   display: flex;
-  padding: 2.5em;
+  padding: 2em ;
   justify-content: space-between;
 }
 
@@ -22,7 +22,6 @@
   font-size: .7em;
   padding: 9px;
 }
-
 
 .tittleD{
   font-size: 1em;
@@ -86,6 +85,8 @@
 
 .overviewBox p {
   margin: 0 0.4rem;
+  font-family: 'Lexend Deca';
+  font-size: 1.1em;
 }
 
 .roomsService{
@@ -124,22 +125,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  /* background-color: #CD5A3E; */
 }
 
 
 .servicesD li{
-  font-size: 1.2em;
+  font-size: 1.1em;
+  font-family: 'Lexend Deca';
   text-align: start;
   margin-bottom: 2px;
-  list-style-type:circle
+  list-style-type: disc;
+  width: 200px;
+  /* background-color: #CD5A3E; */
 
 }
 
 .twoColumns {
   column-count: 2;
 }
-
-
 
 .imageRelative{
   position: relative;
@@ -152,32 +155,35 @@
   top: 15em;
   left: 10em;
   border: none;
-  background-color: #CD5A3E;
-  border-radius: 50%;
+  background-color: #18181854;
+  border-radius: 30%;
   color: rgb(255, 255, 255);
   cursor: pointer;
-  color: pink;
+  text-align: center;
+  
 }
 .prevButton img{
   width: 20px;
-
+  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg) brightness(104%) contrast(106%);
 }
 
 .nextButton{
   width: 35px;
   height: 35px;
-  border-radius: 50%;
+  border-radius: 30%;
   position: absolute;
   right: 10em;
   top: 15em;
   border: none;
-  background-color: #CD5A3E;
+  background-color: #18181854;
   color: white;
   cursor: pointer;
+  text-align: center;
 }
 
 .nextButton img{
   width: 20px;
+  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg) brightness(104%) contrast(106%);
 }
 
 .bigContainerDetail header p{
@@ -333,7 +339,9 @@ a{
 }
 
 .roomsDOne  {
-margin: 1rem;
+  margin: 1rem;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
 }
 
 .roomsDOne img, .roomsDTwo img{
@@ -344,6 +352,8 @@ margin: 1rem;
 .roomsDTwo  {
   margin: 1rem;
   width: 500px;
+  font-family: 'Lexend Deca';
+  font-weight: 500;
 }
 .spanproperty{
   margin-right: 0.3rem;

@@ -28,15 +28,14 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
   };
 
   const handleSort = (option) => {
-    dispatch(SORT(option));
     SetCurrentPage(1); // Reinicia la página actual después de ordenar
   };
 
   const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
 
-  const resetCurrentPage = () => {
-    SetCurrentPage(1);
-  };
+  // const resetCurrentPage = () => {
+  //   SetCurrentPage(1);
+  // };
 
 
 
@@ -44,17 +43,12 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
   return (
     <div className={styles.containerCards}>
 
-
-        
-    
-<div className={styles.containerTop}>
-{Array.isArray(currentCards) && 
-  currentCards.map((property) => (
-    <Card property={property} key={property.id} />
-  ))
-}
-
-
+      <div className={styles.containerTop}>
+          {Array.isArray(currentCards) && 
+            currentCards.map((property) => (
+              <Card property={property} key={property.id} />
+          ))
+          }
       </div>
  
       <div className={styles.containerBottom}>

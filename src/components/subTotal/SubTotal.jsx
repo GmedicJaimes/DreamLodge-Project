@@ -263,16 +263,17 @@ const[preferenceId, setPreferenceId] = useState(null);
         margin: "2rem"
         }} />
 
-        <Grid container spacing={4}>
+        <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
             <Typography
               variant="h1"
               sx={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
+                fontSize: "25px",
+                fontWeight: "500",
+                color: "#000",
                 marginTop: "30px",
-                marginLeft: "45PX",
+                marginLeft: "45px",
+                textAlign: "center"
               }}
             >
               SubTotal
@@ -281,12 +282,12 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "13px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
-                marginTop: "10px",
-                marginLeft: "50px",
+                fontSize: "20px",
+                fontWeight: "500",
+                color: "#000",
+                marginLeft: "45px",
                 display: "flex",
+                justifyContent: "center"
               }}
             >
               {/* {numberooms} Rooms */}
@@ -303,23 +304,24 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "35px",
+                fontSize: "30px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginTop: "20px",
+                marginTop: "25px",
                 marginLeft: "30px",
               }}
             >
-              ${subTotal}
+              ${property?.price}
             </Typography>
 
             <Typography
               variant="h1"
               sx={{
-                fontSize: "15px",
+                fontSize: "20px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginLeft: "80px",
+                marginLeft: "40px",
+                marginTop: "22px"
               }}
             >
               {subTotal} USD
@@ -338,7 +340,6 @@ const[preferenceId, setPreferenceId] = useState(null);
   variant="contained"
   color="primary"
   style={{
-    marginTop: "30px",
     marginBottom: "10px",
     borderRadius: "20px",
     fontSize: "17px",
@@ -366,10 +367,11 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
+                fontSize: "17px",
+                fontWeight: "400",
                 color: "#CD5A3E",
                 margin: "20px",
+                textAlign: "center"
               }}
             >
               Please read and understand our cancellation policy prior to

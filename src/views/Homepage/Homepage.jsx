@@ -166,7 +166,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           ascending={ascending}
         /> */}
         <div className={styles.headerHomePage}>
-            <img src={landingImg} alt="" srcset="" />
+            <img src={landingImg} alt=""  />
         </div>
         <div className={styles.containerSections}>
           <aside className={styles.aside}>
@@ -197,28 +197,24 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
           {/* <button onClick={handleAvailableProperties}>Available Lodgings</button> */}
           <section className={styles.calendarHome}>
-  <div className={styles.skeletonContainer}>
-    {loading ? (
-      Array.from({ length: host.length || 12 }).map((_, idx) => (
-        <SkeletonCard key={idx} />
-      ))
-    ) : (
-      host.length > 0 ? (
-        <Cards host={host} />
-      ) : null
-    )}
-  </div>
-  
-    <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
-      Sorry, no properties are available with those search criteria.
-    </p>
+            <div className={styles.skeletonContainer}>
+              {loading ? (
+                Array.from({ length: host.length || 12 }).map((_, idx) => (
+                  <SkeletonCard key={idx} />
+                ))
+              ) : (
+                
+                  <Cards host={host} />
+                
+              )}
+            </div>
+            
+              <p className={host.length === 0 ? styles.errorMessageEmpty : styles.errorMessage}>
+                Sorry, no properties are available with those search criteria.
+              </p>
 
 
-</section>
-
-
-
-
+          </section>
         </div>
       </div>
     </div>

@@ -66,12 +66,9 @@ const Calendar = ({
 
   };
 
-  
-
-
 
   const handleRoomsChange = (inputValue) => {
-    if (inputValue === "" || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
+    if (inputValue === " " || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
       onRoomsChange(inputValue);
     }
   };
@@ -251,7 +248,7 @@ const Calendar = ({
                 value={endDate}
                 minDate={secondDateMin}
                 onChange={onEndChange}
-               disabled={isSecondPickerDisabled}
+                disabled={isSecondPickerDisabled}
 
               />
             </DemoContainer>
