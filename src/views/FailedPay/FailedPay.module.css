@@ -1,0 +1,71 @@
+.containerPrev {
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+  margin-bottom: 2rem;
+  font-family: "Lexend Deca";
+}
+
+.containerFailure {
+  width: 40em;
+  height: auto;
+  margin: 1rem;
+  margin-top: 5vh;
+  border-radius: 0.7rem;
+  box-shadow: 0 7px 20px 5px #52525288;
+  background-color: #eadccf;
+  padding: 2rem;
+}
+
+.failedPay {
+  padding: 1em;
+  font-size: 2em;
+  color: #cd5a3e;
+}
+
+.containerFailure p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.failedPaymentInfo {
+  margin-top: 20px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  font-family: "Lexend Deca";
+}
+
+.textAreaField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  font-family: "Lexend Deca";
+}
+
+.btnContact {
+  border: none;
+  color: white;
+  background-color: #cd5a3e;
+  width: 100%;
+  padding: 0.4em;
+  border-radius: 4px;
+  font-size: 1.4em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btnContact:hover {
+  background-color: #8b3626;
+}

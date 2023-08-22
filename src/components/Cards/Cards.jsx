@@ -11,44 +11,20 @@ const Cards = ({ host, currentPage }) => {
   const cardsPerPage = 6; 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexfOfFirstCard = indexOfLastCard - cardsPerPage;
-
-  // Function to change the current page
-  const paginate = (pageNumber) => {
-    SetCurrentPage(pageNumber);
-  };
-
-  const handleSort = (option) => {
-    SetCurrentPage(1); // Reinicia la página actual después de ordenar
-  };
-
-  // const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
   const currentCards = host.slice(indexfOfFirstCard, indexOfLastCard);
 
-  // const resetCurrentPage = () => {
-  //   SetCurrentPage(1);
-  // };
 
 
 
   return (
     <div className={styles.containerCards}>
-
-
-        
-    
-<div className={styles.containerTop}>
-{Array.isArray(currentCards) && 
-  currentCards.map((property) => (
-    <Card property={property} key={property.id} />
-  ))
-}
-
-
+        <div className={styles.containerTop}>
+        {Array.isArray(currentCards) && 
+          currentCards.map((property) => (
+            <Card property={property} key={property.id} />
+          ))
+        }
       </div>
- 
-
-    
-     
     </div>
   );
 };

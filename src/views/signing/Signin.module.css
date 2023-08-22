@@ -1,10 +1,11 @@
-.viewSign{
-    height: 744px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.containerSignView {
+  padding-top: 60px;
 }
 
-.view{
-    height: 800px;
+.viewSign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 76px;
 }
