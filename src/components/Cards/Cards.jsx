@@ -20,8 +20,8 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
     SetCurrentPage(1); // Reinicia la página actual después de ordenar
   };
 
-  const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
-  // const currentCards = host.slice(indexfOfFirstCard, indexOfLastCard);
+  // const currentCards = allCards.slice(indexfOfFirstCard, indexOfLastCard);
+  const currentCards = host.slice(indexfOfFirstCard, indexOfLastCard);
 
   // const resetCurrentPage = () => {
   //   SetCurrentPage(1);

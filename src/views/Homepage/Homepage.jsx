@@ -204,15 +204,15 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
               </p>
 
 
+            {/* <section>
+                <Paginate
+                  cardsPerPage={cardsPerPage}
+                  totalCards={host.length}
+                  paginate={paginate}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}/>
+            </section> */}
           </section>
-          {/* <section>
-              <Paginate
-                cardsPerPage={cardsPerPage}
-                totalCards={host.length}
-                paginate={paginate}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}/>
-          </section> */}
         </div>
       </div>
     </div>
