@@ -4,6 +4,7 @@ import { auth } from "../../config/firebase";
 import React from "react";
 import Dropdown from "../Dropdown/Dropdown";
 import { logOut, getPropertiesList } from "../../config/handlers";
+import Asset1 from "../../assets/DreamLodgeIcon.png"
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
@@ -20,7 +21,7 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.containertwo}>
         <Link to={"/home"} className={styles.logo}>
-          DreamLodge
+          <img src={Asset1} alt="" srcset="" className={styles.imgLogo}/>
         </Link>
       </div>
 

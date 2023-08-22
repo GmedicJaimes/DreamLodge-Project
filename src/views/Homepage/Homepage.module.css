@@ -79,6 +79,11 @@ width: 30%;
       width: auto;
      
     }
+    .headerHomePage img, .headerHomePage{
+      height: 150px;
+      object-fit: cover;
+      object-position: center center;
+    }
   }
 
  

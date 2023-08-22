@@ -1,17 +1,18 @@
 .tutorialContainerOne{
-  margin: 3rem;
-  height: 75vh;
+
+  height: auto;
   width: 100%;
+  margin: 0 auto;
 }
 
 .tutorialContainer {
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
-    max-width: 55em;
-    margin: auto;
+    max-width: 80%;
     padding: 2.1em;
-    min-height:26vh;
+    min-height:50%;
+    margin: 0 auto;
     /* margin-bottom: 6rem; */
   }
   

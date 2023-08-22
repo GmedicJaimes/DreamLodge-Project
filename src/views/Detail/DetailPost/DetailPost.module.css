@@ -302,6 +302,10 @@ a {
   margin-bottom: 10px;
 }
 
+.tittleD {
+  font-size: 1.5rem;
+}
+
 .containerSectionOne {
   margin: 0 auto;
   max-width: 35em;
@@ -488,7 +492,7 @@ a {
     padding: 2px 5px;
   }
   .tittleD {
-    font-size: 1.3rem;
+    font-size: 1.9rem;
   }
   .twoColumns {
     column-count: 1;
