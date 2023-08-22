@@ -59,10 +59,23 @@ const[preferenceId, setPreferenceId] = useState(null);
   };
 
   const bookingAndBuy = async () => {
-    setIsLoading(true); // Inicia estado de "cargando"
-    setIsDisabled(true)
+    setIsLoading(true);   
+    setIsDisabled(true);
+  
     try {
-      const id = await createPreference();
+      if (!startDate || !endDate) {
+        swal("Please select both start and end dates.");
+        return;
+      }
+  
+      if (startDate.isAfter(endDate)) {
+        swal("Start date cannot be after end date.");
+        return;
+      }
+  
+      await createBooking(propertyId, startDate, endDate); 
+  
+      const id = await createPreference(); 
       if (id) {
         setPreferenceId(id);
         setDataTicket({
@@ -70,49 +83,24 @@ const[preferenceId, setPreferenceId] = useState(null);
           idTicket: id,
           totalTicket: subTotal,
         });
-        try {
-          const intervalPay = setInterval(async () => {
-            const paymentStatus = await getPaymentStatus(id);
-            if (paymentStatus === "approved") {
-              updateAvaible(property.id, preferenceId);
-              clearInterval(intervalPay);
-            } else if (paymentStatus === "rejected") {
-              clearInterval(intervalPay);
-            }
-          }, 10000);
-        } catch (error) {
-          console.error("Error in obtaining payment status", error);
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
-
-        if (!startDate || !endDate) {
-          swal("Please select both start and end dates.");
-          return;
-        }
-
-        if (startDate.isAfter(endDate)) {
-          swal("Start date cannot be after end date.");
-          return;
-        }
-
-        try {
-          await createBooking(propertyId, startDate, endDate);
-        } catch (error) {
-          console.log(error);
-          swal("An error occurred while making the booking.");
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
+  
+        const intervalPay = setInterval(async () => {
+          const paymentStatus = await getPaymentStatus(id);
+          if (paymentStatus === "approved") {
+            updateAvaible(property.id, preferenceId);
+            clearInterval(intervalPay);
+          } else if (paymentStatus === "rejected") {
+            clearInterval(intervalPay);
+          }
+        }, 10000);
       }
     } catch (error) {
       console.error("ERROR SUBMIT AND BUY FUNCTION");
-      setIsLoading(true); // Finaliza estado de "cargando"
-
-    }
-    finally {
+    } finally {
+      setIsLoading(false); // Finaliza estado de "cargando" una vez que todo esté completo
     }
   };
+  
 
   // ==========================================================
 
@@ -263,16 +251,17 @@ const[preferenceId, setPreferenceId] = useState(null);
         margin: "2rem"
         }} />
 
-        <Grid container spacing={4}>
+        <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
             <Typography
               variant="h1"
               sx={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
+                fontSize: "25px",
+                fontWeight: "500",
+                color: "#000",
                 marginTop: "30px",
-                marginLeft: "45PX",
+                marginLeft: "45px",
+                textAlign: "center"
               }}
             >
               SubTotal
@@ -281,12 +270,12 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "13px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
-                marginTop: "10px",
-                marginLeft: "50px",
+                fontSize: "20px",
+                fontWeight: "500",
+                color: "#000",
+                marginLeft: "45px",
                 display: "flex",
+                justifyContent: "center"
               }}
             >
               {/* {numberooms} Rooms */}
@@ -303,23 +292,24 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "35px",
+                fontSize: "30px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginTop: "20px",
+                marginTop: "25px",
                 marginLeft: "30px",
               }}
             >
-              ${subTotal}
+              ${property?.price}
             </Typography>
 
             <Typography
               variant="h1"
               sx={{
-                fontSize: "15px",
+                fontSize: "20px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginLeft: "80px",
+                marginLeft: "40px",
+                marginTop: "22px"
               }}
             >
               {subTotal} USD
@@ -338,7 +328,6 @@ const[preferenceId, setPreferenceId] = useState(null);
   variant="contained"
   color="primary"
   style={{
-    marginTop: "30px",
     marginBottom: "10px",
     borderRadius: "20px",
     fontSize: "17px",
@@ -366,10 +355,11 @@ const[preferenceId, setPreferenceId] = useState(null);
             <Typography
               variant="h1"
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
+                fontSize: "17px",
+                fontWeight: "400",
                 color: "#CD5A3E",
                 margin: "20px",
+                textAlign: "center"
               }}
             >
               Please read and understand our cancellation policy prior to

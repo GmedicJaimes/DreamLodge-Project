@@ -162,7 +162,7 @@ const DetailPost = () => {
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
           reviewDoc.data()
           );
-          console.log(reviewsData)
+          // console.log(reviewsData)
         setReviews(reviewsData);
 
         if (auth.currentUser) {
@@ -335,7 +335,6 @@ const DetailPost = () => {
       </div>
       {hasPurchased && (
         <div>
-          <h3>Deja una reseña:</h3>
           <input
             type="text"
             placeholder="Nombre"

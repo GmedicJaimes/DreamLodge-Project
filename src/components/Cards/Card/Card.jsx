@@ -19,7 +19,7 @@ const Card = ({ property }) => {
         }
         </div>
         <div className={styles.info}>
-          <h3>{location.state}, {location.city}</h3>
+          <h3>{location?.state}, {location?.city}</h3>
           <p className={styles.infoName}>{name}</p>
           <p className={styles.infoPrice}>$ {price} USD noche</p>
         </div>
