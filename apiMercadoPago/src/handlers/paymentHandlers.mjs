@@ -1,6 +1,7 @@
-const mercadopago = require('mercadopago')
+import {collection, addDoc} from 'firebase/firestore'
+import mercadopago from 'mercadopago';
+import { db } from '../../../src/config/firebase.js'
  
-
 mercadopago.configure({
     access_token:"TEST-1217239966605378-080822-11c74257002c2927c70422faaaaf3e94-1446217996"
 })
@@ -29,7 +30,7 @@ mercadopago.configure({
 // .catch(function (error) {
 //   console.log(error);
 // });
-const createPayment = async(req, res)=>{
+export const createPayment = async(req, res)=>{
     try {
       const result = await mercadopago.preferences.create({
           items:[
@@ -56,12 +57,20 @@ const createPayment = async(req, res)=>{
         return res.status(404).send(error)
     }
 };
-const listenWebHook = async(req, res)=>{
+export const listenWebHook = async(req, res)=>{
     const payment = req.query;
     try {
         if(payment.type === "payment"){
             const data = await mercadopago.payment.findById(payment['data.id'])
-            console.log(data)
+            const registerPurchase = async()=>{
+              try {
+                const purchasesCollectionRef = collection(db, 'purchases');
+                
+                await addDoc(purchasesCollectionRef, {})
+              } catch (error) {
+                console.error(error)
+              }
+            }
         };
         res.status(204)
     } catch (error) {
@@ -71,5 +80,20 @@ const listenWebHook = async(req, res)=>{
     
 };
 
+// const registerPurchases = async (userId, propertyId) => {
+//   try {
+//     // Referencia a la colección "purchases"
+//     const purchasesCollectionRef = collection(db, 'purchases');
 
-module.exports={ createPayment, listenWebHook}
+//     // Agregar un nuevo documento con la información de la compra
+//     await addDoc(purchasesCollectionRef, {
+//       userId: userId,
+//       propertyId: propertyId,
+//       purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
+//     });
+
+//     // console.log('Compra registrada exitosamente');
+//   } catch (error) {
+//     //console.error('Error al registrar la compra:', error);
+//   }}
+
