@@ -59,10 +59,23 @@ const[preferenceId, setPreferenceId] = useState(null);
   };
 
   const bookingAndBuy = async () => {
-    setIsLoading(true); // Inicia estado de "cargando"
-    setIsDisabled(true)
+    setIsLoading(true);   
+    setIsDisabled(true);
+  
     try {
-      const id = await createPreference();
+      if (!startDate || !endDate) {
+        swal("Please select both start and end dates.");
+        return;
+      }
+  
+      if (startDate.isAfter(endDate)) {
+        swal("Start date cannot be after end date.");
+        return;
+      }
+  
+      await createBooking(propertyId, startDate, endDate); 
+  
+      const id = await createPreference(); 
       if (id) {
         setPreferenceId(id);
         setDataTicket({
@@ -70,49 +83,24 @@ const[preferenceId, setPreferenceId] = useState(null);
           idTicket: id,
           totalTicket: subTotal,
         });
-        try {
-          const intervalPay = setInterval(async () => {
-            const paymentStatus = await getPaymentStatus(id);
-            if (paymentStatus === "approved") {
-              updateAvaible(property.id, preferenceId);
-              clearInterval(intervalPay);
-            } else if (paymentStatus === "rejected") {
-              clearInterval(intervalPay);
-            }
-          }, 10000);
-        } catch (error) {
-          console.error("Error in obtaining payment status", error);
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
-
-        if (!startDate || !endDate) {
-          swal("Please select both start and end dates.");
-          return;
-        }
-
-        if (startDate.isAfter(endDate)) {
-          swal("Start date cannot be after end date.");
-          return;
-        }
-
-        try {
-          await createBooking(propertyId, startDate, endDate);
-        } catch (error) {
-          console.log(error);
-          swal("An error occurred while making the booking.");
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
+  
+        const intervalPay = setInterval(async () => {
+          const paymentStatus = await getPaymentStatus(id);
+          if (paymentStatus === "approved") {
+            updateAvaible(property.id, preferenceId);
+            clearInterval(intervalPay);
+          } else if (paymentStatus === "rejected") {
+            clearInterval(intervalPay);
+          }
+        }, 10000);
       }
     } catch (error) {
       console.error("ERROR SUBMIT AND BUY FUNCTION");
-      setIsLoading(true); // Finaliza estado de "cargando"
-
-    }
-    finally {
+    } finally {
+      setIsLoading(false); // Finaliza estado de "cargando" una vez que todo esté completo
     }
   };
+  
 
   // ==========================================================
 

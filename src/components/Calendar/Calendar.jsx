@@ -50,10 +50,6 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
-
-  // const handlePropertyTypeFilterChange = (event) => {
-  //   setSelectedTypes(event.target.value);
-  // };
   
 
   const today = dayjs();
@@ -79,16 +75,25 @@ const Calendar = ({
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  //  const handleResetFilters = () => {
+  //   onGuestChange(0);
+  //   onRoomsChange(0);
+  //   onStartChange(null);
+  //   onEndChange(null);
+  //   onPropertyTypeFilterChange(null);
+  //   onStateChange(null);
+  //   onCityChange(null);
+  // };
+
   const handleResetFilters = () => {
     onGuestChange(0);
     onRoomsChange(0);
-    onStartChange(null);
-    onEndChange(null);
-    onPropertyTypeFilterChange(null);
-    onStateChange(null);
-    onCityChange(null);
+    onPropertyTypeFilterChange("");
+    onStateChange("");
+    onCityChange("");
   };
+  
+  
   
 
 
@@ -264,7 +269,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="number"
+                  type="text"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -282,7 +287,7 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="number"
+                  type="text"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
