@@ -11,6 +11,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import BedIcon from "@mui/icons-material/Bed";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { DateContext } from "../../Contex/DateContex";
+import style from "./Calendar.module.css"
 import {
 
   isPropertyAvailable,
@@ -66,12 +67,9 @@ const Calendar = ({
 
   };
 
-  
-
-
 
   const handleRoomsChange = (inputValue) => {
-    if (inputValue === "" || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
+    if (inputValue === " " || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
       onRoomsChange(inputValue);
     }
   };
@@ -251,7 +249,7 @@ const Calendar = ({
                 value={endDate}
                 minDate={secondDateMin}
                 onChange={onEndChange}
-               disabled={isSecondPickerDisabled}
+                disabled={isSecondPickerDisabled}
 
               />
             </DemoContainer>
@@ -345,8 +343,8 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
-           <button onClick={handleResetFilters}>Clean filtered</button>
+{/*             <MenuItem onClick={sortByPrice}>Sort by price</MenuItem>
+ */}           
           </FormControl>
           <MenuItem onClick={sortByPrice}
              style={{
@@ -362,6 +360,7 @@ const Calendar = ({
               
               
                </MenuItem>
+               <button onClick={handleResetFilters} className={style.btnClean} >Clean filtered</button>
         </Grid>
       </Card>
     </div>

@@ -203,7 +203,6 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 </p>
 
 
-          </section>
           <section>
               <Paginate
                 cardsPerPage={cardsPerPage}
@@ -211,6 +210,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
                 paginate={paginate}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}/>
+          </section>
           </section>
         </div>
       </div>
