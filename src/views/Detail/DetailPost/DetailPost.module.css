@@ -409,6 +409,7 @@ a{
 }
 
 .singleReview{
+  min-width: 45%;
   max-width: 45%;
   padding: 20px;
   display: flex;
@@ -424,12 +425,66 @@ a{
   margin: 0 1em;
 }
 
+.reviewAut{
+  margin: 0 1rem;
+}
+
 .reviewsBox {
   display: flex;
   flex-wrap: wrap; /* Permite que el contenido se envuelva en múltiples filas */
+  justify-content: space-evenly;
   width: 100%;
 }
 .reviewCont{
   text-align: left;
   margin: 1rem;
+}
+
+.createReviewBox{
+height: 300px;
+width: 30%;
+background-color:  #eadccf;
+margin: 0 auto;
+padding: 2rem;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+border-radius: 7px;
+}
+
+.createReviewBox input {
+  padding: 0.5rem;
+  margin: 0.5rem 0rem;
+  width: 50%;
+  border-radius: 5px;
+  background-color: #eadccf;;
+  border: none;
+  font-size: 1rem;
+}
+.reviewTextarea{
+  display: block;
+  height: 250px;
+  width: 297px;
+  resize: none;
+  border-radius: 5px;
+  background-color: #eadccf;
+  padding-right: 1rem;
+}
+
+
+.reviewSelect{
+  padding: 1rem;
+  background-color: transparent;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.reviewBtn{
+  padding: 1rem;
+  background-color: transparent;
+  width: 45%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  border: 1px solid #767676
 }

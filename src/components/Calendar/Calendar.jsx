@@ -295,9 +295,9 @@ const Calendar = ({
                     shrink: true,
                   }}
                   variant="standard"
-                  onChange={(e) => handleRoomsChange(e.target.value)} // Pasa el valor en lugar del evento
+                  onChange={(e) => handleRoomsChange(e.target.value)} 
                   inputProps={{
-                    style: { textAlign: "center" }, // Centra el texto dentro del TextField
+                    style: { textAlign: "center" }, 
                     max: 6 
                   }}
                 />
@@ -367,7 +367,7 @@ const Calendar = ({
               
               
                </MenuItem>
-               <button onClick={handleResetFilters} className={style.btnClean} >Clean filtered</button>
+               <button onClick={handleResetFilters} className={style.btnClean} >Clean Filtered</button>
         </Grid>
       </Card>
     </div>
