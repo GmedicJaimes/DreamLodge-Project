@@ -33,7 +33,8 @@ const Calendar = ({
   stateFilter,
   cityFilter,
   sortByPrice,
-  ascending
+  ascending,
+  setIsPriceSorted
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
@@ -91,6 +92,7 @@ const Calendar = ({
     onPropertyTypeFilterChange("");
     onStateChange("");
     onCityChange("");
+    setIsPriceSorted(false);
   };
   
   
