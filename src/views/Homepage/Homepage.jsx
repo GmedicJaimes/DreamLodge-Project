@@ -157,7 +157,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
 
 
     if (currentPage > totalFilteredPages) {
-      setCurrentPage(totalFilteredPages);
+      setCurrentPage(1);
     }
   }, [host, cardsPerPage, currentPage]);
 

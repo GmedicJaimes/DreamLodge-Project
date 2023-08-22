@@ -6,7 +6,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Calendar from "../Calendar/Calendar"
 
 
-const Cards = ({ host, currentPage, SetCurrentPage }) => {
+const Cards = ({ host, currentPage }) => {
+
   const cardsPerPage = 6; 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexfOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -26,7 +27,6 @@ const Cards = ({ host, currentPage, SetCurrentPage }) => {
   // const resetCurrentPage = () => {
   //   SetCurrentPage(1);
   // };
-
 
 
 

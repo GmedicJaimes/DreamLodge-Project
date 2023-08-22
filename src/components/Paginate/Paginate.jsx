@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Paginate.module.css";
 
 
 
-const Paginate = ({ cardsPerPage, totalCards, paginate, currentPage, setCurrentPage }) => {
+const Paginate = ({ cardsPerPage, totalCards, paginate, currentPage }) => {
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(totalCards / cardsPerPage); i++) {
     pageNumbers.push(i);
