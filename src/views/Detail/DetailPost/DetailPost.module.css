@@ -8,23 +8,23 @@
   /* margin-bottom: 1em; */
 }
 
-.bigContainerDetail header{
+.bigContainerDetail header {
   display: flex;
-  padding: 2em ;
+  padding: 2em;
   justify-content: space-between;
 }
 
-.priceDiv{
-  background-color: #CD5A3E;
+.priceDiv {
+  background-color: #cd5a3e;
   border-radius: 0.5em;
   color: white;
   font-weight: 700;
-  font-size: .7em;
+  font-size: 0.7em;
   padding: 9px;
 }
 
-.tittleD{
-  font-size: 1em;
+.tittleD {
+  font-size: 3em;
   font-weight: 600;
   text-align: left;
   display: inline;
@@ -32,37 +32,36 @@
 
 .location {
   font-weight: 900;
-  font-size: .7em;
+  font-size: 0.7em;
   text-align: start;
 }
 
-.locationTwo{
+.locationTwo {
   color: gray;
-  font-size: .6em;
+  font-size: 0.6em;
   font-weight: 400;
   text-align: start;
 }
 
-.firstHr{
+.firstHr {
   margin: 1rem 0;
 }
 
-.imageCarrousel{
+.imageCarrousel {
   width: 90%;
   height: 90%;
 }
 
-.falseLineOne{
-    height: 1px;
-    background-color: #e9d4c391;
-    width: 90%;
-    margin: auto;
-    margin-top: 0.1rem;
-    margin-bottom: 1.5em;
-    border-radius: 1em;
-  
+.falseLineOne {
+  height: 1px;
+  background-color: #e9d4c391;
+  width: 90%;
+  margin: auto;
+  margin-top: 0.1rem;
+  margin-bottom: 1.5em;
+  border-radius: 1em;
 }
-.falseLine{
+.falseLine {
   height: 1px;
   background-color: #e9d4c391;
   width: 90%;
@@ -72,10 +71,10 @@
   border-radius: 1em;
 }
 
-.overviewRating{
+.overviewRating {
   width: 80%;
   margin: auto;
-  background-color: #EADCCF;
+  background-color: #eadccf;
   border-radius: 1em;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -85,39 +84,37 @@
 
 .overviewBox p {
   margin: 0 0.4rem;
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
   font-size: 1.1em;
 }
 
-.roomsService{
+.roomsService {
   display: flex;
   margin: auto;
   justify-content: space-evenly;
-  list-style-type:circle;
-
+  list-style-type: circle;
 }
 
-.roomsService section{
+.roomsService section {
   width: 35%;
-  background-color: #EADCCF;
+  background-color: #eadccf;
   margin: 2em;
   border-radius: 1em;
   height: 25em;
 }
 
-.roomsService h3{
+.roomsService h3 {
   font-size: 2.1em;
   margin-top: 1em;
 }
 
-.roomsD li{
+.roomsD li {
   margin-top: 1.1em;
   font-size: 1.6em;
   text-align: start;
-
 }
 
-.roomsD img{
+.roomsD img {
   width: 30px;
 }
 
@@ -128,27 +125,25 @@
   /* background-color: #CD5A3E; */
 }
 
-
-.servicesD li{
+.servicesD li {
   font-size: 1.1em;
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
   text-align: start;
   margin-bottom: 2px;
   list-style-type: disc;
   width: 200px;
   /* background-color: #CD5A3E; */
-
 }
 
 .twoColumns {
   column-count: 2;
 }
 
-.imageRelative{
+.imageRelative {
   position: relative;
   height: 500px;
 }
-.prevButton{
+.prevButton {
   width: 35px;
   height: 35px;
   position: absolute;
@@ -160,14 +155,14 @@
   color: rgb(255, 255, 255);
   cursor: pointer;
   text-align: center;
-  
 }
-.prevButton img{
+.prevButton img {
   width: 20px;
-  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg) brightness(104%) contrast(106%);
+  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg)
+    brightness(104%) contrast(106%);
 }
 
-.nextButton{
+.nextButton {
   width: 35px;
   height: 35px;
   border-radius: 30%;
@@ -181,26 +176,26 @@
   text-align: center;
 }
 
-.nextButton img{
+.nextButton img {
   width: 20px;
-  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg) brightness(104%) contrast(106%);
+  filter: invert(100%) sepia(6%) saturate(7474%) hue-rotate(197deg)
+    brightness(104%) contrast(106%);
 }
 
-.bigContainerDetail header p{
+.bigContainerDetail header p {
   font-size: 16px;
 }
 
-.bigContainerDetail header p:hover{
-  color: #CD5A3E;
+.bigContainerDetail header p:hover {
+  color: #cd5a3e;
   cursor: pointer;
 }
 
-
-.reviewBigBox{
+.reviewBigBox {
   min-height: 11em;
   width: 85%;
   margin: auto;
-  background-color: #EADCCF;
+  background-color: #eadccf;
   border-radius: 1em;
   margin-top: 2em;
   margin-bottom: 5rem;
@@ -208,11 +203,11 @@
 }
 
 .reviewBigBox h3 {
-  margin: 1rem 0
+  margin: 1rem 0;
 }
 
-.reviewBox .priceDiv{
-  background-color: #CD5A3E;
+.reviewBox .priceDiv {
+  background-color: #cd5a3e;
   border-radius: 5px;
   color: white;
   font-weight: 500;
@@ -225,7 +220,7 @@
   text-align: center;
 }
 
-.reservationDays{
+.reservationDays {
   border: none;
   height: 2em;
   width: 6em;
@@ -233,10 +228,10 @@
   border-radius: 1em;
 }
 
-.otroBoton{
+.otroBoton {
   border: none;
   border-radius: 5px;
-  background-color: #CD5A3E;
+  background-color: #cd5a3e;
   height: 2.3em;
   margin: 1em;
   font-weight: 600;
@@ -244,17 +239,17 @@
   cursor: pointer;
 }
 
-.otroBoton:hover{
-  color: #CD5A3E;
+.otroBoton:hover {
+  color: #cd5a3e;
   background-color: white;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.reservebtn{
-  background-color: #CD5A3E;
+.reservebtn {
+  background-color: #cd5a3e;
   color: white;
   font-weight: 700;
   font-size: 1.7em;
@@ -265,23 +260,23 @@ a{
   width: 10em;
 }
 
-.reservebtn:hover{
-  color: #CD5A3E;
+.reservebtn:hover {
+  color: #cd5a3e;
   background-color: white;
 }
 
-.imageCarrousel{
+.imageCarrousel {
   max-height: 27em;
   object-fit: cover;
 }
 
-.spanPrice{
+.spanPrice {
   font-size: 28px;
-  color: #CD5A3E;
+  color: #cd5a3e;
 }
 
-.pPrice{
-  color: #CD5A3E;
+.pPrice {
+  color: #cd5a3e;
   margin-bottom: 0.5rem;
 }
 
@@ -289,11 +284,11 @@ a{
   color: white;
 }
 
-.firstHr{
+.firstHr {
   width: 80%;
 }
 
-.containerSection{
+.containerSection {
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
@@ -307,21 +302,20 @@ a{
   margin-bottom: 10px;
 }
 
-
-.containerSectionOne{
+.containerSectionOne {
   margin: 0 auto;
   max-width: 35em;
   text-align: left;
 }
 
-.containerSectionTwo{
+.containerSectionTwo {
   margin: 0 auto;
   max-width: 35em;
   text-align: left;
   min-height: 40em;
 }
 
-.containerSectionOne section{
+.containerSectionOne section {
   margin: 1rem 0;
   margin-bottom: 0.5rem;
 }
@@ -332,33 +326,33 @@ a{
   margin: 1rem 0;
 }
 
-.roomsD h3 div{
+.roomsD h3 div {
   display: flex;
   justify-content: space-between;
-  height:300px;
+  height: 300px;
 }
 
-.roomsDOne  {
+.roomsDOne {
   margin: 1rem;
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
   font-weight: 500;
 }
 
-.roomsDOne img, .roomsDTwo img{
-
-  margin-right: 1rem;
+.roomsDOne img,
+.roomsDTwo img {
+  /* margin-right: 1rem; */
 }
 
-.roomsDTwo  {
+.roomsDTwo {
   margin: 1rem;
   width: 500px;
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
   font-weight: 500;
 }
-.spanproperty{
+.spanproperty {
   margin-right: 0.3rem;
 }
-.roomsDTwoBed{
+.roomsDTwoBed {
   display: inline-block;
   margin-left: 3rem;
 }
@@ -367,65 +361,56 @@ a{
   margin: 5rem;
 }
 
-.roomsDTwoBed{
-  margin-left: 2rem;}
+.roomsDTwoBed {
+  margin-left: 2rem;
+}
 
-
-.spanServices{
+.spanServices {
   font-weight: bolder;
   margin-left: 0.3rem;
 }
 
-
-.containerSection{
+.containerSection {
   /* height: 600px; */
-  margin-bottom:60px;
+  margin-bottom: 60px;
 }
 
-
-
-
-
-@media(max-width:600){
-  .bigContainerDetail{
+@media (max-width: 600) {
+  .bigContainerDetail {
     width: 60%;
   }
-
-
 }
 
-
-.tittleSpan{
-  background-color: #99997A;
+.tittleSpan {
+  background-color: #99997a;
   color: white;
   padding: 4px 10px;
-
 }
 
-.headRev{
+.headRev {
   display: flex;
   justify-content: space-between;
   margin: 0 1em;
 }
 
-.singleReview{
+.singleReview {
   min-width: 45%;
   max-width: 45%;
   padding: 20px;
   display: flex;
   background-color: rgb(247, 244, 232);
   border-radius: 7px;
-  margin: 1rem 
+  margin: 1rem;
 }
 
-.iconUserReview{
+.iconUserReview {
   width: 3em;
   border: 2px solid black;
   border-radius: 50%;
   margin: 0 1em;
 }
 
-.reviewAut{
+.reviewAut {
   margin: 0 1rem;
 }
 
@@ -435,21 +420,21 @@ a{
   justify-content: space-evenly;
   width: 100%;
 }
-.reviewCont{
+.reviewCont {
   text-align: left;
   margin: 1rem;
 }
 
-.createReviewBox{
-height: 300px;
-width: 30%;
-background-color:  #eadccf;
-margin: 0 auto;
-padding: 2rem;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-border-radius: 7px;
+.createReviewBox {
+  height: 300px;
+  width: 30%;
+  background-color: #eadccf;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 7px;
 }
 
 .createReviewBox input {
@@ -457,11 +442,11 @@ border-radius: 7px;
   margin: 0.5rem 0rem;
   width: 50%;
   border-radius: 5px;
-  background-color: #eadccf;;
+  background-color: #eadccf;
   border: none;
   font-size: 1rem;
 }
-.reviewTextarea{
+.reviewTextarea {
   display: block;
   height: 250px;
   width: 297px;
@@ -471,20 +456,19 @@ border-radius: 7px;
   padding-right: 1rem;
 }
 
-
-.reviewSelect{
+.reviewSelect {
   padding: 1rem;
   background-color: transparent;
   border-radius: 4px;
   margin: 0.5rem 0;
 }
 
-.reviewBtn{
+.reviewBtn {
   padding: 1rem;
   background-color: transparent;
   width: 45%;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
-  border: 1px solid #767676
+  border: 1px solid #767676;
 }
