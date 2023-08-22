@@ -293,9 +293,9 @@ const Calendar = ({
                     shrink: true,
                   }}
                   variant="standard"
-                  onChange={(e) => handleRoomsChange(e.target.value)} // Pasa el valor en lugar del evento
+                  onChange={(e) => handleRoomsChange(e.target.value)} 
                   inputProps={{
-                    style: { textAlign: "center" }, // Centra el texto dentro del TextField
+                    style: { textAlign: "center" }, 
                     max: 6 
                   }}
                 />

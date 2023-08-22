@@ -27,6 +27,7 @@ import PropertyDash from "./views/Dashboard/PropertyDash/PropertyDash";
 import UserDash from "./views/Dashboard/UserDash/UserDash";
 import Profit from "./views/Dashboard/Profit/Profit";
 import ReviewsDash from "./views/Dashboard/ReviewDash/ReviewDash";
+import FailedPay from "./views/FailedPay/FailedPay";
 
 function App() {
   const imageUrlRef = ref(storage, "properties/");
