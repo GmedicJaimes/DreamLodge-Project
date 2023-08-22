@@ -87,6 +87,7 @@ function App() {
         <Route path="/config/:id" element={<EditUser />} />
         <Route path="/post" element={<Post />} />
         <Route path="/nice" element={<AceptedPay />} />
+        <Route path="/failure" element={<FailedPay />} />
         <Route path="/tutorial" element={<TutorialPost />} />
         <Route path="/admin" element={<DashboardAdmin />}>
           <Route
