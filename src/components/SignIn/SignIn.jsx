@@ -207,13 +207,13 @@ const SignIn = () => {
 
   return (
     <div className={styles.mainContainerOne}>
-      <div className={styles.mainContainer}>
+      <div className={styles.mainContainerSign}>
         <header>
           <h2>Create your account</h2>
         </header>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroupOne}>
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
                 type="text"
                 name="name"
@@ -226,7 +226,7 @@ const SignIn = () => {
               )}
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
                 type="text"
                 name="lastName"
@@ -239,7 +239,7 @@ const SignIn = () => {
               )}
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <select
                 // className={styles.selectSignIn}
                 name="country"
@@ -265,7 +265,7 @@ const SignIn = () => {
                 <span className={styles.ErrorValid}>{errors.country} </span>
               )}
             </div>
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
                 onChange={handleChange}
                 type="file"
@@ -276,17 +276,13 @@ const SignIn = () => {
                   register.imageFile.length === 0 ? styles.grayText : ""
                 }`}
               />
-              <span className={styles.imageSelect}>
-                {register.imageFile?.name || ""}
-              </span>
               {errors.country && (
                 <span className={styles.ErrorValid}>{errors.imageFile} </span>
               )}
             </div>
           </div>
           <div className={styles.formGroupTwo}>
-            <div className={styles.formGroup}>
-              <div className={styles.forcedLine}></div>
+            <div className={styles.formGroupSignIn}>
               <select
                 name="languages"
                 value={register.languages}
@@ -308,9 +304,9 @@ const SignIn = () => {
                 })}
               </select>
             </div>
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
-                type="text"
+                type=""
                 value={register.languages.join(", ")}
                 placeholder="Languages"
               />
@@ -319,7 +315,7 @@ const SignIn = () => {
               )}
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
                 type="email"
                 name="email"
@@ -332,7 +328,7 @@ const SignIn = () => {
               )}
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={styles.formGroupSignIn}>
               <input
                 type="password"
                 name="password"
@@ -344,30 +340,27 @@ const SignIn = () => {
                 <span className={styles.ErrorValid}>{errors.password}</span>
               )}
             </div>
-            <div className={styles.formBtn}>
-              <button className={styles.loginWG} onClick={signInGoogle}>
-                Sign In With Google
-              </button>
-              <br />
-              <button
-                className={`${styles.btn} ${
-                  isFormValid ? "" : styles.disabledBtn
-                }`}
-                type="submit"
-                disabled={!isFormValid}
-              >
-                Create my account
-              </button>
-
-              <p className={styles.foot}>
-                Already have an account?{" "}
-                <Link className={styles.linkfoot} to={"/login"}>
-                  Log in
-                </Link>
-              </p>
-            </div>
           </div>
         </form>
+        <div className={styles.formBtn}>
+          <button className={styles.loginWG} onClick={signInGoogle}>
+            Sign In With Google
+          </button>
+          <button
+            className={`${styles.btn} ${isFormValid ? "" : styles.disabledBtn}`}
+            type="submit"
+            disabled={!isFormValid}
+          >
+            Create my account
+          </button>
+
+          <p className={styles.foot}>
+            Already have an account?{" "}
+            <Link className={styles.linkfoot} to={"/login"}>
+              Log in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
