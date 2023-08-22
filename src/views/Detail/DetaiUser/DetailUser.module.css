@@ -71,6 +71,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     margin-bottom: 3em;
     /* background-color: chartreuse; */
 }
@@ -85,11 +86,10 @@
 }
 
 .bodyContainer{
-    display: flex;
-
-    margin: 2rem 17%;
-    margin-right: 200rem;
-
+    min-height: 45vh;
+    max-width: 70em;
+    margin: auto;
+    padding: 2.5em;
     border-radius: 0.3em;
 }
 
@@ -110,7 +110,7 @@
   margin-bottom: 3em;
 }
 
-.h4 {
+.h4MP {
 font-size: 2rem;
 color: #CD5A3E;
 text-align: center;
@@ -147,7 +147,7 @@ margin-right: 51rem;
 
 
 .menuSide{
-    min-width: 100%;
+    /* min-width: 100%; */
     display: flex;
     justify-content: center;
     padding-top: 3em;
@@ -155,10 +155,12 @@ margin-right: 51rem;
 }
 
 .propertiesSide{
-    width: 60%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem; /* Espacio entre tarjetas */
+    /* width: 60%; */
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr); */
+    /* gap: 1rem; Espacio entre tarjetas */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .link {
@@ -240,10 +242,12 @@ margin-right: 51rem;
   .noProperties{
     color: black;
     text-align: center;
-    /* margin-left: 20rem; */
+    margin-left: 20rem;
     font-size: 1.5em;
     width: 400px;
     /* margin: 2em; */
+    /* margin: auto; */
+    
     margin-bottom: 99px;
   }
 
@@ -262,6 +266,9 @@ margin-right: 51rem;
 }
 
 
+.containerInfoOne{
+  min-height: 100vh;
+}
 
 /* .seeMbtn {
     padding: 1em;

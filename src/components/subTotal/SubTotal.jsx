@@ -7,15 +7,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Importa Button aquí
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
-import { Link } from "react-router-dom";
-import {
-  createBooking,
-  isPropertyAvailable,
-  getBookingsByPropertyId,
-} from "../../config/handlers";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import axios from "axios";
-import styles from "./subTotal.module.css";
+import { Link } from "react-router-dom"
+import { createBooking, isPropertyAvailable,  getBookingsByPropertyId, getPaymentStatus} from "../../config/handlers";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import axios from 'axios';
+import { auth } from "../../config/firebase";
 
 const SubTotal = ({
   handleStartDateChange,
@@ -40,17 +36,19 @@ const SubTotal = ({
     idTicket: "",
   });
 
-  //integracion mercado pago:
-  const [preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
-  const createPreference = async () => {
-    try {
-      const response = await axios.post(`http://localhost:3001/createorder`, {
-        description: `${property.name}`,
-        price: `${subTotal}`,
-        quantity: `${countSelectedDays()}`,
-        currency_id: "ARS",
-      });
+//integracion mercado pago: 
+const[preferenceId, setPreferenceId] = useState(null);
+  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
+    const createPreference = async()=>{
+        try {
+            const response = await axios.post(`http://localhost:3001/createorder`, {
+                description: `${property.name}`,
+                price: `${subTotal}`,
+                quantity: `${countSelectedDays()}`,
+                currency_id: "ARS",
+                propertyId: propertyId,
+                userId: auth.currentUser.uid
+            });
 
       const { id } = response.data;
 
@@ -120,8 +118,11 @@ const SubTotal = ({
 
 
   React.useEffect(() => {
-    localStorage.setItem("dataTicket", JSON.stringify({dataTicket}));
-  }, [dataTicket]);
+    localStorage.setItem(
+      "dataTicket",
+      JSON.stringify(dataTicket)
+    );
+  }, [property]);
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -147,12 +148,7 @@ const SubTotal = ({
 
   const subTotal = countSelectedDays() * property?.price;
 
-  //   React.useEffect(() => {
-  //     if (startDate && endDate) {
-  //       const count = countSelectedDays();
-  //       console.log(`counted days` , count);
-  //     }
-  //   }, [startDate, endDate]);
+
 
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
@@ -267,16 +263,17 @@ const SubTotal = ({
         margin: "2rem"
         }} />
 
-        <Grid container spacing={4}>
+        <Grid container spacing={0}>
           <Grid item xs={12} sm={6}>
             <Typography
               variant="h1"
               sx={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
+                fontSize: "25px",
+                fontWeight: "500",
+                color: "#000",
                 marginTop: "30px",
-                marginLeft: "45PX",
+                marginLeft: "45px",
+                textAlign: "center"
               }}
             >
               SubTotal
@@ -285,12 +282,12 @@ const SubTotal = ({
             <Typography
               variant="h1"
               sx={{
-                fontSize: "13px",
-                fontWeight: "bold",
-                color: "#CD5A3E",
-                marginTop: "10px",
-                marginLeft: "50px",
+                fontSize: "20px",
+                fontWeight: "500",
+                color: "#000",
+                marginLeft: "45px",
                 display: "flex",
+                justifyContent: "center"
               }}
             >
               {/* {numberooms} Rooms */}
@@ -307,23 +304,24 @@ const SubTotal = ({
             <Typography
               variant="h1"
               sx={{
-                fontSize: "35px",
+                fontSize: "30px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginTop: "20px",
+                marginTop: "25px",
                 marginLeft: "30px",
               }}
             >
-              ${subTotal}
+              ${property?.price}
             </Typography>
 
             <Typography
               variant="h1"
               sx={{
-                fontSize: "15px",
+                fontSize: "20px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginLeft: "80px",
+                marginLeft: "40px",
+                marginTop: "22px"
               }}
             >
               {subTotal} USD
@@ -342,7 +340,6 @@ const SubTotal = ({
   variant="contained"
   color="primary"
   style={{
-    marginTop: "30px",
     marginBottom: "10px",
     borderRadius: "20px",
     fontSize: "17px",
@@ -370,10 +367,11 @@ const SubTotal = ({
             <Typography
               variant="h1"
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
+                fontSize: "17px",
+                fontWeight: "400",
                 color: "#CD5A3E",
                 margin: "20px",
+                textAlign: "center"
               }}
             >
               Please read and understand our cancellation policy prior to

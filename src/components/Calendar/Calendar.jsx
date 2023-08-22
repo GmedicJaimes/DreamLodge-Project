@@ -30,10 +30,13 @@ const Calendar = ({
   onStateChange,
   onCityChange,
   stateFilter,
-  cityFilter
+  cityFilter,
+  sortByPrice,
+  ascending
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
+  // const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionado
 
   
   const handlePropertyStateFilterChange=(event)=>{
@@ -46,6 +49,10 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
+
+  // const handlePropertyTypeFilterChange = (event) => {
+  //   setSelectedTypes(event.target.value);
+  // };
   
 
   const today = dayjs();
@@ -60,9 +67,8 @@ const Calendar = ({
   };
 
 
-
   const handleRoomsChange = (inputValue) => {
-    if (inputValue === "" || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
+    if (inputValue === " " || (Number(inputValue) >= 0 && !inputValue.includes("-"))) {
       onRoomsChange(inputValue);
     }
   };
@@ -73,7 +79,16 @@ const Calendar = ({
 
 
   
-
+  const handleResetFilters = () => {
+    onGuestChange(0);
+    onRoomsChange(0);
+    onStartChange(null);
+    onEndChange(null);
+    onPropertyTypeFilterChange(null);
+    onStateChange(null);
+    onCityChange(null);
+  };
+  
 
 
   // Función para contar la cantidad de días seleccionados
@@ -233,7 +248,7 @@ const Calendar = ({
                 value={endDate}
                 minDate={secondDateMin}
                 onChange={onEndChange}
-               disabled={isSecondPickerDisabled}
+                disabled={isSecondPickerDisabled}
 
               />
             </DemoContainer>
@@ -284,11 +299,11 @@ const Calendar = ({
           <FormControl variant="outlined" sx={{ minWidth: 120 }}>
             <InputLabel>Type</InputLabel>
             <Select
-              value={propertyTypeFilter}
-              onChange={handlePropertyTypeFilterChange}
-              label="Type"
+                  value={propertyTypeFilter}
+                  onChange={handlePropertyTypeFilterChange}
+                  label="Type"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               <MenuItem value="Cabins">Cabins</MenuItem>
               <MenuItem value="Beachfront">Beachfront</MenuItem>
               <MenuItem value="Mansion">Mansion</MenuItem>
@@ -296,14 +311,14 @@ const Calendar = ({
               <MenuItem value="Room">Room</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "5px" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "3px" }}>
             <InputLabel>State</InputLabel>
             <Select
               value={stateFilter}
               onChange={handlePropertyStateFilterChange}
               label="State"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               {Object.keys(US_STATE_CITIES).map((state) => (
                 <MenuItem key={state} value={state}>
                   {state}
@@ -312,14 +327,14 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}
               onChange={handlePropertyCityFilterchange}
               label="City"
             >
-              <MenuItem value={null}>All</MenuItem>
+              <MenuItem value={""}>All</MenuItem>
               {stateFilter &&
                 US_STATE_CITIES[stateFilter].map((city) => (
                   <MenuItem key={city} value={city}>
@@ -327,7 +342,23 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
+            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
+           <button onClick={handleResetFilters}>Clean filtered</button>
           </FormControl>
+          <MenuItem onClick={sortByPrice}
+             style={{
+              border:"1px solid #AFAFB3",
+              color:"#616163",
+              borderRadius: "5px",
+              minWidth: 119,
+              width: "45%",
+              marginRight: "4px"
+
+            }}
+            >Sort by price 
+              
+              
+               </MenuItem>
         </Grid>
       </Card>
     </div>

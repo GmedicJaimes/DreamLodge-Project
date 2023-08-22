@@ -3,7 +3,7 @@
 .container{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items:center;
   height: 100vh;
   background-image: url(../../assets/landingImg.jpeg);;
@@ -90,6 +90,7 @@
   color: white;
   cursor: pointer;
 }
+
 
 
 
