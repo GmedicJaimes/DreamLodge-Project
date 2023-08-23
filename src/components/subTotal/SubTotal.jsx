@@ -33,12 +33,6 @@ const SubTotal = ({
 
   const navigate = useNavigate();
 
-  const [dataTicket, setDataTicket] = React.useState({
-    daysTicket: "",
-    totalTicket: "",
-    idTicket: "",
-  });
-
 
   const bookingAndBuy = async () => {
     setIsLoading(true);   
@@ -73,22 +67,17 @@ const SubTotal = ({
   // ==========================================================
 
 
-  React.useEffect(() => {
-    localStorage.setItem(
-      "dataTicket",
-      JSON.stringify(dataTicket)
-    );
-  }, [property]);
+  
 
   useEffect(() => {
     if (startDate && endDate) {
       const start = dayjs(startDate);
       const end = dayjs(endDate);
       const diff = end.diff(start, "day");
-      setDataTicket({
-        ...dataTicket,
-        daysTicket: diff,
-      });
+      localStorage.setItem(
+        "daysTicket",
+        JSON.stringify(diff)
+      );
     }
   }, [startDate, endDate]);
 

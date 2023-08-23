@@ -2,7 +2,6 @@
 
 .dashboardContainer{
   display: flex;
-  flex-direction: row;
   justify-content: start;
 }
 
@@ -16,3 +15,15 @@
   width: 82%;
 }
 
+/* MEDIA QUERY */
+
+@media(max-width: 900px){
+  .dashboardContainer{
+    width: 100%;
+    flex-direction: column;
+  }
+  .menuDash{
+    width: 100%;
+
+  }
+}

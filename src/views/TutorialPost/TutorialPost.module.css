@@ -1,6 +1,6 @@
 .tutorialContainerOne{
 
-  height: auto;
+  height: 70vh;
   width: 100%;
   margin: 0 auto;
 }
@@ -9,10 +9,10 @@
     border-radius: 2em;
     box-shadow: 0 7px 20px 5px #52525288;
     background-color: #eadccf;
-    max-width: 80%;
+    max-width: 55em;
     padding: 2.1em;
-    min-height:50%;
-    margin: 0 auto;
+    /* min-height:50%; */
+    margin: 10em auto 0 auto;
     /* margin-bottom: 6rem; */
   }
   
@@ -74,7 +74,7 @@
 @media(max-width: 1400px){
 
   .tutorialContainerOne{
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
   }
 
 

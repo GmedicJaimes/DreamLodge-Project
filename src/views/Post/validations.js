@@ -36,24 +36,24 @@ export const validateName = (name) => {
   };
   
   
-  export const validateImageFiles = (imageFiles) => {
-    if (!Array.isArray(imageFiles)) return false;
+  // export const validateImageFiles = (imageFiles) => {
+  //   if (!Array.isArray(imageFiles)) return false;
   
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
+  //   const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+  //   const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
   
-    if (imageFiles.length < 1 || imageFiles.length > 3) {
-      return false;
-    }
+  //   if (imageFiles.length < 1 || imageFiles.length > 3) {
+  //     return false;
+  //   }
   
-    for (const file of imageFiles) {
-      if (!allowedTypes.includes(file.type) || file.size > maxSizeInBytes) {
-        return false;
-      }
-    }
+  //   for (const file of imageFiles) {
+  //     if (!allowedTypes.includes(file.type) || file.size > maxSizeInBytes) {
+  //       return false;
+  //     }
+  //   }
   
-    return true;
-  };
+  //   return true;
+  // };
   
   
 export const validatePrice = (price) => {

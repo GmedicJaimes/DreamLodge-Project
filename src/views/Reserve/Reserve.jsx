@@ -4,6 +4,7 @@ import { auth } from '../../config/firebase';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 import style from './Reserve.module.css'
+import About from "../../components/About/About"
 const Reserve = () => {
   const { subTotal, selectedDays, propertyName } = useParams();
   const [preferenceId, setPreferenceId] = useState(null);
@@ -30,11 +31,17 @@ const Reserve = () => {
     const id = await createPreference();
     if (id) {
       setPreferenceId(id);
+      localStorage.setItem(
+        "ticketMp",
+        JSON.stringify(id, subTotal)
+      );
+      console.log(id);
     }
   };
 
   return (
     <div className={style.ticketContainer}>
+      <div></div>
       <div className={style.ticket}>
         <h2>Payment Details</h2>
         <div className={style.ticketDetail}>
@@ -51,13 +58,19 @@ const Reserve = () => {
             <span>{selectedDays}</span>
           </div>
         </div>
-        <button onClick={handleReserveClick}>Reserve Now</button>
+        <button className={style.buttonCapi} onClick={handleReserveClick}>Reserve Now</button>
+        
+        {preferenceId &&
+          <div className={style.walletContainer}>
+            <Wallet initialization={{ preferenceId: preferenceId }} />
+          </div>
+          // :
+          // <div className={style.walletContainer}>
+          //   Click above to confirm
+          // </div>
+          }
       </div>
-      {preferenceId && (
-        <div className={style.walletContainer}>
-          <Wallet initialization={{ preferenceId: preferenceId }} />
-        </div>
-      )}
+      <About></About>
     </div>
   );
 };

@@ -126,3 +126,17 @@
     height: 20px;
   }
   
+
+
+  @media(max-width:500px){
+    .userListItemName{
+      flex-direction: column;
+    }
+    .userListItem div{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      text-align: center;
+    }
+  }

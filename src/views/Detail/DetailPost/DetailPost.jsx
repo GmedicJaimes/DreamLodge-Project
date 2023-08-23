@@ -56,6 +56,7 @@ const DetailPost = () => {
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
 
+
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {
@@ -151,19 +152,35 @@ const DetailPost = () => {
   //
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchPropertyDetails() {
       try {
         const detailPost = await detailId(id);
         setPropertyDetail(detailPost);
-
+      } catch (error) {
+        console.error("Error fetching property details:", error);
+      }
+    }
+  
+    fetchPropertyDetails();
+  }, [id]);
+  
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
         const reviewsSnapshot = await getDocs(
           query(collection(db, "reviews"), where("propertyId", "==", id))
         );
         const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
           reviewDoc.data()
-          );
+        );
         setReviews(reviewsData);
-
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    }
+  
+    async function checkPurchases() {
+      try {
         if (auth.currentUser) {
           const userId = auth.currentUser.uid;
           const purchasesQuery = query(
@@ -173,19 +190,53 @@ const DetailPost = () => {
           );
           const purchasesSnapshot = await getDocs(purchasesQuery);
           const hasPurchased = !purchasesSnapshot?.empty;
-          
-
+  
           setHasPurchased(hasPurchased);
           setReviewAuthor(auth.currentUser.displayName);
-
         }
       } catch (error) {
-        console.error("Hubo un error al obtener los datos:", error);
+        console.error("Error checking purchases:", error);
       }
     }
+  
+    fetchReviews();
+    checkPurchases();
+  }, [id]);
 
-    fetchData();
-  }, [reviews]);
+  
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const detailPost = await detailId(id);
+  //       setPropertyDetail(detailPost);
+
+  //       const reviewsSnapshot = await getDocs(
+  //         query(collection(db, "reviews"), where("propertyId", "==", id))
+  //       );
+  //       const reviewsData = reviewsSnapshot.docs.map((reviewDoc) =>
+  //         reviewDoc.data()
+  //         );
+  //       setReviews(reviewsData);
+
+  //       if (auth.currentUser) {
+  //         const userId = auth.currentUser.uid;
+  //         const purchasesQuery = query(
+  //           collection(db, "purchases"),
+  //           where("userId", "==", userId),
+  //           where("propertyId", "==", id)
+  //         );
+  //         const purchasesSnapshot = await getDocs(purchasesQuery);
+  //         const hasPurchased = !purchasesSnapshot?.empty;
+  
+  //         setHasPurchased(hasPurchased);
+  //         setReviewAuthor(auth.currentUser.displayName);
+  //       }
+  //     } catch (error) {
+  //       console.error("Hubo un error al obtener los datos:", error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [reviews]);
 
 
     const calculateAverageRating = () => {

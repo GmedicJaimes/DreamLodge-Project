@@ -11,7 +11,12 @@
   background-size: 100% 100%; 
   font-family: 'Lexend Deca';
 }
-
+.imgLogo{
+  width: 200px;
+  height: 40px;
+  display: block;
+  margin-left: 1.2rem;
+}
 .headerLanding{
   display: flex;
   flex-direction: row;
@@ -19,7 +24,7 @@
   align-items: center;
   width: 100%;
   background-color: #EADCCF;
-  height: 70px;
+  height: 75px;
   position: fixed;
   top:0;
 }

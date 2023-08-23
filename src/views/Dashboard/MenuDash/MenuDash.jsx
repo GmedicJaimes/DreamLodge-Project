@@ -18,6 +18,9 @@ const MenuDash = () => {
         <Link to={'/admin/reviews'}>
           <p>Reviews</p>
         </Link>
+        <Link to={'/admin/failures'}>
+          <p>Failures</p>
+        </Link>
         {/* <Link to={'/admin/rent-profit'}>
           <p>Rent & Profit</p>
         </Link> */}

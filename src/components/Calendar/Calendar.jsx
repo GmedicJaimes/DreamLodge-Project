@@ -335,7 +335,7 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%"}}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%",marginLeft:"1.5%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}
@@ -353,6 +353,7 @@ const Calendar = ({
 {/*             <MenuItem onClick={sortByPrice}>Sort by price</MenuItem>
  */}           
           </FormControl>
+          <br />
           <MenuItem onClick={sortByPrice}
              style={{
               border:"1px solid #AFAFB3",
@@ -367,7 +368,7 @@ const Calendar = ({
               
               
                </MenuItem>
-               <button onClick={handleResetFilters} className={style.btnClean} >Clean Filtered</button>
+               <button onClick={handleResetFilters} className={style.btnClean} >Reset Filters</button>
         </Grid>
       </Card>
     </div>

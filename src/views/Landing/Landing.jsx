@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import React from 'react';
 import About from "../../components/About/About.jsx"
+import Asset1 from "../../assets/Asset1.png"
 
 import style from './Landing.module.css'
 
@@ -9,7 +10,7 @@ const Landing = () => {
     <div className={style.container}>
       <div></div>
       <div className={style.headerLanding}>
-        <h1>DreamLodge</h1>
+      <img src={Asset1} alt="" srcset="" className={style.imgLogo}/>
       </div>
 
       <section className={style.sectionLanding}>
