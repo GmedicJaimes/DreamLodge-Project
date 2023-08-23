@@ -28,6 +28,7 @@ import UserDash from "./views/Dashboard/UserDash/UserDash";
 import Profit from "./views/Dashboard/Profit/Profit";
 import ReviewsDash from "./views/Dashboard/ReviewDash/ReviewDash";
 import FailedPay from "./views/FailedPay/FailedPay";
+import FailureView from "./views/Dashboard/FailureDash/view/FailureView"
 
 function App() {
   const imageUrlRef = ref(storage, "properties/");
@@ -62,32 +63,52 @@ function App() {
 
   return (
     <div className="App">
-      {
-        location.pathname !== '/' ? <Navbar/> : null
-      }
-      
-      <Routes>  
-        <Route path='/' element={<Landing/>}/>
-        <Route path='/home' element={<Homepage host={host} setHost={setHost} originalHost={originalHost} setOriginalHost={setOriginalHost}/>}/>
-        <Route path='/reserve/:id' element={<Reserve/>}/>
-        <Route path='/login' element={<LoginSignin/>} />
-        <Route path='/signin' element={<SignInView/>}/>
-        <Route path='/rooms/:id' element={<DetailPost/>}/>
-        <Route path='/user/:id' element={<DetailUser/>}/>
-        <Route path='/privacy&termns' element={<FooterLinks/>}/>
-        <Route path='/editpr/:id' element={<UserEditProperty/>}/>
-        <Route path='/config/:id' element={<EditUser/>}/>
-        <Route path='/reserve/:subTotal/:propertyId/:selectedDays/:propertyName' element={<Reserve/>}/>
-        <Route path='/post' element={<Post/>}/>  
-        <Route path='/nice' element={<AceptedPay/>}/>
-        <Route path='/failure' element={<FailedPay/>}/>
-        <Route path='/tutorial' element={<TutorialPost/>}/>
-        <Route path='/admin' element={<DashboardAdmin />}>
-          <Route path='/admin/' element={<Dashboard totalImages={totalImages} totalProperties={totalProperties} totalUsers={totalUsers} setTotalImages={setTotalImages} setTotalProperties={setTotalProperties} setTotalUsers={setTotalUsers}/>}/>
-          <Route path='/admin/propertys' element={<PropertyDash />}/>
-          <Route path='/admin/users' element={<UserDash />}/>
-          <Route path='/admin/reviews' element={<ReviewsDash/>}/>
-          <Route path='/admin/rent-profit' element={<Profit />}/>
+      {location.pathname !== "/" ? <Navbar /> : null}
+
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route
+          path="/home"
+          element={
+            <Homepage
+              host={host}
+              setHost={setHost}
+              originalHost={originalHost}
+              setOriginalHost={setOriginalHost}
+            />
+          }
+        />
+        <Route path="/reserve/:id" element={<Reserve />} />
+        <Route path="/login" element={<LoginSignin />} />
+        <Route path="/signin" element={<SignInView />} />
+        <Route path="/rooms/:id" element={<DetailPost />} />
+        <Route path="/user/:id" element={<DetailUser />} />
+        <Route path="/privacy&termns" element={<FooterLinks />} />
+        <Route path="/editpr/:id" element={<UserEditProperty />} />
+        <Route path="/config/:id" element={<EditUser />} />
+        <Route path="/post" element={<Post />} />
+        <Route path="/nice" element={<AceptedPay />} />
+        <Route path="/failure" element={<FailedPay />} />
+        <Route path="/tutorial" element={<TutorialPost />} />
+        <Route path="/admin" element={<DashboardAdmin />}>
+          <Route
+            path="/admin/"
+            element={
+              <Dashboard
+                totalImages={totalImages}
+                totalProperties={totalProperties}
+                totalUsers={totalUsers}
+                setTotalImages={setTotalImages}
+                setTotalProperties={setTotalProperties}
+                setTotalUsers={setTotalUsers}
+              />
+            }
+          />
+          <Route path="/admin/propertys" element={<PropertyDash />} />
+          <Route path="/admin/users" element={<UserDash />} />
+          <Route path="/admin/reviews" element={<ReviewsDash />} />
+          <Route path="/admin/rent-profit" element={<Profit />} />
+          <Route path="/admin/failures" element={<FailureView/>} />
         </Route>
       </Routes>
     </div>
