@@ -20,6 +20,11 @@ const Reserve = () => {
         currency_id: "ARS",
       });
 
+      localStorage.setItem(
+        "subTotal",
+        JSON.stringify(subTotal)
+      );
+
       const { id } = response.data;
       return id;
     } catch (error) {
@@ -33,7 +38,7 @@ const Reserve = () => {
       setPreferenceId(id);
       localStorage.setItem(
         "ticketMp",
-        JSON.stringify(id, subTotal)
+        JSON.stringify(id)
       );
       console.log(id);
     }
