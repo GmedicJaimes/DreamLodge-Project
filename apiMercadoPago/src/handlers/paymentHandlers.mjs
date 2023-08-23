@@ -35,19 +35,21 @@ export const createPayment = async(req, res)=>{
       const result = await mercadopago.preferences.create({
           items:[
               {
-                  title: req.body.description,
-                  unit_price: Number(req.body.price),
+                  title: "banana",
+                  unit_price: 100,
                   currency_id: "ARS",
                   quantity: 1,
-                  propertyId: req.body.propertyId,
-                  userId: req.body.userId
-              }
+              },
           ],
+          metadata:{
+            propertyId: "audbaeidbaioudnaduan",
+            userId: "useriduseriduserid"
+          },
           back_urls: {
               success:"http://localhost:5173/nice",
               failure:"http://localhost:5173/failure"
           },
-          notification_url: "https://5243-2800-810-5ab-2d5-5c67-56bf-a10-6c72.ngrok.io/webhook"
+          notification_url: "https://5bc1-2800-810-5ab-2d5-3028-580-4e9f-c517.ngrok.io/webhook"
       })
   
       // console.log(result)
@@ -63,16 +65,19 @@ export const listenWebHook = async(req, res)=>{
     try {
         if(payment.type === "payment"){
             const data = await mercadopago.payment.findById(payment['data.id'])
+            console.log(data)
             const registerPurchase = async()=>{
+                const netAmount =  data.transaction_details.net_received_amount;
+                const userId =  data.metadata.user_id;
+                const propertyId =  data.metadata.property_id;
               try {
                 const purchasesCollectionRef = collection(db, 'purchases');
                 
-                const totalAmount = data.transaction_amount;
 
                 await addDoc(purchasesCollectionRef, {
-                    userId: data.external_reference, 
-                    propertyId: data.metadata.propertyId,
-                    totalAmount: totalAmount,
+                    userId: userId,
+                    propertyId:propertyId ,
+                    totalAmount: netAmount,
                     timestamp: serverTimestamp()
                 })
               } catch (error) {

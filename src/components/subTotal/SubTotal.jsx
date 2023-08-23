@@ -29,6 +29,7 @@ const SubTotal = ({
   const [bookedDates, setBookedDates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -54,13 +55,17 @@ const SubTotal = ({
         return;
       }
   
-      await createBooking(propertyId, startDate, endDate); 
-  
+      const bookingResult = await createBooking(propertyId, startDate, endDate); 
+      if(bookingResult.error){
+        setError(bookingResult.error);
+      }else{
+        navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
+      }
+
     } catch (error) {
-      console.error("ERROR SUBMIT AND BUY FUNCTION");
+      console.error("Error en bookingAndBuy:", error);
     } finally {
       setIsLoading(false);
-      navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
     }
   };
   
@@ -296,32 +301,26 @@ const SubTotal = ({
               }}
             >
               <Button
-  type="submit"
-  variant="contained"
-  color="primary"
-  style={{
-    marginBottom: "10px",
-    borderRadius: "20px",
-    fontSize: "17px",
-    width: "150px",
-  }}
-  sx={{
-    backgroundColor: "#CD5A3E",
-    "&:hover": {
-      backgroundColor: "#E57951",
-    },
-  }}
-  onClick={bookingAndBuy}
-  disabled={isLoading || !startDate || !endDate || isDisabled} // Botón deshabilitado si isLoading, startDate o endDate son falsy
->
-  Reserve
-</Button>
-
-              {/* {preferenceId && (
-                <div >
-                  <Wallet initialization={{ preferenceId: preferenceId }} />
-                </div>
-              )} */}
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{
+                  marginBottom: "10px",
+                  borderRadius: "20px",
+                  fontSize: "17px",
+                  width: "150px",
+                }}
+                sx={{
+                  backgroundColor: "#CD5A3E",
+                  "&:hover": {
+                    backgroundColor: "#E57951",
+                  },
+                }}
+                onClick={bookingAndBuy}
+                disabled={isLoading || !startDate || !endDate || isDisabled || error}  
+              >
+                Reserve
+              </Button>
             </div>
 
             <Typography
