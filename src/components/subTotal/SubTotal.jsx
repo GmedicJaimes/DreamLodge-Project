@@ -33,7 +33,6 @@ const SubTotal = ({
 
   const navigate = useNavigate();
 
-  const navigate = useNavigate();
 
   const [dataTicket, setDataTicket] = React.useState({
     daysTicket: "",
@@ -57,7 +56,6 @@ const SubTotal = ({
         return;
       }
   
-<<<<<<< HEAD
       const bookingResult = await createBooking(propertyId, startDate, endDate); 
       if(bookingResult.error){
         setError(bookingResult.error);
@@ -65,18 +63,10 @@ const SubTotal = ({
         navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
       }
 
-=======
-      await createBooking(propertyId, startDate, endDate); 
-  
->>>>>>> dd7f824d90aecbddf7a032618101a5856e0ce7a9
     } catch (error) {
       console.error("Error en bookingAndBuy:", error);
     } finally {
       setIsLoading(false);
-<<<<<<< HEAD
-=======
-      navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
->>>>>>> dd7f824d90aecbddf7a032618101a5856e0ce7a9
     }
   };
   
@@ -312,7 +302,6 @@ const SubTotal = ({
               }}
             >
               <Button
-<<<<<<< HEAD
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -333,34 +322,6 @@ const SubTotal = ({
               >
                 Reserve
               </Button>
-=======
-  type="submit"
-  variant="contained"
-  color="primary"
-  style={{
-    marginBottom: "10px",
-    borderRadius: "20px",
-    fontSize: "17px",
-    width: "150px",
-  }}
-  sx={{
-    backgroundColor: "#CD5A3E",
-    "&:hover": {
-      backgroundColor: "#E57951",
-    },
-  }}
-  onClick={bookingAndBuy}
-  disabled={isLoading || !startDate || !endDate || isDisabled} // Botón deshabilitado si isLoading, startDate o endDate son falsy
->
-  Reserve
-</Button>
-
-              {/* {preferenceId && (
-                <div >
-                  <Wallet initialization={{ preferenceId: preferenceId }} />
-                </div>
-              )} */}
->>>>>>> dd7f824d90aecbddf7a032618101a5856e0ce7a9
             </div>
 
             <Typography

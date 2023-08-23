@@ -1,4 +1,4 @@
-import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
+import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query,deleteDoc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendPasswordResetEmail,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
@@ -932,4 +932,9 @@ export  const getAllFailure = async () => {
   const querySnapshot = await getDocs(failuresCollectionRef);
   const failures = querySnapshot.docs.map(doc => doc.data());
   return failures;
+};
+
+export const deleteFailureById = async (failureId) => {
+  const failureRef = doc(db, 'failures', failureId);
+  await deleteDoc(failureRef);
 };
