@@ -56,6 +56,7 @@ const DetailPost = () => {
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
 
+
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {

@@ -44,6 +44,10 @@ const firebaseConfig = {
 //   appId: "1:850493221990:web:3d3e6ce4ac0416311c11a7"
 // };
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 5404b2c09d47d103725d84fa34275d191d09ed10
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
 //   authDomain: "salvadora-90d6f.firebaseapp.com",
@@ -53,6 +57,20 @@ const firebaseConfig = {
 //   appId: "1:105994431952:web:f13fdd0d6ac739d6ce5dd5",
 //   measurementId: "G-K3ETDZDBC6"
 // };
+<<<<<<< HEAD
+=======
+=======
+const firebaseConfig = {
+  apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
+  authDomain: "salvadora-90d6f.firebaseapp.com",
+  projectId: "salvadora-90d6f",
+  storageBucket: "salvadora-90d6f.appspot.com",
+  messagingSenderId: "105994431952",
+  appId: "1:105994431952:web:f13fdd0d6ac739d6ce5dd5",
+  measurementId: "G-K3ETDZDBC6"
+};
+>>>>>>> dd7f824d90aecbddf7a032618101a5856e0ce7a9
+>>>>>>> 5404b2c09d47d103725d84fa34275d191d09ed10
 
 
 const app = initializeApp(firebaseConfig);
