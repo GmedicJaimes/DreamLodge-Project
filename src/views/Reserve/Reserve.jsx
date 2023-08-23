@@ -33,6 +33,7 @@ const Reserve = () => {
     const id = await createPreference();
     if (id) {
       setPreferenceId(id);
+      console.log(id);
     }
   };
 
@@ -55,16 +56,16 @@ const Reserve = () => {
             <span>{selectedDays}</span>
           </div>
         </div>
-        <button onClick={handleReserveClick}>Reserve Now</button>
+        <button className={style.buttonCapi} onClick={handleReserveClick}>Reserve Now</button>
         
-        {preferenceId ? 
+        {preferenceId &&
           <div className={style.walletContainer}>
             <Wallet initialization={{ preferenceId: preferenceId }} />
           </div>
-          :
-          <div className={style.walletContainer}>
-            Click above to confirm
-          </div>
+          // :
+          // <div className={style.walletContainer}>
+          //   Click above to confirm
+          // </div>
           }
       </div>
       <About></About>

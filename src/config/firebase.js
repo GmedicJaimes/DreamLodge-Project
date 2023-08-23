@@ -44,6 +44,7 @@ const firebaseConfig = {
 //   appId: "1:850493221990:web:3d3e6ce4ac0416311c11a7"
 // };
 
+
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
 //   authDomain: "salvadora-90d6f.firebaseapp.com",
@@ -53,7 +54,6 @@ const firebaseConfig = {
 //   appId: "1:105994431952:web:f13fdd0d6ac739d6ce5dd5",
 //   measurementId: "G-K3ETDZDBC6"
 // };
-
 
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
