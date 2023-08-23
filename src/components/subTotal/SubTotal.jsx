@@ -37,6 +37,7 @@ const SubTotal = ({
   const bookingAndBuy = async () => {
     setIsLoading(true);   
     setIsDisabled(true);
+    
   
     try {
       if (!startDate || !endDate) {
@@ -93,7 +94,10 @@ const SubTotal = ({
 
   const subTotal = countSelectedDays() * property?.price;
 
-
+  localStorage.setItem(
+    "subTotal",
+    JSON.stringify(subTotal)
+  );
 
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
