@@ -1,12 +1,12 @@
 .calendarContainer {
   width: 250px;
-  border: 1px solid #CD5A3E;
+  border: 1px solid #cd5a3e;
   padding: 15px;
   border-radius: 5px;
   background-color: #eadccf;
 }
 
-.calendarCnt{
+.calendarCnt {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,12 +24,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #CD5A3E;
+  color: #cd5a3e;
 }
 
 .monthYear {
   font-size: 16px;
-  color: #CD5A3E;
+  color: #cd5a3e;
 }
 
 .daysContainer {
@@ -50,7 +50,7 @@
 }
 
 .selected {
-  background-color: #CD5A3E;
+  background-color: #cd5a3e;
   color: white;
 }
 
@@ -63,27 +63,26 @@
 
 .peopleSelector label {
   margin-right: 10px;
-  color: #CD5A3E;
+  color: #cd5a3e;
 }
 
 .peopleInput {
   width: 50px;
   padding: 5px;
-  border: 1px solid #CD5A3E;
+  border: 1px solid #cd5a3e;
   border-radius: 4px;
   transition: border-color 0.3s;
 }
 
 .peopleInput:focus {
-  border-color: #CD5A3E;
+  border-color: #cd5a3e;
   outline: none;
   text-align: center;
 }
 
-
-.btnClean{
-  border:1px solid #AFAFB3;
-  color:#7f7f81;
+.btnClean {
+  border: 1px solid #afafb3;
+  color: #7f7f81;
   width: 45%;
   margin-right: 4px;
   background-color: transparent;
@@ -91,4 +90,6 @@
   margin-top: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  }
+  font-family: "Lexend Deca";
+  font-size: 1em;
+}
