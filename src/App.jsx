@@ -28,6 +28,7 @@ import UserDash from "./views/Dashboard/UserDash/UserDash";
 import Profit from "./views/Dashboard/Profit/Profit";
 import ReviewsDash from "./views/Dashboard/ReviewDash/ReviewDash";
 import FailedPay from "./views/FailedPay/FailedPay";
+import FailureView from "./views/Dashboard/FailureDash/view/FailureView"
 
 function App() {
   const imageUrlRef = ref(storage, "properties/");
@@ -107,6 +108,7 @@ function App() {
           <Route path="/admin/users" element={<UserDash />} />
           <Route path="/admin/reviews" element={<ReviewsDash />} />
           <Route path="/admin/rent-profit" element={<Profit />} />
+          <Route path="/admin/failures" element={<FailureView/>} />
         </Route>
       </Routes>
     </div>

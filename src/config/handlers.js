@@ -859,6 +859,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 
 
 
+
 export const getAllBookings = async () => {
   const bookingsCollectionRef = collection(db, "bookings");
   const querySnapshot = await getDocs(bookingsCollectionRef);
@@ -919,3 +920,16 @@ export const fetchFilteredProperties = async (filters) => {
   }
 };
 
+
+//======================================== FAILURES=======================================
+//======================================== FAILURES========================================
+//======================================== FAILURES=======================================
+//======================================== FAILURES=======================================
+
+
+export  const getAllFailure = async () => {
+  const failuresCollectionRef = collection(db, "failures");
+  const querySnapshot = await getDocs(failuresCollectionRef);
+  const failures = querySnapshot.docs.map(doc => doc.data());
+  return failures;
+};
