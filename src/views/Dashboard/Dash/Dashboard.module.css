@@ -210,3 +210,24 @@
     justify-content: center;
   }
   
+
+
+
+  @media(max-width: 1500px){
+    .cardsDash {
+      grid-template-columns: repeat(2, 1fr);
+      margin-left: 2%;
+;
+    }
+  
+}
+
+
+@media(max-width: 900px){
+  .cardsDash {
+    grid-template-columns: repeat(1, 1fr);
+;
+  }
+ 
+  }
+

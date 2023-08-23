@@ -129,3 +129,14 @@
   width: 15px;
   height: 15px;
 }
+
+
+@media(max-width:500px){
+  .properListItem div{
+    flex-direction: column;
+  }
+  .properListItemName{
+    flex-direction: column;
+  }
+}
+
