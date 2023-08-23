@@ -1,4 +1,3 @@
-
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import {getAuth, GoogleAuthProvider, FacebookAuthProvider} from 'firebase/auth';
@@ -44,7 +43,6 @@ const firebaseConfig = {
 //   appId: "1:850493221990:web:3d3e6ce4ac0416311c11a7"
 // };
 
-
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
 //   authDomain: "salvadora-90d6f.firebaseapp.com",
@@ -62,4 +60,3 @@ export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const facebookProvider = new FacebookAuthProvider();
-

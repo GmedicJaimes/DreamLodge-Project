@@ -31,8 +31,6 @@ const SubTotal = ({
   const [isDisabled, setIsDisabled] = useState(false);
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
-
 
   const [dataTicket, setDataTicket] = React.useState({
     daysTicket: "",
@@ -79,7 +77,7 @@ const SubTotal = ({
       "dataTicket",
       JSON.stringify(dataTicket)
     );
-  }, [property]);
+  }, [dataTicket]);
 
   useEffect(() => {
     if (startDate && endDate) {
