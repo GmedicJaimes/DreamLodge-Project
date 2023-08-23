@@ -8,7 +8,10 @@
   
 }
 .imgLogo{
-  width: 150px;
+  width: 200px;
+  height: 40px;
+  margin-left: -1rem;
+  margin-top: 0.8rem;
 }
 
 .containertwo {
