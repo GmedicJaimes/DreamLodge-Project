@@ -108,7 +108,7 @@
 }
 
 .userListItem .contentReviews{
-  width: 380px;
+  width: 31%;
   /* background-color: #cd5b3e; */
   margin-right: 8px;
   font-family: 'Lexend Deca';
@@ -128,4 +128,25 @@
 .deleteButton img{
   width: 20px;
   height: 20px;
+}
+
+
+
+@media (max-width:500px){
+
+  .userListItemName{
+    flex-direction: column;
+    align-content: space-between;
+    text-align: center;
+  }
+  .contentReviews{
+
+  }
+  .userListItem div{
+    flex-direction: column;
+    width: 100%;
+  }
+  .userListItem{
+    width: 100%;
+  }
 }
