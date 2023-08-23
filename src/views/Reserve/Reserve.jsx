@@ -5,20 +5,18 @@ import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 import style from './Reserve.module.css'
 const Reserve = () => {
-  const { subTotal, propertyId, selectedDays, propertyName } = useParams();
+  const { subTotal, selectedDays, propertyName } = useParams();
   const [preferenceId, setPreferenceId] = useState(null);
 
   initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff");
 
   const createPreference = async () => {
     try {
-      const response = await axios.post(`http://localhost:3001/createorder`, {
+      const response = await axios.post(`https://apimercadopago.onrender.com/createorder`, {
         description: `${propertyName}`,
         price: `${subTotal}`,
         quantity: `${selectedDays}`,
         currency_id: "ARS",
-        propertyId: propertyId,
-        userId: auth.currentUser.uid,
       });
 
       const { id } = response.data;
