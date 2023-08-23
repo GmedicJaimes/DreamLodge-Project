@@ -10,46 +10,45 @@
   border-radius: 10px;
   overflow: hidden;
   margin: 1rem 0;
-  width: 310px;
+  width: 320px;
   height: 400px;
   color: black;
   box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.562);
   transition: 0.3s ease; /* Add a smooth transition effect */
-
 }
 
-.containerCard:hover{
+.containerCard:hover {
   transform: translateY(-10px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
 
-.info{
+.info {
   display: flex;
   flex-direction: column;
   justify-content: left;
   align-items: flex-start;
   background-color: #f7f3f0;
   height: 50%;
-  padding-left:.8rem;
+  padding-left: 0.8rem;
   padding-top: 1rem;
 }
-.info h3{
+.info h3 {
   font-size: 1.3rem;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
-.infoName{
+.infoName {
   padding: 5px 0;
   font-weight: 500;
   text-align: left;
   color: #59595b;
 }
 
-.infoPrice{
+.infoPrice {
   color: black;
   font-weight: 600;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
 .image {

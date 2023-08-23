@@ -138,27 +138,32 @@ const SubTotal = ({
     setIsDisabled(false)
   }, [propertyId]);
 
+ 
   return (
-    <div style={{ width: "500px", height: "380px", radius: "10px" }}>
+    <div  >
       {/*      <Alert severity="warning">
           Selected dates are not available.
         </Alert> */}
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#CD5A3E",
-          alignContent: "center",
-          padding: "15px",
-          margin: "20px",
-          marginBottom: "-22px",
+          fontSize: "20px", // Ajusta el tamaño de fuente según tus necesidades
+          fontWeight: "bold",
+          color: "#CD5A3E",
+          marginBottom: "-4%",
+          marginLeft:"4%",
+          borderRadius:"5px 5px 0px 0px "
         }}
       >
         <Typography
           variant="h1"
           sx={{
-            fontSize: "20px",
+            fontSize: "16px", // Ajusta el tamaño de fuente según tus necesidades
             fontWeight: "bold",
             color: "white",
+            backgroundColor: "#CD5A3E",
+            padding:"1rem",
+            width:"100%",
             textAlign: "center",
           }}
         >
@@ -172,7 +177,13 @@ const SubTotal = ({
           backgroundColor: "#eadccf",
           height: "auto",
           padding: "15px",
-          margin: "20px",
+          // margin: "20px",
+          margin: "4%",
+          
+          borderRadius:"0px 0px 5px 5px",
+          width:"96%",
+
+
         }}
       >
         <Grid container justifyContent="center">
@@ -222,8 +233,7 @@ const SubTotal = ({
                 fontSize: "25px",
                 fontWeight: "500",
                 color: "#000",
-                marginTop: "30px",
-                marginLeft: "45px",
+                marginLeft: "10%",
                 textAlign: "center"
               }}
             >
@@ -236,7 +246,7 @@ const SubTotal = ({
                 fontSize: "20px",
                 fontWeight: "500",
                 color: "#000",
-                marginLeft: "45px",
+                marginLeft: "10%",
                 display: "flex",
                 justifyContent: "center"
               }}
@@ -258,8 +268,7 @@ const SubTotal = ({
                 fontSize: "30px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginTop: "25px",
-                marginLeft: "30px",
+                marginLeft: "40%",
               }}
             >
               ${property?.price}
@@ -271,7 +280,7 @@ const SubTotal = ({
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginLeft: "40px",
+                marginLeft: "40%",
                 marginTop: "22px"
               }}
             >

@@ -1,39 +1,36 @@
-import './App.css';
-import React, { useState, useEffect} from "react";
-import { Route, Routes } from 'react-router-dom'
-import Landing from "./views/Landing/Landing"
-import Homepage from './views/Homepage/Homepage'
-import Navbar from './components/Navbar/Navbar'
-import DetailPost from "./views/Detail/DetailPost/DetailPost"
-import DetailUser from "./views/Detail/DetaiUser/DetailUser"
-import Post from './views/Post/Post';
-import { useLocation } from 'react-router-dom'
-import { LoginSignin } from './views/LoginSignin/LoginSignin'
-import { SignInView } from './views/signing/SignInView';
-import { FooterLinks } from './views/FooterLinks/FooterLinks';
-import Reserve from './views/Reserve/Reserve';
-import UserEditProperty from './views/UserEditProperty/UserEditProperty';
-import EditUser from "./views/EditUser/EditUser"
-import AceptedPay from './views/AceptedPay/AceptedPay';
-import TutorialPost from './views/TutorialPost/TutorialPost';
-import DashboardAdmin from './views/Dashboard/DashboardAdmin';
-import {db, storage} from './config/firebase';
-import {collection, getDocs,  } from 'firebase/firestore';
-import { listAll, ref } from 'firebase/storage';
-import { getPropertiesList } from './config/handlers';
-import Dashboard from './views/Dashboard/Dash/Dashboard';
-import UsersPanel from './components/UserPanel/UserPanel';
-import PropertyDash from './views/Dashboard/PropertyDash/PropertyDash';
-import UserDash from './views/Dashboard/UserDash/UserDash';
-import Profit from './views/Dashboard/Profit/Profit';
-import ReviewsDash from './views/Dashboard/ReviewDash/ReviewDash';
-import FailedPay from './views/FailedPay/FailedPay';
-
-
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import Landing from "./views/Landing/Landing";
+import Homepage from "./views/Homepage/Homepage";
+import Navbar from "./components/Navbar/Navbar";
+import DetailPost from "./views/Detail/DetailPost/DetailPost";
+import DetailUser from "./views/Detail/DetaiUser/DetailUser";
+import Post from "./views/Post/Post";
+import { useLocation } from "react-router-dom";
+import { LoginSignin } from "./views/LoginSignin/LoginSignin";
+import { SignInView } from "./views/signing/SignInView";
+import { FooterLinks } from "./views/FooterLinks/FooterLinks";
+import Reserve from "./views/Reserve/Reserve";
+import UserEditProperty from "./views/UserEditProperty/UserEditProperty";
+import EditUser from "./views/EditUser/EditUser";
+import AceptedPay from "./views/AceptedPay/AceptedPay";
+import TutorialPost from "./views/TutorialPost/TutorialPost";
+import DashboardAdmin from "./views/Dashboard/DashboardAdmin";
+import { db, storage } from "./config/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { listAll, ref } from "firebase/storage";
+import { getPropertiesList } from "./config/handlers";
+import Dashboard from "./views/Dashboard/Dash/Dashboard";
+import UsersPanel from "./components/UserPanel/UserPanel";
+import PropertyDash from "./views/Dashboard/PropertyDash/PropertyDash";
+import UserDash from "./views/Dashboard/UserDash/UserDash";
+import Profit from "./views/Dashboard/Profit/Profit";
+import ReviewsDash from "./views/Dashboard/ReviewDash/ReviewDash";
+import FailedPay from "./views/FailedPay/FailedPay";
 
 function App() {
-
-  const imageUrlRef = ref(storage, 'properties/');
+  const imageUrlRef = ref(storage, "properties/");
 
   const [host, setHost] = useState([]);
   const [originalHost, setOriginalHost] = useState([]);
@@ -50,9 +47,8 @@ function App() {
         setOriginalHost(properties);
         setHost(properties);
         setTotalProperties(properties.length);
-      
 
-        const usersSnapshot = await getDocs(collection(db, 'users'));
+        const usersSnapshot = await getDocs(collection(db, "users"));
         setTotalUsers(usersSnapshot.size);
 
         const imagesSnapshot = await listAll(imageUrlRef);
@@ -63,7 +59,6 @@ function App() {
     }
     fetchProperties();
   }, [location.pathname]);
-
 
   return (
     <div className="App">
@@ -96,7 +91,7 @@ function App() {
         </Route>
       </Routes>
     </div>
-  )
+  );
 }
 
 export default App;

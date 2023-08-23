@@ -1,79 +1,96 @@
-.containerPrev{
-display: flex;
-justify-content: center;
-height: 80vh;
-margin-bottom: 2rem;
+.containerPrev {
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+  margin-bottom: 1.7em;
 }
 
-.container{
-    width: 40em;
-    height: auto;
-    margin: 1rem;
-    margin-top: 5vh;
-    border-radius: .7rem;
-    box-shadow: 0 7px 20px 5px #52525288;
-    background-color: #EADCCF;
-    padding: 2rem;
+.containerPay {
+  width: 40em;
+  height: 33em;
+  margin-top: 5vh;
+  border-radius: 0.7rem;
+  box-shadow: 0 7px 20px 5px #52525288;
+  background-color: #eadccf;
+  padding: 1rem;
 }
 
-
-
-header {
-    padding:1em;
-    font-size: 2em;
+.containerPay header {
+  /* padding: 1em; */
+  font-size: 2em;
+  font-family: "Lexend Deca";
+  margin-bottom: 10px;
 }
 
+.containerPay h4 {
+  font-family: "Lexend Deca";
+  font-weight: 400;
+  font-size: 1.2em;
+  margin-bottom: 60px;
+}
 
-
-.cardHost{
-    width: 25em;
-    min-height: 18vh;
-    margin: auto;
-    border-radius: .7rem;
-    padding-top: 3em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 3rem;
+.cardHost {
+  width: 25em;
+  min-height: 18vh;
+  margin: auto;
+  border-radius: 0.7rem;
+  padding-top: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  /* margin-bottom: 3rem; */
+  /* background-color: #cd5a3e; */
 }
 
 .cardHost img {
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  background-color: #707070b9;
+  border: none;
 }
 
-.cardHost p{
-    margin: 2rem;
-    font-weight: 700;
+.cardHost p {
+  margin: 2rem;
+  font-weight: 700;
 }
 
-.recipeNuser{
-    display: flex;
-    justify-content: space-evenly;
+.recipeNuser {
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.cardTicket{
-    border: 1px solid rgb(224, 217, 217);
-    width: 50%;
-    height: 18em;
-    margin: auto;
-    border-radius: .7rem;
-    padding-top: 3em;
-    background-color: aliceblue;
-    display: grid;
-    padding: 1rem;
+.cardTicket {
+  border: 1px solid rgb(224, 217, 217);
+  width: 600px;
+  margin: auto;
+  border-radius: 0.7rem;
+  background-color: aliceblue;
+  display: grid;
+  padding: 1rem;
 }
 
-.btnContact{
-    border: none;
-    color: white;
-    background-color: orange;
-    width: 100%;
-    padding: 0.4em;
-    border-radius: 0.5em;
-    font-size: 1.4em;
-    font-weight: 700;
-    cursor: pointer;
+.cardTicket p {
+  text-align: left;
+  padding-left: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.cardTicket span {
+  text-align: center;
+}
+
+.btnContact {
+  border: none;
+  color: white;
+  background-color: #cd5a3e;
+  width: 100%;
+  padding: 0.4em;
+  border-radius: 5px;
+  font-family: "Lexend Deca";
+  font-size: 1.3em;
+  font-weight: 400;
+  cursor: pointer;
 }
