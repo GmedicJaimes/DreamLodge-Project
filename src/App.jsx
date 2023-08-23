@@ -82,6 +82,7 @@ function App() {
         <Route path='/privacy&termns' element={<FooterLinks/>}/>
         <Route path='/editpr/:id' element={<UserEditProperty/>}/>
         <Route path='/config/:id' element={<EditUser/>}/>
+        <Route path='/reserve/:subTotal/:propertyId/:selectedDays/:propertyName' element={<Reserve/>}/>
         <Route path='/post' element={<Post/>}/>  
         <Route path='/nice' element={<AceptedPay/>}/>
         <Route path='/failure' element={<FailedPay/>}/>

@@ -7,7 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Importa Button aquí
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { createBooking, isPropertyAvailable,  getBookingsByPropertyId, getPaymentStatus} from "../../config/handlers";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
@@ -30,33 +30,14 @@ const SubTotal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  const navigate = useNavigate();
+
   const [dataTicket, setDataTicket] = React.useState({
     daysTicket: "",
     totalTicket: "",
     idTicket: "",
   });
 
-//integracion mercado pago: 
-const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
-    const createPreference = async()=>{
-        try {
-            const response = await axios.post(`http://localhost:3001/createorder`, {
-                description: `${property.name}`,
-                price: `${subTotal}`,
-                quantity: `${countSelectedDays()}`,
-                currency_id: "ARS",
-                propertyId: propertyId,
-                userId: auth.currentUser.uid
-            });
-
-      const { id } = response.data;
-
-      return id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const bookingAndBuy = async () => {
     setIsLoading(true);   
@@ -75,29 +56,11 @@ const[preferenceId, setPreferenceId] = useState(null);
   
       await createBooking(propertyId, startDate, endDate); 
   
-      const id = await createPreference(); 
-      if (id) {
-        setPreferenceId(id);
-        setDataTicket({
-          ...dataTicket,
-          idTicket: id,
-          totalTicket: subTotal,
-        });
-  
-        const intervalPay = setInterval(async () => {
-          const paymentStatus = await getPaymentStatus(id);
-          if (paymentStatus === "approved") {
-            updateAvaible(property.id, preferenceId);
-            clearInterval(intervalPay);
-          } else if (paymentStatus === "rejected") {
-            clearInterval(intervalPay);
-          }
-        }, 10000);
-      }
     } catch (error) {
       console.error("ERROR SUBMIT AND BUY FUNCTION");
     } finally {
-      setIsLoading(false); // Finaliza estado de "cargando" una vez que todo esté completo
+      setIsLoading(false);
+      navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
     }
   };
   
@@ -342,14 +305,14 @@ const[preferenceId, setPreferenceId] = useState(null);
   onClick={bookingAndBuy}
   disabled={isLoading || !startDate || !endDate || isDisabled} // Botón deshabilitado si isLoading, startDate o endDate son falsy
 >
-  {isLoading ? "Loading..." : "Reserve"}
+  Reserve
 </Button>
 
-              {preferenceId && (
+              {/* {preferenceId && (
                 <div >
                   <Wallet initialization={{ preferenceId: preferenceId }} />
                 </div>
-              )}
+              )} */}
             </div>
 
             <Typography
