@@ -45,7 +45,7 @@ const FailureDash = () => {
       <h2>Failures:</h2>
       <div className={styles.userListItemName}>
         <p>Author</p>
-        <span>Message</span>
+        <p className={styles.userListItemMessage}>Message</p>
         <p>Subject</p>
         <p>Date</p>
       </div>

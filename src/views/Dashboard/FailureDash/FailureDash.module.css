@@ -118,6 +118,7 @@
   justify-content: space-evenly;
   align-items: center;
   text-align: left;
+
 }
 
 .FailureDiv p {
@@ -129,7 +130,7 @@
 }
 
 .userListItemFailure .contentReviewsFailure {
-  width: 380px;
+  width: 30%;
   /* background-color: #cd5b3e; */
   margin-right: 8px;
   font-family: "Lexend Deca";
@@ -148,4 +149,23 @@
 .deleteButtonFailure img {
   width: 20px;
   height: 20px;
+}
+
+
+@media (max-width:900px){
+  .userListItemName{
+    flex-direction: column;
+    justify-content: center;
+
+  }
+
+  .FailureDiv{
+    flex-direction: column;
+    width: auto;
+  }
+
+  .contentReviewsFailure{
+    margin: 0.5rem 0;
+  }
+
 }

@@ -138,5 +138,9 @@
   .properListItemName{
     flex-direction: column;
   }
+
+  .properListItem div{
+    flex-direction: column;
+  }
 }
 

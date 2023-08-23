@@ -132,9 +132,11 @@
     .userListItemName{
       flex-direction: column;
     }
-    .userListItem{
+    .userListItem div{
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-content: center;
+      text-align: center;
     }
   }
