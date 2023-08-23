@@ -5,15 +5,15 @@ import {getAuth, GoogleAuthProvider, FacebookAuthProvider} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC_YrDe0cR-pUS5vk_QvZ6Z28f_lylJCJ8",
-  authDomain: "pruebadeploy-8f459.firebaseapp.com",
-  projectId: "pruebadeploy-8f459",
-  storageBucket: "pruebadeploy-8f459.appspot.com",
-  messagingSenderId: "191809447425",
-  appId: "1:191809447425:web:30b9622277fc63f85b4200",
-  measurementId: "G-KK3JWKX9LE"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC_YrDe0cR-pUS5vk_QvZ6Z28f_lylJCJ8",
+//   authDomain: "pruebadeploy-8f459.firebaseapp.com",
+//   projectId: "pruebadeploy-8f459",
+//   storageBucket: "pruebadeploy-8f459.appspot.com",
+//   messagingSenderId: "191809447425",
+//   appId: "1:191809447425:web:30b9622277fc63f85b4200",
+//   measurementId: "G-KK3JWKX9LE"
+// };
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
@@ -34,7 +34,17 @@ const firebaseConfig = {
 //   appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
 //   measurementId: "G-XG83CW4362"
 // };
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDv9lt0RdAH8dPiniuSKSj5mpDinXynzwg",
+//   authDomain: "playground-b5cbd.firebaseapp.com",
+//   databaseURL: "https://playground-b5cbd-default-rtdb.firebaseio.com",
+//   projectId: "playground-b5cbd",
+//   storageBucket: "playground-b5cbd.appspot.com",
+//   messagingSenderId: "850493221990",
+//   appId: "1:850493221990:web:3d3e6ce4ac0416311c11a7"
+// };
 
+<<<<<<< HEAD
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
 //   authDomain: "salvadora-90d6f.firebaseapp.com",
@@ -44,6 +54,17 @@ const firebaseConfig = {
 //   appId: "1:105994431952:web:f13fdd0d6ac739d6ce5dd5",
 //   measurementId: "G-K3ETDZDBC6"
 // };
+=======
+const firebaseConfig = {
+  apiKey: "AIzaSyCEK5pyVCxEC9S4NUlmKGwD0qWEsBreEDU",
+  authDomain: "salvadora-90d6f.firebaseapp.com",
+  projectId: "salvadora-90d6f",
+  storageBucket: "salvadora-90d6f.appspot.com",
+  messagingSenderId: "105994431952",
+  appId: "1:105994431952:web:f13fdd0d6ac739d6ce5dd5",
+  measurementId: "G-K3ETDZDBC6"
+};
+>>>>>>> dd7f824d90aecbddf7a032618101a5856e0ce7a9
 
 
 const app = initializeApp(firebaseConfig);

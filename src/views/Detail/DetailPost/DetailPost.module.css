@@ -2,7 +2,7 @@
   background-color: #f7f3f0;
   margin: 0 auto;
   /* margin-top: 3em; */
-  max-width: 75em;
+  max-width: 70em;
   /* border-radius: 2em; */
   padding-bottom: 1.5em;
   /* margin-bottom: 1em; */
@@ -24,7 +24,7 @@
 }
 
 .tittleD{
-  font-size: 1em;
+  font-size: 3em;
   font-weight: 600;
   text-align: left;
   display: inline;
@@ -32,13 +32,13 @@
 
 .location {
   font-weight: 900;
-  font-size: .7em;
+  font-size: 1.2em;
   text-align: start;
 }
 
 .locationTwo{
   color: gray;
-  font-size: .6em;
+  font-size: .9em;
   font-weight: 400;
   text-align: start;
 }
@@ -305,10 +305,6 @@ a{
 .listServices {
   width: calc(50% - 10px); /* Ajusta el ancho según tus necesidades */
   margin-bottom: 10px;
-}
-
-.tittleD{
-  font-size: 1.5rem;
 }
 
 .containerSectionOne{

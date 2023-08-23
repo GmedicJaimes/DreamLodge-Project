@@ -1,4 +1,4 @@
-import {collection, addDoc} from 'firebase/firestore'
+import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
 import mercadopago from 'mercadopago';
 import { db } from '../../../src/config/firebase.js'
  
@@ -38,15 +38,16 @@ export const createPayment = async(req, res)=>{
                   title: req.body.description,
                   unit_price: Number(req.body.price),
                   currency_id: "ARS",
-                  quantity: Number(req.body.quantity),
+                  quantity: 1,
                   propertyId: req.body.propertyId,
                   userId: req.body.userId
               }
           ],
           back_urls: {
-              success:" http://localhost:5173/nice"
+              success:"http://localhost:5173/nice",
+              failure:"http://localhost:5173/failure"
           },
-          notification_url: "https://a3ec-2800-810-5ab-2d5-510e-b1c-3123-df0b.ngrok.io/webhook"
+          notification_url: "https://5243-2800-810-5ab-2d5-5c67-56bf-a10-6c72.ngrok.io/webhook"
       })
   
       // console.log(result)
@@ -66,11 +67,19 @@ export const listenWebHook = async(req, res)=>{
               try {
                 const purchasesCollectionRef = collection(db, 'purchases');
                 
-                await addDoc(purchasesCollectionRef, {})
+                const totalAmount = data.transaction_amount;
+
+                await addDoc(purchasesCollectionRef, {
+                    userId: data.external_reference, 
+                    propertyId: data.metadata.propertyId,
+                    totalAmount: totalAmount,
+                    timestamp: serverTimestamp()
+                })
               } catch (error) {
                 console.error(error)
               }
             }
+            await registerPurchase()
         };
         res.status(204)
     } catch (error) {
