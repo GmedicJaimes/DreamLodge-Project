@@ -335,7 +335,7 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%"}}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%",marginLeft:"1.5%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}

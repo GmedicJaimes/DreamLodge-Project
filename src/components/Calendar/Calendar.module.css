@@ -83,9 +83,10 @@
 
 .btnClean{
   border:1px solid #AFAFB3;
-  color:#ffffff;
+  color:#7f7f81;
   width: 45%;
   margin-right: 4px;
+  background-color: transparent;
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 5px;
