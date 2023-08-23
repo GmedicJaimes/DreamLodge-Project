@@ -724,18 +724,18 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
         userId: auth?.currentUser?.uid,
       });
 
-
+      return {error:null}
     } else {
       // console.log('Property is not available for the selected dates');
       swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
+      return{error:"The property is not avaible in this date"}
     }
 
   } catch (error) {
-    console.log(error)
     swal('Error' ,'Error making the reservation.', 'error');
+    return { error: 'Error making the reservation.' };
   }
 };
-
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================

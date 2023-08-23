@@ -33,6 +33,10 @@ const Reserve = () => {
     const id = await createPreference();
     if (id) {
       setPreferenceId(id);
+      localStorage.setItem(
+        "ticketMp",
+        JSON.stringify(id, subTotal)
+      );
       console.log(id);
     }
   };
