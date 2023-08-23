@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getAllFailure } from '../../../config/handlers';
+import { getAllFailure, deleteFailureById } from '../../../config/handlers';
+import { doc } from 'firebase/firestore'; // Import doc from Firestore
 import styles from "./FailureDash.module.css";
+
 
 const FailureDash = () => {
   const [failures, setFailures] = useState([]);
@@ -16,7 +18,29 @@ const FailureDash = () => {
     };
 
     fetchData();
-  }, []);
+  }, []);;
+
+
+  const handleDeleteFailure = async (failureAuthor) => {
+    const confirmDelete = await swal({
+      title: 'Delete Failure',
+      text: 'Are you sure you want to delete this failure?',
+      icon: 'warning',
+      dangerMode: true,
+      buttons: ['Cancel', 'Delete'],
+    });
+
+    if (confirmDelete) {
+      try {
+        await deleteFailureById(failureAuthor);
+        setFailures(prevFailures => prevFailures.filter(failure => failure.author !== failureAuthor));
+      } catch (error) {
+        console.error('Error deleting failure:', error);
+      }
+    }
+  };
+  
+  
 
   return (
     <div className={styles.failureContainer}>
@@ -36,12 +60,12 @@ const FailureDash = () => {
                   <p>{user.author}</p>
                   <p className={styles.contentReviewsFailure}>{user.message}</p>
                   <p>{user.subject}</p>
-                  <p>{user.timestamp.seconds}</p> {/* Adjust this based on your timestamp structure */}
+                  <p>{new Date(user.timestamp * 1000).toLocaleDateString()}</p>
                 </div>
                 <button
-                  onClick={() => handleDeleteReviews(user.id)}
+                  onClick={() => handleDeleteFailure(user.author)}
                   className={styles.deleteButtonFailure}>
-                  Delete
+                  <img src="https://cdn-icons-png.flaticon.com/128/657/657059.png" alt="" srcSet="" />
                 </button>
               </li>
             ))}
