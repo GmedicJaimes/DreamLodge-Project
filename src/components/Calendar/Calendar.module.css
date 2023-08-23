@@ -6,7 +6,7 @@
   background-color: #eadccf;
 }
 
-.calendarCnt{
+.calendarCnt {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,8 +82,8 @@
 
 .btnClean {
   border: 1px solid #afafb3;
-  color: #616163;
-  width: 90%;
+  color: #ffffff;
+  width: 45%;
   margin-right: 4px;
   padding: 1rem;
   margin-top: 1rem;

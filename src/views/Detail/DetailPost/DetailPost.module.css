@@ -2,7 +2,7 @@
   background-color: #f7f3f0;
   margin: 0 auto;
   /* margin-top: 3em; */
-  max-width: 75em;
+  max-width: 70em;
   /* border-radius: 2em; */
   padding-bottom: 1.5em;
   /* margin-bottom: 1em; */
@@ -32,13 +32,13 @@
 
 .location {
   font-weight: 900;
-  font-size: 0.7em;
+  font-size: 1.2em;
   text-align: start;
 }
 
 .locationTwo {
   color: gray;
-  font-size: 0.6em;
+  font-size: 0.9em;
   font-weight: 400;
   text-align: start;
 }
