@@ -1,6 +1,6 @@
 .containerEdit{
   display: flex;
-  padding-top: 20px;
+  padding-top: 2em;
   justify-content: center;
   align-items: center;
 }
@@ -9,10 +9,10 @@
     border-radius: 10px;
     box-shadow: 0 7px 20px 5px #29292988;
     background-color: #EADCCF;
-    width: 1000px;
-    height: 600px;
+    /* width: 1000px; */
+    /* height: 600px; */
     margin-top: 10px;
-    padding-top: 20px;
+    padding: 3em;
 }
 
 .title{
@@ -174,7 +174,7 @@ cursor: pointer;
 
 .buttonSubmit {
   padding: 11px 95px;
-  margin-left: 2em;
+  margin-left: 0 2em 3em ;
   font-size: 1em;
   font-family: 'Lexend Deca';
   font-weight: 500;
