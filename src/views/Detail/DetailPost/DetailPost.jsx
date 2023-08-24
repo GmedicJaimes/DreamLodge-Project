@@ -5,7 +5,7 @@ import About from "../../../components/About/About";
 import guest from "../../../assets/gente_junta.png";
 import door from "../../../assets/puerta.png";
 import bed from "../../../assets/cama.png";
-import usuario from "../../../assets/usuario.png"
+import usuario from "../../../assets/usuario.png";
 import bathroomicon from "../../../assets/bano-publico.png";
 import SubTotal from "../../../components/subTotal/SubTotal";
 import { DateContext } from "../../../Contex/DateContex";
@@ -15,13 +15,10 @@ import {
 } from "../../../config/handlers";
 import { db } from "../../../config/firebase";
 
-
 import dayjs from "dayjs";
-
 
 import { useParams, Link } from "react-router-dom";
 import { detailId } from "../../../config/handlers";
-
 
 import { auth } from "../../../config/firebase";
 
@@ -30,12 +27,9 @@ const DetailPost = () => {
   const [property, setPropertyDetail] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
 
-  
-
-
   // console.log(id)
 
-  const propertyId = id
+  const propertyId = id;
 
   //CALENDAR DATES ============================================
 
@@ -48,7 +42,11 @@ const DetailPost = () => {
     if (startDate) {
       const isAvailable = await isPropertyAvailable(id, startDate, date);
       if (!isAvailable) {
-        swal( 'Error',"The property is not available for these dates.", 'error');
+        swal(
+          "Error",
+          "The property is not available for these dates.",
+          "error"
+        );
       }
     }
   };
@@ -56,11 +54,14 @@ const DetailPost = () => {
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
 
-
     if (endDate) {
       const isAvailable = await isPropertyAvailable(id, date, endDate);
       if (!isAvailable) {
-        swal( 'Error',"The property is not available for these dates.", 'error');
+        swal(
+          "Error",
+          "The property is not available for these dates.",
+          "error"
+        );
         // Aquí puedes manejar cualquier otra lógica que necesites,
         // por ejemplo, desactivar un botón de reservar o mostrar un mensaje específico.
       }
@@ -88,7 +89,7 @@ const DetailPost = () => {
     }
     window.scrollTo(0, 0);
     fetchBookedDates();
-    return 
+    return;
   }, [id]);
 
   //REVIEWS============================================
@@ -108,7 +109,6 @@ const DetailPost = () => {
         rating: reviewRating,
       });
 
-      
       setReviewAuthor("");
       setReviewContent("");
       setReviewRating(0);
@@ -136,7 +136,7 @@ const DetailPost = () => {
   React.useEffect(() => {
     localStorage.setItem(
       "propertyData",
-      JSON.stringify({property, propertyId})
+      JSON.stringify({ property, propertyId })
     );
   }, [property]);
 
@@ -160,10 +160,10 @@ const DetailPost = () => {
         console.error("Error fetching property details:", error);
       }
     }
-  
+
     fetchPropertyDetails();
   }, [id]);
-  
+
   useEffect(() => {
     async function fetchReviews() {
       try {
@@ -178,7 +178,7 @@ const DetailPost = () => {
         console.error("Error fetching reviews:", error);
       }
     }
-  
+
     async function checkPurchases() {
       try {
         if (auth.currentUser) {
@@ -190,25 +190,21 @@ const DetailPost = () => {
           );
           const purchasesSnapshot = await getDocs(purchasesQuery);
           const hasPurchased = !purchasesSnapshot?.empty;
-  
-           setHasPurchased(hasPurchased);
-           //setHasPurchased(true);
-           
+
+          setHasPurchased(hasPurchased);
+          //setHasPurchased(true);
 
           setReviewAuthor(auth.currentUser.displayName);
-
-;
         }
       } catch (error) {
         console.error("Error checking purchases:", error);
       }
     }
-  
+
     fetchReviews();
     checkPurchases();
   }, [id]);
 
-  
   // useEffect(() => {
   //   async function fetchData() {
   //     try {
@@ -232,7 +228,7 @@ const DetailPost = () => {
   //         );
   //         const purchasesSnapshot = await getDocs(purchasesQuery);
   //         const hasPurchased = !purchasesSnapshot?.empty;
-  
+
   //         setHasPurchased(hasPurchased);
   //         setReviewAuthor(auth.currentUser.displayName);
   //       }
@@ -243,21 +239,18 @@ const DetailPost = () => {
   //   fetchData();
   // }, [reviews]);
 
+  const calculateAverageRating = () => {
+    if (reviews.length === 0) {
+      return 0;
+    }
 
-    const calculateAverageRating = () => {
-      if (reviews.length === 0) {
-        return 0; 
-      }
-    
-      const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-      const averageRating = totalRating / reviews.length;
-    
-      return averageRating;
-    };
-  
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+
+    return averageRating;
+  };
 
   const isTwoColumns = property?.services?.length > 5;
-
 
   return (
     <div>
@@ -265,7 +258,9 @@ const DetailPost = () => {
         <header>
           <section>
             <h1 className={styles.tittleD}>{property?.name}</h1>{" "}
-            <span className={styles.tittleSpan}>★{parseFloat(calculateAverageRating()).toFixed(1)}</span>
+            <span className={styles.tittleSpan}>
+              ★{parseFloat(calculateAverageRating()).toFixed(1)}
+            </span>
             <h5 className={styles.location}>
               {property?.location?.city}, {property?.location?.state}
             </h5>
@@ -309,17 +304,16 @@ const DetailPost = () => {
           </button>
         </section>
         <div className={styles.falseLineOne}></div>
-
         <div className={styles.containerSection}>
           <div className={styles.containerSectionOne}>
             <section className={styles.overviewBox}>
               <h3 className={styles.h3DescRev}>Description</h3>
               <p className={styles.overviewBoxText}>{property?.description}</p>
             </section>
-            <section >
+            <section>
               <h3 className={styles.h3DescRev}>Facilities</h3>
               <div className={styles.servicesD}>
-                <ul className={isTwoColumns ? styles.twoColumns : ''}>
+                <ul className={isTwoColumns ? styles.twoColumns : ""}>
                   {property?.services?.map((serviceItem) => {
                     return (
                       <li key={serviceItem} className={styles.listServices}>
@@ -371,22 +365,29 @@ const DetailPost = () => {
         </div>
         <div className={styles.falseLine}></div>
         <section id="" className={styles.reviewBigBox}>
-          <h3 className={styles.h3DescRev}>Reviews <span className={styles.tittleSpan}>{parseFloat(calculateAverageRating()).toFixed(1)}</span></h3>
+          <h3 className={styles.h3DescRev}>
+            Reviews{" "}
+            <span className={styles.tittleSpan}>
+              {parseFloat(calculateAverageRating()).toFixed(1)}
+            </span>
+          </h3>
           <div className={styles.reviewsBox}>
             {reviews &&
               reviews.map((r) => (
                 <div className={styles.singleReview} key={r.id}>
                   <div>
-                  <img
-  className={styles.iconUserReview}
-  src={auth.currentUser.photoURL || usuario}
-  alt=""
-/>
+                    <img
+                      className={styles.iconUserReview}
+                      src={auth.currentUser?.photoURL || usuario}
+                      alt=""
+                    />
                   </div>
                   <div className={styles.contentReview}>
                     <div className={styles.headRev}>
                       <p className={styles.reviewAut}>{r.author}</p>
-                      <p className={styles.reviewRat}><span className={styles.tittleSpan}>★{r.rating}</span></p>
+                      <p className={styles.reviewRat}>
+                        <span className={styles.tittleSpan}>★{r.rating}</span>
+                      </p>
                     </div>
                     <p className={styles.reviewCont}> {r.content}</p>
                   </div>
@@ -394,39 +395,43 @@ const DetailPost = () => {
               ))}
           </div>
         </section>
-      {hasPurchased && (
-        <div className={styles.createReviewBox}>
-          <input
-            type="text"
-            placeholder="Nombre"
-            value={reviewAuthor}
-            onChange={(e) => setReviewAuthor(e.target.value)}
-          />
-          <textarea
-            placeholder="Write your review here"
-            value={reviewContent}
-            onChange={(e) => setReviewContent(e.target.value)}
-            className={styles.reviewTextarea}
-          />
-          <select
-            value={reviewRating}
-            onChange={(e) => setReviewRating(Number(e.target.value))}
-            className={styles.reviewSelect}
-
-          >
-            <option value="" selected hidden>Choose Rating</option>
-            <option value={1}>★</option>
-            <option value={2}>★★</option>
-            <option value={3}>★★★</option>
-            <option value={4}>★★★★</option>
-            <option value={5}>★★★★★</option>
-          </select>
-          <button onClick={() => submitReview(id)} 
-          className={styles.reviewBtn}>Submit</button>
-        </div>
-      )}      </div>
-
-
+        {hasPurchased && (
+          <div className={styles.createReviewBox}>
+            <input
+              type="text"
+              placeholder="Nombre"
+              value={reviewAuthor}
+              onChange={(e) => setReviewAuthor(e.target.value)}
+            />
+            <textarea
+              placeholder="Write your review here"
+              value={reviewContent}
+              onChange={(e) => setReviewContent(e.target.value)}
+              className={styles.reviewTextarea}
+            />
+            <select
+              value={reviewRating}
+              onChange={(e) => setReviewRating(Number(e.target.value))}
+              className={styles.reviewSelect}
+            >
+              <option value="" selected hidden>
+                Choose Rating
+              </option>
+              <option value={1}>★</option>
+              <option value={2}>★★</option>
+              <option value={3}>★★★</option>
+              <option value={4}>★★★★</option>
+              <option value={5}>★★★★★</option>
+            </select>
+            <button
+              onClick={() => submitReview(id)}
+              className={styles.reviewBtn}
+            >
+              Submit
+            </button>
+          </div>
+        )}{" "}
+      </div>
 
       <About />
     </div>
