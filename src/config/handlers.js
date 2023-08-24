@@ -199,7 +199,7 @@ export const signInGoogle = async () => {
 
         // Envía el correo de bienvenida solo si el usuario es nuevo
         await sendPasswordResetEmail(auth, email, {
-          url: "http://localhost:5173/",
+          url: "https://dreamlodgeprueba.firebaseapp.com/",
           handleCodeInApp: true
         });
       }

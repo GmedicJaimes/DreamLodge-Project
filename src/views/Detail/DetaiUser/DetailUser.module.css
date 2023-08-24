@@ -270,6 +270,46 @@ margin-right: 51rem;
   min-height: 100vh;
 }
 
+
+@media(max-width:700px){
+  .dataUser, .containerInfo{
+    flex-direction: column;
+  }
+
+  .containerInfo{
+    height:700px;
+  }
+
+  .containerInfo h1{
+    margin-bottom: 2rem;
+  }
+.dataUser{
+  margin-top:10rem;
+
+}
+
+  .dataUser img{
+    display: block;
+    margin-top:19rem;
+
+  }
+
+  .blockDU{
+    flex-direction: column;
+    margin-top: 3rem;
+    min-height: 10px;
+  }
+  .propertiesHost{
+    display: flex;
+  }
+
+  .h4MP{
+    margin: 1rem 0;
+  }
+}
+
+
+
 /* .seeMbtn {
     padding: 1em;
     border-radius: 5px;
