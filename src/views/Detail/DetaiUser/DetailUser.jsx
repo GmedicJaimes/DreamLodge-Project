@@ -46,7 +46,7 @@ const DetailUser = () => {
                         <div className={styles.nameTittle}>
                             <h3>{user?.name} {user?.lastName}</h3>
                         </div>
-                        <div >
+                        <div className={styles.propertiesHost} >
                         <p className={styles.userP}>Property Host</p>
                         <p className={styles.userP}>{user?.country}</p>
                         </div>

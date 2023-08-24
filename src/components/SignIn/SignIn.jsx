@@ -158,7 +158,7 @@ const SignIn = () => {
         await registerUserInFirestore(uid, userToSave);
 
         await sendPasswordResetEmail(auth, email, {
-          url: "http://localhost:5173/",
+          url: "https://dreamlodgeprueba.firebaseapp.com/",
           handleCodeInApp: true
       });
       

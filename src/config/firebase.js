@@ -14,8 +14,6 @@ import {getStorage} from 'firebase/storage';
 //   measurementId: "G-KK3JWKX9LE"
 // };
 
-<<<<<<< HEAD
-=======
 const firebaseConfig = {
   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
   authDomain: "dreamlodgeprueba.firebaseapp.com",
@@ -25,29 +23,16 @@ const firebaseConfig = {
   appId: "1:937226421893:web:13d4f51541cebda5bb8bec",
   measurementId: "G-6TB25EM3W8"
 };
-//Se termino al final!
 
-
->>>>>>> 94756fe31c2cffd034367071845bcc590b8aa2ab
 // const firebaseConfig = {
-//   apiKey: "AIzaSyDCEXGxA5qGuDPp53bJDgHnr-ARv7s4A7s",
-//   authDomain: "dreamlodgeprueba.firebaseapp.com",
-//   projectId: "dreamlodgeprueba",
-//   storageBucket: "dreamlodgeprueba.appspot.com",
-//   messagingSenderId: "937226421893",
-//   appId: "1:937226421893:web:13d4f51541cebda5bb8bec",
-//   measurementId: "G-6TB25EM3W8"
+//   apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
+//   authDomain: "foodiesitelab-99c62.firebaseapp.com",
+//   projectId: "foodiesitelab-99c62",
+//   storageBucket: "foodiesitelab-99c62.appspot.com",
+//   messagingSenderId: "195800164351",
+//   appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
+//   measurementId: "G-XG83CW4362"
 // };
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
-  authDomain: "foodiesitelab-99c62.firebaseapp.com",
-  projectId: "foodiesitelab-99c62",
-  storageBucket: "foodiesitelab-99c62.appspot.com",
-  messagingSenderId: "195800164351",
-  appId: "1:195800164351:web:74dbc6e62e9282c9cca9ca",
-  measurementId: "G-XG83CW4362"
-};
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDv9lt0RdAH8dPiniuSKSj5mpDinXynzwg",
 //   authDomain: "playground-b5cbd.firebaseapp.com",

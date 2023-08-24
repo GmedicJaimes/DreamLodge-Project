@@ -24,6 +24,7 @@ import {
 const Post = () => {
   const [errores, setErrores] = useState([]);
   const [cities, setCities] = useState([]);
+  
 
   const [formData, setFormData] = useState({
     name: "",

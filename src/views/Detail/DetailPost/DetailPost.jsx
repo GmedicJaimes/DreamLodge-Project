@@ -191,8 +191,13 @@ const DetailPost = () => {
           const purchasesSnapshot = await getDocs(purchasesQuery);
           const hasPurchased = !purchasesSnapshot?.empty;
   
-          setHasPurchased(hasPurchased);
+           setHasPurchased(hasPurchased);
+           //setHasPurchased(true);
+           
+
           setReviewAuthor(auth.currentUser.displayName);
+
+;
         }
       } catch (error) {
         console.error("Error checking purchases:", error);
@@ -372,7 +377,11 @@ const DetailPost = () => {
               reviews.map((r) => (
                 <div className={styles.singleReview} key={r.id}>
                   <div>
-                    <img className={styles.iconUserReview} src={usuario} alt="" />
+                  <img
+  className={styles.iconUserReview}
+  src={auth.currentUser.photoURL || usuario}
+  alt=""
+/>
                   </div>
                   <div className={styles.contentReview}>
                     <div className={styles.headRev}>
@@ -392,7 +401,6 @@ const DetailPost = () => {
             placeholder="Nombre"
             value={reviewAuthor}
             onChange={(e) => setReviewAuthor(e.target.value)}
-            disabled
           />
           <textarea
             placeholder="Write your review here"
