@@ -51,7 +51,7 @@ const Reserve = () => {
             <span>{selectedDays}</span>
           </div>
         </div>
-        <button onClick={handleReserveClick}>Reserve Now</button>
+        <button onClick={handleReserveClick} className={style.btnReserveNow}>Reserve Now</button>
       </div>
       {preferenceId && (
         <div className={style.walletContainer}>
