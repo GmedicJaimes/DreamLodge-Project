@@ -1,4 +1,4 @@
-import {collection, addDoc} from 'firebase/firestore'
+import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
 import mercadopago from 'mercadopago';
 import { db } from '../../../src/config/firebase.js'
  
@@ -35,18 +35,21 @@ export const createPayment = async(req, res)=>{
       const result = await mercadopago.preferences.create({
           items:[
               {
-                  title: req.body.description,
-                  unit_price: Number(req.body.price),
+                  title: "banana",
+                  unit_price: 100,
                   currency_id: "ARS",
-                  quantity: Number(req.body.quantity),
-                  propertyId: req.body.propertyId,
-                  userId: req.body.userId
-              }
+                  quantity: 1,
+              },
           ],
-          back_urls: {
-              success:" http://localhost:5173/nice"
+          metadata:{
+            propertyId: "audbaeidbaioudnaduan",
+            userId: "useriduseriduserid"
           },
-          notification_url: "https://a3ec-2800-810-5ab-2d5-510e-b1c-3123-df0b.ngrok.io/webhook"
+          back_urls: {
+              success:"http://localhost:5173/nice",
+              failure:"http://localhost:5173/failure"
+          },
+          notification_url: "https://5bc1-2800-810-5ab-2d5-3028-580-4e9f-c517.ngrok.io/webhook"
       })
   
       // console.log(result)
@@ -62,15 +65,26 @@ export const listenWebHook = async(req, res)=>{
     try {
         if(payment.type === "payment"){
             const data = await mercadopago.payment.findById(payment['data.id'])
+            console.log(data)
             const registerPurchase = async()=>{
+                const netAmount =  data.transaction_details.net_received_amount;
+                const userId =  data.metadata.user_id;
+                const propertyId =  data.metadata.property_id;
               try {
                 const purchasesCollectionRef = collection(db, 'purchases');
                 
-                await addDoc(purchasesCollectionRef, {})
+
+                await addDoc(purchasesCollectionRef, {
+                    userId: userId,
+                    propertyId:propertyId ,
+                    totalAmount: netAmount,
+                    timestamp: serverTimestamp()
+                })
               } catch (error) {
                 console.error(error)
               }
             }
+            await registerPurchase()
         };
         res.status(204)
     } catch (error) {

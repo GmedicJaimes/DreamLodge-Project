@@ -1,4 +1,4 @@
-.panelContainer {
+.failureContainer {
   border-radius: 10px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   padding: 10px;
@@ -7,14 +7,14 @@
   height: 500px;
 }
 
-.panelContainer h2{
+.failureContainer h2 {
   text-align: left;
   padding-bottom: 10px;
   padding-left: 10px;
-  border-bottom: 2px solid #EADCCF;
+  border-bottom: 2px solid #eadccf;
 }
 
-.userListItemName{
+.userListItemName {
   background-color: #e4e4e4;
   display: flex;
   flex-direction: row;
@@ -29,43 +29,64 @@
 }
 
 .userListItemName p {
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
+  font-weight: 500;
+  margin-left: 85px;
+  margin-right: 10%;
+}
+
+.userListItemName span {
+  font-family: "Lexend Deca";
+  font-size: 1em;
+  font-weight: 500;
+  margin-left: 5%;
+  margin-right: 21%;
+}
+
+.userListItemFailure {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  box-shadow: 0 5px 8px 0px rgba(0, 0, 0, 0.192);
+  border-radius: 5px;
+}
+
+.userListItemFailure p {
+  font-family: "Lexend Deca";
   font-weight: 500;
   margin-right: 20px;
   width: 160px;
 }
 
-.userListItemName span{
-  font-family: 'Lexend Deca';
+.userListItemFailure span {
+  font-family: "Lexend Deca";
   font-size: 1em;
   font-weight: 500;
   width: 100px;
   margin-right: 20%;
 }
 
-.userListItemName .rating{
-  width: 120px;
-  margin-right: 90px;
-}
-
-
-.userListContainer {
+.userListContainerFailure {
   height: 500px;
   overflow: auto;
   margin: 0;
   padding-top: 10px;
 }
-
-.userListContainer::-webkit-scrollbar{
+.userListContainerFailure::-webkit-scrollbar {
   width: 7px;
 }
 
-.userListContainer::-webkit-scrollbar-thumb{
+.userListContainerFailure::-webkit-scrollbar-thumb {
   background-color: #cd5b3e;
   border-radius: 5px;
 }
 
-.userList {
+.userListFailure {
   display: flex;
   flex-direction: column;
   list-style: none;
@@ -73,10 +94,10 @@
   margin: 0;
 }
 
-.userListItem {
+.userListItemFailure {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin-bottom: 10px;
   padding: 10px;
@@ -85,38 +106,37 @@
   border-radius: 5px;
 }
 
-.userListItem:hover{
-  background-color: #e4e4e4;
+.userListItemFailure:hover {
+  /* background-color: #e4e4e4; */
   cursor: pointer;
-  transform: translateY( -3px);
+  transform: translateY(-3px);
 }
 
-.userListItem div{
+.FailureDiv {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
   text-align: left;
 }
 
-.userListItem p {
-  font-family: 'Lexend Deca';
+.FailureDiv p {
+  font-family: "Lexend Deca";
   font-weight: 400;
-  margin-left: 40px;
+  /* margin-left: 10px; */
   margin-right: 20px;
-  width: 100px;
+  /* width: 100px; */
 }
 
-.userListItem .contentReviews{
-  width: 31%;
+.userListItemFailure .contentReviewsFailure {
+  width: 30%;
   /* background-color: #cd5b3e; */
   margin-right: 8px;
-  font-family: 'Lexend Deca';
+  font-family: "Lexend Deca";
   font-weight: 400;
 }
 
-
-.deleteButton {
+.deleteButtonFailure {
   background-color: transparent;
   width: 25px;
   border: none;
@@ -125,28 +145,23 @@
   margin-right: 20px;
 }
 
-.deleteButton img{
+.deleteButtonFailure img {
   width: 20px;
   height: 20px;
 }
 
-
-
-@media (max-width:500px){
-
-  .userListItemName{
+@media (max-width: 900px) {
+  .userListItemName {
     flex-direction: column;
-    align-content: space-between;
-    text-align: center;
+    justify-content: center;
   }
-  .contentReviews{
 
-  }
-  .userListItem div{
+  .FailureDiv {
     flex-direction: column;
-    width: 100%;
+    width: auto;
   }
-  .userListItem{
-    width: 100%;
+
+  .contentReviewsFailure {
+    margin: 0.5rem 0;
   }
 }

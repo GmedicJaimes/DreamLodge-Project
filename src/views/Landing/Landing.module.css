@@ -11,7 +11,12 @@
   background-size: 100% 100%; 
   font-family: 'Lexend Deca';
 }
-
+.imgLogo{
+  width: 200px;
+  height: 40px;
+  display: block;
+  margin-left: 1.2rem;
+}
 .headerLanding{
   display: flex;
   flex-direction: row;
@@ -19,7 +24,7 @@
   align-items: center;
   width: 100%;
   background-color: #EADCCF;
-  height: 70px;
+  height: 75px;
   position: fixed;
   top:0;
 }
@@ -103,9 +108,10 @@
 
 .container{
   margin: 0 auto;
-  height: 1400px;
-  object-fit: cover;
-  object-position: center top; 
+  height: 100vh;
+  background-size: cover;
+  background-position: center center; /* Centrar horizontalmente y verticalmente */
+
 }
 
   .headerLanding h1 {
@@ -123,15 +129,16 @@
     padding: 2rem;
     height: auto;
     width: 50%;
+    margin-top: 4rem;
   }
 
   .sectionLanding h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .sectionLanding p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.7rem;
   }
 
   .sectionLanding button {

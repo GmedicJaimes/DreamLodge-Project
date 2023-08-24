@@ -1,5 +1,4 @@
 .container {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,12 +7,18 @@
   background-color: #EADCCF;
   
 }
+.imgLogo{
+  width: 200px;
+  height: 40px;
+  margin-left: -1rem;
+  margin-top: 0.8rem;
+}
 
 .containertwo {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 88%;
+  width: 50%;
 }
 
 .adminNav{
@@ -96,10 +101,152 @@
 /************************************************RESPONSIVE *************************************************/
 
 
-/* @media (max-width: 600px){
 
 
 
+@media (max-width: 800px){
+
+  .postBtn{
+    display: none;
+  }
+
+  .loginBtn {
+    display: block; 
+    padding: 0.8rem;
+  }
+
+.logo{
+  font-size: 1.2rem;
+}
   
+.menuNav {
+  display: block;
+}
+
+.buttonHola{
+  display: flex;
+  width: 40%;
+  justify-content: space-evenly;
+}
+} 
+
+
+
+/* 
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  background-color: #EADCCF;
   
-} */
+}
+
+.containertwo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.adminNav{
+  display: flex;
+  width: 200px;
+  margin-left: 40%;
+  margin-right: 20px;
+}
+
+
+.admin{
+  text-decoration: none;
+  background-color: #CD5A3E;
+  width: 200px;
+  color: #fdfdfd;
+  font-weight: 500;
+  padding: 0.6rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect 
+  font-size: 1.1rem;
+
+}
+
+.logo{
+  font-family: 'Montserrat';
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  margin-left: 2rem;
+  color: #1E1E23;
+}
+
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.login{
+  display: block; 
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.8rem;
+  margin-right: 2rem;
+  width: 125px;
+  background-color: #CD5A3E;
+  border: #CD5A3E;
+  color: white;
+  cursor: pointer;
+}
+
+.postBtn{
+  width: 150px;
+  margin-right: 5%;
+}
+
+.post {
+  text-decoration: none;
+  background-color: #d1ada4;
+  width: 120px;
+  color: #fdfdfd;
+  font-weight: 500;
+  padding: 0.8rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect 
+  font-size: 1.1rem;
+}
+  
+.post:hover{
+  background-color: rgba(205, 90, 62, 0.9); /* Semi-transparent #CD5A3E color with 90% opacity 
+  padding: 0.8rem;
+  border-radius: 10px;
+}
+
+
+
+
+
+
+@media (max-width: 800px){
+
+  .postBtn{
+    display: none;
+  }
+
+  .loginBtn{
+
+
+  }
+
+.logo{
+  font-size: 1.2rem;
+}
+  
+}  */
+
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/
+/************************************************RESPONSIVE *************************************************/

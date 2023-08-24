@@ -7,13 +7,34 @@ import styles from './Dashboard.module.css'
 const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
 
   const [purchaseSize, setPurchaseSize] = useState(0);
-
+  const [totalGanancias, setTotalGanancias] = useState(0);
+  const [netEarnings, setNetEarnings] = useState(0)
   useEffect(() => {
     const getPurchaseCount = async () => {
       try {
         const purchasesSnapshot = await getDocs(collection(db, 'purchases'));
         const totalPurchases = purchasesSnapshot.size;
         setPurchaseSize(totalPurchases);
+        const purchases = purchasesSnapshot.docs.map(doc=>({ id: doc.id, ...doc.data() }));
+        const sumTotalTickets = (purchases) => {
+          let total = 0;
+          for (let i = 0; i < purchases.length; i++) {
+            const purchase = purchases[i];
+            const totalTicket = parseFloat(purchase.totalTicket);
+            if (!isNaN(totalTicket)) {
+              total += totalTicket;
+            }
+          }
+          return total;
+        };
+        const totalGanancias = sumTotalTickets(purchases);
+        setTotalGanancias(totalGanancias);
+        const calculateNetEarnings = (totalGanancias) => {
+          const netEarnings = totalGanancias * 0.05;
+          return netEarnings;
+        };
+        const netEarnings = calculateNetEarnings(totalGanancias);
+        setNetEarnings(netEarnings)
       } catch (error) {
         console.error(error);
       }
@@ -46,11 +67,11 @@ const Dashboard = ({ totalImages, totalProperties, totalUsers }) => {
           </div>
           <div className={styles.dashboardSection}>
             <h2>Ganancias totales:</h2>
-            <p>{purchaseSize ? purchaseSize : "$0"}</p>
+            <p>{totalGanancias ? `$${totalGanancias}` : "$0"}</p>
           </div>
           <div className={styles.dashboardSection}>
             <h2>Ganancias netas:</h2>
-            <p>{purchaseSize ? purchaseSize : "$0"}</p>
+            <p>{netEarnings ? `$${netEarnings}` : "$0"}</p>
           </div>
       </div>
     </div>

@@ -2,14 +2,15 @@ import React, { useEffect, useContext, useState } from "react";
 
 import styles from "./Homepage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Filters from "../../components/Filters/Filters";
+import About from "../../components/About/About"
 import Cards from "../../components/Cards/Cards";
 import {
   fetchFilteredProperties,
   sortPropertiesByPrice,
   getAllBookings,
   fetchAvailablePropertiesInRange,
-  getPropertiesList
+  getPropertiesList,
+  isPropertyAvailable
 } from "../../config/handlers";
 import SkeletonCard from "../../components/SkeletonCard/SkeletonCard";
 import { listAll } from "firebase/storage";
@@ -30,7 +31,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const [ascending, setAscending] = useState(true);
   const { startDate, endDate, setDateRange } = useContext(DateContext);
   const [loading, setLoading] = useState(true); // Agrega el estado de carga
-  const [selectedTypes, setSelectedTypes] = useState([]); // Estado para tipos seleccionados
+  const [isPriceSorted, setIsPriceSorted] = useState(false); // estado para el ordenamiento de precio
 
   // console.log(host)
 
@@ -51,6 +52,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   const handleStateFilter = (value)=>{
     setStateFilter(value);
   };
+
   const handleCityFilter = (value) => {
     setCityFilter(value)
   };
@@ -75,6 +77,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     }
   };
 
+
   const handleEndDateChange = async (date) => {
     setDateRange(startDate, date);
     if (startDate) {
@@ -82,6 +85,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setHost(availableProperties);
     }
   };
+
+  useEffect(() => {
+    if (isPriceSorted) {
+      const sortedProperties = sortPropertiesByPrice([...host], ascending);
+      setHost(sortedProperties);
+    }
+  }, [host, isPriceSorted, ascending]);
 
   useEffect(() => {
     setLoading(true);
@@ -96,13 +106,31 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
     async function fetchFilteredHost() {
       const filteredHost = await fetchFilteredProperties(filters);
       setLoading(false);
-      setHost(filteredHost);
-    }
+      // setHost(filteredHost);
+   
 
+      if (isPriceSorted) {
+        const sortedProperties = sortPropertiesByPrice([...filteredHost], ascending);
+        setHost(sortedProperties);
+      } else {
+        setHost(filteredHost);
+      }
+    }
 
     fetchFilteredHost();
 
-  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter]);
+    if (
+      guest === 0 &&
+      rooms === 0 &&
+      propertyTypeFilter === "" &&
+      stateFilter === "" &&
+      cityFilter === ""
+    ) {
+      setDateRange(null, null);
+    }
+  }, [guest, rooms, propertyTypeFilter, stateFilter, cityFilter, isPriceSorted]);
+
+  
 
   useEffect(() => {
     async function fetchAndUpdateHost() {
@@ -118,13 +146,13 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   
       if (rooms) {
         filteredHost = filteredHost.filter(
-          (host) => host.stances && host.stances.rooms === Number(rooms)
+          (host) => host.stances && host.stances.rooms == Number(rooms)
         );
       }
   
       if (guest) {
         filteredHost = filteredHost.filter((property) => {
-          return property.stances && property.stances.guest === Number(guest);
+          return property.stances && property.stances.guest == Number(guest);
         });
       }
   
@@ -135,16 +163,24 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
   }, [guest, rooms, allProperties]);
   
 
-  // Función para manejar el ordenamiento por precio
-  const handleSortByPrice = () => {
-    // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
-    const sortedProperties = sortPropertiesByPrice([...host], ascending);
+  // // Función para manejar el ordenamiento por precio
+  // const handleSortByPrice = () => {
+  //   // Clona la lista de propiedades del estado "host" para evitar copiar el estado directamente
+  //   const sortedProperties = sortPropertiesByPrice([...host], ascending);
 
-     // Actualiza el estado "host" con las propiedades ordenadas por precio
+  //    // Actualiza el estado "host" con las propiedades ordenadas por precio
+  //   setHost(sortedProperties);
+  //   // Invierte el valor de "ascending" para alternar entre ascendente y descendente
+  //   setAscending(!ascending);
+  // };
+
+  const handleSortByPrice = () => {
+    const sortedProperties = sortPropertiesByPrice([...host], ascending);
     setHost(sortedProperties);
-    // Invierte el valor de "ascending" para alternar entre ascendente y descendente
     setAscending(!ascending);
+    setIsPriceSorted(true); // Establece que los filtros de ordenamiento están activos
   };
+  
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -183,6 +219,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
             onCityChange={handleCityFilter}
             sortByPrice={handleSortByPrice}
             ascending={ascending}
+            setIsPriceSorted={setIsPriceSorted}
           />
           </aside>
           <section className={styles.calendarHome}>
@@ -214,6 +251,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
           </section>
         </div>
       </div>
+      <About/>
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Typography, Card, TextField, Grid, Button } from "@mui/material"; // Importa Button aquí
 import { StyledDivider } from "./SubTotalStyled";
 import { DateContext } from "../../../src/Contex/DateContex";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { createBooking, isPropertyAvailable,  getBookingsByPropertyId, getPaymentStatus} from "../../config/handlers";
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
@@ -29,110 +29,56 @@ const SubTotal = ({
   const [bookedDates, setBookedDates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [error, setError] = useState(null);
 
-  const [dataTicket, setDataTicket] = React.useState({
-    daysTicket: "",
-    totalTicket: "",
-    idTicket: "",
-  });
+  const navigate = useNavigate();
 
-//integracion mercado pago: 
-const[preferenceId, setPreferenceId] = useState(null);
-  initMercadoPago("TEST-b1609369-11aa-4417-ac56-d07ef28cfcff")
-    const createPreference = async()=>{
-        try {
-            const response = await axios.post(`http://localhost:3001/createorder`, {
-                description: `${property.name}`,
-                price: `${subTotal}`,
-                quantity: `${countSelectedDays()}`,
-                currency_id: "ARS",
-                propertyId: propertyId,
-                userId: auth.currentUser.uid
-            });
-
-      const { id } = response.data;
-
-      return id;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const bookingAndBuy = async () => {
-    setIsLoading(true); // Inicia estado de "cargando"
-    setIsDisabled(true)
+    setIsLoading(true);   
+    setIsDisabled(true);
+    
+  
     try {
-      const id = await createPreference();
-      if (id) {
-        setPreferenceId(id);
-        setDataTicket({
-          ...dataTicket,
-          idTicket: id,
-          totalTicket: subTotal,
-        });
-        try {
-          const intervalPay = setInterval(async () => {
-            const paymentStatus = await getPaymentStatus(id);
-            if (paymentStatus === "approved") {
-              updateAvaible(property.id, preferenceId);
-              clearInterval(intervalPay);
-            } else if (paymentStatus === "rejected") {
-              clearInterval(intervalPay);
-            }
-          }, 10000);
-        } catch (error) {
-          console.error("Error in obtaining payment status", error);
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
-
-        if (!startDate || !endDate) {
-          swal("Please select both start and end dates.");
-          return;
-        }
-
-        if (startDate.isAfter(endDate)) {
-          swal("Start date cannot be after end date.");
-          return;
-        }
-
-        try {
-          await createBooking(propertyId, startDate, endDate);
-        } catch (error) {
-          console.log(error);
-          swal("An error occurred while making the booking.");
-          setIsLoading(true); // Finaliza estado de "cargando"
-
-        }
+      if (!startDate || !endDate) {
+        swal("Please select both start and end dates.");
+        return;
       }
-    } catch (error) {
-      console.error("ERROR SUBMIT AND BUY FUNCTION");
-      setIsLoading(true); // Finaliza estado de "cargando"
+  
+      if (startDate.isAfter(endDate)) {
+        swal("Start date cannot be after end date.");
+        return;
+      }
+  
+      const bookingResult = await createBooking(propertyId, startDate, endDate); 
+      if(bookingResult.error){
+        setError(bookingResult.error);
+      }else{
+        navigate(`/reserve/${subTotal}/${propertyId}/${countSelectedDays()}/${property.name}`);
+      }
 
-    }
-    finally {
+    } catch (error) {
+      console.error("Error en bookingAndBuy:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+  
 
   // ==========================================================
 
 
-  React.useEffect(() => {
-    localStorage.setItem(
-      "dataTicket",
-      JSON.stringify(dataTicket)
-    );
-  }, [property]);
+  
 
   useEffect(() => {
     if (startDate && endDate) {
       const start = dayjs(startDate);
       const end = dayjs(endDate);
       const diff = end.diff(start, "day");
-      setDataTicket({
-        ...dataTicket,
-        daysTicket: diff,
-      });
+      localStorage.setItem(
+        "daysTicket",
+        JSON.stringify(diff)
+      );
     }
   }, [startDate, endDate]);
 
@@ -148,7 +94,10 @@ const[preferenceId, setPreferenceId] = useState(null);
 
   const subTotal = countSelectedDays() * property?.price;
 
-
+  localStorage.setItem(
+    "subTotal",
+    JSON.stringify(subTotal)
+  );
 
   const secondDateMin = startDate ? startDate.add(1, "day") : null;
   const isSecondPickerDisabled = !startDate;
@@ -187,27 +136,32 @@ const[preferenceId, setPreferenceId] = useState(null);
     setIsDisabled(false)
   }, [propertyId]);
 
+ 
   return (
-    <div style={{ width: "500px", height: "380px", radius: "10px" }}>
+    <div  >
       {/*      <Alert severity="warning">
           Selected dates are not available.
         </Alert> */}
       <Card
         elevation={0}
         sx={{
-          backgroundColor: "#CD5A3E",
-          alignContent: "center",
-          padding: "15px",
-          margin: "20px",
-          marginBottom: "-22px",
+          fontSize: "20px", // Ajusta el tamaño de fuente según tus necesidades
+          fontWeight: "bold",
+          color: "#CD5A3E",
+          marginBottom: "-4%",
+          marginLeft:"4%",
+          borderRadius:"5px 5px 0px 0px "
         }}
       >
         <Typography
           variant="h1"
           sx={{
-            fontSize: "20px",
+            fontSize: "16px", // Ajusta el tamaño de fuente según tus necesidades
             fontWeight: "bold",
             color: "white",
+            backgroundColor: "#CD5A3E",
+            padding:"1rem",
+            width:"100%",
             textAlign: "center",
           }}
         >
@@ -221,7 +175,13 @@ const[preferenceId, setPreferenceId] = useState(null);
           backgroundColor: "#eadccf",
           height: "auto",
           padding: "15px",
-          margin: "20px",
+          // margin: "20px",
+          margin: "4%",
+          
+          borderRadius:"0px 0px 5px 5px",
+          width:"96%",
+
+
         }}
       >
         <Grid container justifyContent="center">
@@ -271,8 +231,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                 fontSize: "25px",
                 fontWeight: "500",
                 color: "#000",
-                marginTop: "30px",
-                marginLeft: "45px",
+                marginLeft: "10%",
                 textAlign: "center"
               }}
             >
@@ -285,7 +244,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                 fontSize: "20px",
                 fontWeight: "500",
                 color: "#000",
-                marginLeft: "45px",
+                marginLeft: "10%",
                 display: "flex",
                 justifyContent: "center"
               }}
@@ -307,8 +266,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                 fontSize: "30px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginTop: "25px",
-                marginLeft: "30px",
+                marginLeft: "40%",
               }}
             >
               ${property?.price}
@@ -320,7 +278,7 @@ const[preferenceId, setPreferenceId] = useState(null);
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#CD5A3E",
-                marginLeft: "40px",
+                marginLeft: "40%",
                 marginTop: "22px"
               }}
             >
@@ -336,32 +294,26 @@ const[preferenceId, setPreferenceId] = useState(null);
               }}
             >
               <Button
-  type="submit"
-  variant="contained"
-  color="primary"
-  style={{
-    marginBottom: "10px",
-    borderRadius: "20px",
-    fontSize: "17px",
-    width: "150px",
-  }}
-  sx={{
-    backgroundColor: "#CD5A3E",
-    "&:hover": {
-      backgroundColor: "#E57951",
-    },
-  }}
-  onClick={bookingAndBuy}
-  disabled={isLoading || !startDate || !endDate || isDisabled} // Botón deshabilitado si isLoading, startDate o endDate son falsy
->
-  {isLoading ? "Loading..." : "Reserve"}
-</Button>
-
-              {preferenceId && (
-                <div >
-                  <Wallet initialization={{ preferenceId: preferenceId }} />
-                </div>
-              )}
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{
+                  marginBottom: "10px",
+                  borderRadius: "20px",
+                  fontSize: "17px",
+                  width: "150px",
+                }}
+                sx={{
+                  backgroundColor: "#CD5A3E",
+                  "&:hover": {
+                    backgroundColor: "#E57951",
+                  },
+                }}
+                onClick={bookingAndBuy}
+                disabled={isLoading || !startDate || !endDate || isDisabled || error}  
+              >
+                Reserve
+              </Button>
             </div>
 
             <Typography

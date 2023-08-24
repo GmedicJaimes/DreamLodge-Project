@@ -17,7 +17,7 @@ import {
   validateStances,
   validateServices,
   validateDescription,
-  validateImageFiles,
+  // validateImageFiles,
   validatePrice,
 } from "./validations";
 
@@ -99,9 +99,9 @@ const Post = () => {
     if (!validatePrice(formData.price)) {
       errorMessages.push("The minimum price should be 10 USD.");
     }
-    if (!validateImageFiles(formData.imageFile)) {
-      errorMessages.push("Upload up to a maximum of 3 photos.");
-    }
+    // if (!validateImageFiles(formData.imageFile)) {
+    //   errorMessages.push("Upload up to a maximum of 3 photos.");
+    // }
     if (!validateDescription(formData.description)) {
       errorMessages.push(
         "Description should be between 30 and 200 characters "

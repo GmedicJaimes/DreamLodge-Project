@@ -180,9 +180,9 @@ const EditUser = () => {
                         <label htmlFor="">Lenguages: </label>
                         <input 
                             type="text" 
-                            value={user?.languages} 
+                            value={user?.language} 
                         readOnly />
-                        <select name="languages" className={styles.languageSelect} onChange={handleLang}>
+                        <select name="language" className={styles.languageSelect} onChange={handleLang}>
                             {
                             languagesAvailable.map((lang) => {
                                 return(

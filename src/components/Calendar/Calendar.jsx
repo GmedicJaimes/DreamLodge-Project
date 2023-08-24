@@ -11,6 +11,7 @@ import Person2Icon from "@mui/icons-material/Person2";
 import BedIcon from "@mui/icons-material/Bed";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { DateContext } from "../../Contex/DateContex";
+import style from "./Calendar.module.css"
 import {
 
   isPropertyAvailable,
@@ -32,7 +33,8 @@ const Calendar = ({
   stateFilter,
   cityFilter,
   sortByPrice,
-  ascending
+  ascending,
+  setIsPriceSorted
 }) => {
   // Obtener las fechas seleccionadas del contexto
   const { startDate, endDate, setDateRange } = useContext(DateContext);
@@ -49,10 +51,6 @@ const Calendar = ({
   const handlePropertyTypeFilterChange = (event) => {
     onPropertyTypeFilterChange(event.target.value)
   };
-
-  // const handlePropertyTypeFilterChange = (event) => {
-  //   setSelectedTypes(event.target.value);
-  // };
   
 
   const today = dayjs();
@@ -78,16 +76,26 @@ const Calendar = ({
   const isSecondPickerDisabled = !startDate;
 
 
-  
+  //  const handleResetFilters = () => {
+  //   onGuestChange(0);
+  //   onRoomsChange(0);
+  //   onStartChange(null);
+  //   onEndChange(null);
+  //   onPropertyTypeFilterChange(null);
+  //   onStateChange(null);
+  //   onCityChange(null);
+  // };
+
   const handleResetFilters = () => {
     onGuestChange(0);
     onRoomsChange(0);
-    onStartChange(null);
-    onEndChange(null);
-    onPropertyTypeFilterChange(null);
-    onStateChange(null);
-    onCityChange(null);
+    onPropertyTypeFilterChange("");
+    onStateChange("");
+    onCityChange("");
+    setIsPriceSorted(false);
   };
+  
+  
   
 
 
@@ -103,7 +111,7 @@ const Calendar = ({
   };
 
   return (
-    <div>
+    <div className={style.calendarCnt}>
       <Card
         elevation={0}
         sx={{
@@ -112,7 +120,7 @@ const Calendar = ({
           padding: "15px",
           margin: "20px",
           marginBottom: "-22px",
-          width: "300px",
+          width: "350px",
           borderRadius: '4px 4px 0px 0px'
         }}
       >
@@ -137,7 +145,7 @@ const Calendar = ({
           height: "auto",
           padding: "15px",
           margin: "20px",
-          width: "300px",
+          width: "350px",
           boxShadow: "1px 4px 5px 1px #B8B8B8",
           borderRadius: '0px 0px 4px 4px'
         }}
@@ -263,7 +271,7 @@ const Calendar = ({
                 <TextField
                   id="valueAdult"
                   label="Guest"
-                  type="number"
+                  type="text"
                   value={guest}
                   InputLabelProps={{
                     shrink: true,
@@ -281,22 +289,22 @@ const Calendar = ({
                 <TextField
                   id="value-Rooms"
                   label="Rooms "
-                  type="number"
+                  type="text"
                   value={rooms}
                   InputLabelProps={{
                     shrink: true,
                   }}
                   variant="standard"
-                  onChange={(e) => handleRoomsChange(e.target.value)} // Pasa el valor en lugar del evento
+                  onChange={(e) => handleRoomsChange(e.target.value)} 
                   inputProps={{
-                    style: { textAlign: "center" }, // Centra el texto dentro del TextField
+                    style: { textAlign: "center" }, 
                     max: 6 
                   }}
                 />
               </Grid>
             </Grid>
           </LocalizationProvider>
-          <FormControl variant="outlined" sx={{ minWidth: 120 }}>
+          <FormControl variant="outlined" sx={{ minWidth: 120, width:"39%" }}>
             <InputLabel>Type</InputLabel>
             <Select
                   value={propertyTypeFilter}
@@ -311,7 +319,7 @@ const Calendar = ({
               <MenuItem value="Room">Room</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%", marginRight: "3px" }}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%", marginRight: "3px" }}>
             <InputLabel>State</InputLabel>
             <Select
               value={stateFilter}
@@ -327,7 +335,7 @@ const Calendar = ({
             </Select>
           </FormControl>
 
-          <FormControl variant="outlined" sx={{ minWidth: 120, width: "45%"}}>
+          <FormControl variant="outlined" sx={{ minWidth: 115, width: "39%",marginLeft:"1.5%"}}>
             <InputLabel>City</InputLabel>
             <Select
               value={cityFilter}
@@ -342,23 +350,25 @@ const Calendar = ({
                   </MenuItem>
                 ))}
             </Select>
-            <MenuItem onClick={sortByPrice}>Sort by price {ascending ? 'ascending' : 'descending'} </MenuItem>
-           <button onClick={handleResetFilters}>Clean filtered</button>
+{/*             <MenuItem onClick={sortByPrice}>Sort by price</MenuItem>
+ */}           
           </FormControl>
+          <br />
           <MenuItem onClick={sortByPrice}
              style={{
               border:"1px solid #AFAFB3",
               color:"#616163",
               borderRadius: "5px",
-              minWidth: 119,
-              width: "45%",
-              marginRight: "4px"
+              // minWidth: 119,
+              // width: "37%",
+              marginRight: "8px"
 
             }}
             >Sort by price 
               
               
                </MenuItem>
+               <button onClick={handleResetFilters} className={style.btnClean} >Reset Filters</button>
         </Grid>
       </Card>
     </div>

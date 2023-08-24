@@ -1,4 +1,4 @@
-import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query} from 'firebase/firestore';
+import {getDocs,Timestamp , collection, addDoc, updateDoc, doc,getDoc,setDoc,getFirestore,where,query,deleteDoc} from 'firebase/firestore';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import {v4} from 'uuid';
 import {createUserWithEmailAndPassword, sendPasswordResetEmail,getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
@@ -557,7 +557,7 @@ const checkStartWithin = async (propertyId, formattedStartDate, formattedEndDate
       where("startDate", "<=", formattedEndDate)
     )
   );
-  // console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
+   //console.log("Reservas que comienzan dentro del rango:", snapshot.docs.map(doc => doc.data()));
   return snapshot.size === 0;
 }
 
@@ -618,7 +618,7 @@ const checkContainedWithin = async (propertyId, formattedStartDate, formattedEnd
     doc.data().endDate <= formattedEndDate && endSnapshot.docs.includes(doc)
   );
 
- // console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
+  //console.log("Reservas contenidas dentro del rango:", filteredDocs.map(doc => doc.data()));
 
   return filteredDocs.length === 0;
 }
@@ -639,17 +639,17 @@ export const isPropertyAvailable = async (propertyId, startDate, endDate) => {
     const isContainedWithin = await checkContainedWithin(propertyId, formattedStartDate, formattedEndDate);
 
     // console.log('isStartWithin:', isStartWithin);
-    // console.log('isEndWithin:', isEndWithin);
-    // console.log('isOverlappingStart:', isOverlappingStart);
-    // console.log('isContainedWithin:', isContainedWithin);
+     //console.log('isEndWithin:', isEndWithin);
+     //console.log('isOverlappingStart:', isOverlappingStart);
+    //console.log('isContainedWithin:', isContainedWithin);
 
     const finalResult = isStartWithin && isEndWithin && isOverlappingStart && isContainedWithin;
-    // console.log('Final availability result:', finalResult);
+    //console.log('Final availability result:', finalResult);
 
     return finalResult;
 
   } catch (error) {
-   // console.error('Error checking property availability:', error);
+    console.error('Error checking property availability:', error);
     return false;
   }
 };
@@ -724,18 +724,18 @@ const bookingsCollectionRef = collection(db, "bookings"); // Adjust the path as 
         userId: auth?.currentUser?.uid,
       });
 
-
+      return {error:null}
     } else {
       // console.log('Property is not available for the selected dates');
       swal('Error','La propiedad no está disponible en las fechas seleccionadas.', 'error');
+      return{error:"The property is not avaible in this date"}
     }
 
   } catch (error) {
-    console.log(error)
     swal('Error' ,'Error making the reservation.', 'error');
+    return { error: 'Error making the reservation.' };
   }
 };
-
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
 //======================================== BOOKING SECTION ========================================
@@ -780,7 +780,7 @@ export const getPaymentStatus = async (preferenceId) => {
   }
 };
 
-export const registerPurchases = async (userId, propertyId) => {
+export const registerPurchases = async (userId, propertyId, totalTicket) => {
   try {
     // Referencia a la colección "purchases"
     const purchasesCollectionRef = collection(db, 'purchases');
@@ -789,12 +789,13 @@ export const registerPurchases = async (userId, propertyId) => {
     await addDoc(purchasesCollectionRef, {
       userId: userId,
       propertyId: propertyId,
+      totalTicket: totalTicket,
       purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
     });
 
-    // console.log('Compra registrada exitosamente');
+    console.log('Compra registrada exitosamente');
   } catch (error) {
-    //console.error('Error al registrar la compra:', error);
+    console.error('Error al registrar la compra:', error);
   }}
 
   
@@ -853,6 +854,7 @@ export const fetchAvailablePropertiesInRange = async (startDate, endDate) => {
 //======================================== CALENDARIO FILTRADO========================================
 //======================================== CALENDARIO FILTRADO========================================
 //======================================== CALENDARIO FILTRADO========================================
+
 
 
 
@@ -919,3 +921,21 @@ export const fetchFilteredProperties = async (filters) => {
   }
 };
 
+
+//======================================== FAILURES=======================================
+//======================================== FAILURES========================================
+//======================================== FAILURES=======================================
+//======================================== FAILURES=======================================
+
+
+export  const getAllFailure = async () => {
+  const failuresCollectionRef = collection(db, "failures");
+  const querySnapshot = await getDocs(failuresCollectionRef);
+  const failures = querySnapshot.docs.map(doc => doc.data());
+  return failures;
+};
+
+export const deleteFailureById = async (failureId) => {
+  const failureRef = doc(db, 'failures', failureId);
+  await deleteDoc(failureRef);
+};
