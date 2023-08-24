@@ -31,7 +31,7 @@
 .userListItemName p {
   font-family: "Lexend Deca";
   font-weight: 500;
-  margin-left: 80px;
+  margin-left: 85px;
   margin-right: 10%;
 }
 
@@ -118,7 +118,6 @@
   justify-content: space-evenly;
   align-items: center;
   text-align: left;
-
 }
 
 .FailureDiv p {
@@ -151,21 +150,18 @@
   height: 20px;
 }
 
-
-@media (max-width:900px){
-  .userListItemName{
+@media (max-width: 900px) {
+  .userListItemName {
     flex-direction: column;
     justify-content: center;
-
   }
 
-  .FailureDiv{
+  .FailureDiv {
     flex-direction: column;
     width: auto;
   }
 
-  .contentReviewsFailure{
+  .contentReviewsFailure {
     margin: 0.5rem 0;
   }
-
 }
