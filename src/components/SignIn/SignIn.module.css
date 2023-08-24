@@ -3,20 +3,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  margin: -2.5rem 0;
+  width: 700px;
 }
 
 .mainContainerSign {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+
   align-items: center;
   border-radius: 0.5em;
-  width: 700px;
+  width: 100%;
   box-shadow: 0 4px 20px 5px #00000088;
   background-color: #eadccf;
   text-align: left;
-  height: 500px;
 }
 
 .mainContainerSign header {
@@ -32,10 +31,11 @@
 }
 
 .mainContainerSign form {
-  padding: 1rem 0;
+  padding-top: 1rem ;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 3rem;
 }
 
 .formGroupOne {
@@ -45,11 +45,11 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 250px;
+  height: 100%;
 }
 
 .formGroupTwo {
-  width: 350px;
+  width: 3500px;
   /* background-color: #363636; */
   display: flex;
   flex-direction: column;
@@ -58,9 +58,9 @@
   height: 250px;
 }
 
-.formGroupSignIn input {
+.formGroup input {
   width: 500px;
-  height: 50px;
+  margin: 0.3rem 0 ;
   padding: 1em;
   font-size: 14px;
   border: none;
@@ -75,7 +75,7 @@
 .selectSignIn {
   width: 280px;
   padding: 1em;
-  height: 50px;
+  height: 83%;
   font-size: 14px;
   border: none;
   border-radius: 4px;
@@ -116,7 +116,7 @@
 
 /* Seccion Footer */
 
-.btn {
+.btnSubmit {
   width: 250px;
   padding: 1em;
   margin-top: 10px;
@@ -134,9 +134,20 @@
   /* margin-left: 4rem; */
 }
 
+.buttonDiv{
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+
+
+
 .linkfoot {
   color: #cd5a3e;
   font-weight: 900;
+  padding-bottom: 2rem;
 }
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
 /* ///////////////////////////////////// ME ESTA TIRANDO ERROR ESTAS LINEAS DE CODIGO  */
@@ -196,28 +207,40 @@
 /* ///////////////////////////////////// RESPONSIVE  */
 /* ///////////////////////////////////// RESPONSIVE  */
 
-@media (max-width: 600px) {
-  .mainContainerSign form {
-    display: flex;
-    flex-direction: column;
+@media (max-width: 800px) {
+  .mainContainerOne {
+    width: 400px;
+    height: 100%;
   }
+
+
 
   .mainContainerSign {
-    width: 500px;
-    height: 800px;
-    margin-top: 300px;
+width: 100%;
+margin-left: 0;
   }
 
-  .formBtn {
-    margin-left: 0;
-    width: 100%;
+  .ErrorValid{
+    display: block;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .mainContainerOne {
+    width: 300px;
+    height: 100%;
+
   }
 
-  .btn {
-    padding: 1rem;
-  }
+.formGroup input, .formGroup select {
+  width: 80%;
+}
+.mainContainerSign form {
+  margin-left: 0.1
+}
+.buttonDiv button{
+  width: 90%;
+}
 
-  .selectSignIn {
-    width: 100%;
-  }
 }
