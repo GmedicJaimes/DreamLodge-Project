@@ -4,7 +4,7 @@ import { auth } from "../../config/firebase";
 import React from "react";
 import Dropdown from "../Dropdown/Dropdown";
 import { logOut, getPropertiesList } from "../../config/handlers";
-import Asset1 from "../../assets/Asset1.png"
+import Asset1 from "../../assets/Asset1.png";
 
 const Navbar = () => {
   const [currentUser, setCurrentUser] = React.useState(auth.currentUser);
@@ -21,13 +21,13 @@ const Navbar = () => {
     <div className={styles.container}>
       <div className={styles.containertwo}>
         <Link to={"/home"} className={styles.logo}>
-          <img src={Asset1} alt="" srcset="" className={styles.imgLogo}/>
+          <img src={Asset1} alt="" srcset="" className={styles.imgLogo} />
         </Link>
       </div>
 
       <div className={styles.button}>
         <div className={styles.adminNav}>
-          {currentUser && currentUser.email === "agustinibarperrotta@gmail.com" ? (
+          {currentUser && currentUser.email === "admindreamlodge@gmail.com" ? (
             <Link to={"/admin"} className={styles.admin}>
               Dashboard Admin
             </Link>
