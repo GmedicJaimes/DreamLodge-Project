@@ -8,24 +8,30 @@ import { updateAvaible } from "../../config/handlers";
 import { auth } from "../../config/firebase";
 
 const AceptedPay = () => {
-  const [dataRecipe, setDataRecipe] = React.useState({});
+  const [dataRecipe, setDataRecipe] = React.useState("");
   const [userData, setUserData] = React.useState();
-  const [ticketInfo, setTicketInfo] = React.useState({});
+  const [ticketInfo, setTicketInfo] = React.useState("");
+  const [totalTicket, setTotalTicket] = React.useState("");
 
   React.useEffect(() => {
     const defineRecipe = async () => {
-      const savedRecipe = localStorage.getItem("propertyData");
+      const savedRecipe = localStorage.getItem("daysTicket");
+      const propertyJ = localStorage.getItem("propertyData");
+      const infoRecipe = localStorage.getItem("ticketMp");
+      const subTotalJ = localStorage.getItem("subTotal");
 
-      const infoRecipe = localStorage.getItem("dataTicket");
-
-      if (savedRecipe || infoRecipe) {
+      if (savedRecipe || infoRecipe || subTotalJ || propertyJ) {
         const parsedRecipe = JSON.parse(savedRecipe);
-
+        const subTotal = JSON.parse(subTotalJ);
         const parsedInfo = JSON.parse(infoRecipe);
-        setTicketInfo(parsedInfo);
+        const property = JSON.parse(propertyJ);
 
+        setTicketInfo(parsedInfo);
+        setTotalTicket(subTotal)
         setDataRecipe(parsedRecipe);
-        const idOwner = parsedRecipe.property.userId;
+
+
+        const idOwner = property?.property?.userId;
 
         const user = await getUserByUID(idOwner);
         // console.log(user);
@@ -65,10 +71,10 @@ const AceptedPay = () => {
               <h1>Recipe</h1>
               <span>-------------------------------------------------</span>
               <p>Location: {dataRecipe?.propertyTicket?.name}</p>
-              <p>Ticket: {ticketInfo?.dataTicket?.idTicket}</p>
-              <p>Total Days {ticketInfo?.dataTicket?.daysTicket}</p>
+              <p>Ticket: {ticketInfo}</p>
+              <p>Total Days {dataRecipe}</p>
               <span>-------------------------------------------------</span>
-              <h2>Total price: {ticketInfo?.dataTicket?.totalTicket}$USD</h2>
+              <h2>Total price: {totalTicket}$USD</h2>
             </div>
           </div>
         </div>

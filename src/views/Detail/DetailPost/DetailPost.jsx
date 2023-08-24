@@ -227,17 +227,14 @@ const DetailPost = () => {
   //         );
   //         const purchasesSnapshot = await getDocs(purchasesQuery);
   //         const hasPurchased = !purchasesSnapshot?.empty;
-          
-
+  
   //         setHasPurchased(hasPurchased);
   //         setReviewAuthor(auth.currentUser.displayName);
-
   //       }
   //     } catch (error) {
   //       console.error("Hubo un error al obtener los datos:", error);
   //     }
   //   }
-
   //   fetchData();
   // }, [reviews]);
 

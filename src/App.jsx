@@ -78,7 +78,8 @@ function App() {
             />
           }
         />
-        <Route path="/reserve/:id" element={<Reserve />} />
+        {/* <Route path="/reserve/:id" element={<Reserve />} /> */}
+          <Route path='/reserve/:subTotal/:propertyId/:selectedDays/:propertyName' element={<Reserve/>}/>
         <Route path="/login" element={<LoginSignin />} />
         <Route path="/signin" element={<SignInView />} />
         <Route path="/rooms/:id" element={<DetailPost />} />

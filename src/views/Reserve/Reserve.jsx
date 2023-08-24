@@ -22,6 +22,11 @@ const Reserve = () => {
         userId: auth.currentUser.uid,
       });
 
+      localStorage.setItem(
+        "subTotal",
+        JSON.stringify(subTotal)
+      );
+
       const { id } = response.data;
       return id;
     } catch (error) {
@@ -33,6 +38,10 @@ const Reserve = () => {
     const id = await createPreference();
     if (id) {
       setPreferenceId(id);
+      localStorage.setItem(
+        "ticketMp",
+        JSON.stringify(id)
+      );
       console.log(id);
     }
   };
