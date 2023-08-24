@@ -51,7 +51,8 @@ const TutorialPost = () => {
         );
         case 2:
             return (
-            <div className={styles.stepContent}><h3>Step 2: Choose Your Property's Identity</h3>
+            <div className={`${styles.stepContent} ${styles.stepContentThree}`}><
+              h3>Step 2: Choose Your Property's Identity</h3>
             <p>Now that you've given your property a captivating name, it's time to define its identity. Think of the type of experience you want to offer your guests or buyers.</p>
             <p>Is your property nestled in the serene countryside, offering tranquility and nature's beauty? Or perhaps it's a luxurious mansion with lavish amenities, perfect for a grand getaway. Maybe it's a cozy cabin where the warmth of the fireplace creates unforgettable memories.</p>
             <p>If your property is a beachfront paradise where the sound of waves is your lullaby, or a chic urban apartment that puts guests in the heart of the action, choose the type that best captures its essence.</p>
@@ -59,7 +60,8 @@ const TutorialPost = () => {
         );
         case 3:
             return (
-            <div className={styles.stepContent}><h3>Step 3: Choose Your Property's Perfect Spot</h3>
+            <div className={`${styles.stepContent} ${styles.stepContentFour}`}>
+              <h3>Step 3: Choose Your Property's Perfect Spot</h3>
             <p>Now that your property has a name and a defined identity, it's time to pinpoint its location. The right location can make all the difference in creating a memorable experience for your guests or buyers.</p>
             <p>Is your property perched on a cliff overlooking the endless ocean? Or is it tucked away in a quaint countryside village, surrounded by rolling hills? Perhaps it's a hidden gem in the heart of a bustling city, offering convenient access to entertainment and culture.</p>
             <p>Think about the surroundings you want your guests to wake up to, explore, and enjoy. Consider the nearby attractions, natural beauty, and accessibility. A property's location is not just about coordinates; it's about creating an unforgettable experience.</p>
@@ -67,7 +69,8 @@ const TutorialPost = () => {
             )
         case 4:
             return (
-            <div className={styles.stepContent}><h3>Step 4: Elevate Your Property with Services</h3>
+            <div className={`${styles.stepContent} ${styles.stepContentFive}`}>
+              <h3>Step 4: Elevate Your Property with Services</h3>
             <p>Congratulations on coming this far! Your property is taking shape and gaining character. Now, it's time to make it even more inviting and attractive by offering a range of services that will cater to your guests' needs and desires.</p>
             <p>Consider what amenities and services will enhance the overall experience of staying at your property. Are you providing a cozy cabin getaway? Think about adding services like a private chef, daily housekeeping, or guided nature hikes.</p>
             <p>If your property is a luxurious mansion, consider offering spa treatments, chauffeur services, and gourmet dining experiences. Beachfront properties could offer water sports, beachside barbecues, and sunset yoga sessions.</p>
@@ -76,7 +79,8 @@ const TutorialPost = () => {
             );
         case 5:
             return (
-            <div className={styles.stepContent}> <h3>Step 6: Create Comfortable and Inviting Spaces</h3>
+            <div className={`${styles.stepContent} ${styles.stepContentSix}`}> 
+            <h3>Step 6: Create Comfortable and Inviting Spaces</h3>
             <p>Welcome to the step where you'll define the rooms that make up your rental property. Each room contributes to the overall experience your guests will have, so let's make them comfortable, stylish, and inviting!</p>
             <p>Think about the layout of your property. Start with the essentials, like bedrooms, living rooms, and bathrooms. How many of each type of room does your property have? Consider the size and capacity of each room. Is there a master suite with a private balcony? A cozy reading nook in the living area? A spacious dining room for communal meals?</p>
             <p>Remember that each room should reflect the theme and ambiance of your property. Use your style guide to ensure a consistent look and feel throughout. Consider the color palette, furnishings, and decor that will create a cohesive and harmonious environment.</p>
@@ -86,7 +90,8 @@ const TutorialPost = () => {
             );
         case 6:
             return (
-            <div className={styles.stepContent}> <h3>Step 7: Set the Perfect Price</h3>
+            <div className={`${styles.stepContent} ${styles.stepContentSeven}`}>
+               <h3>Step 7: Set the Perfect Price</h3>
             <p>Welcome to the step where you'll determine the price per night for your rental property. Setting the right price is a crucial decision that can attract guests and maximize your revenue. Let's find the sweet spot that reflects the value of your property and meets the expectations of your target audience.</p>
             <p>Consider several factors when deciding on the price. Start by researching similar properties in your area to understand the market rates. Look at properties with similar features, amenities, and location. This will give you an idea of the competitive landscape and help you position your property effectively.</p>
             <p>Think about the unique selling points of your property. Does it offer breathtaking views, luxurious amenities, or convenient access to attractions? These features can justify a higher price point. On the other hand, if you're targeting budget-conscious travelers, a more affordable price might attract more bookings.</p>
