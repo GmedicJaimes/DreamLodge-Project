@@ -780,7 +780,7 @@ export const getPaymentStatus = async (preferenceId) => {
   }
 };
 
-export const registerPurchases = async (userId, propertyId) => {
+export const registerPurchases = async (userId, propertyId, totalTicket) => {
   try {
     // Referencia a la colección "purchases"
     const purchasesCollectionRef = collection(db, 'purchases');
@@ -789,12 +789,13 @@ export const registerPurchases = async (userId, propertyId) => {
     await addDoc(purchasesCollectionRef, {
       userId: userId,
       propertyId: propertyId,
+      totalTicket: totalTicket,
       purchaseDate: serverTimestamp(), // Marca de tiempo del servidor
     });
 
-    // console.log('Compra registrada exitosamente');
+    console.log('Compra registrada exitosamente');
   } catch (error) {
-    //console.error('Error al registrar la compra:', error);
+    console.error('Error al registrar la compra:', error);
   }}
 
   

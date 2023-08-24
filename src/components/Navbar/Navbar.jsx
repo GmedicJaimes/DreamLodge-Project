@@ -27,7 +27,7 @@ const Navbar = () => {
 
       <div className={styles.button}>
         <div className={styles.adminNav}>
-          {currentUser && currentUser.email === "admindreamlodge@gmail.com" ? (
+          {currentUser && currentUser.email === "agustinibarperrotta@gmail.com" ? (
             <Link to={"/admin"} className={styles.admin}>
               Dashboard Admin
             </Link>

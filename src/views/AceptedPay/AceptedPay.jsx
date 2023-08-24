@@ -29,7 +29,7 @@ const AceptedPay = () => {
         setTicketInfo(parsedInfo);
         setTotalTicket(subTotal)
         setDataRecipe(parsedRecipe);
-
+        console.log(property)
 
         const idOwner = property?.property?.userId;
 
@@ -38,8 +38,8 @@ const AceptedPay = () => {
         setUserData(user);
         // console.log(parsedRecipe.property.uui)
 
-        await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket);
-        await registerPurchases(auth.currentUser.uid, parsedRecipe.propertyId);
+        // await updateAvaible(parsedRecipe.propertyId, parsedRecipe.idTicket);
+        await registerPurchases(auth.currentUser.uid, property.propertyId, totalTicket);
       }
     };
     defineRecipe();
