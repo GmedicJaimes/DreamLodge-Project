@@ -24,6 +24,9 @@ const firebaseConfig = {
   measurementId: "G-6TB25EM3W8"
 };
 
+//? ahora si es el final de esto!
+
+
 // const firebaseConfig = {
 //   apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
 //   authDomain: "foodiesitelab-99c62.firebaseapp.com",
