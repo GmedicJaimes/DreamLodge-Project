@@ -23,6 +23,8 @@ const firebaseConfig = {
   appId: "1:937226421893:web:13d4f51541cebda5bb8bec",
   measurementId: "G-6TB25EM3W8"
 };
+//Se termino al final!
+
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyC-Bb1urfKlXTTVkPTgO-gCcsHKaHWtloM",
