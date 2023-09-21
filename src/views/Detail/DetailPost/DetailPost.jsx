@@ -379,7 +379,7 @@ const DetailPost = () => {
                   <div>
                   <img
   className={styles.iconUserReview}
-  src={auth.currentUser?.photoURL || usuario}
+  src={ usuario}
   alt=""
 />
                   </div>

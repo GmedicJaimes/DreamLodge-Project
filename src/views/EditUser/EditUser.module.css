@@ -58,7 +58,8 @@
 
 .avatar {
     margin: auto;
-    height: 25em;
+    height: 400px;
+    width: 400px
 }
 
 .configBox label{
