@@ -17,6 +17,8 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [auth]);
 
+
+
   return (
     <div className={styles.container}>
       <div className={styles.containertwo}>
@@ -33,7 +35,7 @@ const Navbar = () => {
             </Link>
           ) : null}
         </div>
-        {currentUser !== null ? (
+        {currentUser === null ? (
           <div className={styles.button}>
             <div className={styles.postBtn}>
               <Link to={"/tutorial"} className={styles.post}>

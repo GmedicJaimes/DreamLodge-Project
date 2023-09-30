@@ -67,6 +67,155 @@ ul {
 
 .dropdownMenu.active{
   opacity: 1;
+  margin-top: -1rem;
+  visibility: visible;
+  transform: translateY(0);
+  transition: 500ms ease;
+  z-index: 1000;
+
+}
+
+.dropdownMenu.inactive{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: 500ms ease;
+}
+
+.dropdownMenu h3{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px 0;
+  font-weight: 500;
+  font-size: 18px;
+  color: #000000;
+  line-height: 1.2rem;
+}
+
+.dropdownMenu span{
+  font-size: .9em;
+  color: #9b9999;
+  font-weight: 400;
+}
+
+.dropdownMenu ul li{
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdownMenu ul li:hover a{
+  color: rgb(212, 33, 9);
+  cursor: pointer;
+}
+
+.dropdownMenu ul li:hover img{
+  opacity: 1;
+  cursor: pointer;
+}
+
+.dropDownItem{
+  display: flex;
+  margin: 10px auto;
+}
+
+.dropDownItem img{
+  max-width: 20px;
+  margin-right: 10px;
+  opacity: 0.5;
+  transition: 500ms;
+}
+
+.dropDownItem a{
+  max-width: 100px;
+  margin-left: 10px;
+  transition: 500ms;
+}
+
+
+@media (max-width: 600px){
+  .menuContainer{
+
+  }
+}
+
+
+
+
+
+
+
+
+/* body {
+  --primary-bg: #242526;
+  --secondary-bg: #fff;
+  --primary-text-color: #555;
+  --secondary-text-color: #cecece;
+  --border-radius: 8px;
+  --speed: 500ms
+}
+
+ul {
+  list-style: none;
+}
+
+.dropdownMenu a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Lexend Deca';
+}
+
+.menuTrigger{
+  width: 155px;
+}
+
+.menuTrigger img{
+  position: absolute;
+  top: 15px;
+  right: 39px;
+  height: 40px;
+  width: 50px;
+  /* border-radius: 50%; 
+  z-index: 500;
+  overflow: hidden;
+}
+
+.menuTrigger img:hover{
+  filter: invert(33%) sepia(76%) saturate(1398%) hue-rotate(358deg) brightness(94%) contrast(85%);
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  width: 288px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.486);
+}
+
+.dropdownMenu ul{
+  display: flex;
+  flex-direction: column;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.dropdownMenu::before{
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 28px;
+  height: 28px;
+  width: 28px;
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+
+.dropdownMenu.active{
+  opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: 500ms ease;
@@ -128,3 +277,13 @@ ul {
   margin-left: 10px;
   transition: 500ms;
 }
+
+
+@media (max-width: 600px){
+  .menuContainer{
+
+  }
+} */
+
+
+
