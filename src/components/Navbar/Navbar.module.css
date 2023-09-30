@@ -4,10 +4,9 @@
   justify-content: space-between;
   align-items: center;
   height: 75px;
-  background-color: #EADCCF;
-  
+  background-color: #eadccf;
 }
-.imgLogo{
+.imgLogo {
   width: 200px;
   height: 40px;
   margin-left: -1rem;
@@ -21,17 +20,16 @@
   width: 50%;
 }
 
-.adminNav{
+.adminNav {
   display: flex;
   width: 200px;
   margin-left: 40%;
   margin-right: 20px;
 }
 
-
-.admin{
+.admin {
   text-decoration: none;
-  background-color: #CD5A3E;
+  background-color: #cd5a3e;
   width: 200px;
   color: #fdfdfd;
   font-weight: 500;
@@ -39,19 +37,18 @@
   border-radius: 10px;
   transition: background-color 0.3s ease; /* Add a smooth transition effect */
   font-size: 1.1rem;
-
 }
 
-.logo{
-  font-family: 'Montserrat';
+.logo {
+  font-family: "Montserrat";
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 0.1rem;
   margin-left: 2rem;
-  color: #1E1E23;
+  color: #1e1e23;
 }
 
-.button{
+.button {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -59,22 +56,22 @@
   width: 100%;
 }
 
-.login{
-  display: block; 
+.login {
+  display: block;
   letter-spacing: 0.1rem;
   font-size: 1rem;
   font-weight: bold;
   padding: 0.8rem;
   margin-right: 2rem;
   width: 125px;
-  background-color: #CD5A3E;
- 
-  border: #CD5A3E;
+  background-color: #cd5a3e;
+
+  border: #cd5a3e;
   color: white;
   cursor: pointer;
 }
 
-.postBtn{
+.postBtn {
   width: 150px;
   margin-right: 5%;
 }
@@ -90,9 +87,14 @@
   transition: background-color 0.3s ease; /* Add a smooth transition effect */
   font-size: 1.1rem;
 }
-  
-.post:hover{
-  background-color: rgba(205, 90, 62, 0.9); /* Semi-transparent #CD5A3E color with 90% opacity */
+
+.post:hover {
+  background-color: rgba(
+    205,
+    90,
+    62,
+    0.9
+  ); /* Semi-transparent #CD5A3E color with 90% opacity */
   padding: 0.8rem;
   border-radius: 10px;
 }
@@ -101,21 +103,17 @@
 /************************************************RESPONSIVE *************************************************/
 /************************************************RESPONSIVE *************************************************/
 
-
-
-
-
-@media (max-width: 800px){
-
-  .postBtn{
+@media (max-width: 800px) {
+  .postBtn {
     display: none;
   }
 
   .loginBtn {
-    display: block; 
+    display: block;
     padding: 0.8rem;
   }
 
+<<<<<<< HEAD
 .logo img {
 
   width: 150px;
@@ -323,19 +321,34 @@ margin-left: 40px;
   justify-content: space-evenly;
 }
 } 
+=======
+  .logo {
+    font-size: 1.2rem;
+  }
+>>>>>>> 7f4f31c426c17906c903c6d910bd0c29bd7dee71
 
+  .menuNav {
+    display: block;
+  }
 
-@media (max-width: 600px){
+  .buttonHola {
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
+  }
+}
 
-  .button{
+@media (max-width: 600px) {
+  .button {
     display: block;
     float: right;
-
   }
-.login{
-width: 80px;
-margin-left: 40px;
+  .login {
+    width: 80px;
+    margin-left: 40px;
+  }
 }
+<<<<<<< HEAD
 
 
 } 
@@ -346,3 +359,5 @@ margin-left: 40px;
 
 } */
 
+=======
+>>>>>>> 7f4f31c426c17906c903c6d910bd0c29bd7dee71
