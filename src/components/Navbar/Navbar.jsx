@@ -35,7 +35,7 @@ const Navbar = () => {
             </Link>
           ) : null}
         </div>
-        {currentUser === null ? (
+        {currentUser !== null ? (
           <div className={styles.button}>
             <div className={styles.postBtn}>
               <Link to={"/tutorial"} className={styles.post}>

@@ -157,6 +157,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       }
   
       setHost(filteredHost);
+      console.log("YO SOI HOST PAAAA",host)
     }
   // console.log(host,"desde hompeage")
     fetchAndUpdateHost();
