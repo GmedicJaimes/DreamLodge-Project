@@ -316,35 +316,43 @@ export const updateUser = async( user ) => {
       image
     })
   } catch (error) {
-    
+    console.error(error)
   }
 }
 
 export const getPropertiesList = async () => {
   try {
+    // Obtén la referencia a la colección "properties"
+    const propertiesCollectionRef = collection(db, "properties");
+
+    // Obtén los documentos de la colección
     const data = await getDocs(propertiesCollectionRef);
-    
+
     // Mapea los documentos a sus datos y procesa la URL de la imagen si existe
-    const properties = await Promise.all(data.docs.map(async (doc) => {
-      const propertyData = doc.data();
-      
-      if (propertyData.imageUrl) {
-        const imageUrlRef = ref(storage, propertyData.imageUrl); // Corregir referencia a storage
-        propertyData.imageUrl = await getDownloadURL(imageUrlRef);
-      }
-      
-      return {
-        ...propertyData,
-        id: doc.id
-      };
-    }));
+    const properties = await Promise.all(
+      data.docs.map(async (doc) => {
+        const propertyData = doc.data();
+
+        // if (propertyData.imageUrl) {
+        //   // Corrige la referencia a la carpeta de imágenes
+        //   const imageUrlRef = ref(storage, propertyData.imageUrl);
+        //   propertyData.imageUrl = await getDownloadURL(imageUrlRef);
+        // }
+
+        return {
+          ...propertyData,
+          id: doc.id
+        };
+      })
+    );
 
     return properties; // Devuelve la lista de propiedades procesadas
   } catch (error) {
-    // console.log(error);
-    throw error; // Lanza el error nuevamente para manejarlo donde se llama la función
+    console.error("Error fetching properties:", error);
+    throw error;
   }
 };
+
 
 // handlers.js
 // export const getPropertiesListPerPage = async (page, perPage) => {
@@ -893,21 +901,21 @@ export const fetchFilteredProperties = async (filters) => {
     
     if (filters.rooms) {
       baseQuery = query(baseQuery, where('stances.rooms', '==', Number(filters.rooms)));
-    };
+    }
 
     if (filters.guest) {
       baseQuery = query(baseQuery, where('stances.guest', '==', Number(filters.guest)));
     }
     if (filters.propertyType) {
       baseQuery = query(baseQuery, where('type', 'array-contains', filters.propertyType));
-    };
+    }
     if (filters.stateFilter) {
       baseQuery = query(baseQuery, where('location.state', '==', filters.stateFilter));
-    };
+    }
     
     if (filters.cityFilter) {
       baseQuery = query(baseQuery, where('location.city', '==', filters.cityFilter));
-    };
+    }
     
     
     const querySnapshot = await getDocs(baseQuery);

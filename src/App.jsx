@@ -31,8 +31,7 @@ import FailedPay from "./views/FailedPay/FailedPay";
 import FailureView from "./views/Dashboard/FailureDash/view/FailureView"
 
 function App() {
-  const imageUrlRef = ref(storage, "properties/");
-
+  const imageUrlRef = ref(storage, 'properties/');
   const [host, setHost] = useState([]);
   const [originalHost, setOriginalHost] = useState([]);
   const [totalProperties, setTotalProperties] = useState(0);
@@ -53,12 +52,14 @@ function App() {
         setTotalUsers(usersSnapshot.size);
 
         const imagesSnapshot = await listAll(imageUrlRef);
+        
         setTotalImages(imagesSnapshot.items.length);
       } catch (error) {
-        // console.error("Error fetching properties:", error);
+        console.error("Error fetching properties:", error);
       }
     }
     fetchProperties();
+    console.log(host)
   }, [location.pathname]);
 
   return (

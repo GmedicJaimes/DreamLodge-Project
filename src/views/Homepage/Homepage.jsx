@@ -195,7 +195,7 @@ const Homepage = ({ host, setHost, originalHost, setOriginalHost }) => {
       setCurrentPage(1);
     }
   }, [host, cardsPerPage, currentPage]);
-
+console.log(host, originalHost)
   return (
     <div>
       <div className={styles.containerHome}>
